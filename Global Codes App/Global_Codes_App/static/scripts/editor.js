@@ -1,10 +1,11 @@
 ﻿// Global variables
 var worksection_data = 'empty';
+var preload_status = 'empty';
 
-
-
-// Get the work section data and populate the sytem lookup field
+// Get all the data preloaded including: Worksection and library
 $(function () {
+
+    // Get the work section data
     $.getJSON('/worksection_data', function (data) {
         worksection_data = data;
         var options = '';
@@ -14,6 +15,18 @@ $(function () {
         $('#tlc_search_system').html(options);
         $('#tlc_search_system').val('WSL_ALL_DW');
         $('#tlc_search_section').html(get_worksections($('#tlc_search_system').val()));
+    });
+
+    // Preload the library code data
+    $.getJSON('/preload_data', function (data) {
+        preload_status = data;
+
+        if (preload_status['result'] == 'ERROR') {
+            swal({
+                title: "Error!",
+                text: "Problem preloading the data."
+            });
+        };
     });
 });
 
@@ -33,8 +46,10 @@ $('#tlc_search_system').change(function () {
 
 
 // Library code search button
-//$('#tlc_search_submit').click( function() {
+$('#tlc_search_submit').click(function () {
+    
 
+});
 
 
 
