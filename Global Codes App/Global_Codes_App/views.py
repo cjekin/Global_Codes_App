@@ -33,6 +33,27 @@ def tlc_data():
     data = sql.generic_sql('TLC',filters)
     json_data = jsonify(data)
     return json_data
+
+@app.route('/worksection_data')
+def worksection_data():
+    headers = ['system_name','section_letter','section_name']
+    data = sql.exec_stored_procedure('spGlobalWorkSections',headers)
+
+    worksection_data = {}
+    # Get a separate lists of unique sections
+    systems = []
+    for r in data['data']:
+        if r['system_name'] not in systems:
+            systems.append(r['system_name'])
+    worksection_data['systems'] = systems
+
+    # Get a lookup based on system
+    for system in systems:
+        print('Looking up system: ' + system)
+        worksection_data[system] = [[r['section_letter'],r['section_name']] for r in data['data'] if r['system_name'] == system]
+
+    json_data = jsonify(worksection_data)
+    return json_data
     
 
 

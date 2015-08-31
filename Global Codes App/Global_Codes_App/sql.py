@@ -32,3 +32,28 @@ def generic_sql(table,filters,headers='ALL'):
     raw_data = cursor.fetchall()
     data = [dict(zip(headers,row)) for row in raw_data]
     return dict(headers=headers, data=data)
+
+
+
+def exec_stored_procedure(stored_procedure, headers=[]):
+    try:
+        cnxn = pyodbc.connect('DSN=Warehouse')
+        cursor = cnxn.cursor()
+    except:
+        print 'Problem making connection'
+    
+    sql = "EXEC %s ;" % (stored_procedure)
+    data = {}
+           
+    try: 
+        cursor.execute(sql)
+        raw_data = cursor.fetchall()
+
+        if headers == []:
+            data['data'] = [dict(zip(range(len(row)),row)) for row in raw_data]
+        else:
+            data['data'] = [dict(zip(headers,row)) for row in raw_data]
+    except:
+        data['data'] = 'Error'
+
+    return data

@@ -415,6 +415,7 @@
     <Content Include="Global_Codes_App\static\images\p1.jpg" />
     <Content Include="Global_Codes_App\static\images\p2.jpg" />
     <Content Include="Global_Codes_App\static\images\profile.jpg" />
+    <Content Include="Global_Codes_App\static\scripts\editor.js" />
     <Content Include="Global_Codes_App\static\styles\img\green%402x.png" />
     <Content Include="Global_Codes_App\static\styles\img\green.png" />
     <Content Include="Global_Codes_App\static\styles\static_custom.css" />
@@ -2687,6 +2688,7 @@
     <Content Include="Global_Codes_App\static\vendor\xeditable\LICENSE-MIT" />
     <Content Include="Global_Codes_App\static\vendor\xeditable\README.md" />
     <Content Include="Global_Codes_App\templates\basic_test.html" />
+    <Content Include="Global_Codes_App\templates\editor.html" />
     <Content Include="requirements.txt" />
     <Content Include="Global_Codes_App\static\content\bootstrap.css" />
     <Content Include="Global_Codes_App\static\content\bootstrap.min.css" />

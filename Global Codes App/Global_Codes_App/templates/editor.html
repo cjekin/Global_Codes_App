@@ -41,7 +41,7 @@
                         <option>Biochemistry</option>
                         <option>Haematology</option>
                     </select>
-                    <button type="submit" class="btn btn-success m-b">Refresh</button>
+                    <button id="tlc_search_submit" type="submit" class="btn btn-success m-b">Refresh</button>
                 </div>
             </div>
         </div>
@@ -272,81 +272,5 @@
 {% endblock %}
 
 {% block scripts %}
-
-<script>
-    $(function () {
-        $("#testalert").click(function () {
-            swal("Here's a message!");
-        });
-    });
-</script>
-
-<script>
-    // Drag and drop functions
-    $(function draggables () {
-        $(".global-drag").draggable({
-            helper: "clone"
-        });
-
-        $(".global-drop").droppable({
-            activeClass: "ui-state-default",
-            hoverClass: "ui-state-hover",
-
-            drop: function (event, ui) {
-                console.log("Adding " + ui.draggable.text() + " to " + $(this).find(".tfc").text());
-                $(this).find(".global-code").html('<span class="label label-success current-global-map">' + ui.draggable.html() + '</span>');
-                draggables(); // Re-identify the draggable elements
-            },
-        });
-    });
-
-    // Mapping click function
-    $(function () { 
-        $(".current-global-map").dblclick(function () {
-            
-            var clicked_mapping = this;
-
-            swal({
-                title: "Are you sure?",
-                text: "This will delete the mapping of " + $(clicked_mapping).html() + " from " + $(clicked_mapping).parent().parent().find(".tfc").text(),
-                type: "warning",
-                showCancelButton: true,
-                confirmButtonColor: "#DD6B55",
-                confirmButtonText: "Delete Mapping"
-            },
-                function () {
-                    $(clicked_mapping).remove();
-                    console.log("Removing " + $(clicked_mapping).html() + " from " + $(clicked_mapping).parent().parent().find(".tfc").text());
-            });
-        });
-    });
-
-</script>
-
-<script>
-    $(function () {
-        // Data tables functions
-
-        // Setup - add a text input to each footer cell
-        $('#global_code_datatable tfoot th').each(function () {
-            var title = $('#global_code_datatable thead th').eq($(this).index()).text();
-            $(this).html('<input type="text" placeholder="Search ' + title + '" />');
-        });
-
-        // Initialize the data tables
-        $('#library_code_datatable').dataTable();
-        $('#global_code_datatable').dataTable();
-
-        // Apply the search
-        //table.columns().every(function () {
-        //    var that = this;
-        //    $('input', this.footer()).on('keyup change', function () {
-        //        that
-        //            .search(this.value)
-        //            .draw();
-        //    });
-        //});
-    });
-</script>
-
+<script src="static/scripts/editor.js"></script>
 {% endblock %}
