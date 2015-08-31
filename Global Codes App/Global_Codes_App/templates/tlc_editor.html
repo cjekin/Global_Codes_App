@@ -1,0 +1,81 @@
+{% extends "layout.html" %}
+
+{% block content %}
+
+<div class="form-group">
+  <label for="sel1">Select list:</label>
+  <select class="form-control origin" id="origin_select">
+    <option value="WSL_ALL_DW">WSL_ALL_DW</option>
+    <option value="BMI_ALL_DW">BMI_ALL_DW</option>
+    <option value="CROM_ALL_DW">CROM_ALL_DW</option>
+    <option value="EAL_BHI_DW">EAL_BHI_DW</option>
+  </select>
+</div>
+
+<div id="tlc_data" class="table-responsive"></div>
+
+
+{% endblock %}
+
+{% block scripts %}
+
+
+<script>$("#test").text("Final worked 2");</script>
+
+<script>
+
+    // Build a table from JSON data
+    function buildTableFromJSON(data, table_id) {
+
+        var headers = data['headers'];
+
+        var table = '<table id="' + table_id + '" class="table"><tr>';
+
+        // Create header
+        for(h = 0; h < headers.length; h++) {
+            table += '<th>' + headers[h] + '</th>';
+        }
+        table += '</tr>';
+
+        // Create content
+        for (i = 0; i < data['data'].length; i++) {
+            var row = data['data'][i];
+            table += '<tr>';
+            for (h = 0; h < headers.length; h++) {
+                var cell = row[headers[h]];
+                if (headers[h] == 'TLC') {
+                    table += '<td id="tlc|' + row['Origin'] + '|' + row['TLC'] + '">' + cell + '</td>';
+                } else {
+                    table += '<td>' + cell + '</td>';
+                }
+            }
+            table += '</tr>';
+        }
+
+        table += '</table>';
+
+        return table;
+
+    }
+
+    //$("button").bind('click', function () {
+    $("#origin_select").change(function () {
+        var url = '/tlc_data?origin=' + $("#origin_select").val();
+        $.getJSON(url, function (data) {
+
+            console.log('Number of results: ' + data['data'].length);
+            console.log('Second row results: ' + data['data'][2]['TLC']);
+            console.log('Header data: ' + data['headers']);
+
+            table = buildTableFromJSON(data, 'mytable');
+
+            $("#tlc_data").html(table);
+
+        });
+        return false;
+    });
+
+</script>
+
+
+{% endblock %}
