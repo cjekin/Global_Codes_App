@@ -5,7 +5,7 @@ from flask import render_template, jsonify, Response, request
 from Global_Codes_App import app
 import sql
 
-global_tlcs = []
+global_tlcs = {}
 
 
 @app.route('/')
@@ -21,25 +21,27 @@ def home():
 @app.route('/preload_data')
 def preload_data():
     global global_tlcs
-    print('Preloading data ----------- ')
-    headers = ['system','tlc','tlc_name','tlc_type','tfc','tfc_worksection','tfc_name','tfc_units','tfc_functions','tfc_most_common','tfc_common_tlc','tfc_common_tlc_name','tfc_reflab','tfc_reflab_name','tfc_row','global_code','global_excluded','global_created','global_mapped']
-    raw_data = sql.exec_stored_procedure('spGlobalsApp_Mapping',headers)
-    if raw_data['data'] == 'Error':
+    global_tlcs = sql.pull_raw_data()
+    if 'error' in global_tlcs:
         print('Error gathering global_tlcs!')
         return jsonify({'result':'ERROR'})
     else:
-        global_tlcs = raw_data['data']
+        print('Loaded data')
         return jsonify({'result':'OK'})
 
 
 @app.route('/tlc_data')
 def tlc_data():
-    origin = request.args.get('origin')
-    if origin == None:
-        origin = 'WSL_ALL_DW'
-    filters = {'Origin':origin}
-    data = sql.generic_sql('TLC',filters)
-    json_data = jsonify(data)
+    system = request.args.get('system')
+    section = request.args.get('section')
+    primary = request.args.get('primary')
+    unmapped = request.args.get('unmapped')
+
+    global global_tlcs
+
+    result = sql.pull_library_data(global_tlcs,system,section,primary,unmapped)
+
+    json_data = jsonify(result)
     return json_data
 
 

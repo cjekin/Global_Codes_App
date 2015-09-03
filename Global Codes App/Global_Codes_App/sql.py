@@ -74,13 +74,13 @@ def pull_raw_data():
     try: 
         cursor.execute(sql)
         headers = [column[0] for column in cursor.description]
-        print headers
+        print(headers)
             
         raw_data = cursor.fetchall()
         raw_data_dict = [dict(zip(headers,row)) for row in raw_data]
     except:
         print('Problem pulling data')
-        return {'data':'ERROR'} 
+        return {'error':'ERROR'} 
     
     # Format the result in to a dictionary
     D = {}
@@ -118,10 +118,12 @@ def pull_library_data(D,system,section='ALL',primary=1,unmapped=1):
         if section not in D[system][r]['tlc_sections']:
             accept = False
         if accept == True:
-            num_tfc = len([t for t in D[system][r]['tfc']])
-            L = dict(Mapped=D[system][r]['tlc_mapped'], TLC=r,
-                     Name=D[system][r]['tlc_name'],Type=D[system][r]['tlc_type'],Size=num_tfc)
+            num_tfc = str(len([t for t in D[system][r]['tfc']]))
+            L = [D[system][r]['tlc_mapped'], r, D[system][r]['tlc_name'], D[system][r]['tlc_type'], num_tfc]
+            
+            #dict(Mapped=str(D[system][r]['tlc_mapped']), TLC=r,
+            #         Name=D[system][r]['tlc_name'],Type=D[system][r]['tlc_type'],Size=num_tfc)
             result.append(L)
-    result = sorted(result, key=lambda k: k['TLC']) 
+    #result = sorted(result, key=lambda k: k['TLC']) 
             
     return {'data': result}

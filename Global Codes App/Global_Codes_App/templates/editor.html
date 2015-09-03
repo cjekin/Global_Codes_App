@@ -20,7 +20,17 @@
     </div>
 </div>
 
-<div class="content animate-panel" data-effect="fadeIn">
+<div id="data_preload_splash" class="normalheader transition animated fadeIn">
+    <div class="hpanel">
+        <div class="panel-body">
+            <h2 class="font-light m-b-xs">
+                Preloading data...
+            </h2>
+        </div>
+    </div>
+</div>
+
+<div id="global_code_editor_main" class="content animate-panel" data-effect="fadeIn">
 
 <!--Library Code Search-->
 <div class="row">
@@ -41,6 +51,12 @@
                         <option>Biochemistry</option>
                         <option>Haematology</option>
                     </select>
+                    <div class="checkbox">
+                        <label><input type="checkbox" value="">Primary Codes</label>
+                    </div>
+                    <div class="checkbox">
+                        <label><input type="checkbox" value="">Unmapped</label>
+                    </div>
                     <button id="tlc_search_submit" type="submit" class="btn btn-success m-b">Refresh</button>
                 </div>
             </div>
@@ -63,39 +79,12 @@
                         <tr>
                             <th></th>
                             <th>TLC</th>
-                            <th>Description</th>
+                            <th>Name</th>
                             <th>Type</th>
-                            <th>Number of codes</th>
-                            <th>Number Last Year</th>
+                            <th>Number of tests</th>
                         </tr>
                     </thead>
 
-                    <tbody>
-                        <tr>
-                            <td><i class="fa fa-check-circle fa-2x text-success"></i></td>
-                            <td>LIPP</td>
-                            <td>LIPID PROFILE</td>
-                            <td>G</td>
-                            <td>5</td>
-                            <td>43295</td>
-                        </tr>
-                        <tr>
-                            <td></td>
-                            <td>LFT</td>
-                            <td>LIVER FUNCTION TESTS</td>
-                            <td>G</td>
-                            <td>5</td>
-                            <td>43295</td>
-                        </tr>
-                        <tr>
-                            <td></td>
-                            <td>UE</td>
-                            <td>UREA & ELECTROLYTES</td>
-                            <td>G</td>
-                            <td>5</td>
-                            <td>43295</td>
-                        </tr>
-                    </tbody>
                 </table>
             </div>
         </div>

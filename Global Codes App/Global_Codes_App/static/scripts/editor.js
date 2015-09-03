@@ -5,6 +5,9 @@ var preload_status = 'empty';
 // Get all the data preloaded including: Worksection and library
 $(function () {
 
+    console.log('Starting up now...');
+    $('#global_code_editor_main').hide();
+
     // Get the work section data
     $.getJSON('/worksection_data', function (data) {
         worksection_data = data;
@@ -26,6 +29,11 @@ $(function () {
                 title: "Error!",
                 text: "Problem preloading the data."
             });
+        } else {
+            var url_val = '/tlc_data?system=' + $('#tlc_search_system').val() + '&section=' + $('#tlc_search_section').val().substring(0, 1) + '&primary=1&unmapped=1';
+            library_code_datatable.ajax.url(url_val).load();
+            $('#data_preload_splash').hide();
+            $('#global_code_editor_main').show();
         };
     });
 });
@@ -45,10 +53,15 @@ $('#tlc_search_system').change(function () {
 });
 
 
-// Library code search button
+// Initialize the data tables
+$('#global_code_datatable').DataTable();
+console.log('Section = ' + $('#tlc_search_section').val());
+var library_code_datatable = $('#library_code_datatable').DataTable({
+    "ajax": '/tlc_data?system=' + $('#tlc_search_system').val() + '&section=' + $('#tlc_search_section').val() + '&primary=1&unmapped=1'
+});
 $('#tlc_search_submit').click(function () {
-    
-
+    var url_val = '/tlc_data?system=' + $('#tlc_search_system').val() + '&section=' + $('#tlc_search_section').val().substring(0,1) + '&primary=1&unmapped=1';
+    library_code_datatable.ajax.url(url_val).load();
 });
 
 
@@ -93,29 +106,7 @@ $(function () {
 });
 
 
-$(function () {
-    // Data tables functions
 
-    // Setup - add a text input to each footer cell
-    $('#global_code_datatable tfoot th').each(function () {
-        var title = $('#global_code_datatable thead th').eq($(this).index()).text();
-        $(this).html('<input type="text" placeholder="Search ' + title + '" />');
-    });
-
-    // Initialize the data tables
-    $('#library_code_datatable').dataTable();
-    $('#global_code_datatable').dataTable();
-
-    // Apply the search
-    //table.columns().every(function () {
-    //    var that = this;
-    //    $('input', this.footer()).on('keyup change', function () {
-    //        that
-    //            .search(this.value)
-    //            .draw();
-    //    });
-    //});
-});
 
 
 // Build a table from JSON data
