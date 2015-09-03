@@ -23,7 +23,8 @@
 <div id="data_preload_splash" class="normalheader transition animated fadeIn">
     <div class="hpanel">
         <div class="panel-body">
-            <h2 class="font-light m-b-xs">
+            <span class="pull-left m-r"><img src="/static/images/loading_circle.gif" /></span>
+            <h2 class="font-light m-b-xs m-l">
                 Preloading data...
             </h2>
         </div>
@@ -35,7 +36,7 @@
 <!--Library Code Search-->
 <div class="row">
     <!-- Library Search Panel -->
-    <div class="col-lg-3">
+    <div class="col-lg-3 col-md-3">
         <div class="hpanel">
             <div class="panel-body">
                 <div class="form">
@@ -47,15 +48,15 @@
                     </select>
                     Section: 
                     <select id="tlc_search_section" class="form-control input-sm m-b">
-                        <option>Referrals</option>
-                        <option>Biochemistry</option>
-                        <option>Haematology</option>
+                        <option>A - HAEMATOLOGY</option>
+                        <option>B - BIOCHEMISTRY</option>
+                        <option>C - COAGULATION</option>
                     </select>
-                    <div class="checkbox">
-                        <label><input type="checkbox" value="">Primary Codes</label>
+                    <div class="checkbox m-b">
+                        <label><input id="tlc_search_primary" type="checkbox" value="">Primary Codes</label>
                     </div>
-                    <div class="checkbox">
-                        <label><input type="checkbox" value="">Unmapped</label>
+                    <div class="checkbox m-b">
+                        <label><input id="tlc_search_unmapped" type="checkbox" value="">Unmapped</label>
                     </div>
                     <button id="tlc_search_submit" type="submit" class="btn btn-success m-b">Refresh</button>
                 </div>
@@ -64,7 +65,7 @@
     </div>
 
     <!-- Library codes detail panel -->
-    <div class="col-lg-9">
+    <div class="col-lg-9 col-md-9">
         <div class="hpanel">
             <div class="panel-heading hbuilt">
                 Library Codes

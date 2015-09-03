@@ -1,7 +1,7 @@
 # Imports
 import pyodbc
 from datetime import datetime
-from flask import render_template, jsonify, Response, request
+from flask import render_template, jsonify, Response, request, json
 from Global_Codes_App import app
 import sql
 
@@ -21,7 +21,10 @@ def home():
 @app.route('/preload_data')
 def preload_data():
     global global_tlcs
-    global_tlcs = sql.pull_raw_data()
+
+    if global_tlcs == {}:
+        global_tlcs = sql.pull_raw_data()
+
     if 'error' in global_tlcs:
         print('Error gathering global_tlcs!')
         return jsonify({'result':'ERROR'})
@@ -39,7 +42,10 @@ def tlc_data():
 
     global global_tlcs
 
-    result = sql.pull_library_data(global_tlcs,system,section,primary,unmapped)
+    if global_tlcs == {}:
+        result = dict(data = [[0,'TLC','NAME','I','0'],[0,'TLC','NAME','I','0']])
+    else:
+        result = sql.pull_library_data(global_tlcs,system,section,primary,unmapped)
 
     json_data = jsonify(result)
     return json_data
@@ -48,7 +54,7 @@ def tlc_data():
 @app.route('/worksection_data')
 def worksection_data():
     headers = ['system_name','section_letter','section_name']
-    data = sql.exec_stored_procedure('spGlobalWorkSections',headers)
+    data = sql.exec_stored_procedure('spGlobalsApp_WorkSections',headers)
 
     worksection_data = {}
     # Get a separate lists of unique sections

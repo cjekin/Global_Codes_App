@@ -16,7 +16,7 @@ $(function () {
             options += '<option>' + worksection_data['systems'][i] + '</option>';
         }
         $('#tlc_search_system').html(options);
-        $('#tlc_search_system').val('WSL_ALL_DW');
+        $('#tlc_search_system').val('CROM_ALL_DW');
         $('#tlc_search_section').html(get_worksections($('#tlc_search_system').val()));
     });
 
@@ -57,11 +57,34 @@ $('#tlc_search_system').change(function () {
 $('#global_code_datatable').DataTable();
 console.log('Section = ' + $('#tlc_search_section').val());
 var library_code_datatable = $('#library_code_datatable').DataTable({
-    "ajax": '/tlc_data?system=' + $('#tlc_search_system').val() + '&section=' + $('#tlc_search_section').val() + '&primary=1&unmapped=1'
+    "ajax": '/tlc_data?system=' + $('#tlc_search_system').val() + '&section=' + $('#tlc_search_section').val() + '&primary=0&unmapped=0',
+    "columnDefs": [
+        {
+            "render": function (data) {
+                //console.log(data)
+                if (data == "1") {
+                    return "<i class=\"fa fa-check-circle text-center text-success\"></i>";
+                } else {
+                    return "";
+                }
+        },
+            "targets": 0
+        }
+    ]
 });
+
+// Refresh the library data table
 $('#tlc_search_submit').click(function () {
-    var url_val = '/tlc_data?system=' + $('#tlc_search_system').val() + '&section=' + $('#tlc_search_section').val().substring(0,1) + '&primary=1&unmapped=1';
+    var primary = +$('#tlc_search_primary').prop('checked');
+    var unmapped = +$('#tlc_search_unmapped').prop('checked');
+    var url_val = '/tlc_data?system=' + $('#tlc_search_system').val() + '&section=' + $('#tlc_search_section').val().substring(0, 1) + '&primary=' + primary + '&unmapped=' + unmapped;
     library_code_datatable.ajax.url(url_val).load();
+});
+
+// Respond to clicking a library code
+$("#library_code_datatable tbody").delegate("tr", "click", function () {
+    var tlc_click = $("td:eq(1)", this).text();
+    console.log('You clicked: ' + tlc_click);
 });
 
 

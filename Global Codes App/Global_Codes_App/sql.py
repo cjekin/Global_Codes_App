@@ -2,6 +2,9 @@
 
 
 import pyodbc
+import string
+import traceback
+import sys
 
 def generic_sql(table,filters,headers='ALL'):
     try:
@@ -59,6 +62,10 @@ def exec_stored_procedure(stored_procedure, headers=[]):
     return data
 
 
+def strip_non_ascii(string):
+    ''' Returns the string without non ASCII characters'''
+    stripped = (c for c in string if 0 < ord(c) < 127)
+    return ''.join(stripped)
 
 def pull_raw_data():
     # Pull all data in to a single table and convert to dict
@@ -77,9 +84,16 @@ def pull_raw_data():
         print(headers)
             
         raw_data = cursor.fetchall()
+
+        # Clear the non-ascii characters from the result
+        for i in range(len(raw_data)):
+            for j in range(len(raw_data[i])):
+                raw_data[i][j] =  ''.join([c if ord(c) < 128 else ' ' for c in str(raw_data[i][j])]) 
+
         raw_data_dict = [dict(zip(headers,row)) for row in raw_data]
-    except:
+    except Exception, err:
         print('Problem pulling data')
+        print(traceback.format_exc())
         return {'error':'ERROR'} 
     
     # Format the result in to a dictionary
@@ -106,14 +120,15 @@ def pull_raw_data():
     return D
 
 
-def pull_library_data(D,system,section='ALL',primary=1,unmapped=1):
+def pull_library_data(D,system,section,primary,unmapped):
     result = []
+    print 'pull_library_data: ', primary, unmapped
     for r in D[system]:
         accept = True
         
-        if unmapped == 1 and D[system][r]['tlc_mapped'] == 1:
+        if unmapped == '1' and D[system][r]['tlc_mapped'] == '1':
             accept = False
-        if primary == 1 and D[system][r]['tlc_primary'] == 0:
+        if primary == '1' and D[system][r]['tlc_primary'] == '0':
             accept = False
         if section not in D[system][r]['tlc_sections']:
             accept = False
@@ -121,8 +136,6 @@ def pull_library_data(D,system,section='ALL',primary=1,unmapped=1):
             num_tfc = str(len([t for t in D[system][r]['tfc']]))
             L = [D[system][r]['tlc_mapped'], r, D[system][r]['tlc_name'], D[system][r]['tlc_type'], num_tfc]
             
-            #dict(Mapped=str(D[system][r]['tlc_mapped']), TLC=r,
-            #         Name=D[system][r]['tlc_name'],Type=D[system][r]['tlc_type'],Size=num_tfc)
             result.append(L)
     #result = sorted(result, key=lambda k: k['TLC']) 
             
