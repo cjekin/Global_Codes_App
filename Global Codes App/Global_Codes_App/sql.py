@@ -69,33 +69,28 @@ def strip_non_ascii(string):
 
 def pull_raw_data():
     # Pull all data in to a single table and convert to dict
-    try:
-        cnxn = pyodbc.connect('DSN=Warehouse')
-        cursor = cnxn.cursor()
-    except:
-        print 'Problem making connection'
+    cnxn = pyodbc.connect('DSN=Warehouse')
+    cursor = cnxn.cursor()
     
     sql = "EXEC spGlobalsApp_RawMapping"
     data = {}
            
-    try: 
-        cursor.execute(sql)
-        headers = [column[0] for column in cursor.description]
-        print(headers)
+    cursor.execute(sql)
+    headers = [column[0] for column in cursor.description]
+    print(headers)
             
-        raw_data = cursor.fetchall()
+    raw_data = cursor.fetchall()
 
-        # Clear the non-ascii characters from the result
-        for i in range(len(raw_data)):
-            for j in range(len(raw_data[i])):
-                raw_data[i][j] =  ''.join([c if ord(c) < 128 else ' ' for c in str(raw_data[i][j])]) 
+    # Clear the non-ascii characters from the result
+    print('Cleaning the data of non-ascii characters...')
+    for i in range(len(raw_data)):
+        for j in range(len(raw_data[i])):
+            if type(raw_data[i][j]) == str:
+                raw_data[i][j] =  ''.join([c if ord(c) < 128 else ' ' for c in raw_data[i][j]]) 
+    print('Finished cleaning data')
 
-        raw_data_dict = [dict(zip(headers,row)) for row in raw_data]
-    except Exception, err:
-        print('Problem pulling data')
-        print(traceback.format_exc())
-        return {'error':'ERROR'} 
-    
+    raw_data_dict = [dict(zip(headers,row)) for row in raw_data]
+
     # Format the result in to a dictionary
     D = {}
     for r in raw_data_dict:
@@ -126,9 +121,9 @@ def pull_library_data(D,system,section,primary,unmapped):
     for r in D[system]:
         accept = True
         
-        if unmapped == '1' and D[system][r]['tlc_mapped'] == '1':
+        if unmapped == '1' and D[system][r]['tlc_mapped'] == 1:
             accept = False
-        if primary == '1' and D[system][r]['tlc_primary'] == '0':
+        if primary == '1' and D[system][r]['tlc_primary'] == 0:
             accept = False
         if section not in D[system][r]['tlc_sections']:
             accept = False
@@ -140,3 +135,29 @@ def pull_library_data(D,system,section,primary,unmapped):
     #result = sorted(result, key=lambda k: k['TLC']) 
             
     return {'data': result}
+
+def pull_tlc_detail(D, system, tlc):
+    print('Pulling TLC detail for: ' + system + ': ' + tlc)
+
+    return {'result': D[system][tlc]} 
+
+
+def pull_all_global_codes():
+    try:
+        cnxn = pyodbc.connect('DSN=Warehouse')
+        cursor = cnxn.cursor()
+    except:
+        print 'Problem making connection'
+    
+    sql = "EXEC spGlobalsApp_GlobalCodes"
+    data = {}
+           
+    try: 
+        cursor.execute(sql)
+        raw_data = cursor.fetchall()
+
+        data['result'] = [list(r) for r in raw_data]
+    except:
+        data['result'] = 'ERROR'
+
+    return data

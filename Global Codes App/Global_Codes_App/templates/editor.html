@@ -96,15 +96,13 @@
 <!-- Format code detail -->
 <div class="hpanel">
     <div class="panel-heading">
-        <div class="panel-tools">
-            <a class="showhide"><i class="fa fa-chevron-up"></i></a>
-            <a class="closebox"><i class="fa fa-times"></i></a>
+        <div id="tlc-detail-header" class="h3">
+            TLC - NAME OF THE TLC - TYPE
         </div>
-        UE - UREA & ELECTROLYTES | Format code detail
     </div>
     <div class="panel-body">
         <div class="table-responsive">
-        <table cellpadding="1" cellspacing="1" class="table">
+        <table cellpadding="1" cellspacing="1" class="table" id="tlc-detail-table">
             <thead>
             <tr>
                 <th></th>
@@ -189,9 +187,6 @@
         </table>
         </div>
     </div>
-    <div class="panel-footer">
-        Table - 6 rows
-    </div>
 </div>
 
 
@@ -221,7 +216,8 @@
 
         <tbody>
         <tr>
-            <td><span class="label label-success global-drag">BC_UE_K</span></td>
+            <!--<td><span class="label label-success global-drag">BC_UE_K</span></td>-->
+            <td><div class="global-drag"><button type="button" class="btn btn-primary btn-xs">BC_UE_NA</button></div></td>
             <td>Sodium</td>
             <td>Serum</td>
             <td>Result</td>
@@ -231,7 +227,7 @@
             <td>Chemistry</td>
         </tr>
         <tr>
-            <td><span class="global-drag"><span class="label label-success">BC_UE_K</span></span></td>
+            <td><div class="global-drag"><button type="button" class="btn btn-primary btn-xs">BC_UE_NA</button></div></td>
             <td>Potassium</td>
             <td>Serum</td>
             <td>Result</td>
@@ -241,7 +237,7 @@
             <td>Chemistry</td>
         </tr>
         <tr>
-            <td><span class="global-drag"><span class="label label-success">BC_UE_K</span></span></td>
+            <td><div class="global-drag"><button type="button" class="btn btn-primary btn-xs">BC_UE_NA</button></div></td>
             <td>Chloride</td>
             <td>Serum</td>
             <td>Result</td>

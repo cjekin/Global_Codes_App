@@ -4,8 +4,16 @@ from datetime import datetime
 from flask import render_template, jsonify, Response, request, json
 from Global_Codes_App import app
 import sql
+import traceback
+import sys
+import time
 
 global_tlcs = {}
+
+def error_log(error):
+    with open('error_log.txt','a') as F:
+        current_time = time.strftime("%d/%m/%Y %H:%M")
+        F.write('-----' + current_time + '\n' + error)
 
 
 @app.route('/')
@@ -22,15 +30,15 @@ def home():
 def preload_data():
     global global_tlcs
 
-    if global_tlcs == {}:
-        global_tlcs = sql.pull_raw_data()
+    try:
+        #raise ValueError('Testing error handling')
+        if global_tlcs == {}:
+            global_tlcs = sql.pull_raw_data()
+    except Exception, err:
+        error_log('Preload data function:\n' + str(traceback.format_exc()))
+        return jsonify({'result':'ERROR'}) 
 
-    if 'error' in global_tlcs:
-        print('Error gathering global_tlcs!')
-        return jsonify({'result':'ERROR'})
-    else:
-        print('Loaded data')
-        return jsonify({'result':'OK'})
+    return jsonify({'result':'OK'})
 
 
 @app.route('/tlc_data')
@@ -66,30 +74,47 @@ def worksection_data():
 
     # Get a lookup based on system
     for system in systems:
-        print('Looking up system: ' + system)
+        #print('Looking up system: ' + system)
         worksection_data[system] = [[r['section_letter'],r['section_name']] for r in data['data'] if r['system_name'] == system]
 
     json_data = jsonify(worksection_data)
     return json_data
 
-@app.route('/tlc_search_data')
-def tlc_search_data():
-    system = request.args.get('system')
-    worksection = request.args.get('worksection')
-    global global_tlcs
-   
-    tlcs = {}
-    for row in global_tlcs:
-        if row['system'] == str(system) and row['tfc_worksection'] == str(worksection):
-            if row['tlc'] not in tlcs:
-                tlcs[row['tlc']] = dict(tlc = row['tlc'], tlc_name = row['tlc_name'], tlc_type = row['tlc_type'], tlc_mapped = row['global_mapped'])
-            elif row['global_mapped'] == '0':
-                tlcs[row['tlc']['global_mapped']] = '0'
 
-    tlc_list = sorted([k for k in tlcs]) # return in alphabetical order
-    data = dict(data = [tlcs[k] for k in tlc_list])
-    json_data = jsonify(data)
+@app.route('/tlc_detail')
+def tlc_detail():
+    try:
+        system = request.args.get('system')
+        tlc = request.args.get('tlc')
+
+        global global_tlcs
+
+        if global_tlcs == {}:
+            result = dict(result = 'ERROR', error_detail='The data was not preloaded')
+        else:
+            result = sql.pull_tlc_detail(global_tlcs,system,tlc)
+
+    except Exception, err:
+        error_log('Error looking up TLC detail:\n' + str(traceback.format_exc()))
+        print ('-----------\ntlc_detail error' + str(traceback.format_exc()))
+        result = dict(result = 'ERROR', error_detail='Problem running query')
+
+    json_data = jsonify(result)
     return json_data
+
+
+
+
+@app.route('/global_table')
+def global_table():
+        
+    result = sql.pull_all_global_codes()
+
+    json_data = jsonify(result)
+    return json_data
+
+
+
     
     
 

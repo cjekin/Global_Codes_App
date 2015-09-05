@@ -1,0 +1,70 @@
+-----05/09/2015 12:20
+Preload data function:
+Traceback (most recent call last):
+  File "C:\Users\cekin\Documents\GitHub\Global_Codes_App\Global Codes App\Global_Codes_App\views.py", line 35, in preload_data
+    global_tlcs = sql.pull_raw_data()
+  File "C:\Users\cekin\Documents\GitHub\Global_Codes_App\Global Codes App\Global_Codes_App\sql.py", line 97, in pull_raw_data
+    raw_data[i][j] =  ''.join([c if ord(c) < 128 else ' ' for c in str(raw_data[i][j])])
+UnicodeEncodeError: 'ascii' codec can't encode character u'\xfe' in position 17: ordinal not in range(128)
+-----05/09/2015 12:22
+Preload data function:
+Traceback (most recent call last):
+  File "C:\Users\cekin\Documents\GitHub\Global_Codes_App\Global Codes App\Global_Codes_App\views.py", line 36, in preload_data
+    global_tlcs = sql.pull_raw_data()
+  File "C:\Users\cekin\Documents\GitHub\Global_Codes_App\Global Codes App\Global_Codes_App\sql.py", line 97, in pull_raw_data
+    raw_data[i][j] =  ''.join([c if ord(c) < 128 else ' ' for c in str(raw_data[i][j])])
+UnicodeEncodeError: 'ascii' codec can't encode character u'\xfe' in position 17: ordinal not in range(128)
+-----05/09/2015 12:32
+Preload data function:
+Traceback (most recent call last):
+  File "C:\Users\cekin\Documents\GitHub\Global_Codes_App\Global Codes App\Global_Codes_App\views.py", line 34, in preload_data
+    raise ValueError('Testing error handling')
+ValueError: Testing error handling
+-----05/09/2015 13:02
+Error looking up TLC detail:
+Traceback (most recent call last):
+  File "C:\Users\cekin\Documents\GitHub\Global_Codes_App\Global Codes App\Global_Codes_App\views.py", line 95, in tlc_detail
+    result = sql.pull_tlc_detail(global_tlcs,system,tlc)
+  File "C:\Users\cekin\Documents\GitHub\Global_Codes_App\Global Codes App\Global_Codes_App\sql.py", line 141, in pull_tlc_detail
+    print('Pulling TLC detail for: ' + system + ': ' + tlc)
+TypeError: cannot concatenate 'str' and 'NoneType' objects
+-----05/09/2015 13:05
+Error looking up TLC detail:
+Traceback (most recent call last):
+  File "C:\Users\cekin\Documents\GitHub\Global_Codes_App\Global Codes App\Global_Codes_App\views.py", line 89, in tlc_detail
+    print('tlc_detail system=' + system + 'tlc=' + tlc)
+TypeError: cannot concatenate 'str' and 'NoneType' objects
+-----05/09/2015 13:06
+Error looking up TLC detail:
+Traceback (most recent call last):
+  File "C:\Users\cekin\Documents\GitHub\Global_Codes_App\Global Codes App\Global_Codes_App\views.py", line 89, in tlc_detail
+    print('tlc_detail system=' + system + 'tlc=' + tlc)
+TypeError: cannot concatenate 'str' and 'NoneType' objects
+-----05/09/2015 13:07
+Error looking up TLC detail:
+Traceback (most recent call last):
+  File "C:\Users\cekin\Documents\GitHub\Global_Codes_App\Global Codes App\Global_Codes_App\views.py", line 89, in tlc_detail
+    print('tlc_detail system=' + system + 'tlc=' + tlc)
+TypeError: cannot concatenate 'str' and 'NoneType' objects
+-----05/09/2015 13:08
+Error looking up TLC detail:
+Traceback (most recent call last):
+  File "C:\Users\cekin\Documents\GitHub\Global_Codes_App\Global Codes App\Global_Codes_App\views.py", line 89, in tlc_detail
+    print('tlc_detail system=' + system + 'tlc=' + tlc)
+TypeError: cannot concatenate 'str' and 'NoneType' objects
+-----05/09/2015 13:12
+Error looking up TLC detail:
+Traceback (most recent call last):
+  File "C:\Users\cekin\Documents\GitHub\Global_Codes_App\Global Codes App\Global_Codes_App\views.py", line 96, in tlc_detail
+    result = sql.pull_tlc_detail(global_tlcs,system,tlc)
+  File "C:\Users\cekin\Documents\GitHub\Global_Codes_App\Global Codes App\Global_Codes_App\sql.py", line 141, in pull_tlc_detail
+    print('Pulling TLC detail for: ' + system + ': ' + tlc)
+TypeError: cannot concatenate 'str' and 'NoneType' objects
+-----05/09/2015 16:47
+Error looking up TLC detail:
+Traceback (most recent call last):
+  File "C:\Users\cekin\Documents\GitHub\Global_Codes_App\Global Codes App\Global_Codes_App\views.py", line 95, in tlc_detail
+    result = sql.pull_tlc_detail(global_tlcs,system,tlc)
+  File "C:\Users\cekin\Documents\GitHub\Global_Codes_App\Global Codes App\Global_Codes_App\sql.py", line 142, in pull_tlc_detail
+    return {'result': D[system][tlc]}
+KeyError: u'U'

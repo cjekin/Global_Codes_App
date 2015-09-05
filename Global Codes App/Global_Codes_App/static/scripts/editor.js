@@ -2,6 +2,7 @@
 var worksection_data = 'empty';
 var preload_status = 'empty';
 
+
 // Get all the data preloaded including: Worksection and library
 $(function () {
 
@@ -26,12 +27,16 @@ $(function () {
 
         if (preload_status['result'] == 'ERROR') {
             swal({
-                title: "Error!",
-                text: "Problem preloading the data."
+                title: "Problem preloading the data",
+                text: "An exception occurred when we were preloading the data. The details have been recorded in the error log.",
+                type: "warning"
             });
+            $('#data_preload_splash').hide();
         } else {
-            var url_val = '/tlc_data?system=' + $('#tlc_search_system').val() + '&section=' + $('#tlc_search_section').val().substring(0, 1) + '&primary=1&unmapped=1';
+            var url_val = '/tlc_data?system=' + $('#tlc_search_system').val() + '&section=' + $('#tlc_search_section').val().substring(0, 1) + '&primary=0&unmapped=0';
             library_code_datatable.ajax.url(url_val).load();
+            fill_library_code_detail('CROM_ALL_DW', 'U/E');
+            event_handlers();
             $('#data_preload_splash').hide();
             $('#global_code_editor_main').show();
         };
@@ -53,8 +58,7 @@ $('#tlc_search_system').change(function () {
 });
 
 
-// Initialize the data tables
-$('#global_code_datatable').DataTable();
+// Initialize the library seach data table
 console.log('Section = ' + $('#tlc_search_section').val());
 var library_code_datatable = $('#library_code_datatable').DataTable({
     "ajax": '/tlc_data?system=' + $('#tlc_search_system').val() + '&section=' + $('#tlc_search_section').val() + '&primary=0&unmapped=0',
@@ -84,15 +88,80 @@ $('#tlc_search_submit').click(function () {
 // Respond to clicking a library code
 $("#library_code_datatable tbody").delegate("tr", "click", function () {
     var tlc_click = $("td:eq(1)", this).text();
-    console.log('You clicked: ' + tlc_click);
+    var system = $('#tlc_search_system').val()
+    console.log('You clicked: ' + tlc_click + ' in system ' + system);
+    fill_library_code_detail(system, tlc_click);
 });
 
 
 
-// Drag and drop functions
-$(function draggables () {
+
+//Fill in the library code detail
+function fill_library_code_detail(system, tlc) {
+    $.getJSON('/tlc_detail?system=' + system + '&tlc=' + tlc, function (data) {
+        if (data['result'] == 'ERROR') {
+            swal({
+                title: "Error looking up " + tlc,
+                text: "An exception occurred loading the TLC data. The details have been recorded in the error log. " + data['error_detail'],
+                type: "warning"
+            });
+        } else {
+            var tlc_detail = data['result'];
+            console.log(tlc_detail);
+            $('#tlc-detail-header').text(tlc + ' - ' + tlc_detail['tlc_name'] + ' - ' + tlc_detail['tlc_type']);
+
+            // Get the field names
+            var tfcs = data['result']['tfc'];
+            var headers = ['Sec','TFC','Name','Most Common Result','Units','Num','Global','Global Name','Global Sample','Result Type','Excluded',''];
+            var fields = ['tfc_worksection','tfc','tfc_name','tfc_common_result','tfc_units','tfc_numlastyear','global_code','global_code_desc','global_code_sample','global_code_type','global_excluded'];
+        
+            // Build the header
+            var cont = '<thead><tr>';
+            for (i = 0; i < headers.length; i++) {
+                cont += '<th>' + headers[i] + '</th>';
+            };
+            cont += '<th></th></tr></thead><tbody>'
+
+            // Build the body
+            for (i = 0; i < tfcs.length; i++) {
+                cont += '<tr class="global-drop">'
+                for (j = 0; j < fields.length; j++) {
+
+                    if (fields[j] in tfcs[i]) {
+                        var res_val = (tfcs[i][fields[j]] || '');
+                    } else {
+                        var res_val = '--';
+                    };
+                
+
+                    if (fields[j] == 'global_code' && res_val != '') {
+                        //res_val = '<span class="label label-success current-global-map">' + res_val + '</span>';
+                        res_val = '<button type="button" class="btn btn-primary btn-xs current-global-map">' + res_val + '</button>';
+                    };
+
+                    cont += '<td class="' + fields[j] + '">' + res_val + '</td>';
+                };
+                cont += '<td><span class="glyphicon glyphicon-option-horizontal"></span></td></tr>';
+            };
+            cont += '</tbody>';
+            //console.log(cont);
+            $('#tlc-detail-table').html(cont);
+            event_handlers();
+        };
+    });
+
+}
+
+
+
+
+// Initialise all the event handlers
+function event_handlers () {
+
+    // Drag and drop functions
     $(".global-drag").draggable({
-        helper: "clone"
+        helper: "clone",
+        cancel: false
     });
 
     $(".global-drop").droppable({
@@ -101,16 +170,15 @@ $(function draggables () {
 
         drop: function (event, ui) {
             console.log("Adding " + ui.draggable.text() + " to " + $(this).find(".tfc").text());
-            $(this).find(".global-code").html('<span class="label label-success current-global-map">' + ui.draggable.html() + '</span>');
-            draggables(); // Re-identify the draggable elements
+            $(this).find(".global_code").html('<button type="button" class="btn btn-primary btn-xs current-global-map">' + ui.draggable.text() + '</button>');
+            event_handlers();
         },
     });
-});
 
-// Mapping click function
-$(function () { 
-    $(".current-global-map").dblclick(function () {
-            
+    // Clicking an existing mapping
+    $(".current-global-map").click(function () {
+        console.log('Clicked a mapping');
+
         var clicked_mapping = this;
 
         swal({
@@ -122,47 +190,50 @@ $(function () {
             confirmButtonText: "Delete Mapping"
         },
             function () {
-                $(clicked_mapping).remove();
                 console.log("Removing " + $(clicked_mapping).html() + " from " + $(clicked_mapping).parent().parent().find(".tfc").text());
+                $(clicked_mapping).remove();
             });
     });
+};
+$(event_handlers());
+
+
+// Preload the global code data
+$.getJSON('/global_table', function (global_data) {
+
+    if (global_data['result'] == 'ERROR') {
+        swal({
+            title: "Problem loading the globals",
+            text: "An exception occurred when we were preloading the data. The details have been recorded in the error log.",
+            type: "warning"
+        });
+    } else {
+            $('#global_code_datatable').DataTable({
+            data: global_data['result'],
+            columns: [
+                { title: "BenchCode" },
+                { title: "Description" },
+                { title: "Sample" },
+                { title: "Type." },
+                { title: "Analyte" },
+                { title: "PrimaryLibrary" },
+                { title: "SubSection" },
+                { title: "Department" }
+            ],
+            "columnDefs": [
+            {
+                "render": function (data) {
+                    return '<div class="global-drag"><button type="button" class="btn btn-primary btn-xs">' + data + '</button></div>';
+                },
+                "targets": 0
+            }
+            ]
+        });
+    };
+});
+// Need to reinitialise the event handlers when you search
+$('#global_code_datatable').on('draw.dt', function () {
+    event_handlers();
 });
 
-
-
-
-
-// Build a table from JSON data
-function buildTableFromJSON(data, table_id) {
-
-    var headers = data['headers'];
-
-    var table = '<table id="' + table_id + '" class="table"><tr>';
-
-    // Create header
-    for (h = 0; h < headers.length; h++) {
-        table += '<th>' + headers[h] + '</th>';
-    }
-    table += '</tr>';
-
-    // Create content
-    for (i = 0; i < data['data'].length; i++) {
-        var row = data['data'][i];
-        table += '<tr>';
-        for (h = 0; h < headers.length; h++) {
-            var cell = row[headers[h]];
-            if (headers[h] == 'TLC') {
-                table += '<td id="tlc|' + row['Origin'] + '|' + row['TLC'] + '">' + cell + '</td>';
-            } else {
-                table += '<td>' + cell + '</td>';
-            }
-        }
-        table += '</tr>';
-    }
-
-    table += '</table>';
-
-    return table;
-
-}
 
