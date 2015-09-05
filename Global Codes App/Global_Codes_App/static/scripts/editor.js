@@ -112,8 +112,8 @@ function fill_library_code_detail(system, tlc) {
 
             // Get the field names
             var tfcs = data['result']['tfc'];
-            var headers = ['Sec','TFC','Name','Most Common Result','Units','Num','Global','Global Name','Global Sample','Result Type','Excluded',''];
-            var fields = ['tfc_worksection','tfc','tfc_name','tfc_common_result','tfc_units','tfc_numlastyear','global_code','global_code_desc','global_code_sample','global_code_type','global_excluded'];
+            var headers = ['Global','Sec','TFC','Name','Most Common Result','Units','Num','Global Name','Global Sample','Result Type','Excluded',''];
+            var fields = ['global_code','tfc_worksection','tfc','tfc_name','tfc_common_result','tfc_units','tfc_numlastyear','global_name','global_sample','global_type','global_excluded'];
         
             // Build the header
             var cont = '<thead><tr>';
@@ -130,7 +130,7 @@ function fill_library_code_detail(system, tlc) {
                     if (fields[j] in tfcs[i]) {
                         var res_val = (tfcs[i][fields[j]] || '');
                     } else {
-                        var res_val = '--';
+                        var res_val = '';
                     };
                 
 
@@ -191,6 +191,9 @@ function event_handlers () {
         },
             function () {
                 console.log("Removing " + $(clicked_mapping).html() + " from " + $(clicked_mapping).parent().parent().find(".tfc").text());
+                $(clicked_mapping).parent().parent().find('.global_name').text('');
+                $(clicked_mapping).parent().parent().find('.global_sample').text('');
+                $(clicked_mapping).parent().parent().find('.global_type').text('');
                 $(clicked_mapping).remove();
             });
     });

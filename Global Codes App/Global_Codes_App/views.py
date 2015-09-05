@@ -9,6 +9,7 @@ import sys
 import time
 
 global_tlcs = {}
+global_codes = {}
 
 def error_log(error):
     with open('error_log.txt','a') as F:
@@ -83,6 +84,8 @@ def worksection_data():
 
 @app.route('/tlc_detail')
 def tlc_detail():
+    global global_codes
+
     try:
         system = request.args.get('system')
         tlc = request.args.get('tlc')
@@ -92,7 +95,8 @@ def tlc_detail():
         if global_tlcs == {}:
             result = dict(result = 'ERROR', error_detail='The data was not preloaded')
         else:
-            result = sql.pull_tlc_detail(global_tlcs,system,tlc)
+            #print('I am passing the global_codes: ' + str(global_codes)[:100])
+            result = sql.pull_tlc_detail(global_tlcs,system,tlc, global_codes)
 
     except Exception, err:
         error_log('Error looking up TLC detail:\n' + str(traceback.format_exc()))
@@ -107,10 +111,26 @@ def tlc_detail():
 
 @app.route('/global_table')
 def global_table():
-        
-    result = sql.pull_all_global_codes()
+    print('Called /global_table function')
+    global global_codes
 
-    json_data = jsonify(result)
+    try:  
+        result = sql.pull_all_global_codes()
+        print('Callback result: ' + str(result)[:100])
+
+        L = {'result':[]}
+        for r in result['result']:
+            L['result'].append([r['BenchCode'], r['Description'], r['Sample'], r['Type'], r['Analyte'], r['PrimaryLibrary'], r['SubSection'], r['Department']])
+            global_codes[r['BenchCode']] = r
+
+    except Exception, err:
+        error_log('Error getting global codes together:\n' + str(traceback.format_exc()))
+        print('*** PROBLEM LOADING GLOBALS***')
+        result = dict(result = 'ERROR', error_detail='Problem running query')
+
+    print('I have loaded the globals: ' + str(global_codes)[:100])
+
+    json_data = jsonify(L)
     return json_data
 
 

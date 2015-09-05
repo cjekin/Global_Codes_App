@@ -68,3 +68,131 @@ Traceback (most recent call last):
   File "C:\Users\cekin\Documents\GitHub\Global_Codes_App\Global Codes App\Global_Codes_App\sql.py", line 142, in pull_tlc_detail
     return {'result': D[system][tlc]}
 KeyError: u'U'
+-----05/09/2015 18:27
+Error getting global codes together:
+Traceback (most recent call last):
+  File "C:\Users\cekin\Documents\GitHub\Global_Codes_App\Global Codes App\Global_Codes_App\views.py", line 117, in global_table
+    for r in result['data']:
+KeyError: 'data'
+-----05/09/2015 18:27
+Error looking up TLC detail:
+Traceback (most recent call last):
+  File "C:\Users\cekin\Documents\GitHub\Global_Codes_App\Global Codes App\Global_Codes_App\views.py", line 96, in tlc_detail
+    result = sql.pull_tlc_detail(global_tlcs,system,tlc)
+  File "C:\Users\cekin\Documents\GitHub\Global_Codes_App\Global Codes App\Global_Codes_App\sql.py", line 146, in pull_tlc_detail
+    if 'BC_' in result[i]['global_code']:
+KeyError: 0
+-----05/09/2015 18:31
+Error getting global codes together:
+Traceback (most recent call last):
+  File "C:\Users\cekin\Documents\GitHub\Global_Codes_App\Global Codes App\Global_Codes_App\views.py", line 117, in global_table
+    for r in result['data']:
+KeyError: 'data'
+-----05/09/2015 18:32
+Error looking up TLC detail:
+Traceback (most recent call last):
+  File "C:\Users\cekin\Documents\GitHub\Global_Codes_App\Global Codes App\Global_Codes_App\views.py", line 96, in tlc_detail
+    result = sql.pull_tlc_detail(global_tlcs,system,tlc)
+  File "C:\Users\cekin\Documents\GitHub\Global_Codes_App\Global Codes App\Global_Codes_App\sql.py", line 147, in pull_tlc_detail
+    tfcs[i]['global_name'] = global_codes[tfcs[i]['global_code']]['Description']
+NameError: global name 'global_codes' is not defined
+-----05/09/2015 18:35
+Error getting global codes together:
+Traceback (most recent call last):
+  File "C:\Users\cekin\Documents\GitHub\Global_Codes_App\Global Codes App\Global_Codes_App\views.py", line 119, in global_table
+    for r in result['data']:
+KeyError: 'data'
+-----05/09/2015 18:36
+Error looking up TLC detail:
+Traceback (most recent call last):
+  File "C:\Users\cekin\Documents\GitHub\Global_Codes_App\Global Codes App\Global_Codes_App\views.py", line 98, in tlc_detail
+    result = sql.pull_tlc_detail(global_tlcs,system,tlc, global_codes)
+  File "C:\Users\cekin\Documents\GitHub\Global_Codes_App\Global Codes App\Global_Codes_App\sql.py", line 145, in pull_tlc_detail
+    if 'BC_' in tfcs[i]['global_code'] and len(global_codes) > 0:
+TypeError: argument of type 'NoneType' is not iterable
+-----05/09/2015 18:36
+Error getting global codes together:
+Traceback (most recent call last):
+  File "C:\Users\cekin\Documents\GitHub\Global_Codes_App\Global Codes App\Global_Codes_App\views.py", line 119, in global_table
+    for r in result['data']:
+KeyError: 'data'
+-----05/09/2015 18:37
+Error looking up TLC detail:
+Traceback (most recent call last):
+  File "C:\Users\cekin\Documents\GitHub\Global_Codes_App\Global Codes App\Global_Codes_App\views.py", line 98, in tlc_detail
+    result = sql.pull_tlc_detail(global_tlcs,system,tlc, global_codes)
+  File "C:\Users\cekin\Documents\GitHub\Global_Codes_App\Global Codes App\Global_Codes_App\sql.py", line 146, in pull_tlc_detail
+    tfcs[i]['global_name'] = global_codes[tfcs[i]['global_code']]['Description']
+KeyError: u'BC_UE_NA'
+-----05/09/2015 18:40
+Error getting global codes together:
+Traceback (most recent call last):
+  File "C:\Users\cekin\Documents\GitHub\Global_Codes_App\Global Codes App\Global_Codes_App\views.py", line 119, in global_table
+    for r in result['data']:
+KeyError: 'data'
+-----05/09/2015 18:40
+Error looking up TLC detail:
+Traceback (most recent call last):
+  File "C:\Users\cekin\Documents\GitHub\Global_Codes_App\Global Codes App\Global_Codes_App\views.py", line 98, in tlc_detail
+    result = sql.pull_tlc_detail(global_tlcs,system,tlc, global_codes)
+  File "C:\Users\cekin\Documents\GitHub\Global_Codes_App\Global Codes App\Global_Codes_App\sql.py", line 145, in pull_tlc_detail
+    if 'BC_' in tfcs[i]['global_code']:
+TypeError: argument of type 'NoneType' is not iterable
+-----05/09/2015 18:43
+Error getting global codes together:
+Traceback (most recent call last):
+  File "C:\Users\cekin\Documents\GitHub\Global_Codes_App\Global Codes App\Global_Codes_App\views.py", line 119, in global_table
+    for r in result['data']:
+KeyError: 'data'
+-----05/09/2015 18:45
+Error getting global codes together:
+Traceback (most recent call last):
+  File "C:\Users\cekin\Documents\GitHub\Global_Codes_App\Global Codes App\Global_Codes_App\views.py", line 119, in global_table
+    for r in result['data']:
+KeyError: 'data'
+-----05/09/2015 18:47
+Error getting global codes together:
+Traceback (most recent call last):
+  File "C:\Users\cekin\Documents\GitHub\Global_Codes_App\Global Codes App\Global_Codes_App\views.py", line 119, in global_table
+    for r in result['data']:
+KeyError: 'data'
+-----05/09/2015 18:50
+Error getting global codes together:
+Traceback (most recent call last):
+  File "C:\Users\cekin\Documents\GitHub\Global_Codes_App\Global Codes App\Global_Codes_App\views.py", line 120, in global_table
+    for r in result['data']:
+KeyError: 'data'
+-----05/09/2015 18:58
+Error getting global codes together:
+Traceback (most recent call last):
+  File "C:\Users\cekin\Documents\GitHub\Global_Codes_App\Global Codes App\Global_Codes_App\views.py", line 120, in global_table
+    for r in result['result']:
+KeyError: 'result'
+-----05/09/2015 19:00
+Error getting global codes together:
+Traceback (most recent call last):
+  File "C:\Users\cekin\Documents\GitHub\Global_Codes_App\Global Codes App\Global_Codes_App\views.py", line 121, in global_table
+    for r in result['result']:
+KeyError: 'result'
+-----05/09/2015 19:02
+Error getting global codes together:
+Traceback (most recent call last):
+  File "C:\Users\cekin\Documents\GitHub\Global_Codes_App\Global Codes App\Global_Codes_App\views.py", line 122, in global_table
+    for r in result['result']:
+KeyError: 'result'
+-----05/09/2015 19:07
+Error looking up TLC detail:
+Traceback (most recent call last):
+  File "C:\Users\cekin\Documents\GitHub\Global_Codes_App\Global Codes App\Global_Codes_App\views.py", line 99, in tlc_detail
+    result = sql.pull_tlc_detail(global_tlcs,system,tlc, global_codes)
+  File "C:\Users\cekin\Documents\GitHub\Global_Codes_App\Global Codes App\Global_Codes_App\sql.py", line 151, in pull_tlc_detail
+    print('Unable to find global ' + tfcs[i]['global_code'] + ' to get details')
+TypeError: cannot concatenate 'str' and 'NoneType' objects
+-----05/09/2015 19:07
+Error looking up TLC detail:
+Traceback (most recent call last):
+  File "C:\Users\cekin\Documents\GitHub\Global_Codes_App\Global Codes App\Global_Codes_App\views.py", line 99, in tlc_detail
+    result = sql.pull_tlc_detail(global_tlcs,system,tlc, global_codes)
+  File "C:\Users\cekin\Documents\GitHub\Global_Codes_App\Global Codes App\Global_Codes_App\sql.py", line 151, in pull_tlc_detail
+    print('Unable to find global ' + tfcs[i]['global_code'] + ' to get details')
+TypeError: cannot concatenate 'str' and 'NoneType' objects

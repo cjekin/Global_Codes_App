@@ -136,13 +136,31 @@ def pull_library_data(D,system,section,primary,unmapped):
             
     return {'data': result}
 
-def pull_tlc_detail(D, system, tlc):
+
+def pull_tlc_detail(D, system, tlc, global_codes):
     print('Pulling TLC detail for: ' + system + ': ' + tlc)
 
-    return {'result': D[system][tlc]} 
+    tfcs = D[system][tlc]['tfc']
+
+    for i in range(len(tfcs)):
+        try:
+            if 'BC_' in tfcs[i]['global_code']:
+                tfcs[i]['global_name'] = global_codes[tfcs[i]['global_code']]['Description']
+                tfcs[i]['global_sample'] = global_codes[tfcs[i]['global_code']]['Sample']
+                tfcs[i]['global_type'] = global_codes[tfcs[i]['global_code']]['Type']
+        except:
+            print('Unable to find global ' + str(tfcs[i]['global_code']) + ' to get details')
+
+    result = {}
+    result['tlc_name'] = D[system][tlc]['tlc_name']
+    result['tlc_type'] = D[system][tlc]['tlc_type']
+    result['tfc'] = tfcs
+
+    return {'result': result} 
 
 
 def pull_all_global_codes():
+    print('Running pull_all_global_codes')
     try:
         cnxn = pyodbc.connect('DSN=Warehouse')
         cursor = cnxn.cursor()
@@ -154,9 +172,10 @@ def pull_all_global_codes():
            
     try: 
         cursor.execute(sql)
+        headers = [column[0] for column in cursor.description]
+            
         raw_data = cursor.fetchall()
-
-        data['result'] = [list(r) for r in raw_data]
+        data = dict(result=[dict(zip(headers,row)) for row in raw_data])
     except:
         data['result'] = 'ERROR'
 
