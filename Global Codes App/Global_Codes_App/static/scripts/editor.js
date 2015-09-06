@@ -78,12 +78,14 @@ var library_code_datatable = $('#library_code_datatable').DataTable({
 });
 
 // Refresh the library data table
-$('#tlc_search_submit').click(function () {
+function update_tlc_table() {
     var primary = +$('#tlc_search_primary').prop('checked');
     var unmapped = +$('#tlc_search_unmapped').prop('checked');
     var url_val = '/tlc_data?system=' + $('#tlc_search_system').val() + '&section=' + $('#tlc_search_section').val().substring(0, 1) + '&primary=' + primary + '&unmapped=' + unmapped;
     library_code_datatable.ajax.url(url_val).load();
-});
+    event_handlers();
+};
+$('#tlc_search_submit').click(function () { update_tlc_table() });
 
 // Respond to clicking a library code
 $("#library_code_datatable tbody").delegate("tr", "click", function () {
@@ -169,9 +171,27 @@ function event_handlers () {
         hoverClass: "ui-state-hover",
 
         drop: function (event, ui) {
-            console.log("Adding " + ui.draggable.text() + " to " + $(this).find(".tfc").text());
-            $(this).find(".global_code").html('<button type="button" class="btn btn-primary btn-xs current-global-map">' + ui.draggable.text() + '</button>');
-            event_handlers();
+            var dropped_row = $(this)
+            var dropped_global = ui.draggable.text()
+            console.log("Adding " + dropped_global + " to " + dropped_row.find(".tfc").text());
+            
+            var url = '/add_mapping?system=' + $('#tlc_search_system').val() + '&tfc=' + $(this).find(".tfc").text() + '&global_code=' + ui.draggable.text() + '&user=' + 'CEKIN';
+            $.getJSON(url, function (data) {
+                if (data['result'] == 'ERROR') {
+                    swal({
+                        title: "Unable",
+                        text: "An error occurred while adding " + ui.draggable.text() + " to " + $(this).find(".tfc").text() + ". The details have been recorded in the error log.",
+                        type: "warning"
+                    });
+                } else {
+                    dropped_row.find(".global_code").html('<button type="button" class="btn btn-primary btn-xs current-global-map">' + dropped_global + '</button>');
+                    dropped_row.find(".global_name").html(data['global_name']);
+                    dropped_row.find(".global_sample").html(data['global_sample']);
+                    dropped_row.find(".global_type").html(data['global_type']);
+                    update_tlc_table();
+                    //event_handlers();
+                };
+            });
         },
     });
 
@@ -180,21 +200,35 @@ function event_handlers () {
         console.log('Clicked a mapping');
 
         var clicked_mapping = this;
+        var global = $(clicked_mapping).html();
+        var tfc = $(clicked_mapping).parent().parent().find(".tfc").text();
 
         swal({
             title: "Are you sure?",
-            text: "This will delete the mapping of " + $(clicked_mapping).html() + " from " + $(clicked_mapping).parent().parent().find(".tfc").text(),
+            text: "This will delete the mapping of " + global + " from " + tfc,
             type: "warning",
             showCancelButton: true,
             confirmButtonColor: "#DD6B55",
             confirmButtonText: "Delete Mapping"
         },
             function () {
-                console.log("Removing " + $(clicked_mapping).html() + " from " + $(clicked_mapping).parent().parent().find(".tfc").text());
-                $(clicked_mapping).parent().parent().find('.global_name').text('');
-                $(clicked_mapping).parent().parent().find('.global_sample').text('');
-                $(clicked_mapping).parent().parent().find('.global_type').text('');
-                $(clicked_mapping).remove();
+                var url = '/remove_mapping?system=' + $('#tlc_search_system').val() + '&tfc=' + tfc + '&global_code=' + global + '&user=' + 'CEKIN';
+                $.getJSON(url, function (data) {
+                    if (data['result'] == 'ERROR') {
+                        swal({
+                            title: "Unable to remove",
+                            text: "An error occurred while removing " + global + " from " + tfc + ". The details have been recorded in the error log.",
+                            type: "warning"
+                        });
+                    } else {
+                        console.log("Removing " + $(clicked_mapping).html() + " from " + $(clicked_mapping).parent().parent().find(".tfc").text());
+                        $(clicked_mapping).parent().parent().find('.global_name').text('');
+                        $(clicked_mapping).parent().parent().find('.global_sample').text('');
+                        $(clicked_mapping).parent().parent().find('.global_type').text('');
+                        $(clicked_mapping).remove();
+                        update_tlc_table();
+                    };
+                });
             });
     });
 };

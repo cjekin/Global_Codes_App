@@ -135,6 +135,67 @@ def global_table():
 
 
 
+@app.route('/add_mapping')
+def add_mapping():
+    system = request.args.get('system')
+    tfc = request.args.get('tfc')
+    global_code = request.args.get('global_code')
+    user = request.args.get('user')
+
+    global global_codes
+    global global_tlcs
+
+    try:  
+        result = sql.add_mapping(system,tfc,global_code,user)
+        result['global_name'] = global_codes[global_code]['Description']
+        result['global_sample'] = global_codes[global_code]['Sample']
+        result['global_type'] = global_codes[global_code]['Type']
+
+        # Update the raw data and summary
+        for tlc in global_tlcs[system]:
+            for i in range(len(global_tlcs[system][tlc]['tfc'])):
+                if global_tlcs[system][tlc]['tfc'][i]['tfc'] == tfc:
+                    global_tlcs[system][tlc]['tfc'][i]['global_code'] = global_code
+                    global_tlcs[system][tlc]['tfc'][i]['global_mapped'] = 1
+                    global_tlcs[system][tlc]['tlc_sections'] = sorted(list(set([t['tfc_worksection'] for t in global_tlcs[system][tlc]['tfc']])))
+                    global_tlcs[system][tlc]['tlc_mapped'] = min([t['global_mapped'] for t in global_tlcs[system][tlc]['tfc']])
+
+    except Exception, err:
+        error_log('Unable to add code to mapping:\n' + str(traceback.format_exc()))
+        result = dict(result = 'ERROR', error_detail='Problem adding mapping')
+
+    return jsonify(result)
+
+@app.route('/remove_mapping')
+def remove_mapping():
+    system = request.args.get('system')
+    tfc = request.args.get('tfc')
+    global_code = request.args.get('global_code')
+    user = request.args.get('user')
+
+    global global_codes
+    global global_tlcs
+
+    try:  
+        result = sql.remove_mapping(system,tfc,global_code,user)
+
+        # Update the raw data and summary
+        for tlc in global_tlcs[system]:
+            for i in range(len(global_tlcs[system][tlc]['tfc'])):
+                if global_tlcs[system][tlc]['tfc'][i]['tfc'] == tfc:
+                    global_tlcs[system][tlc]['tfc'][i]['global_code'] = ''
+                    global_tlcs[system][tlc]['tfc'][i]['global_mapped'] = 0
+                    global_tlcs[system][tlc]['tlc_sections'] = sorted(list(set([t['tfc_worksection'] for t in global_tlcs[system][tlc]['tfc']])))
+                    global_tlcs[system][tlc]['tlc_mapped'] = min([t['global_mapped'] for t in global_tlcs[system][tlc]['tfc']])
+
+    except Exception, err:
+        error_log('Unable to remove code from mapping:\n' + str(traceback.format_exc()))
+        result = dict(result = 'ERROR', error_detail='Problem removing mapping')
+
+    return jsonify(result)
+
+
+
     
     
 

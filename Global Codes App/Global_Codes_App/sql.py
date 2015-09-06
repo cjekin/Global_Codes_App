@@ -77,7 +77,8 @@ def pull_raw_data():
            
     cursor.execute(sql)
     headers = [column[0] for column in cursor.description]
-    print(headers)
+    #print(headers)
+    print('-----------\nLoading headers for raw data')
             
     raw_data = cursor.fetchall()
 
@@ -110,7 +111,7 @@ def pull_raw_data():
     for system in D:
         for tlc in D[system]:
             D[system][tlc]['tlc_sections'] = sorted(list(set([t['tfc_worksection'] for t in D[system][tlc]['tfc']])))
-            D[system][tlc]['tlc_mapped'] = max([t['global_mapped'] for t in D[system][tlc]['tfc']])
+            D[system][tlc]['tlc_mapped'] = min([t['global_mapped'] for t in D[system][tlc]['tfc']])
     
     return D
 
@@ -149,7 +150,8 @@ def pull_tlc_detail(D, system, tlc, global_codes):
                 tfcs[i]['global_sample'] = global_codes[tfcs[i]['global_code']]['Sample']
                 tfcs[i]['global_type'] = global_codes[tfcs[i]['global_code']]['Type']
         except:
-            print('Unable to find global ' + str(tfcs[i]['global_code']) + ' to get details')
+            x='Do nothing'
+            #print('Unable to find global ' + str(tfcs[i]['global_code']) + ' to get details')
 
     result = {}
     result['tlc_name'] = D[system][tlc]['tlc_name']
@@ -180,3 +182,52 @@ def pull_all_global_codes():
         data['result'] = 'ERROR'
 
     return data
+
+
+
+def add_mapping(system,tfc,global_code,user):
+    result = 'OK'
+
+    cnxn = pyodbc.connect('DSN=Warehouse')
+    cursor = cnxn.cursor()
+
+    # Put in the mapping
+    sql = """
+    UPDATE [Global_Map] 
+    set [BC] = '%s' where [Origin] = '%s' and [Code] = '%s'
+    """ % (global_code,system,tfc)
+    cursor.execute(sql.replace('\n',' '))
+
+    # Add to the audit trail
+    sql = """
+    INSERT INTO [Global_Audit] ([Date],[UserName],[Origin],[Code],[Change],[ChangeType])
+    VALUES (getdate(),'%s','%s','%s','Mapped %s','Mapping')
+    """ % (user,system,tfc,global_code)
+    cursor.execute(sql.replace('\n',' '))
+    cursor.commit()
+
+    return dict(result='OK')
+
+def remove_mapping(system,tfc,global_code,user):
+    result = 'OK'
+
+    cnxn = pyodbc.connect('DSN=Warehouse')
+    cursor = cnxn.cursor()
+
+    # Put in the mapping
+    sql = """
+    UPDATE [Global_Map] 
+    set [BC] = '' where [Origin] = '%s' and [Code] = '%s'
+    """ % (system,tfc)
+    cursor.execute(sql.replace('\n',' '))
+
+    # Add to the audit trail
+    sql = """
+    INSERT INTO [Global_Audit] ([Date],[UserName],[Origin],[Code],[Change],[ChangeType])
+    VALUES (getdate(),'%s','%s','%s','%s','Removed mapping')
+    """ % (user,system,tfc,global_code)
+    cursor.execute(sql.replace('\n',' '))
+    cursor.commit()
+
+    return dict(result='OK')
+
