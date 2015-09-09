@@ -1,4 +1,11 @@
 @import url(//fonts.googleapis.com/css?family=Open+Sans:300,400,600,700&lang=en);
+
+/* Fix for modal padding */ 
+body.modal-open {
+    padding-right: 0 !important;
+}
+
+
 /* MARGINS & PADDINGS */
 .p-xxs {
   padding: 5px !important;

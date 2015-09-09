@@ -28,6 +28,9 @@
     <EnableUnmanagedDebugging>false</EnableUnmanagedDebugging>
   </PropertyGroup>
   <ItemGroup>
+    <Compile Include="Global_Codes_App\config.py">
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Include="Global_Codes_App\sql.py" />
     <Compile Include="runserver.py" />
     <Compile Include="Global_Codes_App\__init__.py" />
@@ -2689,6 +2692,7 @@
     <Content Include="Global_Codes_App\static\vendor\xeditable\README.md" />
     <Content Include="Global_Codes_App\templates\basic_test.html" />
     <Content Include="Global_Codes_App\templates\editor.html" />
+    <Content Include="Global_Codes_App\templates\editor_modal.html" />
     <Content Include="requirements.txt" />
     <Content Include="Global_Codes_App\static\content\bootstrap.css" />
     <Content Include="Global_Codes_App\static\content\bootstrap.min.css" />

@@ -1,4 +1,5 @@
 # Imports
+import config
 import pyodbc
 from datetime import datetime
 from flask import render_template, jsonify, Response, request, json
@@ -8,11 +9,8 @@ import traceback
 import sys
 import time
 
-global_tlcs = {}
-global_codes = {}
-
 def error_log(error):
-    with open('error_log.txt','a') as F:
+    with open(config.error_log_file,'a') as F:
         current_time = time.strftime("%d/%m/%Y %H:%M")
         F.write('-----' + current_time + '\n' + error)
 
@@ -29,12 +27,11 @@ def home():
 
 @app.route('/preload_data')
 def preload_data():
-    global global_tlcs
 
     try:
         #raise ValueError('Testing error handling')
-        if global_tlcs == {}:
-            global_tlcs = sql.pull_raw_data()
+        if config.global_tlcs == {}:
+            config.global_tlcs = sql.pull_raw_data()
     except Exception, err:
         error_log('Preload data function:\n' + str(traceback.format_exc()))
         return jsonify({'result':'ERROR'}) 
@@ -49,12 +46,10 @@ def tlc_data():
     primary = request.args.get('primary')
     unmapped = request.args.get('unmapped')
 
-    global global_tlcs
-
-    if global_tlcs == {}:
+    if config.global_tlcs == {}:
         result = dict(data = [[0,'TLC','NAME','I','0'],[0,'TLC','NAME','I','0']])
     else:
-        result = sql.pull_library_data(global_tlcs,system,section,primary,unmapped)
+        result = sql.pull_library_data(config.global_tlcs,system,section,primary,unmapped)
 
     json_data = jsonify(result)
     return json_data
@@ -84,19 +79,15 @@ def worksection_data():
 
 @app.route('/tlc_detail')
 def tlc_detail():
-    global global_codes
 
     try:
         system = request.args.get('system')
         tlc = request.args.get('tlc')
 
-        global global_tlcs
-
-        if global_tlcs == {}:
+        if config.global_tlcs == {}:
             result = dict(result = 'ERROR', error_detail='The data was not preloaded')
         else:
-            #print('I am passing the global_codes: ' + str(global_codes)[:100])
-            result = sql.pull_tlc_detail(global_tlcs,system,tlc, global_codes)
+            result = sql.pull_tlc_detail(system,tlc)
 
     except Exception, err:
         error_log('Error looking up TLC detail:\n' + str(traceback.format_exc()))
@@ -111,24 +102,20 @@ def tlc_detail():
 
 @app.route('/global_table')
 def global_table():
-    print('Called /global_table function')
-    global global_codes
+    print('-----------\nPreloading global codes')
 
     try:  
         result = sql.pull_all_global_codes()
-        print('Callback result: ' + str(result)[:100])
 
         L = {'result':[]}
         for r in result['result']:
             L['result'].append([r['BenchCode'], r['Description'], r['Sample'], r['Type'], r['Analyte'], r['PrimaryLibrary'], r['SubSection'], r['Department']])
-            global_codes[r['BenchCode']] = r
+            config.global_codes[r['BenchCode']] = r
 
     except Exception, err:
         error_log('Error getting global codes together:\n' + str(traceback.format_exc()))
         print('*** PROBLEM LOADING GLOBALS***')
         result = dict(result = 'ERROR', error_detail='Problem running query')
-
-    print('I have loaded the globals: ' + str(global_codes)[:100])
 
     json_data = jsonify(L)
     return json_data
@@ -139,26 +126,23 @@ def global_table():
 def add_mapping():
     system = request.args.get('system')
     tfc = request.args.get('tfc')
-    global_code = request.args.get('global_code')
+    new_global_code = request.args.get('global_code')
     user = request.args.get('user')
 
-    global global_codes
-    global global_tlcs
-
     try:  
-        result = sql.add_mapping(system,tfc,global_code,user)
-        result['global_name'] = global_codes[global_code]['Description']
-        result['global_sample'] = global_codes[global_code]['Sample']
-        result['global_type'] = global_codes[global_code]['Type']
+        result = sql.add_mapping(system,tfc,new_global_code,user)
+        result['global_name'] = config.global_codes[new_global_code]['Description']
+        result['global_sample'] = config.global_codes[new_global_code]['Sample']
+        result['global_type'] = config.global_codes[new_global_code]['Type']
 
         # Update the raw data and summary
-        for tlc in global_tlcs[system]:
-            for i in range(len(global_tlcs[system][tlc]['tfc'])):
-                if global_tlcs[system][tlc]['tfc'][i]['tfc'] == tfc:
-                    global_tlcs[system][tlc]['tfc'][i]['global_code'] = global_code
-                    global_tlcs[system][tlc]['tfc'][i]['global_mapped'] = 1
-                    global_tlcs[system][tlc]['tlc_sections'] = sorted(list(set([t['tfc_worksection'] for t in global_tlcs[system][tlc]['tfc']])))
-                    global_tlcs[system][tlc]['tlc_mapped'] = min([t['global_mapped'] for t in global_tlcs[system][tlc]['tfc']])
+        for tlc in config.global_tlcs[system]:
+            for i in range(len(config.global_tlcs[system][tlc]['tfc'])):
+                if config.global_tlcs[system][tlc]['tfc'][i]['tfc'] == tfc:
+                    config.global_tlcs[system][tlc]['tfc'][i]['global_code'] = new_global_code
+                    config.global_tlcs[system][tlc]['tfc'][i]['global_mapped'] = 1
+                    config.global_tlcs[system][tlc]['tlc_sections'] = sorted(list(set([t['tfc_worksection'] for t in config.global_tlcs[system][tlc]['tfc']])))
+                    config.global_tlcs[system][tlc]['tlc_mapped'] = min([t['global_mapped'] for t in config.global_tlcs[system][tlc]['tfc']])
 
     except Exception, err:
         error_log('Unable to add code to mapping:\n' + str(traceback.format_exc()))
@@ -166,27 +150,25 @@ def add_mapping():
 
     return jsonify(result)
 
+
 @app.route('/remove_mapping')
 def remove_mapping():
     system = request.args.get('system')
     tfc = request.args.get('tfc')
-    global_code = request.args.get('global_code')
+    old_global_code = request.args.get('global_code')
     user = request.args.get('user')
 
-    global global_codes
-    global global_tlcs
-
     try:  
-        result = sql.remove_mapping(system,tfc,global_code,user)
+        result = sql.remove_mapping(system,tfc,old_global_code,user)
 
         # Update the raw data and summary
-        for tlc in global_tlcs[system]:
-            for i in range(len(global_tlcs[system][tlc]['tfc'])):
-                if global_tlcs[system][tlc]['tfc'][i]['tfc'] == tfc:
-                    global_tlcs[system][tlc]['tfc'][i]['global_code'] = ''
-                    global_tlcs[system][tlc]['tfc'][i]['global_mapped'] = 0
-                    global_tlcs[system][tlc]['tlc_sections'] = sorted(list(set([t['tfc_worksection'] for t in global_tlcs[system][tlc]['tfc']])))
-                    global_tlcs[system][tlc]['tlc_mapped'] = min([t['global_mapped'] for t in global_tlcs[system][tlc]['tfc']])
+        for tlc in config.global_tlcs[system]:
+            for i in range(len(config.global_tlcs[system][tlc]['tfc'])):
+                if config.global_tlcs[system][tlc]['tfc'][i]['tfc'] == tfc:
+                    config.global_tlcs[system][tlc]['tfc'][i]['global_code'] = ''
+                    config.global_tlcs[system][tlc]['tfc'][i]['global_mapped'] = 0
+                    config.global_tlcs[system][tlc]['tlc_sections'] = sorted(list(set([t['tfc_worksection'] for t in config.global_tlcs[system][tlc]['tfc']])))
+                    config.global_tlcs[system][tlc]['tlc_mapped'] = min([t['global_mapped'] for t in config.global_tlcs[system][tlc]['tfc']])
 
     except Exception, err:
         error_log('Unable to remove code from mapping:\n' + str(traceback.format_exc()))

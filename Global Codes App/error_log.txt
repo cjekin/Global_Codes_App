@@ -4,3 +4,71 @@ Traceback (most recent call last):
   File "C:\Users\cekin\Documents\GitHub\Global_Codes_App\Global Codes App\Global_Codes_App\views.py", line 150, in add_mapping
     result['global_name'] = global_codes[global_code]['Description']
 KeyError: u'BC_FBC_RDW'
+-----09/09/2015 16:54
+Error getting global codes together:
+Traceback (most recent call last):
+  File "\\tdlpathology\docs\TDL\IT\Chris Ekin\GitHub\Global_Codes_App\Global Codes App\Global_Codes_App\views.py", line 123, in global_table
+    L['result'].append([r['BenchCode'], r['Description'], r['Sample'], r['Type'], r['Analyte'], r['PrimaryLibrary'], r['SubSection'], r['Department']])
+TypeError: string indices must be integers, not str
+-----09/09/2015 18:40
+Error getting global codes together:
+Traceback (most recent call last):
+  File "\\tdlpathology\docs\TDL\IT\Chris Ekin\GitHub\Global_Codes_App\Global Codes App\Global_Codes_App\views.py", line 123, in global_table
+    L['result'].append([r['BenchCode'], r['Description'], r['Sample'], r['Type'], r['Analyte'], r['PrimaryLibrary'], r['SubSection'], r['Department']])
+TypeError: string indices must be integers, not str
+-----09/09/2015 18:55
+Unable to remove code from mapping:
+Traceback (most recent call last):
+  File "\\tdlpathology\docs\TDL\IT\Chris Ekin\GitHub\Global_Codes_App\Global Codes App\Global_Codes_App\views.py", line 177, in remove_mapping
+    result = sql.remove_mapping(system,tfc,global_code,user)
+  File "\\tdlpathology\docs\TDL\IT\Chris Ekin\GitHub\Global_Codes_App\Global Codes App\Global_Codes_App\sql.py", line 222, in remove_mapping
+    cursor.execute(sql.replace('\n',' '))
+ProgrammingError: ('42S02', "[42S02] [Microsoft][ODBC SQL Server Driver][SQL Server]Invalid object name 'Global_Map_Test'. (208) (SQLExecDirectW)")
+-----09/09/2015 18:55
+Unable to remove code from mapping:
+Traceback (most recent call last):
+  File "\\tdlpathology\docs\TDL\IT\Chris Ekin\GitHub\Global_Codes_App\Global Codes App\Global_Codes_App\views.py", line 177, in remove_mapping
+    result = sql.remove_mapping(system,tfc,global_code,user)
+  File "\\tdlpathology\docs\TDL\IT\Chris Ekin\GitHub\Global_Codes_App\Global Codes App\Global_Codes_App\sql.py", line 222, in remove_mapping
+    cursor.execute(sql.replace('\n',' '))
+ProgrammingError: ('42S02', "[42S02] [Microsoft][ODBC SQL Server Driver][SQL Server]Invalid object name 'Global_Map_Test'. (208) (SQLExecDirectW)")
+-----09/09/2015 19:22
+Unable to remove code from mapping:
+Traceback (most recent call last):
+  File "\\tdlpathology\docs\TDL\IT\Chris Ekin\GitHub\Global_Codes_App\Global Codes App\Global_Codes_App\views.py", line 162, in remove_mapping
+    result = sql.remove_mapping(system,tfc,old_global_code,user)
+  File "\\tdlpathology\docs\TDL\IT\Chris Ekin\GitHub\Global_Codes_App\Global Codes App\Global_Codes_App\sql.py", line 227, in remove_mapping
+    cursor.execute(sql.replace('\n',' '))
+ProgrammingError: ('42S02', "[42S02] [Microsoft][ODBC SQL Server Driver][SQL Server]Invalid object name 'GlobalCodes_Audit'. (208) (SQLExecDirectW)")
+-----09/09/2015 19:22
+Unable to remove code from mapping:
+Traceback (most recent call last):
+  File "\\tdlpathology\docs\TDL\IT\Chris Ekin\GitHub\Global_Codes_App\Global Codes App\Global_Codes_App\views.py", line 162, in remove_mapping
+    result = sql.remove_mapping(system,tfc,old_global_code,user)
+  File "\\tdlpathology\docs\TDL\IT\Chris Ekin\GitHub\Global_Codes_App\Global Codes App\Global_Codes_App\sql.py", line 227, in remove_mapping
+    cursor.execute(sql.replace('\n',' '))
+ProgrammingError: ('42S02', "[42S02] [Microsoft][ODBC SQL Server Driver][SQL Server]Invalid object name 'GlobalCodes_Audit'. (208) (SQLExecDirectW)")
+-----09/09/2015 19:23
+Unable to remove code from mapping:
+Traceback (most recent call last):
+  File "\\tdlpathology\docs\TDL\IT\Chris Ekin\GitHub\Global_Codes_App\Global Codes App\Global_Codes_App\views.py", line 165, in remove_mapping
+    for tlc in global_tlcs[system]:
+NameError: global name 'global_tlcs' is not defined
+-----09/09/2015 19:26
+Unable to remove code from mapping:
+Traceback (most recent call last):
+  File "\\tdlpathology\docs\TDL\IT\Chris Ekin\GitHub\Global_Codes_App\Global Codes App\Global_Codes_App\views.py", line 166, in remove_mapping
+    for i in range(len(global_tlcs[system][tlc]['tfc'])):
+NameError: global name 'global_tlcs' is not defined
+-----09/09/2015 19:27
+Unable to add code to mapping:
+Traceback (most recent call last):
+  File "\\tdlpathology\docs\TDL\IT\Chris Ekin\GitHub\Global_Codes_App\Global Codes App\Global_Codes_App\views.py", line 133, in add_mapping
+    result = sql.add_mapping(system,tfc,new_global_code,user)
+TypeError: add_mapping() takes exactly 3 arguments (4 given)
+-----09/09/2015 19:28
+Unable to add code to mapping:
+Traceback (most recent call last):
+  File "\\tdlpathology\docs\TDL\IT\Chris Ekin\GitHub\Global_Codes_App\Global Codes App\Global_Codes_App\views.py", line 134, in add_mapping
+    result['global_name'] = config.global_codes[global_code]['Description']
+NameError: global name 'global_code' is not defined

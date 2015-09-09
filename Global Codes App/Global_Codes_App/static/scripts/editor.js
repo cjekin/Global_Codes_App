@@ -143,7 +143,9 @@ function fill_library_code_detail(system, tlc) {
 
                     cont += '<td class="' + fields[j] + '">' + res_val + '</td>';
                 };
-                cont += '<td><span class="glyphicon glyphicon-option-horizontal"></span></td></tr>';
+                //cont += '<td><span class="glyphicon glyphicon-option-horizontal"></span></td></tr>';
+                //cont += '<td><a class=""><i class="glyphicon glyphicon-option-horizontal"></i></a></td></tr>';
+                cont += '<td><a class=""><i class="pe-7s pe-7s-more pe-2x"></i></a></td></tr>';
             };
             cont += '</tbody>';
             //console.log(cont);
