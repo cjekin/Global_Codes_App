@@ -177,6 +177,23 @@ def remove_mapping():
     return jsonify(result)
 
 
+@app.route('/get_more_tfc_info')
+def get_more_tfc_info():
+    tfc = request.args.get('tfc')
+    system = request.args.get('system')
+    print('Getting TFC info for' + str(tfc) + ' in ' + str(system))
+
+    try:  
+        result = sql.get_more_tfc_info(system, tfc)
+    except Exception, err:
+        error_log('Error getting TFC info:\n' + str(traceback.format_exc()))
+        print('*Error getting TFC info')
+        result = dict(result = 'ERROR', error_detail='Problem running query')
+
+    json_data = jsonify(result)
+    return json_data
+
+
 
     
     
