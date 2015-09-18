@@ -97,7 +97,6 @@ $("#library_code_datatable tbody").delegate("tr", "click", function () {
 
 
 
-
 //Fill in the library code detail
 function fill_library_code_detail(system, tlc) {
     $.getJSON('/tlc_detail?system=' + system + '&tlc=' + tlc, function (data) {
@@ -145,7 +144,7 @@ function fill_library_code_detail(system, tlc) {
                 };
                 //cont += '<td><span class="glyphicon glyphicon-option-horizontal"></span></td></tr>';
                 //cont += '<td><a class=""><i class="glyphicon glyphicon-option-horizontal"></i></a></td></tr>';
-                cont += '<td><a class=""><i class="pe-7s pe-7s-more pe-2x"></i></a></td></tr>';
+                cont += '<td><a class=""><i class="pe-7s pe-7s-more pe-2x tfc-more"></i></a></td></tr>';
             };
             cont += '</tbody>';
             //console.log(cont);
@@ -233,6 +232,26 @@ function event_handlers () {
                 });
             });
     });
+
+    // Respond to clicking a format code more icon
+    $(".tfc-more").click(function () {
+        var clicked_tfc = this;
+
+        if ($(clicked_tfc).closest('tr').next('tr').hasClass('extra-tfc-info')) {
+            $(clicked_tfc).closest('tr').next('tr').remove();
+        } else {
+            var tfc = $(clicked_tfc).closest('tr').find(".tfc").text();
+            var url = '/get_more_tfc_info?system=' + $('#tlc_search_system').val() + '&tfc=' + tfc;
+            $.getJSON(url, function (data) {
+                if (data['result'] == 'ERROR') {
+                    $(clicked_tfc).closest("tr").after('<tr class="extra-tfc-info"><td colspan="12">' + data['error_detail'] + '</td></tr>');
+                } else {
+                    var r = data['result'][0]
+                    $(clicked_tfc).closest("tr").after('<tr class="extra-tfc-info"><td colspan="12">' + r['Description'] + '</td></tr>');
+                };
+            });
+        };
+    });
 };
 $(event_handlers());
 
@@ -274,5 +293,7 @@ $.getJSON('/global_table', function (global_data) {
 $('#global_code_datatable').on('draw.dt', function () {
     event_handlers();
 });
+
+
 
 

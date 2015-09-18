@@ -229,3 +229,21 @@ def remove_mapping(system,tfc,old_global_code,user):
 
     return dict(result='OK')
 
+
+def get_more_tfc_info(system, tfc):
+    try:
+        cnxn = pyodbc.connect(config.connection_string)
+        cursor = cnxn.cursor()
+    except:
+        print 'Problem making connection'
+    
+    sql = "EXEC spGlobalsApp_GetTFCInfo %s,%s" % (system,tfc)
+    data = {}
+           
+    cursor.execute(sql)
+    headers = [column[0] for column in cursor.description]
+            
+    raw_data = cursor.fetchall()
+    data = dict(result=[dict(zip(headers,row)) for row in raw_data])
+
+    return data
