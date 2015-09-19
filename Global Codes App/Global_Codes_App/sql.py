@@ -35,29 +35,73 @@ def generic_sql(table,filters,headers='ALL'):
     return dict(headers=headers, data=data)
 
 
-
-def exec_stored_procedure(stored_procedure, headers=[]):
+def exec_stored_procedure(stored_procedure,arguements=[]):
     try:
         cnxn = pyodbc.connect(config.connection_string)
         cursor = cnxn.cursor()
     except:
         print 'Problem making connection'
     
-    sql = "EXEC %s ;" % (stored_procedure)
+    sql = "EXEC %s %s;" % (stored_procedure,','.join(arguements))
     data = {}
            
     try: 
         cursor.execute(sql)
+        headers = [column[0] for column in cursor.description]
+            
         raw_data = cursor.fetchall()
-
-        if headers == []:
-            data['data'] = [dict(zip(range(len(row)),row)) for row in raw_data]
-        else:
-            data['data'] = [dict(zip(headers,row)) for row in raw_data]
+        data = dict(result=[dict(zip(headers,row)) for row in raw_data])
     except:
-        data['data'] = 'Error'
+        data['result'] = 'ERROR'
 
     return data
+
+def exec_stored_procedure_list(stored_procedure, arguements=[], header_row=False):
+    try:
+        cnxn = pyodbc.connect(config.connection_string)
+        cursor = cnxn.cursor()
+    except:
+        print 'Problem making connection'
+
+    # Put string arguements in quotes
+    args = []
+    for a in arguements:
+        if type(a) == str or type(a) == unicode:
+            args.append("'" + a + "'")
+        else:
+            args.append(a)
+    
+    sql = "EXEC %s %s;" % (stored_procedure,','.join(args))
+    print sql
+    data = {}
+           
+    cursor.execute(sql)
+    raw_data = cursor.fetchall()
+    print 'Raw data\n', raw_data
+        
+    # Clear the non-ascii characters from the result
+    print('Cleaning the data of non-ascii characters...')
+    for i in range(len(raw_data)):
+        for j in range(len(raw_data[i])):
+            raw_data[i][j] = str(raw_data[i][j])
+            raw_data[i][j] =  ''.join([c if ord(c) < 128 else ' ' for c in raw_data[i][j]]) 
+    print('Finished cleaning data')
+
+    output_list = []
+    if header_row == True:
+        output_list = [[column[0] for column in cursor.description]]
+
+    for r in raw_data:
+        output_list.append(list(r))
+
+    print 'Output list: \n', output_list
+
+    data = dict(data=output_list)
+
+    return data
+
+
+
 
 
 def strip_non_ascii(string):
@@ -136,7 +180,8 @@ def pull_library_data(D,system,section,primary,unmapped):
     return {'data': result}
 
 
-def pull_tlc_detail(system, tlc):
+
+def pull_tlc_detail_old(system, tlc):
     print('Pulling TLC detail for: ' + system + ': ' + tlc)
 
     tfcs = config.global_tlcs[system][tlc]['tfc']

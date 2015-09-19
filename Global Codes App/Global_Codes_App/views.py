@@ -28,13 +28,13 @@ def home():
 @app.route('/preload_data')
 def preload_data():
 
-    try:
-        #raise ValueError('Testing error handling')
-        if config.global_tlcs == {}:
-            config.global_tlcs = sql.pull_raw_data()
-    except Exception, err:
-        error_log('Preload data function:\n' + str(traceback.format_exc()))
-        return jsonify({'result':'ERROR'}) 
+    #try:
+    #    #raise ValueError('Testing error handling')
+    #    if config.global_tlcs == {}:
+    #        config.global_tlcs = sql.pull_raw_data()
+    #except Exception, err:
+    #    error_log('Preload data function:\n' + str(traceback.format_exc()))
+    #    return jsonify({'result':'ERROR'}) 
 
     return jsonify({'result':'OK'})
 
@@ -46,10 +46,12 @@ def tlc_data():
     primary = request.args.get('primary')
     unmapped = request.args.get('unmapped')
 
-    if config.global_tlcs == {}:
-        result = dict(data = [[0,'TLC','NAME','I','0'],[0,'TLC','NAME','I','0']])
-    else:
-        result = sql.pull_library_data(config.global_tlcs,system,section,primary,unmapped)
+    args = [system,section,primary,unmapped]
+
+    try:
+        result = sql.exec_stored_procedure_list('spGlobalsApp_GetTLCList',args)
+    except:
+        result = {'data':[0,'Error getting data','','']}
 
     json_data = jsonify(result)
     return json_data
@@ -57,21 +59,19 @@ def tlc_data():
 
 @app.route('/worksection_data')
 def worksection_data():
-    headers = ['system_name','section_letter','section_name']
-    data = sql.exec_stored_procedure('spGlobalsApp_WorkSections',headers)
+    data = sql.exec_stored_procedure('spGlobalsApp_WorkSections')
 
     worksection_data = {}
     # Get a separate lists of unique sections
     systems = []
-    for r in data['data']:
+    for r in data['result']:
         if r['system_name'] not in systems:
             systems.append(r['system_name'])
     worksection_data['systems'] = systems
 
     # Get a lookup based on system
     for system in systems:
-        #print('Looking up system: ' + system)
-        worksection_data[system] = [[r['section_letter'],r['section_name']] for r in data['data'] if r['system_name'] == system]
+        worksection_data[system] = [[r['section_letter'],r['section_name']] for r in data['result'] if r['system_name'] == system]
 
     json_data = jsonify(worksection_data)
     return json_data
@@ -84,16 +84,14 @@ def tlc_detail():
         system = request.args.get('system')
         tlc = request.args.get('tlc')
 
-        if config.global_tlcs == {}:
-            result = dict(result = 'ERROR', error_detail='The data was not preloaded')
-        else:
-            result = sql.pull_tlc_detail(system,tlc)
+        result = sql.exec_stored_procedure_list('spGlobalsApp_GetTLCDetail', [system,tlc], True)
 
     except Exception, err:
         error_log('Error looking up TLC detail:\n' + str(traceback.format_exc()))
         print ('-----------\ntlc_detail error' + str(traceback.format_exc()))
-        result = dict(result = 'ERROR', error_detail='Problem running query')
+        result = dict(data = 'ERROR', error_detail='Problem running query')
 
+    print 'Result before pass:', result
     json_data = jsonify(result)
     return json_data
 
@@ -184,11 +182,11 @@ def get_more_tfc_info():
     print('Getting TFC info for' + str(tfc) + ' in ' + str(system))
 
     try:  
-        result = sql.get_more_tfc_info(system, tfc)
+        result = sql.exec_stored_procedure_list('spGlobalsApp_GetMoreTFCInfo', [system, tfc], True)
     except Exception, err:
         error_log('Error getting TFC info:\n' + str(traceback.format_exc()))
         print('*Error getting TFC info')
-        result = dict(result = 'ERROR', error_detail='Problem running query')
+        result = dict(data = 'ERROR', error_detail='Problem running query')
 
     json_data = jsonify(result)
     return json_data
