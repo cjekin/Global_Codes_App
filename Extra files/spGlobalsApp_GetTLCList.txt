@@ -1,0 +1,68 @@
+USE [Warehouse]
+GO
+/****** Object:  StoredProcedure [dbo].[spGlobalsApp_GetTLCList]    Script Date: 20/09/2015 23:42:23 ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+
+-- =============================================
+-- Author:		Chris Ekin
+-- Create date: 31/08/2015
+-- Modified:    02/09/2015
+-- Description:	Returns a list of TLCs for a given system
+--              filtered by mapped and primary status if requested
+-- =============================================
+ALTER PROCEDURE [dbo].[spGlobalsApp_GetTLCList]
+	@system_origin varchar(20), @section varchar(1), @primary int, @unmapped int
+AS
+BEGIN
+
+
+-- Get the template query to run through
+DECLARE @QUERY_TEMPLATE VARCHAR(MAX)
+SET @QUERY_TEMPLATE = '
+select tlc_mapped, tlc, tlc_name, tlc_type from (
+select min(tfc_mapped) as tlc_mapped, tlc, tlc_name, tlc_type, tlc_primary
+from (
+	select tlc.[Test Code] as tlc, tlc.[Description] as tlc_name, tlc.[TLC type] as tlc_type,
+	case when tlc.[Test Code] in (select distinct TLC from [{DB_NAME}].dbo.FORM_INFO) then 1 else 0 end as tlc_primary, tc.Code as tfc
+	,case when (map.GlobalCode is not null and map.GlobalCode <> '''') or (map.Excluded is not null and map.Excluded <> '''') then 1 else 0 end as tfc_mapped
+	from [{DB_NAME}].dbo.TEST tlc 
+	inner join [{DB_NAME}].dbo.TEST_CODES tc on tlc.[Test Code] = tc.TLC
+	inner join [{DB_NAME}].dbo.FORM f on tc.Code = f.TFC
+	left join [Warehouse].dbo.[GlobalCodes_Map] map on tc.Code = map.Code and map.Origin = ''{DB_NAME}''
+	where tlc.[TLC type] in (''I'',''G'')
+	and f.WrkSection = ''{SECTION}''
+	UNION
+	select tlc.[Test Code] as tlc, tlc.[Description] as tlc_name, tlc.[TLC type] as tlc_type, 0 as tlc_primary, tc2.Code as tfc
+	,case when (map.GlobalCode is not null and map.GlobalCode <> '''') or (map.Excluded is not null and map.Excluded <> '''') then 1 else 0 end as tfc_mapped
+	from [{DB_NAME}].dbo.TEST tlc 
+	inner join [{DB_NAME}].dbo.TEST_CODES tc on tlc.[Test Code] = tc.TLC
+	inner join [{DB_NAME}].dbo.TEST_CODES tc2 on tc.Code = tc2.TLC
+	inner join [{DB_NAME}].dbo.FORM f on tc.Code = f.TFC
+	left join [Warehouse].dbo.[GlobalCodes_Map] map on tc.Code = map.Code and map.Origin = ''{DB_NAME}''
+	where tlc.[TLC type] = ''P''
+	and f.WrkSection = ''{SECTION}''
+) q1
+group by tlc, tlc_name, tlc_type, tlc_primary
+) q2
+'
+
+SET @QUERY_TEMPLATE = REPLACE(@QUERY_TEMPLATE, '{DB_NAME}', @system_origin)
+SET @QUERY_TEMPLATE = REPLACE(@QUERY_TEMPLATE, '{SECTION}', @section)
+
+IF @primary = 1 and @unmapped = 1
+SET @QUERY_TEMPLATE = @QUERY_TEMPLATE + ' where tlc_primary = 1 and tlc_mapped = 0'
+IF @primary = 1 and @unmapped = 0
+SET @QUERY_TEMPLATE = @QUERY_TEMPLATE + ' where tlc_primary = 1'
+IF @primary = 0 and @unmapped = 1
+SET @QUERY_TEMPLATE = @QUERY_TEMPLATE + ' where tlc_mapped = 0'
+
+EXECUTE (@QUERY_TEMPLATE)
+
+--select @QUERY_TEMPLATE
+
+
+
+END

@@ -1,0 +1,27 @@
+USE [Warehouse]
+GO
+/****** Object:  StoredProcedure [dbo].[spGlobalsApp_Worksections]    Script Date: 20/09/2015 23:42:51 ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+
+-- =============================================
+-- Author:		Chris Ekin
+-- Create date: 31/08/2015
+-- Modified:    19/09/2015
+--              Expanded to use system databases instead of Warehouse table
+-- Description:	Get a list of systems and sections for global codes
+-- =============================================
+ALTER PROCEDURE [dbo].[spGlobalsApp_Worksections]
+
+AS
+BEGIN
+
+select 'WSL_ALL_DW' as system_name, Code as section_letter, isnull(upper(section),'NO NAME') as section_name
+from [WSL_ALL_DW].dbo.[SECTIONS.TXT] where Code is not null and Code not in ('*','')
+UNION
+select 'CROM_ALL_DW' as system_name, Code as section_letter, isnull(upper(section),'NO NAME') as section_name
+from [CROM_ALL_DW].dbo.[SECTIONS.TXT] where Code is not null and Code not in ('*','')
+
+END

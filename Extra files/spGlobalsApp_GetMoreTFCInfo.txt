@@ -1,0 +1,39 @@
+USE [Warehouse]
+GO
+/****** Object:  StoredProcedure [dbo].[spGlobalsApp_GetMoreTFCInfo]    Script Date: 20/09/2015 23:40:22 ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+
+-- =============================================
+-- Author:		Chris Ekin
+-- Create date: 19/09/2015
+-- Modified:    
+-- Description:	Returns extra information for the
+--              format code
+-- =============================================
+ALTER PROCEDURE [dbo].[spGlobalsApp_GetMoreTFCInfo]
+	@system_origin varchar(20), @tfc varchar(10)
+AS
+BEGIN
+
+-- Get the template query to run through
+DECLARE @QUERY_TEMPLATE VARCHAR(MAX)
+SET @QUERY_TEMPLATE = '
+select f.Units, f.Functions, isnull(f.Flags,'''') as Flags, isnull(f.Reflab,'''') as RefLab, f.RepSection, f.Row, 
+fi.Count as Number_Last_Year, fi.LastSeen as Last_Seen, fi.[1st] as Most_Common_Result, fi.[1stPct] as Percent_Most_Common, 
+fi.[2nd] as Second_Most_Common, fi.[2ndPct] as Percent_Second, fi.TLC as Most_Common_TLC, fi.TLCDescription as Most_Common_TLC_Desc,
+fi.CITM_Code, fi.SectionName as Section_Name, fi.RefLabName as RefLab_Name
+from [{DB_NAME}].dbo.FORM f
+left join [{DB_NAME}].dbo.FORM_INFO fi on f.TFC = fi.Code
+left join [Warehouse].dbo.GlobalCodes_Map map on f.TFC = map.Code and map.Origin = ''{DB_NAME}''
+left join [Warehouse].dbo.GlobalCodes_Main g on map.GlobalCode = g.GlobalCode
+where f.TFC = ''{TFC}''
+'
+
+SET @QUERY_TEMPLATE = REPLACE(@QUERY_TEMPLATE, '{DB_NAME}', @system_origin)
+SET @QUERY_TEMPLATE = REPLACE(@QUERY_TEMPLATE, '{TFC}', @tfc)
+EXECUTE (@QUERY_TEMPLATE)
+
+END
