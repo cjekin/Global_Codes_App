@@ -308,8 +308,9 @@ $.getJSON('/global_table', function (global_data) {
             type: "warning"
         });
     } else {
-            $('#global_code_datatable').DataTable({
+        var global_code_datatable = $('#global_code_datatable').DataTable({
             data: global_data['result'],
+            sPlaceHolder: "head:before",
             columns: [
                 { title: "BenchCode" },
                 { title: "Description" },
@@ -329,6 +330,10 @@ $.getJSON('/global_table', function (global_data) {
             }
             ]
         });
+
+        yadcf.init(global_code_datatable, [
+            { column_number: 7 }
+            ]);
     };
 });
 // Need to reinitialise the event handlers when you search

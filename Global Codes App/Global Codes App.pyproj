@@ -135,6 +135,7 @@
     <Folder Include="Global_Codes_App\static\vendor\datatables_plugins\sorting\" />
     <Folder Include="Global_Codes_App\static\vendor\datatables_plugins\sorting\custom-data-source\" />
     <Folder Include="Global_Codes_App\static\vendor\datatables_plugins\type-detection\" />
+    <Folder Include="Global_Codes_App\static\vendor\datatables_plugins\yadcf\" />
     <Folder Include="Global_Codes_App\static\vendor\flot.curvedlines\" />
     <Folder Include="Global_Codes_App\static\vendor\flot.curvedlines\flot\" />
     <Folder Include="Global_Codes_App\static\vendor\flot.curvedlines\tests\" />
@@ -850,6 +851,7 @@
     <Content Include="Global_Codes_App\static\vendor\datatables_plugins\api\index.html" />
     <Content Include="Global_Codes_App\static\vendor\datatables_plugins\api\page.jumpToData%28%29.js" />
     <Content Include="Global_Codes_App\static\vendor\datatables_plugins\api\sum%28%29.js" />
+    <Content Include="Global_Codes_App\static\vendor\datatables_plugins\columnFilter.js" />
     <Content Include="Global_Codes_App\static\vendor\datatables_plugins\features\alphabetSearch\dataTables.alphabetSearch.css" />
     <Content Include="Global_Codes_App\static\vendor\datatables_plugins\features\alphabetSearch\dataTables.alphabetSearch.js" />
     <Content Include="Global_Codes_App\static\vendor\datatables_plugins\features\alphabetSearch\dataTables.alphabetSearch.min.js" />
@@ -1012,6 +1014,15 @@
     <Content Include="Global_Codes_App\static\vendor\datatables_plugins\type-detection\ip-address.js" />
     <Content Include="Global_Codes_App\static\vendor\datatables_plugins\type-detection\num-html.js" />
     <Content Include="Global_Codes_App\static\vendor\datatables_plugins\type-detection\numeric-comma.js" />
+    <Content Include="Global_Codes_App\static\vendor\datatables_plugins\yadcf\bower.json" />
+    <Content Include="Global_Codes_App\static\vendor\datatables_plugins\yadcf\ChangeLog.markdown" />
+    <Content Include="Global_Codes_App\static\vendor\datatables_plugins\yadcf\contributing.md" />
+    <Content Include="Global_Codes_App\static\vendor\datatables_plugins\yadcf\example.html" />
+    <Content Include="Global_Codes_App\static\vendor\datatables_plugins\yadcf\jquery.dataTables.yadcf.css" />
+    <Content Include="Global_Codes_App\static\vendor\datatables_plugins\yadcf\jquery.dataTables.yadcf.js" />
+    <Content Include="Global_Codes_App\static\vendor\datatables_plugins\yadcf\LICENSE-MIT.txt" />
+    <Content Include="Global_Codes_App\static\vendor\datatables_plugins\yadcf\README.md" />
+    <Content Include="Global_Codes_App\static\vendor\datatables_plugins\yadcf\yadcf.jquery.json" />
     <Content Include="Global_Codes_App\static\vendor\flot.curvedlines\.bower.json" />
     <Content Include="Global_Codes_App\static\vendor\flot.curvedlines\.project" />
     <Content Include="Global_Codes_App\static\vendor\flot.curvedlines\curvedLines.js" />
