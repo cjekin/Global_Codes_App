@@ -124,11 +124,12 @@ function fill_library_code_detail() {
 
                     cont += '<td class="' + headers[j] + '">' + row[j] + '</td>';
                 };
-                cont += '<td><a class=""><i class="pe-7s pe-7s-more pe-2x tfc-more"></i></a></td></tr>';
+                cont += '<td><a class=""><i class="pe-7s pe-7s-plus pe-2x tfc-more"></i></a></td></tr>';
             };
             cont += '</tbody>';
             $('#tlc-detail-table').html(cont);
             event_handlers();
+            tfc_more_click();
         };
     });
 
@@ -153,21 +154,21 @@ function event_handlers () {
         drop: function (event, ui) {
             var dropped_row = $(this)
             var dropped_global = ui.draggable.text()
-            console.log("Adding " + dropped_global + " to " + dropped_row.find(".tfc").text());
+            console.log("Adding " + dropped_global + " to " + dropped_row.find(".TFC").text());
             
-            var url = '/add_mapping?system=' + $('#tlc_search_system').val() + '&tfc=' + $(this).find(".tfc").text() + '&global_code=' + ui.draggable.text() + '&user=' + 'CEKIN';
+            var url = '/add_mapping?system=' + $('#tlc_search_system').val() + '&tfc=' + $(this).find(".TFC").text() + '&global_code=' + ui.draggable.text();
             $.getJSON(url, function (data) {
                 if (data['result'] == 'ERROR') {
                     swal({
                         title: "Unable",
-                        text: "An error occurred while adding " + ui.draggable.text() + " to " + $(this).find(".tfc").text() + ". The details have been recorded in the error log.",
+                        text: "An error occurred while adding " + ui.draggable.text() + " to " + $(this).find(".TFC").text() + ". The details have been recorded in the error log.",
                         type: "warning"
                     });
                 } else {
-                    dropped_row.find(".global_code").html('<button type="button" class="btn btn-primary btn-xs current-global-map">' + dropped_global + '</button>');
-                    dropped_row.find(".global_name").html(data['global_name']);
-                    dropped_row.find(".global_sample").html(data['global_sample']);
-                    dropped_row.find(".global_type").html(data['global_type']);
+                    dropped_row.find(".Global").html('<button type="button" class="btn btn-primary btn-xs current-global-map">' + dropped_global + '</button>');
+                    dropped_row.find(".Global_Name").html(data['global_name']);
+                    dropped_row.find(".Sample").html(data['global_sample']);
+                    dropped_row.find(".Primary_Library").html(data['global_library']);
                     update_tlc_table();
                     //event_handlers();
                 };
@@ -181,7 +182,7 @@ function event_handlers () {
 
         var clicked_mapping = this;
         var global = $(clicked_mapping).html();
-        var tfc = $(clicked_mapping).parent().parent().find(".tfc").text();
+        var tfc = $(clicked_mapping).parent().parent().find(".TFC").text();
 
         swal({
             title: "Are you sure?",
@@ -202,9 +203,9 @@ function event_handlers () {
                         });
                     } else {
                         console.log("Removing " + $(clicked_mapping).html() + " from " + $(clicked_mapping).parent().parent().find(".tfc").text());
-                        $(clicked_mapping).parent().parent().find('.global_name').text('');
-                        $(clicked_mapping).parent().parent().find('.global_sample').text('');
-                        $(clicked_mapping).parent().parent().find('.global_type').text('');
+                        $(clicked_mapping).parent().parent().find('.Global_Name').text('');
+                        $(clicked_mapping).parent().parent().find('.Sample').text('');
+                        $(clicked_mapping).parent().parent().find('.Primary_Library').text('');
                         $(clicked_mapping).remove();
                         update_tlc_table();
                     };
@@ -212,14 +213,25 @@ function event_handlers () {
             });
     });
 
-    // Respond to clicking a format code more icon
+};
+$(event_handlers());
+
+// Respond to clicking a format code more icon
+function tfc_more_click() {
+
     $(".tfc-more").click(function () {
         var clicked_tfc = this;
 
+        console.log($(clicked_tfc).closest('tr').next('tr').attr("class"));
+        console.log($(clicked_tfc).closest('tr').next('tr').parent().html());
+
         if ($(clicked_tfc).closest('tr').next('tr').hasClass('extra-tfc-info')) {
+            console.log('Already have more info. Removing');
             $(clicked_tfc).closest('tr').next('tr').remove();
+            $(clicked_tfc).closest("tr").find("td:last a i").removeClass("pe-7s pe-7s-less pe-2x tfc-more").addClass("pe-7s pe-7s-plus pe-2x tfc-more")
         } else {
             var tfc = $(clicked_tfc).closest('tr').find(".TFC").text();
+            var current_exclusion = $(clicked_tfc).closest('tr').find(".Excluded").text();
             var url = '/get_more_tfc_info?system=' + $('#tlc_search_system').val() + '&tfc=' + tfc;
             $.getJSON(url, function (data) {
                 if (data['data'] == 'ERROR') {
@@ -227,19 +239,63 @@ function event_handlers () {
                 } else {
                     var h = data['data'][0];
                     var d = data['data'][1];
-                    var out = '<ul>';
+                    var exclusion_options = ['None', 'Not Requested', 'Internal', 'Title', 'Comment'];
+                    var out = '<tr class="extra-tfc-info"><td colspan="4">';
+                    out += '<div class="form">Exclusion:<select class="tfc_exclusion form-control input-sm m-b">';
+                    for (i = 0; i < exclusion_options.length; i++) {
+                        if (exclusion_options[i] == current_exclusion) {
+                            out += '<option selected="selected">' + exclusion_options[i] + '</option>';
+                        } else {
+                            out += '<option>' + exclusion_options[i] + '</option>';
+                        };
+                    };
+                    out += '</select></div></td/><td colspan="2"><ul>';
+                    var col_num = 2;
                     for (i = 0; i < h.length; i++) {
+                        if (i > h.length / 2 && col_num == 2) {
+                            out += '</ul></td><td colspan="2"><ul>';
+                            col_num = 3;
+                        };
                         out += '<li><b>' + h[i] + '</b>:  ' + d[i] + '</li>';
                     };
-                    out += '</ul>'
+                    out += '</ul></td><td colspan="4"></td></tr>';
 
-                    $(clicked_tfc).closest("tr").after('<tr class="extra-tfc-info"><td colspan="12">' + out + '</td></tr>');
+                    $(clicked_tfc).closest("tr").after(out);
+                    $(clicked_tfc).closest("tr").find("td:last a i").removeClass("pe-7s pe-7s-plus pe-2x tfc-more").addClass("pe-7s pe-7s-less pe-2x tfc-more");
+                    exclusion_select();
                 };
             });
         };
     });
 };
-$(event_handlers());
+
+
+//Respond to changing the exclusion select
+function exclusion_select() {
+    $('.tfc_exclusion').on('change', function () {
+        var exclusion = this.value;
+        var excluded_cell = $(this).closest('tr').prev().find('.Excluded');
+        var tfc = $(this).closest('tr').prev().find('.TFC').text();
+
+        var url = '/exclude_tfc?system=' + current_system + '&tfc=' + tfc + '&exclusion=' + exclusion;
+        $.getJSON(url, function (data) {
+            if (data['result'] == 'ERROR') {
+                swal({
+                    title: "Error excluding TFC",
+                    text: "The details have been recorded in the error log.",
+                    type: "warning"
+                });
+            } else {
+                if (exclusion == 'None') {
+                    excluded_cell.text('');
+                } else {
+                    excluded_cell.text(exclusion);
+                }
+            };
+        });
+    });
+};
+
 
 
 // Preload the global code data

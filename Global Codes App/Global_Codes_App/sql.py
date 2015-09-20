@@ -72,20 +72,16 @@ def exec_stored_procedure_list(stored_procedure, arguements=[], header_row=False
             args.append(a)
     
     sql = "EXEC %s %s;" % (stored_procedure,','.join(args))
-    print sql
     data = {}
            
     cursor.execute(sql)
     raw_data = cursor.fetchall()
-    print 'Raw data\n', raw_data
         
     # Clear the non-ascii characters from the result
-    print('Cleaning the data of non-ascii characters...')
     for i in range(len(raw_data)):
         for j in range(len(raw_data[i])):
             raw_data[i][j] = str(raw_data[i][j])
             raw_data[i][j] =  ''.join([c if ord(c) < 128 else ' ' for c in raw_data[i][j]]) 
-    print('Finished cleaning data')
 
     output_list = []
     if header_row == True:
@@ -93,8 +89,6 @@ def exec_stored_procedure_list(stored_procedure, arguements=[], header_row=False
 
     for r in raw_data:
         output_list.append(list(r))
-
-    print 'Output list: \n', output_list
 
     data = dict(data=output_list)
 
@@ -109,53 +103,6 @@ def strip_non_ascii(string):
     stripped = (c for c in string if 0 < ord(c) < 127)
     return ''.join(stripped)
 
-
-def pull_raw_data():
-    # Pull all data in to a single table and convert to dict
-    cnxn = pyodbc.connect(config.connection_string)
-    cursor = cnxn.cursor()
-    
-    sql = "EXEC spGlobalsApp_RawMapping"
-    data = {}
-           
-    cursor.execute(sql)
-    headers = [column[0] for column in cursor.description]
-    print('-----------\nLoading headers for raw data')
-            
-    raw_data = cursor.fetchall()
-
-    # Clear the non-ascii characters from the result
-    print('Cleaning the data of non-ascii characters...')
-    for i in range(len(raw_data)):
-        for j in range(len(raw_data[i])):
-            if type(raw_data[i][j]) == str:
-                raw_data[i][j] =  ''.join([c if ord(c) < 128 else ' ' for c in raw_data[i][j]]) 
-    print('Finished cleaning data')
-
-    raw_data_dict = [dict(zip(headers,row)) for row in raw_data]
-
-    # Format the result in to a dictionary
-    D = {}
-    for r in raw_data_dict:
-        temp_dict = {k:v for k,v in r.iteritems() if k not in ['system', 'tlc', 'tlc_name', 'tlc_type', 'tlc_primary']}
-        
-        if r['system'] not in D:
-            D[r['system']] = {r['tlc']:dict(tfc=[temp_dict], tlc_type=r['tlc_type'], 
-                                            tlc_name=r['tlc_name'], tlc_primary=r['tlc_primary'])}
-        elif r['tlc'] not in D[r['system']]: 
-            D[r['system']][r['tlc']] = dict(tfc=[temp_dict], tlc_type=r['tlc_type'], 
-                                            tlc_name=r['tlc_name'], tlc_primary=r['tlc_primary'])
-        else:
-            D[r['system']][r['tlc']]['tfc'].append(temp_dict)
-            
-            
-    # Get the summary data
-    for system in D:
-        for tlc in D[system]:
-            D[system][tlc]['tlc_sections'] = sorted(list(set([t['tfc_worksection'] for t in D[system][tlc]['tfc']])))
-            D[system][tlc]['tlc_mapped'] = min([t['global_mapped'] for t in D[system][tlc]['tfc']])
-    
-    return D
 
 
 def pull_library_data(D,system,section,primary,unmapped):
@@ -180,28 +127,6 @@ def pull_library_data(D,system,section,primary,unmapped):
     return {'data': result}
 
 
-
-def pull_tlc_detail_old(system, tlc):
-    print('Pulling TLC detail for: ' + system + ': ' + tlc)
-
-    tfcs = config.global_tlcs[system][tlc]['tfc']
-
-    for i in range(len(tfcs)):
-        try:
-            if 'BC_' in tfcs[i]['global_code']:
-                tfcs[i]['global_name'] = config.global_codes[tfcs[i]['global_code']]['Description']
-                tfcs[i]['global_sample'] = config.global_codes[tfcs[i]['global_code']]['Sample']
-                tfcs[i]['global_type'] = config.global_codes[tfcs[i]['global_code']]['Type']
-        except:
-            x='Do nothing'
-            #print('Unable to find global ' + str(tfcs[i]['global_code']) + ' to get details')
-
-    result = {}
-    result['tlc_name'] = config.global_tlcs[system][tlc]['tlc_name']
-    result['tlc_type'] = config.global_tlcs[system][tlc]['tlc_type']
-    result['tfc'] = tfcs
-
-    return {'result': result} 
 
 
 def pull_all_global_codes():
@@ -237,7 +162,7 @@ def add_mapping(system,tfc,new_global_code,user):
     # Put in the mapping
     sql = """
     UPDATE %s
-    set [BC] = '%s' where [Origin] = '%s' and [Code] = '%s'
+    set [GlobalCode] = '%s' where [Origin] = '%s' and [Code] = '%s'
     """ % (config.global_map_table, new_global_code,system,tfc)
     cursor.execute(sql.replace('\n',' '))
 
@@ -260,7 +185,7 @@ def remove_mapping(system,tfc,old_global_code,user):
     # Put in the mapping
     sql = """
     UPDATE %s 
-    set [BC] = '' where [Origin] = '%s' and [Code] = '%s'
+    set [GlobalCode] = '' where [Origin] = '%s' and [Code] = '%s'
     """ % (config.global_map_table,system,tfc)
     cursor.execute(sql.replace('\n',' '))
 
@@ -269,6 +194,32 @@ def remove_mapping(system,tfc,old_global_code,user):
     INSERT INTO %s ([Date],[UserName],[Origin],[Code],[Change],[ChangeType])
     VALUES (getdate(),'%s','%s','%s','%s','Removed mapping')
     """ % (config.global_audit_table,user,system,tfc,old_global_code)
+    cursor.execute(sql.replace('\n',' '))
+    cursor.commit()
+
+    return dict(result='OK')
+
+def exclude_tfc(system,tfc,exclusion,user):
+    result = 'OK'
+
+    cnxn = pyodbc.connect(config.connection_string)
+    cursor = cnxn.cursor()
+
+    if exclusion == 'None':
+        exclusion = ''
+
+    # Add the exclusion
+    sql = """
+    UPDATE %s
+    set [Excluded] = '%s' where [Origin] = '%s' and [Code] = '%s'
+    """ % (config.global_map_table, exclusion,system,tfc)
+    cursor.execute(sql.replace('\n',' '))
+
+    # Add to the audit trail
+    sql = """
+    INSERT INTO %s ([Date],[UserName],[Origin],[Code],[Change],[ChangeType])
+    VALUES (getdate(),'%s','%s','%s','%s','Exclusion Changed')
+    """ % (config.global_audit_table,user,system,tfc,exclusion)
     cursor.execute(sql.replace('\n',' '))
     cursor.commit()
 

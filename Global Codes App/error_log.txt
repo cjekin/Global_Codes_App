@@ -1,88 +1,18 @@
------16/09/2015 23:40
-Error getting TFC info:
+-----20/09/2015 12:48
+Unable to add code to mapping:
 Traceback (most recent call last):
-  File "C:\Users\cekin\Documents\GitHub\Global_Codes_App\Global Codes App\Global_Codes_App\views.py", line 187, in get_more_tfc_info
-    result = sql.get_more_tfc_info(system, tfc)
-  File "C:\Users\cekin\Documents\GitHub\Global_Codes_App\Global Codes App\Global_Codes_App\sql.py", line 243, in get_more_tfc_info
-    cursor.execute(sql)
-ProgrammingError: ('42000', "[42000] [Microsoft][ODBC SQL Server Driver][SQL Server]Procedure or function 'spGlobalsApp_GetTFCInfo' expects parameter '@tfc', which was not supplied. (201) (SQLExecDirectW)")
------19/09/2015 13:06
-Error getting TFC info:
+  File "C:\Users\cekin\Documents\GitHub\Global_Codes_App\Global Codes App\Global_Codes_App\views.py", line 174, in exclude_tfc
+    result = sql.exclude_tfc(system,tfc,exclusion,user.email)
+AttributeError: 'str' object has no attribute 'email'
+-----20/09/2015 12:49
+Unable to add code to mapping:
 Traceback (most recent call last):
-  File "C:\Users\cekin\Documents\GitHub\Global_Codes_App\Global Codes App\Global_Codes_App\views.py", line 184, in get_more_tfc_info
-    result = sql.get_more_tfc_info(system, tfc)
-  File "C:\Users\cekin\Documents\GitHub\Global_Codes_App\Global Codes App\Global_Codes_App\sql.py", line 279, in get_more_tfc_info
-    cursor.execute(sql)
-ProgrammingError: ('42000', "[42000] [Microsoft][ODBC SQL Server Driver][SQL Server]Incorrect syntax near ','. (102) (SQLExecDirectW)")
------19/09/2015 13:21
-Error looking up TLC detail:
+  File "C:\Users\cekin\Documents\GitHub\Global_Codes_App\Global Codes App\Global_Codes_App\views.py", line 174, in exclude_tfc
+    result = sql.exclude_tfc(system,tfc,exclusion,user.email)
+AttributeError: 'str' object has no attribute 'email'
+-----20/09/2015 12:53
+Unable to add code to mapping:
 Traceback (most recent call last):
-  File "C:\Users\cekin\Documents\GitHub\Global_Codes_App\Global Codes App\Global_Codes_App\views.py", line 87, in tlc_detail
-    result = sql.exec_stored_procedure_list('spGlobalsApp_GetTLCDetail', [system,tlc], True)
-  File "C:\Users\cekin\Documents\GitHub\Global_Codes_App\Global Codes App\Global_Codes_App\sql.py", line 69, in exec_stored_procedure_list
-    cursor.execute(sql)
-ProgrammingError: ('42000', "[42000] [Microsoft][ODBC SQL Server Driver][SQL Server]Incorrect syntax near '/'. (102) (SQLExecDirectW)")
------19/09/2015 13:22
-Error looking up TLC detail:
-Traceback (most recent call last):
-  File "C:\Users\cekin\Documents\GitHub\Global_Codes_App\Global Codes App\Global_Codes_App\views.py", line 87, in tlc_detail
-    result = sql.exec_stored_procedure_list('spGlobalsApp_GetTLCDetail', [system,tlc], True)
-  File "C:\Users\cekin\Documents\GitHub\Global_Codes_App\Global Codes App\Global_Codes_App\sql.py", line 69, in exec_stored_procedure_list
-    cursor.execute(sql)
-ProgrammingError: ('42000', "[42000] [Microsoft][ODBC SQL Server Driver][SQL Server]Incorrect syntax near '/'. (102) (SQLExecDirectW)")
------19/09/2015 13:26
-Error looking up TLC detail:
-Traceback (most recent call last):
-  File "C:\Users\cekin\Documents\GitHub\Global_Codes_App\Global Codes App\Global_Codes_App\views.py", line 87, in tlc_detail
-    result = sql.exec_stored_procedure_list('spGlobalsApp_GetTLCDetail', [system,tlc], True)
-  File "C:\Users\cekin\Documents\GitHub\Global_Codes_App\Global Codes App\Global_Codes_App\sql.py", line 69, in exec_stored_procedure_list
-    cursor.execute(sql)
-ProgrammingError: ('42000', "[42000] [Microsoft][ODBC SQL Server Driver][SQL Server]Incorrect syntax near '/'. (102) (SQLExecDirectW)")
------19/09/2015 13:27
-Error looking up TLC detail:
-Traceback (most recent call last):
-  File "C:\Users\cekin\Documents\GitHub\Global_Codes_App\Global Codes App\Global_Codes_App\views.py", line 87, in tlc_detail
-    result = sql.exec_stored_procedure_list('spGlobalsApp_GetTLCDetail', [system,tlc], True)
-  File "C:\Users\cekin\Documents\GitHub\Global_Codes_App\Global Codes App\Global_Codes_App\sql.py", line 70, in exec_stored_procedure_list
-    cursor.execute(sql)
-ProgrammingError: ('42000', "[42000] [Microsoft][ODBC SQL Server Driver][SQL Server]Incorrect syntax near '/'. (102) (SQLExecDirectW)")
------19/09/2015 13:29
-Error looking up TLC detail:
-Traceback (most recent call last):
-  File "C:\Users\cekin\Documents\GitHub\Global_Codes_App\Global Codes App\Global_Codes_App\views.py", line 87, in tlc_detail
-    result = sql.exec_stored_procedure_list('spGlobalsApp_GetTLCDetail', [system,tlc], True)
-  File "C:\Users\cekin\Documents\GitHub\Global_Codes_App\Global Codes App\Global_Codes_App\sql.py", line 77, in exec_stored_procedure_list
-    cursor.execute(sql)
-ProgrammingError: ('42000', "[42000] [Microsoft][ODBC SQL Server Driver][SQL Server]Incorrect syntax near '/'. (102) (SQLExecDirectW)")
------19/09/2015 13:29
-Error looking up TLC detail:
-Traceback (most recent call last):
-  File "C:\Users\cekin\Documents\GitHub\Global_Codes_App\Global Codes App\Global_Codes_App\views.py", line 87, in tlc_detail
-    result = sql.exec_stored_procedure_list('spGlobalsApp_GetTLCDetail', [system,tlc], True)
-  File "C:\Users\cekin\Documents\GitHub\Global_Codes_App\Global Codes App\Global_Codes_App\sql.py", line 77, in exec_stored_procedure_list
-    cursor.execute(sql)
-ProgrammingError: ('42000', "[42000] [Microsoft][ODBC SQL Server Driver][SQL Server]Incorrect syntax near '/'. (102) (SQLExecDirectW)")
------19/09/2015 13:31
-Error looking up TLC detail:
-Traceback (most recent call last):
-  File "C:\Users\cekin\Documents\GitHub\Global_Codes_App\Global Codes App\Global_Codes_App\views.py", line 87, in tlc_detail
-    result = sql.exec_stored_procedure_list('spGlobalsApp_GetTLCDetail', [system,tlc], True)
-  File "C:\Users\cekin\Documents\GitHub\Global_Codes_App\Global Codes App\Global_Codes_App\sql.py", line 77, in exec_stored_procedure_list
-    cursor.execute(sql)
-ProgrammingError: ('42000', "[42000] [Microsoft][ODBC SQL Server Driver][SQL Server]Incorrect syntax near '/'. (102) (SQLExecDirectW)")
------19/09/2015 13:32
-Error looking up TLC detail:
-Traceback (most recent call last):
-  File "C:\Users\cekin\Documents\GitHub\Global_Codes_App\Global Codes App\Global_Codes_App\views.py", line 87, in tlc_detail
-    result = sql.exec_stored_procedure_list('spGlobalsApp_GetTLCDetail', [system,tlc], True)
-  File "C:\Users\cekin\Documents\GitHub\Global_Codes_App\Global Codes App\Global_Codes_App\sql.py", line 73, in exec_stored_procedure_list
-    print '\t No, it is not a string. It is ' + type(a)
-TypeError: cannot concatenate 'str' and 'type' objects
------19/09/2015 13:33
-Error looking up TLC detail:
-Traceback (most recent call last):
-  File "C:\Users\cekin\Documents\GitHub\Global_Codes_App\Global Codes App\Global_Codes_App\views.py", line 87, in tlc_detail
-    result = sql.exec_stored_procedure_list('spGlobalsApp_GetTLCDetail', [system,tlc], True)
-  File "C:\Users\cekin\Documents\GitHub\Global_Codes_App\Global Codes App\Global_Codes_App\sql.py", line 80, in exec_stored_procedure_list
-    cursor.execute(sql)
-ProgrammingError: ('42000', "[42000] [Microsoft][ODBC SQL Server Driver][SQL Server]Incorrect syntax near '/'. (102) (SQLExecDirectW)")
+  File "C:\Users\cekin\Documents\GitHub\Global_Codes_App\Global Codes App\Global_Codes_App\views.py", line 174, in exclude_tfc
+    raise Exception('message')
+Exception: message

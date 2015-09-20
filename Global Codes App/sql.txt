@@ -1,0 +1,1 @@
+EXEC spGlobalsApp_GetTLCList 'CROM_ALL_DW','A','0','0';

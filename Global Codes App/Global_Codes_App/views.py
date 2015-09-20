@@ -8,15 +8,18 @@ import sql
 import traceback
 import sys
 import time
+from flask.ext.stormpath import login_required, user
 
 def error_log(error):
     with open(config.error_log_file,'a') as F:
         current_time = time.strftime("%d/%m/%Y %H:%M")
         F.write('-----' + current_time + '\n' + error)
+        print error
 
 
 @app.route('/')
 @app.route('/home')
+@login_required
 def home():
     return render_template(
         'editor.html',
@@ -25,21 +28,8 @@ def home():
     )
 
 
-@app.route('/preload_data')
-def preload_data():
-
-    #try:
-    #    #raise ValueError('Testing error handling')
-    #    if config.global_tlcs == {}:
-    #        config.global_tlcs = sql.pull_raw_data()
-    #except Exception, err:
-    #    error_log('Preload data function:\n' + str(traceback.format_exc()))
-    #    return jsonify({'result':'ERROR'}) 
-
-    return jsonify({'result':'OK'})
-
-
 @app.route('/tlc_data')
+@login_required
 def tlc_data():
     system = request.args.get('system')
     section = request.args.get('section')
@@ -58,6 +48,7 @@ def tlc_data():
 
 
 @app.route('/worksection_data')
+@login_required
 def worksection_data():
     data = sql.exec_stored_procedure('spGlobalsApp_WorkSections')
 
@@ -78,6 +69,7 @@ def worksection_data():
 
 
 @app.route('/tlc_detail')
+@login_required
 def tlc_detail():
 
     try:
@@ -91,7 +83,6 @@ def tlc_detail():
         print ('-----------\ntlc_detail error' + str(traceback.format_exc()))
         result = dict(data = 'ERROR', error_detail='Problem running query')
 
-    print 'Result before pass:', result
     json_data = jsonify(result)
     return json_data
 
@@ -99,6 +90,7 @@ def tlc_detail():
 
 
 @app.route('/global_table')
+@login_required
 def global_table():
     print('-----------\nPreloading global codes')
 
@@ -107,8 +99,8 @@ def global_table():
 
         L = {'result':[]}
         for r in result['result']:
-            L['result'].append([r['BenchCode'], r['Description'], r['Sample'], r['Type'], r['Analyte'], r['PrimaryLibrary'], r['SubSection'], r['Department']])
-            config.global_codes[r['BenchCode']] = r
+            L['result'].append([r['GlobalCode'], r['Description'], r['Sample'], r['Type'], r['Analyte'], r['PrimaryLibrary'], r['SubSection'], r['Department']])
+            config.global_codes[r['GlobalCode']] = r
 
     except Exception, err:
         error_log('Error getting global codes together:\n' + str(traceback.format_exc()))
@@ -121,26 +113,17 @@ def global_table():
 
 
 @app.route('/add_mapping')
+@login_required
 def add_mapping():
     system = request.args.get('system')
     tfc = request.args.get('tfc')
     new_global_code = request.args.get('global_code')
-    user = request.args.get('user')
 
     try:  
-        result = sql.add_mapping(system,tfc,new_global_code,user)
+        result = sql.add_mapping(system,tfc,new_global_code,user.email)
         result['global_name'] = config.global_codes[new_global_code]['Description']
         result['global_sample'] = config.global_codes[new_global_code]['Sample']
-        result['global_type'] = config.global_codes[new_global_code]['Type']
-
-        # Update the raw data and summary
-        for tlc in config.global_tlcs[system]:
-            for i in range(len(config.global_tlcs[system][tlc]['tfc'])):
-                if config.global_tlcs[system][tlc]['tfc'][i]['tfc'] == tfc:
-                    config.global_tlcs[system][tlc]['tfc'][i]['global_code'] = new_global_code
-                    config.global_tlcs[system][tlc]['tfc'][i]['global_mapped'] = 1
-                    config.global_tlcs[system][tlc]['tlc_sections'] = sorted(list(set([t['tfc_worksection'] for t in config.global_tlcs[system][tlc]['tfc']])))
-                    config.global_tlcs[system][tlc]['tlc_mapped'] = min([t['global_mapped'] for t in config.global_tlcs[system][tlc]['tfc']])
+        result['global_library'] = config.global_codes[new_global_code]['PrimaryLibrary']
 
     except Exception, err:
         error_log('Unable to add code to mapping:\n' + str(traceback.format_exc()))
@@ -150,23 +133,14 @@ def add_mapping():
 
 
 @app.route('/remove_mapping')
+@login_required
 def remove_mapping():
     system = request.args.get('system')
     tfc = request.args.get('tfc')
     old_global_code = request.args.get('global_code')
-    user = request.args.get('user')
 
     try:  
-        result = sql.remove_mapping(system,tfc,old_global_code,user)
-
-        # Update the raw data and summary
-        for tlc in config.global_tlcs[system]:
-            for i in range(len(config.global_tlcs[system][tlc]['tfc'])):
-                if config.global_tlcs[system][tlc]['tfc'][i]['tfc'] == tfc:
-                    config.global_tlcs[system][tlc]['tfc'][i]['global_code'] = ''
-                    config.global_tlcs[system][tlc]['tfc'][i]['global_mapped'] = 0
-                    config.global_tlcs[system][tlc]['tlc_sections'] = sorted(list(set([t['tfc_worksection'] for t in config.global_tlcs[system][tlc]['tfc']])))
-                    config.global_tlcs[system][tlc]['tlc_mapped'] = min([t['global_mapped'] for t in config.global_tlcs[system][tlc]['tfc']])
+        result = sql.remove_mapping(system,tfc,old_global_code,user.email)
 
     except Exception, err:
         error_log('Unable to remove code from mapping:\n' + str(traceback.format_exc()))
@@ -174,8 +148,25 @@ def remove_mapping():
 
     return jsonify(result)
 
+@app.route('/exclude_tfc')
+@login_required
+def exclude_tfc():
+    system = request.args.get('system')
+    tfc = request.args.get('tfc')
+    exclusion = request.args.get('exclusion')
+
+    try:  
+        result = sql.exclude_tfc(system,tfc,exclusion,user.email)
+
+    except Exception, err:
+        error_log('Unable to add code to mapping:\n' + str(traceback.format_exc()))
+        result = dict(result = 'ERROR', error_detail='Problem adding mapping')
+
+    return jsonify(result)
+
 
 @app.route('/get_more_tfc_info')
+@login_required
 def get_more_tfc_info():
     tfc = request.args.get('tfc')
     system = request.args.get('system')
@@ -190,6 +181,14 @@ def get_more_tfc_info():
 
     json_data = jsonify(result)
     return json_data
+
+
+@app.route('/logout')
+def logout():
+    logout_user()
+    flash('You were logged out.')
+
+    return redirect(url_for('show_posts'))
 
 
 
