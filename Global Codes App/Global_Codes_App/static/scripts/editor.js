@@ -222,8 +222,8 @@ function tfc_more_click() {
     $(".tfc-more").click(function () {
         var clicked_tfc = this;
 
-        console.log($(clicked_tfc).closest('tr').next('tr').attr("class"));
-        console.log($(clicked_tfc).closest('tr').next('tr').parent().html());
+        //console.log($(clicked_tfc).closest('tr').next('tr').attr("class"));
+        //console.log($(clicked_tfc).closest('tr').next('tr').parent().html());
 
         if ($(clicked_tfc).closest('tr').next('tr').hasClass('extra-tfc-info')) {
             console.log('Already have more info. Removing');

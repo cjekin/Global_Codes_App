@@ -16,3 +16,9 @@ Traceback (most recent call last):
   File "C:\Users\cekin\Documents\GitHub\Global_Codes_App\Global Codes App\Global_Codes_App\views.py", line 174, in exclude_tfc
     raise Exception('message')
 Exception: message
+-----21/09/2015 00:41
+Error getting global codes together:
+Traceback (most recent call last):
+  File "\\tdlpathology\docs\TDL\IT\Chris Ekin\GitHub\Global_Codes_App\Global Codes App\Global_Codes_App\views.py", line 102, in global_table
+    L['result'].append([r['GlobalCode'], r['Description'], r['Sample'], r['Type'], r['Analyte'], r['PrimaryLibrary'], r['SubSection'], r['Department']])
+TypeError: string indices must be integers, not str
