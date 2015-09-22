@@ -124,12 +124,12 @@ function fill_library_code_detail() {
 
                     cont += '<td class="' + headers[j] + '">' + row[j] + '</td>';
                 };
-                cont += '<td><a class=""><i class="pe-7s pe-7s-plus pe-2x tfc-more"></i></a></td></tr>';
+                cont += '<td><a class=""><i class="pe-7s pe-7s-plus pe-2x tfc-plus"></i></a></td></tr>';
             };
             cont += '</tbody>';
             $('#tlc-detail-table').html(cont);
             event_handlers();
-            tfc_more_click();
+            $(".tfc-plus").on('click', tfc_plus_click);
         };
     });
 
@@ -216,55 +216,60 @@ function event_handlers () {
 };
 $(event_handlers());
 
+
 // Respond to clicking a format code more icon
-function tfc_more_click() {
+function tfc_less_click() { 
+    var clicked_tfc = this;
+    $(this).removeClass("pe-7s pe-7s-less pe-2x tfc-less").addClass("pe-7s pe-7s-plus pe-2x tfc-plus");
+    $(this).closest('tr').next('tr').remove();
 
-    $(".tfc-more").click(function () {
-        var clicked_tfc = this;
+    // Switch the event handlers bound to this button
+    $(clicked_tfc).closest('tr').find(".tfc-plus").off();
+    $(clicked_tfc).closest('tr').find(".tfc-plus").on('click', tfc_plus_click);
+};
 
-        //console.log($(clicked_tfc).closest('tr').next('tr').attr("class"));
-        //console.log($(clicked_tfc).closest('tr').next('tr').parent().html());
+function tfc_plus_click() {
+    var clicked_tfc = this;
+    var tfc = $(clicked_tfc).closest('tr').find(".TFC").text();
+    var current_exclusion = $(clicked_tfc).closest('tr').find(".Excluded").text();
 
-        if ($(clicked_tfc).closest('tr').next('tr').hasClass('extra-tfc-info')) {
-            console.log('Already have more info. Removing');
-            $(clicked_tfc).closest('tr').next('tr').remove();
-            $(clicked_tfc).closest("tr").find("td:last a i").removeClass("pe-7s pe-7s-less pe-2x tfc-more").addClass("pe-7s pe-7s-plus pe-2x tfc-more")
+    $(this).removeClass("pe-7s pe-7s-plus pe-2x tfc-plus").addClass("pe-7s pe-7s-less pe-2x tfc-less");
+
+    var url = '/get_more_tfc_info?system=' + $('#tlc_search_system').val() + '&tfc=' + tfc;
+    $.getJSON(url, function (data) {
+        if (data['data'] == 'ERROR') {
+            $(clicked_tfc).closest("tr").after('<tr class="extra-tfc-info"><td colspan="12">' + data['error_detail'] + '</td></tr>');
         } else {
-            var tfc = $(clicked_tfc).closest('tr').find(".TFC").text();
-            var current_exclusion = $(clicked_tfc).closest('tr').find(".Excluded").text();
-            var url = '/get_more_tfc_info?system=' + $('#tlc_search_system').val() + '&tfc=' + tfc;
-            $.getJSON(url, function (data) {
-                if (data['data'] == 'ERROR') {
-                    $(clicked_tfc).closest("tr").after('<tr class="extra-tfc-info"><td colspan="12">' + data['error_detail'] + '</td></tr>');
+            var h = data['data'][0];
+            var d = data['data'][1];
+            var exclusion_options = ['None', 'Not Requested', 'Internal', 'Title', 'Comment'];
+            var out = '<tr class="extra-tfc-info"><td colspan="12">';
+            out += '<div class="row"><div class="col-md-4">';
+            out += '<div class="form">Exclusion:<select class="tfc_exclusion form-control input-sm m-b">';
+            for (i = 0; i < exclusion_options.length; i++) {
+                if (exclusion_options[i] == current_exclusion) {
+                    out += '<option selected="selected">' + exclusion_options[i] + '</option>';
                 } else {
-                    var h = data['data'][0];
-                    var d = data['data'][1];
-                    var exclusion_options = ['None', 'Not Requested', 'Internal', 'Title', 'Comment'];
-                    var out = '<tr class="extra-tfc-info"><td colspan="4">';
-                    out += '<div class="form">Exclusion:<select class="tfc_exclusion form-control input-sm m-b">';
-                    for (i = 0; i < exclusion_options.length; i++) {
-                        if (exclusion_options[i] == current_exclusion) {
-                            out += '<option selected="selected">' + exclusion_options[i] + '</option>';
-                        } else {
-                            out += '<option>' + exclusion_options[i] + '</option>';
-                        };
-                    };
-                    out += '</select></div></td/><td colspan="2"><ul>';
-                    var col_num = 2;
-                    for (i = 0; i < h.length; i++) {
-                        if (i > h.length / 2 && col_num == 2) {
-                            out += '</ul></td><td colspan="2"><ul>';
-                            col_num = 3;
-                        };
-                        out += '<li><b>' + h[i] + '</b>:  ' + d[i] + '</li>';
-                    };
-                    out += '</ul></td><td colspan="4"></td></tr>';
-
-                    $(clicked_tfc).closest("tr").after(out);
-                    $(clicked_tfc).closest("tr").find("td:last a i").removeClass("pe-7s pe-7s-plus pe-2x tfc-more").addClass("pe-7s pe-7s-less pe-2x tfc-more");
-                    exclusion_select();
+                    out += '<option>' + exclusion_options[i] + '</option>';
                 };
-            });
+            };
+            out += '</select></div></div><div class="col-md-4"><ul>';
+            var col_num = 2;
+            for (i = 0; i < h.length; i++) {
+                if (i > h.length / 2 && col_num == 2) {
+                    out += '</ul></div><div class="col-md-4"><ul>';
+                    col_num = 3;
+                };
+                out += '<li><b>' + h[i] + '</b>:  ' + d[i] + '</li>';
+            };
+            out += '</ul></div></td></tr>';
+
+            $(clicked_tfc).closest("tr").after(out);
+            exclusion_select();
+
+            // Switch the event handlers bound to this button
+            $(clicked_tfc).closest('tr').find(".tfc-less").off();
+            $(clicked_tfc).closest('tr').find(".tfc-less").on('click', tfc_less_click);
         };
     });
 };
@@ -332,7 +337,30 @@ $.getJSON('/global_table', function (global_data) {
         });
 
         yadcf.init(global_code_datatable, [
-            { column_number: 7 }
+            {
+                column_number: 2,
+                column_data_type: "html",
+                html_data_type: "text",
+                filter_default_label: "Filter"
+            },
+            {
+                column_number: 3,
+                column_data_type: "html",
+                html_data_type: "text",
+                filter_default_label: "Filter"
+            },
+            {
+                column_number: 6,
+                column_data_type: "html",
+                html_data_type: "text",
+                filter_default_label: "Filter"
+            },
+            {
+                column_number: 7,
+                column_data_type: "html",
+                html_data_type: "text",
+                filter_default_label: "Filter"
+            }
             ]);
     };
 });
