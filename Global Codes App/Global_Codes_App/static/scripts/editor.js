@@ -332,6 +332,10 @@ $.getJSON('/global_table', function (global_data) {
                     return '<div class="global-drag"><button type="button" class="btn btn-primary btn-xs">' + data + '</button></div>';
                 },
                 "targets": 0
+            },
+            {
+                "visible": false,
+                "targets": 8
             }
             ]
         });

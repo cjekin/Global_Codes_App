@@ -99,7 +99,7 @@ def global_table():
 
         L = {'result':[]}
         for r in result['result']:
-            L['result'].append([r['GlobalCode'], r['Description'], r['Sample'], r['Type'], r['Analyte'], r['PrimaryLibrary'], r['SubSection'], r['Department']])
+            L['result'].append([r['GlobalCode'], r['Description'], r['Sample'], r['Type'], r['Analyte'], r['PrimaryLibrary'], r['SubSection'], r['Department'], r['Alias']])
             config.global_codes[r['GlobalCode']] = r
 
     except Exception, err:
