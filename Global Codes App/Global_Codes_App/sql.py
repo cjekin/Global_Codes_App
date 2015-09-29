@@ -50,7 +50,10 @@ def exec_stored_procedure_list(stored_procedure, arguements=[], header_row=False
     # Clear the non-ascii characters from the result
     for i in range(len(raw_data)):
         for j in range(len(raw_data[i])):
-            raw_data[i][j] = str(raw_data[i][j])
+            try:
+                raw_data[i][j] = str(raw_data[i][j])
+            except:
+                print 'Problem with ', raw_data[i][j]
             raw_data[i][j] =  ''.join([c if ord(c) < 128 else ' ' for c in raw_data[i][j]]) 
 
     output_list = []

@@ -9,8 +9,6 @@ var current_system = 'CROM_ALL_DW';
 
 // Get all the data preloaded including: Worksection and library
 $(function () {
-
-    console.log('Starting up now...');
     $('#data_preload_splash').hide();
 
     // Get the work section data
@@ -27,8 +25,10 @@ $(function () {
 
     // Load the library code data
     var url_val = '/tlc_data?system=' + current_system + '&section=' + $('#tlc_search_section').val().substring(0, 1) + '&primary=0&unmapped=0';
+    console.log(url_val);
     library_code_datatable.ajax.url(url_val).load();
     fill_library_code_detail(current_system, current_tlc);
+    update_system_info();
     event_handlers();
 });
 
@@ -49,9 +49,8 @@ $('#tlc_search_system').change(function () {
 
 
 // Initialize the library search data table
-console.log('Section = ' + $('#tlc_search_section').val());
 var library_code_datatable = $('#library_code_datatable').DataTable({
-    "ajax": '/tlc_data?system=' + $('#tlc_search_system').val() + '&section=' + $('#tlc_search_section').val().substring(0, 1) + '&primary=0&unmapped=0',
+    "ajax": '/tlc_data?system=' + current_system + '&section=' + $('#tlc_search_section').val().substring(0, 1) + '&primary=0&unmapped=0',
     "columnDefs": [
         {
             "render": function (data) {
@@ -66,6 +65,32 @@ var library_code_datatable = $('#library_code_datatable').DataTable({
     ]
 });
 
+
+// Refresh the system info widget
+function update_system_info() {
+    current_system = $('#tlc_search_system').val();
+    current_section = $('#tlc_search_section').val().substring(0, 1);
+    var url_val = '/system_info?system=' + current_system + '&section=' + current_section;
+    $('#system-overview-total').text('Loading...');
+    $('#system-overview-total-percent').text('--');
+    $('#system-overview-codesinsection').text('--');
+    $('#system-overview-codesmapped').text('--');
+
+    // Get the work section data
+    $.getJSON(url_val, function (data) {
+        if (data['result'] == 'ERROR') {
+            $('#system-overview-total').text('ERROR');
+        } else {
+            $('#system-overview-total').text(data['result'][0]['Total'] + data['result'][0]['Total'] + ' total');
+            $('#system-overview-total-percent').text('Percent mapped (' + data['result'][0]['PctMapped'] + '%)');
+            $("#system-overview-total-progress").css("width", data['result'][0]['PctMapped'] + '%');
+            $('#system-overview-codesinsection').text(data['result'][0]['NumSection']);
+            $('#system-overview-codesmapped').text(data['result'][0]['NumSectionMapped']);
+        };
+    });
+};
+
+
 // Refresh the library data table
 function update_tlc_table() {
     var primary = +$('#tlc_search_primary').prop('checked');
@@ -75,9 +100,14 @@ function update_tlc_table() {
     var url_val = '/tlc_data?system=' + current_system + '&section=' + current_section + '&primary=' + primary + '&unmapped=' + unmapped;
     
     library_code_datatable.ajax.url(url_val).load();
+    $('#library-code-header').text(current_system);
     event_handlers();
 };
-$('#tlc_search_submit').click(function () { update_tlc_table() });
+$('#tlc_search_submit').click(function () {
+    update_tlc_table();
+    update_system_info();
+});
+
 
 // Respond to clicking a library code
 $("#library_code_datatable tbody").delegate("tr", "click", function () {

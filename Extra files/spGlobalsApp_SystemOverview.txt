@@ -1,0 +1,37 @@
+USE [Warehouse]
+GO
+/****** Object:  StoredProcedure [dbo].[spGlobalsApp_GetTLCDetail]    Script Date: 29/09/2015 22:22:01 ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+
+-- =============================================
+-- Author:		Chris Ekin
+-- Create date: 29/09/15
+-- Modified:    
+-- Description:	Give details of system being looked at
+-- =============================================
+CREATE PROCEDURE [dbo].[spGlobalsApp_SystemOverview]
+	@system_origin varchar(20), @section varchar(10)
+AS
+BEGIN
+
+-- Get the template query to run through
+DECLARE @QUERY_TEMPLATE VARCHAR(MAX)
+SET @QUERY_TEMPLATE = '
+select 
+sum(case when map.Excluded is null or map.Excluded = '''' then 1 else 0 end) as Total,
+cast(cast(sum(case when (map.Excluded is null or map.Excluded = '''') and map.GlobalCode <> '''' and map.GlobalCode is not null then 1 else 0 end) as float)/
+cast(sum(case when (map.Excluded is null or map.Excluded = '''') then 1 else 0 end) as float) * 100 as int) as PctMapped,
+sum(case when (map.Excluded is null or map.Excluded = '''') and f.Wrksection = ''{SECTION}'' then 1 else 0 end) as NumSection,
+sum(case when (map.Excluded is null or map.Excluded = '''') and map.GlobalCode <> '''' and map.GlobalCode is not null and f.Wrksection = ''{SECTION}'' then 1 else 0 end) as NumSectionMapped
+from {DB_NAME}.dbo.FORM f 
+inner join [Warehouse].dbo.GlobalCodes_Map_Test map on f.TFC = map.Code and map.Origin = ''{DB_NAME}''
+'
+
+SET @QUERY_TEMPLATE = REPLACE(@QUERY_TEMPLATE, '{DB_NAME}', @system_origin)
+SET @QUERY_TEMPLATE = REPLACE(@QUERY_TEMPLATE, '{SECTION}', @section)
+EXECUTE (@QUERY_TEMPLATE)
+
+END

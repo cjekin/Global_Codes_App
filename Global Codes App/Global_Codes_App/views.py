@@ -40,8 +40,10 @@ def tlc_data():
 
     try:
         result = sql.exec_stored_procedure_list('spGlobalsApp_GetTLCList',args)
-    except:
-        result = {'data':[0,'Error getting data','','']}
+    except Exception, err:
+        result = {'data':[['0','Error getting data','','']]}
+        error_log('Error getting TLC list:\n' + str(traceback.format_exc()))
+        print ('-----------\n tlc_data error' + str(traceback.format_exc()))
 
     json_data = jsonify(result)
     return json_data
@@ -87,6 +89,23 @@ def tlc_detail():
     return json_data
 
 
+
+@app.route('/system_info')
+@login_required
+def system_info():
+    try:
+        system = request.args.get('system')
+        section = request.args.get('section')
+
+        result = sql.exec_stored_procedure('spGlobalsApp_SystemOverview', [system,section])
+
+    except Exception, err:
+        error_log('Error looking up TLC detail:\n' + str(traceback.format_exc()))
+        print ('-----------\n system_info error' + str(traceback.format_exc()))
+        result = dict(data = 'ERROR', error_detail='Problem getting system overview')
+
+    json_data = jsonify(result)
+    return json_data
 
 
 @app.route('/global_table')
