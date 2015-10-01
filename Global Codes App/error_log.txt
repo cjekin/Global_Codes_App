@@ -22,3 +22,11 @@ Traceback (most recent call last):
   File "\\tdlpathology\docs\TDL\IT\Chris Ekin\GitHub\Global_Codes_App\Global Codes App\Global_Codes_App\views.py", line 102, in global_table
     L['result'].append([r['GlobalCode'], r['Description'], r['Sample'], r['Type'], r['Analyte'], r['PrimaryLibrary'], r['SubSection'], r['Department']])
 TypeError: string indices must be integers, not str
+-----01/10/2015 18:48
+Error looking up TLC detail:
+Traceback (most recent call last):
+  File "\\tdlpathology\docs\TDL\IT\Chris Ekin\GitHub\Global_Codes_App\Global Codes App\Global_Codes_App\views.py", line 100, in system_info
+    result = sql.exec_stored_procedure('spGlobalsApp_SystemOverview', [system,section])
+  File "\\tdlpathology\docs\TDL\IT\Chris Ekin\GitHub\Global_Codes_App\Global Codes App\Global_Codes_App\sql.py", line 19, in exec_stored_procedure
+    cursor.execute(sql)
+ProgrammingError: ('42000', "[42000] [Microsoft][ODBC SQL Server Driver][SQL Server]Could not find stored procedure 'spGlobalsApp_SystemOverview'. (2812) (SQLExecDirectW)")

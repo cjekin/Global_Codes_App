@@ -15,14 +15,14 @@ def exec_stored_procedure(stored_procedure,arguements=[]):
     sql = "EXEC %s %s;" % (stored_procedure,','.join(arguements))
     data = {}
            
-    try: 
-        cursor.execute(sql)
-        headers = [column[0] for column in cursor.description]
+    #try: 
+    cursor.execute(sql)
+    headers = [column[0] for column in cursor.description]
             
-        raw_data = cursor.fetchall()
-        data = dict(result=[dict(zip(headers,row)) for row in raw_data])
-    except:
-        data['result'] = 'ERROR'
+    raw_data = cursor.fetchall()
+    data = dict(result=[dict(zip(headers,row)) for row in raw_data])
+    #except:
+    #data['result'] = 'ERROR'
 
     return data
 
