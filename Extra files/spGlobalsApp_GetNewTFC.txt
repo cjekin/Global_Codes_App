@@ -1,0 +1,48 @@
+USE [Warehouse]
+GO
+/****** Object:  StoredProcedure [dbo].[spGlobalsApp_GetTLCList]    Script Date: 03/10/2015 11:23:18 ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+
+-- =============================================
+-- Author:		Chris Ekin
+-- Create date: 03/10/2015
+-- Modified:    
+-- Description:	Inserts any new TFCs in to the mapping table
+-- =============================================
+ALTER PROCEDURE [dbo].[spGlobalsApp_GetNewTFC]
+AS
+BEGIN
+
+
+-- Get the template query to run through
+DECLARE @QUERY_TEMPLATE VARCHAR(MAX)
+SET @QUERY_TEMPLATE = '
+insert into GlobalCodes_Map_Test
+select ''{DB_NAME}'' as Origin, TFC as Code, TestName as Description, 
+case when Functions like ''%[IJ]%'' or RepSection = ''X'' then ''Internal'' else '''' end as Excluded,
+'''' as GlobalCode
+from {DB_NAME}.dbo.FORM_STAGING
+where TFC not in (select Code from [Warehouse].dbo.GlobalCodes_Map_Test where Origin = ''{DB_NAME}'')
+'
+
+-- Create an all-systems query for each database
+DECLARE @SQL_COMBINED VARCHAR(MAX)
+
+SET @SQL_COMBINED = ''
+
+SET @SQL_COMBINED = @SQL_COMBINED + REPLACE(@QUERY_TEMPLATE, '{DB_NAME}', 'WSL_ALL_DW')		+ ' '
+SET @SQL_COMBINED = @SQL_COMBINED + REPLACE(@QUERY_TEMPLATE, '{DB_NAME}', 'BMI_ALL_DW')		+ ' '
+SET @SQL_COMBINED = @SQL_COMBINED + REPLACE(@QUERY_TEMPLATE, '{DB_NAME}', 'CROM_ALL_DW')	+ ' '
+SET @SQL_COMBINED = @SQL_COMBINED + REPLACE(@QUERY_TEMPLATE, '{DB_NAME}', 'EAL_BHI_DW')		+ ' '
+SET @SQL_COMBINED = @SQL_COMBINED + REPLACE(@QUERY_TEMPLATE, '{DB_NAME}', 'EAL_MIC_DW')		+ ' '
+SET @SQL_COMBINED = @SQL_COMBINED + REPLACE(@QUERY_TEMPLATE, '{DB_NAME}', 'UCLH_BHI_DW')	+ ' '
+SET @SQL_COMBINED = @SQL_COMBINED + REPLACE(@QUERY_TEMPLATE, '{DB_NAME}', 'UCLH_MIC_DW')
+
+EXECUTE (@SQL_COMBINED)
+
+
+
+END
