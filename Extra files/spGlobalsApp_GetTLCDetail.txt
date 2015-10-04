@@ -1,6 +1,6 @@
 USE [Warehouse]
 GO
-/****** Object:  StoredProcedure [dbo].[spGlobalsApp_GetTLCDetail]    Script Date: 20/09/2015 23:42:02 ******/
+/****** Object:  StoredProcedure [dbo].[spGlobalsApp_GetTLCDetail]    Script Date: 03/10/2015 14:04:03 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -21,28 +21,35 @@ BEGIN
 -- Get the template query to run through
 DECLARE @QUERY_TEMPLATE VARCHAR(MAX)
 SET @QUERY_TEMPLATE = '
-select Global, Excluded, Sec, TFC, Name, Most_Common_Result, Num, Global_Name, Primary_Library, Sample, Type 
+select Global, Excluded, Sec, TFC, Name, Most_Common_Result, Num, Global_Name, Primary_Library, Sample, Type, Reflab
 from (
 select f.Row, isnull(map.GlobalCode,'''') as Global, isnull(map.Excluded,'''') as Excluded, f.Wrksection as Sec, f.TFC, f.TestName as Name, 
-fi.[1st] as Most_Common_Result, fi.Count as Num, g.Description as Global_Name, g.PrimaryLibrary as Primary_Library, g.Sample, g.Type
+fi.[1st] as Most_Common_Result, fi.Count as Num, 
+isnull(g.Description,'''') as Global_Name, isnull(g.PrimaryLibrary,'''') as Primary_Library, isnull(g.Sample,'''') as Sample, isnull(g.Type,'''') as Type,
+isnull(f.Reflab,'') as RefLab
 from [{DB_NAME}].dbo.TEST tlc 
 inner join [{DB_NAME}].dbo.TEST_CODES tc on tlc.[Test Code] = tc.TLC
 inner join [{DB_NAME}].dbo.FORM f on tc.Code = f.TFC
+left join [{DB_NAME}].dbo.[REFLABS.TXT] ref on f.Reflab = ref.Code
 left join [{DB_NAME}].dbo.FORM_INFO fi on f.TFC = fi.Code
-left join [Warehouse].dbo.GlobalCodes_Map map on f.TFC = map.Code and map.Origin = ''{DB_NAME}''
-left join [Warehouse].dbo.GlobalCodes_Main g on map.GlobalCode = g.GlobalCode
+left join [Warehouse].dbo.GlobalCodes_Map_Test map on f.TFC = map.Code and map.Origin = ''{DB_NAME}''
+left join [Warehouse].dbo.GlobalCodes_Main_Test g on map.GlobalCode = g.GlobalCode
 where tlc.[TLC type] in (''I'',''G'')
 and tlc.[Test Code] = ''{TLC}''
 UNION
 select f.Row, isnull(map.GlobalCode,'''') as Global, isnull(map.Excluded,'''') as Excluded, f.Wrksection as Sec, f.TFC, f.TestName as Name, 
-fi.[1st] as Most_Common_Result, fi.Count as Num, g.Description as Global_Name, g.PrimaryLibrary as Primary_Library, g.Sample, g.Type
+fi.[1st] as Most_Common_Result, fi.Count as Num, 
+isnull(g.Description,'''') as Global_Name, isnull(g.PrimaryLibrary,'''') as Primary_Library, 
+isnull(g.Sample,'''') as Sample, isnull(g.Type,'''') as Type,
+isnull(f.Reflab,'') as RefLab
 from [{DB_NAME}].dbo.TEST tlc 
 inner join [{DB_NAME}].dbo.TEST_CODES tc on tlc.[Test Code] = tc.TLC
 inner join [{DB_NAME}].dbo.TEST_CODES tc2 on tc.Code = tc2.TLC
 inner join [{DB_NAME}].dbo.FORM f on tc2.Code = f.TFC
+left join [{DB_NAME}].dbo.[REFLABS.TXT] ref on f.Reflab = ref.Code
 left join [{DB_NAME}].dbo.FORM_INFO fi on f.TFC = fi.Code
-left join [Warehouse].dbo.GlobalCodes_Map map on f.TFC = map.Code and map.Origin = ''{DB_NAME}''
-left join [Warehouse].dbo.GlobalCodes_Main g on map.GlobalCode = g.GlobalCode
+left join [Warehouse].dbo.GlobalCodes_Map_Test map on f.TFC = map.Code and map.Origin = ''{DB_NAME}''
+left join [Warehouse].dbo.GlobalCodes_Main_Test g on map.GlobalCode = g.GlobalCode
 where tlc.[TLC type] = ''P''
 and tlc.[Test Code] = ''{TLC}''
 ) q

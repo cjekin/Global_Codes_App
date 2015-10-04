@@ -30,3 +30,33 @@ Traceback (most recent call last):
   File "\\tdlpathology\docs\TDL\IT\Chris Ekin\GitHub\Global_Codes_App\Global Codes App\Global_Codes_App\sql.py", line 19, in exec_stored_procedure
     cursor.execute(sql)
 ProgrammingError: ('42000', "[42000] [Microsoft][ODBC SQL Server Driver][SQL Server]Could not find stored procedure 'spGlobalsApp_SystemOverview'. (2812) (SQLExecDirectW)")
+-----03/10/2015 14:13
+Error looking up TLC detail:
+Traceback (most recent call last):
+  File "C:\Users\cekin\Documents\GitHub\Global_Codes_App\Global Codes App\Global_Codes_App\views.py", line 81, in tlc_detail
+    result = sql.exec_stored_procedure_list('spGlobalsApp_GetTLCDetail', [system,tlc], True)
+  File "C:\Users\cekin\Documents\GitHub\Global_Codes_App\Global Codes App\Global_Codes_App\sql.py", line 47, in exec_stored_procedure_list
+    cursor.execute(sql)
+ProgrammingError: ('42000', "[42000] [Microsoft][ODBC SQL Server Driver][SQL Server]Incorrect syntax near 'WSL_ALL_DW'. (102) (SQLExecDirectW)")
+-----03/10/2015 14:13
+Error looking up TLC detail:
+Traceback (most recent call last):
+  File "C:\Users\cekin\Documents\GitHub\Global_Codes_App\Global Codes App\Global_Codes_App\views.py", line 81, in tlc_detail
+    result = sql.exec_stored_procedure_list('spGlobalsApp_GetTLCDetail', [system,tlc], True)
+  File "C:\Users\cekin\Documents\GitHub\Global_Codes_App\Global Codes App\Global_Codes_App\sql.py", line 47, in exec_stored_procedure_list
+    cursor.execute(sql)
+ProgrammingError: ('42000', "[42000] [Microsoft][ODBC SQL Server Driver][SQL Server]Incorrect syntax near 'CROM_ALL_DW'. (102) (SQLExecDirectW)")
+-----03/10/2015 14:14
+Error looking up TLC detail:
+Traceback (most recent call last):
+  File "C:\Users\cekin\Documents\GitHub\Global_Codes_App\Global Codes App\Global_Codes_App\views.py", line 81, in tlc_detail
+    result = sql.exec_stored_procedure_list('spGlobalsApp_GetTLCDetail', [system,tlc], True)
+  File "C:\Users\cekin\Documents\GitHub\Global_Codes_App\Global Codes App\Global_Codes_App\sql.py", line 47, in exec_stored_procedure_list
+    cursor.execute(sql)
+ProgrammingError: ('42000', "[42000] [Microsoft][ODBC SQL Server Driver][SQL Server]Incorrect syntax near 'WSL_ALL_DW'. (102) (SQLExecDirectW)")
+-----03/10/2015 18:43
+Unable to add code to mapping:
+Traceback (most recent call last):
+  File "C:\Users\cekin\Documents\GitHub\Global_Codes_App\Global Codes App\Global_Codes_App\views.py", line 143, in add_mapping
+    result['global_name'] = config.global_codes[new_global_code]['Description']
+KeyError: u'REF_AD'
