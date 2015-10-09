@@ -211,6 +211,33 @@ def logout():
 
 
 
+@app.route('/dashboard')
+def dashboard():
+
+    try:
+        data = sql.exec_stored_procedure('spGlobalsApp_AllSystemStats')
+        D = {}
+        for row in data:
+            if row['System'] not in D:
+                D[row['System']] = [row]
+            else:
+                D
+
+    except Exception, err:
+        error_log('Error getting dashboard data:\n' + str(traceback.format_exc()))
+        print ('-----------\n Error getting dashboard data:\n' + str(traceback.format_exc()))
+        data = dict(data = 'ERROR', error_detail='Problem getting system overview')
+
+    print data
+    return render_template(
+        'dashboard.html',
+        title='Mapping Overview',
+        year=datetime.now().year, 
+        data = data
+    )
+
+
+
     
     
 

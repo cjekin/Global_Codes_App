@@ -30,3 +30,107 @@ Traceback (most recent call last):
   File "\\tdlpathology\docs\TDL\IT\Chris Ekin\GitHub\Global_Codes_App\Global Codes App\Global_Codes_App\sql.py", line 19, in exec_stored_procedure
     cursor.execute(sql)
 ProgrammingError: ('42000', "[42000] [Microsoft][ODBC SQL Server Driver][SQL Server]Could not find stored procedure 'spGlobalsApp_SystemOverview'. (2812) (SQLExecDirectW)")
+-----07/10/2015 23:32
+Error getting dashboard data:
+Traceback (most recent call last):
+  File "\\tdlpathology\docs\TDL\IT\Chris Ekin\GitHub\Global_Codes_App\Global Codes App\Global_Codes_App\views.py", line 218, in dashboard
+    data = sql.exec_stored_procedure('spGlobalsApp_AllSystemStats')
+  File "\\tdlpathology\docs\TDL\IT\Chris Ekin\GitHub\Global_Codes_App\Global Codes App\Global_Codes_App\sql.py", line 19, in exec_stored_procedure
+    cursor.execute(sql)
+Error: ('08004', '[08004] [Microsoft][ODBC SQL Server Driver][SQL Server]The server principal "TDLPATHOLOGY\\cekin" is not able to access the database "RFH_BIO_DW" under the current security context. (916) (SQLExecDirectW)')
+-----07/10/2015 23:33
+Error getting dashboard data:
+Traceback (most recent call last):
+  File "\\tdlpathology\docs\TDL\IT\Chris Ekin\GitHub\Global_Codes_App\Global Codes App\Global_Codes_App\views.py", line 218, in dashboard
+    data = sql.exec_stored_procedure('spGlobalsApp_AllSystemStats')
+  File "\\tdlpathology\docs\TDL\IT\Chris Ekin\GitHub\Global_Codes_App\Global Codes App\Global_Codes_App\sql.py", line 19, in exec_stored_procedure
+    cursor.execute(sql)
+Error: ('08004', '[08004] [Microsoft][ODBC SQL Server Driver][SQL Server]The server principal "TDLPATHOLOGY\\cekin" is not able to access the database "RFH_BIO_DW" under the current security context. (916) (SQLExecDirectW)')
+-----07/10/2015 23:36
+Error getting dashboard data:
+Traceback (most recent call last):
+  File "\\tdlpathology\docs\TDL\IT\Chris Ekin\GitHub\Global_Codes_App\Global Codes App\Global_Codes_App\views.py", line 218, in dashboard
+    data = sql.exec_stored_procedure('spGlobalsApp_AllSystemStats')
+  File "\\tdlpathology\docs\TDL\IT\Chris Ekin\GitHub\Global_Codes_App\Global Codes App\Global_Codes_App\sql.py", line 19, in exec_stored_procedure
+    cursor.execute(sql)
+Error: ('08004', '[08004] [Microsoft][ODBC SQL Server Driver][SQL Server]The server principal "TDLPATHOLOGY\\cekin" is not able to access the database "RFH_BIO_DW" under the current security context. (916) (SQLExecDirectW)')
+-----07/10/2015 23:37
+Error getting dashboard data:
+Traceback (most recent call last):
+  File "\\tdlpathology\docs\TDL\IT\Chris Ekin\GitHub\Global_Codes_App\Global Codes App\Global_Codes_App\views.py", line 218, in dashboard
+    data = sql.exec_stored_procedure('spGlobalsApp_AllSystemStats')
+  File "\\tdlpathology\docs\TDL\IT\Chris Ekin\GitHub\Global_Codes_App\Global Codes App\Global_Codes_App\sql.py", line 19, in exec_stored_procedure
+    cursor.execute(sql)
+Error: ('08004', '[08004] [Microsoft][ODBC SQL Server Driver][SQL Server]The server principal "TDLPATHOLOGY\\cekin" is not able to access the database "RFH_BIO_DW" under the current security context. (916) (SQLExecDirectW)')
+-----07/10/2015 23:37
+Error getting dashboard data:
+Traceback (most recent call last):
+  File "\\tdlpathology\docs\TDL\IT\Chris Ekin\GitHub\Global_Codes_App\Global Codes App\Global_Codes_App\views.py", line 218, in dashboard
+    data = sql.exec_stored_procedure('spGlobalsApp_AllSystemStats')
+  File "\\tdlpathology\docs\TDL\IT\Chris Ekin\GitHub\Global_Codes_App\Global Codes App\Global_Codes_App\sql.py", line 19, in exec_stored_procedure
+    cursor.execute(sql)
+Error: ('08004', '[08004] [Microsoft][ODBC SQL Server Driver][SQL Server]The server principal "TDLPATHOLOGY\\cekin" is not able to access the database "RFH_BIO_DW" under the current security context. (916) (SQLExecDirectW)')
+-----07/10/2015 23:38
+Error getting dashboard data:
+Traceback (most recent call last):
+  File "\\tdlpathology\docs\TDL\IT\Chris Ekin\GitHub\Global_Codes_App\Global Codes App\Global_Codes_App\views.py", line 218, in dashboard
+    data = sql.exec_stored_procedure('spGlobalsApp_AllSystemStats')
+  File "\\tdlpathology\docs\TDL\IT\Chris Ekin\GitHub\Global_Codes_App\Global Codes App\Global_Codes_App\sql.py", line 19, in exec_stored_procedure
+    cursor.execute(sql)
+Error: ('08004', '[08004] [Microsoft][ODBC SQL Server Driver][SQL Server]The server principal "TDLPATHOLOGY\\cekin" is not able to access the database "RFH_BIO_DW" under the current security context. (916) (SQLExecDirectW)')
+-----07/10/2015 23:38
+Error getting dashboard data:
+Traceback (most recent call last):
+  File "\\tdlpathology\docs\TDL\IT\Chris Ekin\GitHub\Global_Codes_App\Global Codes App\Global_Codes_App\views.py", line 218, in dashboard
+    data = sql.exec_stored_procedure('spGlobalsApp_AllSystemStats')
+  File "\\tdlpathology\docs\TDL\IT\Chris Ekin\GitHub\Global_Codes_App\Global Codes App\Global_Codes_App\sql.py", line 19, in exec_stored_procedure
+    cursor.execute(sql)
+Error: ('08004', '[08004] [Microsoft][ODBC SQL Server Driver][SQL Server]The server principal "TDLPATHOLOGY\\cekin" is not able to access the database "RFH_BIO_DW" under the current security context. (916) (SQLExecDirectW)')
+-----07/10/2015 23:41
+Error getting dashboard data:
+Traceback (most recent call last):
+  File "\\tdlpathology\docs\TDL\IT\Chris Ekin\GitHub\Global_Codes_App\Global Codes App\Global_Codes_App\views.py", line 218, in dashboard
+    data = sql.exec_stored_procedure('spGlobalsApp_AllSystemStats')
+  File "\\tdlpathology\docs\TDL\IT\Chris Ekin\GitHub\Global_Codes_App\Global Codes App\Global_Codes_App\sql.py", line 19, in exec_stored_procedure
+    cursor.execute(sql)
+Error: ('HY007', '[HY007] [Microsoft][ODBC SQL Server Driver]Associated statement is not prepared (0) (SQLNumResultCols)')
+-----07/10/2015 23:41
+Error getting dashboard data:
+Traceback (most recent call last):
+  File "\\tdlpathology\docs\TDL\IT\Chris Ekin\GitHub\Global_Codes_App\Global Codes App\Global_Codes_App\views.py", line 218, in dashboard
+    data = sql.exec_stored_procedure('spGlobalsApp_AllSystemStats')
+  File "\\tdlpathology\docs\TDL\IT\Chris Ekin\GitHub\Global_Codes_App\Global Codes App\Global_Codes_App\sql.py", line 19, in exec_stored_procedure
+    cursor.execute(sql)
+Error: ('HY007', '[HY007] [Microsoft][ODBC SQL Server Driver]Associated statement is not prepared (0) (SQLNumResultCols)')
+-----07/10/2015 23:41
+Error getting dashboard data:
+Traceback (most recent call last):
+  File "\\tdlpathology\docs\TDL\IT\Chris Ekin\GitHub\Global_Codes_App\Global Codes App\Global_Codes_App\views.py", line 218, in dashboard
+    data = sql.exec_stored_procedure('spGlobalsApp_AllSystemStats')
+  File "\\tdlpathology\docs\TDL\IT\Chris Ekin\GitHub\Global_Codes_App\Global Codes App\Global_Codes_App\sql.py", line 19, in exec_stored_procedure
+    cursor.execute(sql)
+Error: ('HY007', '[HY007] [Microsoft][ODBC SQL Server Driver]Associated statement is not prepared (0) (SQLNumResultCols)')
+-----07/10/2015 23:48
+Error getting dashboard data:
+Traceback (most recent call last):
+  File "\\tdlpathology\docs\TDL\IT\Chris Ekin\GitHub\Global_Codes_App\Global Codes App\Global_Codes_App\views.py", line 218, in dashboard
+    data = sql.exec_stored_procedure('spGlobalsApp_AllSystemStats')
+  File "\\tdlpathology\docs\TDL\IT\Chris Ekin\GitHub\Global_Codes_App\Global Codes App\Global_Codes_App\sql.py", line 21, in exec_stored_procedure
+    cursor.execute(sql)
+Error: ('HY007', '[HY007] [Microsoft][ODBC SQL Server Driver]Associated statement is not prepared (0) (SQLNumResultCols)')
+-----07/10/2015 23:48
+Error getting dashboard data:
+Traceback (most recent call last):
+  File "\\tdlpathology\docs\TDL\IT\Chris Ekin\GitHub\Global_Codes_App\Global Codes App\Global_Codes_App\views.py", line 218, in dashboard
+    data = sql.exec_stored_procedure('spGlobalsApp_AllSystemStats')
+  File "\\tdlpathology\docs\TDL\IT\Chris Ekin\GitHub\Global_Codes_App\Global Codes App\Global_Codes_App\sql.py", line 21, in exec_stored_procedure
+    cursor.execute(sql)
+Error: ('HY007', '[HY007] [Microsoft][ODBC SQL Server Driver]Associated statement is not prepared (0) (SQLNumResultCols)')
+-----07/10/2015 23:50
+Error getting dashboard data:
+Traceback (most recent call last):
+  File "\\tdlpathology\docs\TDL\IT\Chris Ekin\GitHub\Global_Codes_App\Global Codes App\Global_Codes_App\views.py", line 218, in dashboard
+    data = sql.exec_stored_procedure('spGlobalsApp_AllSystemStats')
+  File "\\tdlpathology\docs\TDL\IT\Chris Ekin\GitHub\Global_Codes_App\Global Codes App\Global_Codes_App\sql.py", line 21, in exec_stored_procedure
+    cursor.execute(sql)
+Error: ('HY007', '[HY007] [Microsoft][ODBC SQL Server Driver]Associated statement is not prepared (0) (SQLNumResultCols)')

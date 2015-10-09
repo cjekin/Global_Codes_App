@@ -1,0 +1,76 @@
+{% extends "layout.html" %}
+
+{% block content %}
+
+<div class="normalheader transition animated fadeIn">
+    <div class="hpanel">
+        <div class="panel-body">
+            <i class="pe-7s-global fa-4x pull-right"></i>
+            <a class="small-header-action" href="">
+                <div class="clip-header">
+                    <i class="fa fa-arrow-up"></i>
+                </div>
+            </a>
+
+            <h2 class="font-light m-b-xs">
+                Global Codes Editor
+            </h2>
+            <small>Client editor for global codes for all systems.</small>
+        </div>
+    </div>
+</div>
+
+
+<!--<div id="global_code_editor_main" class="content animate-panel" data-effect="fadeIn">-->
+<div id="global_code_dashboard_main" class="content animate-panel">
+
+
+<!--Library Code Search-->
+<div class="row">
+    <!-- Library Search Panel -->
+    <div class="col-lg-4 col-md-4">
+
+        <!--Widget showing mapping stats-->
+        <div class="hpanel stats">
+            <div class="panel-body h-200">
+                <div class="stats-title pull-left">
+                    <h4>WSL_ALL_DW</h4>
+                </div>
+                <div class="m-t-xl">
+                    <span id="system-overview-total-percent" class="font-bold no-margins">
+                        A-HAEMATOLOGY ( 234 / 265 )
+                    </span>
+
+                    <div class="progress m-t-xs full progress-small">
+                        <div id="system-overview-total-progress" style="width: 40%" aria-valuemax="100" aria-valuemin="0" aria-valuenow="55"
+                                role="progressbar" class="progress-bar progress-bar-success">
+                            <span class="sr-only">40% Complete (success)</span>
+                        </div>
+                    </div>
+
+                    <span id="Span1" class="font-bold no-margins">
+                        A-HAEMATOLOGY ( 234 / 265 )
+                    </span>
+
+                    <div class="progress m-t-xs full progress-small">
+                        <div id="Div1" style="width: 40%" aria-valuemax="100" aria-valuemin="0" aria-valuenow="55"
+                                role="progressbar" class="progress-bar progress-bar-success">
+                            <span class="sr-only">40% Complete (success)</span>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div> <!-- End of col -->
+
+</div> <!--Close library code row-->
+
+
+</div><!-- Main Panel Closing tag -->
+
+{% endblock %}
+
+{% block scripts %}
+<!--<script src="static/scripts/dashboard.js"></script>-->
+{% endblock %}
