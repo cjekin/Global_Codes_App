@@ -272,7 +272,7 @@ function tfc_plus_click() {
         } else {
             var h = data['data'][0];
             var d = data['data'][1];
-            var exclusion_options = ['None', 'Not Requested', 'Internal', 'Title', 'Comment'];
+            var exclusion_options = ['None', 'Not Requested', 'Internal', 'Title', 'Comment','SubResult'];
             var out = '<tr class="extra-tfc-info"><td colspan="12">';
             out += '<div class="row"><div class="col-md-4">';
             out += '<div class="form">Exclusion:<select class="tfc_exclusion form-control input-sm m-b">';
