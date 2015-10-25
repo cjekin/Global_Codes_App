@@ -134,3 +134,175 @@ Traceback (most recent call last):
   File "\\tdlpathology\docs\TDL\IT\Chris Ekin\GitHub\Global_Codes_App\Global Codes App\Global_Codes_App\sql.py", line 21, in exec_stored_procedure
     cursor.execute(sql)
 Error: ('HY007', '[HY007] [Microsoft][ODBC SQL Server Driver]Associated statement is not prepared (0) (SQLNumResultCols)')
+-----23/10/2015 17:10
+Error getting dashboard data:
+Traceback (most recent call last):
+  File "\\tdlpathology\docs\TDL\IT\Chris Ekin\GitHub\Global_Codes_App\Global Codes App\Global_Codes_App\views.py", line 221, in dashboard
+    if row['System'] not in D:
+TypeError: string indices must be integers, not str
+-----23/10/2015 17:11
+Error getting dashboard data:
+Traceback (most recent call last):
+  File "\\tdlpathology\docs\TDL\IT\Chris Ekin\GitHub\Global_Codes_App\Global Codes App\Global_Codes_App\views.py", line 221, in dashboard
+    for row in data:
+TypeError: string indices must be integers, not str
+-----23/10/2015 17:12
+Error getting dashboard data:
+Traceback (most recent call last):
+  File "\\tdlpathology\docs\TDL\IT\Chris Ekin\GitHub\Global_Codes_App\Global Codes App\Global_Codes_App\views.py", line 222, in dashboard
+    if row['System'] not in D:
+TypeError: string indices must be integers, not str
+-----23/10/2015 17:20
+Error executing spGlobalsApp_GlobalEditor:
+Traceback (most recent call last):
+  File "\\tdlpathology\docs\TDL\IT\Chris Ekin\GitHub\Global_Codes_App\Global Codes App\Global_Codes_App\views.py", line 248, in globalseditor
+    result = sql.exec_stored_procedure_list('spGlobalsApp_GlobalEditor', None, True)
+  File "\\tdlpathology\docs\TDL\IT\Chris Ekin\GitHub\Global_Codes_App\Global Codes App\Global_Codes_App\sql.py", line 35, in exec_stored_procedure_list
+    for a in arguements:
+TypeError: 'NoneType' object is not iterable
+-----23/10/2015 17:21
+Error executing spGlobalsApp_GlobalEditor:
+Traceback (most recent call last):
+  File "\\tdlpathology\docs\TDL\IT\Chris Ekin\GitHub\Global_Codes_App\Global Codes App\Global_Codes_App\views.py", line 248, in globalseditor
+    result = sql.exec_stored_procedure_list('spGlobalsApp_GlobalEditor', [], True)
+  File "\\tdlpathology\docs\TDL\IT\Chris Ekin\GitHub\Global_Codes_App\Global Codes App\Global_Codes_App\sql.py", line 35, in exec_stored_procedure_list
+    for a in arguements:
+TypeError: 'NoneType' object is not iterable
+-----23/10/2015 17:21
+Error executing spGlobalsApp_GlobalEditor:
+Traceback (most recent call last):
+  File "\\tdlpathology\docs\TDL\IT\Chris Ekin\GitHub\Global_Codes_App\Global Codes App\Global_Codes_App\views.py", line 248, in globalseditor
+    result = sql.exec_stored_procedure_list('spGlobalsApp_GlobalEditor', [], True)
+  File "\\tdlpathology\docs\TDL\IT\Chris Ekin\GitHub\Global_Codes_App\Global Codes App\Global_Codes_App\sql.py", line 35, in exec_stored_procedure_list
+    for a in arguements:
+TypeError: 'NoneType' object is not iterable
+-----23/10/2015 17:22
+Error executing spGlobalsApp_GlobalEditor:
+Traceback (most recent call last):
+  File "\\tdlpathology\docs\TDL\IT\Chris Ekin\GitHub\Global_Codes_App\Global Codes App\Global_Codes_App\views.py", line 248, in globalseditor
+    result = sql.exec_stored_procedure_list('spGlobalsApp_GlobalEditor', header_row=True)
+  File "\\tdlpathology\docs\TDL\IT\Chris Ekin\GitHub\Global_Codes_App\Global Codes App\Global_Codes_App\sql.py", line 53, in exec_stored_procedure_list
+    print 'Problem with ', raw_data[i][j]
+  File "C:\Anaconda\lib\encodings\cp437.py", line 12, in encode
+    return codecs.charmap_encode(input,errors,encoding_map)
+UnicodeEncodeError: 'charmap' codec can't encode character u'\u2010' in position 8: character maps to <undefined>
+-----23/10/2015 17:22
+Error executing spGlobalsApp_GlobalEditor:
+Traceback (most recent call last):
+  File "\\tdlpathology\docs\TDL\IT\Chris Ekin\GitHub\Global_Codes_App\Global Codes App\Global_Codes_App\views.py", line 248, in globalseditor
+    result = sql.exec_stored_procedure_list('spGlobalsApp_GlobalEditor', header_row=True)
+  File "\\tdlpathology\docs\TDL\IT\Chris Ekin\GitHub\Global_Codes_App\Global Codes App\Global_Codes_App\sql.py", line 53, in exec_stored_procedure_list
+    print 'Problem with ', raw_data[i][j]
+  File "C:\Anaconda\lib\encodings\cp437.py", line 12, in encode
+    return codecs.charmap_encode(input,errors,encoding_map)
+UnicodeEncodeError: 'charmap' codec can't encode character u'\u2010' in position 8: character maps to <undefined>
+-----23/10/2015 17:23
+Error executing spGlobalsApp_GlobalEditor:
+Traceback (most recent call last):
+  File "\\tdlpathology\docs\TDL\IT\Chris Ekin\GitHub\Global_Codes_App\Global Codes App\Global_Codes_App\views.py", line 248, in globalseditor
+    result = sql.exec_stored_procedure_list('spGlobalsApp_GlobalEditor', header_row=True)
+  File "\\tdlpathology\docs\TDL\IT\Chris Ekin\GitHub\Global_Codes_App\Global Codes App\Global_Codes_App\sql.py", line 53, in exec_stored_procedure_list
+    print 'Problem with ', raw_data[i][j]
+  File "C:\Anaconda\lib\encodings\cp437.py", line 12, in encode
+    return codecs.charmap_encode(input,errors,encoding_map)
+UnicodeEncodeError: 'charmap' codec can't encode character u'\u2010' in position 8: character maps to <undefined>
+-----23/10/2015 17:24
+Error executing spGlobalsApp_GlobalEditor:
+Traceback (most recent call last):
+  File "\\tdlpathology\docs\TDL\IT\Chris Ekin\GitHub\Global_Codes_App\Global Codes App\Global_Codes_App\views.py", line 248, in globalseditor
+    result = sql.exec_stored_procedure_list('spGlobalsApp_GlobalEditor', header_row=True)
+  File "\\tdlpathology\docs\TDL\IT\Chris Ekin\GitHub\Global_Codes_App\Global Codes App\Global_Codes_App\sql.py", line 53, in exec_stored_procedure_list
+    print 'Problem with ', raw_data[i][j]
+  File "C:\Anaconda\lib\encodings\cp437.py", line 12, in encode
+    return codecs.charmap_encode(input,errors,encoding_map)
+UnicodeEncodeError: 'charmap' codec can't encode character u'\u2010' in position 8: character maps to <undefined>
+-----23/10/2015 17:27
+Error executing spGlobalsApp_GlobalEditor:
+Traceback (most recent call last):
+  File "\\tdlpathology\docs\TDL\IT\Chris Ekin\GitHub\Global_Codes_App\Global Codes App\Global_Codes_App\views.py", line 248, in globalseditor
+    result = sql.exec_stored_procedure_list('spGlobalsApp_GlobalEditor', header_row=True)
+  File "\\tdlpathology\docs\TDL\IT\Chris Ekin\GitHub\Global_Codes_App\Global Codes App\Global_Codes_App\sql.py", line 54, in exec_stored_procedure_list
+    print 'Problem with ', raw_data[i][j]
+  File "C:\Anaconda\lib\encodings\cp437.py", line 12, in encode
+    return codecs.charmap_encode(input,errors,encoding_map)
+UnicodeEncodeError: 'charmap' codec can't encode character u'\u2010' in position 8: character maps to <undefined>
+-----25/10/2015 10:17
+Error executing spGlobalsApp_GlobalEditor:
+Traceback (most recent call last):
+  File "\\tdlpathology\docs\TDL\IT\Chris Ekin\GitHub\Global_Codes_App\Global Codes App\Global_Codes_App\views.py", line 260, in globalseditordata
+    result = sql.exec_stored_procedure_list('spGlobalsApp_GlobalEditor', arguements=[department], header_row=False)
+  File "\\tdlpathology\docs\TDL\IT\Chris Ekin\GitHub\Global_Codes_App\Global Codes App\Global_Codes_App\sql.py", line 45, in exec_stored_procedure_list
+    raw_data = cursor.fetchall()
+ProgrammingError: No results.  Previous SQL was not a query.
+-----25/10/2015 10:18
+Error executing spGlobalsApp_GlobalEditor:
+Traceback (most recent call last):
+  File "\\tdlpathology\docs\TDL\IT\Chris Ekin\GitHub\Global_Codes_App\Global Codes App\Global_Codes_App\views.py", line 260, in globalseditordata
+    result = sql.exec_stored_procedure_list('spGlobalsApp_GlobalEditor', arguements=[department], header_row=False)
+  File "\\tdlpathology\docs\TDL\IT\Chris Ekin\GitHub\Global_Codes_App\Global Codes App\Global_Codes_App\sql.py", line 46, in exec_stored_procedure_list
+    raw_data = cursor.fetchall()
+ProgrammingError: No results.  Previous SQL was not a query.
+-----25/10/2015 10:22
+Error executing spGlobalsApp_GlobalEditor:
+Traceback (most recent call last):
+  File "\\tdlpathology\docs\TDL\IT\Chris Ekin\GitHub\Global_Codes_App\Global Codes App\Global_Codes_App\views.py", line 261, in globalseditordata
+    result = sql.exec_stored_procedure_list('spGlobalsApp_GlobalEditor', [department])
+  File "\\tdlpathology\docs\TDL\IT\Chris Ekin\GitHub\Global_Codes_App\Global Codes App\Global_Codes_App\sql.py", line 46, in exec_stored_procedure_list
+    raw_data = cursor.fetchall()
+ProgrammingError: No results.  Previous SQL was not a query.
+-----25/10/2015 10:23
+Error executing spGlobalsApp_GlobalEditor:
+Traceback (most recent call last):
+  File "\\tdlpathology\docs\TDL\IT\Chris Ekin\GitHub\Global_Codes_App\Global Codes App\Global_Codes_App\views.py", line 261, in globalseditordata
+    result = sql.exec_stored_procedure_list('spGlobalsApp_GlobalEditor')
+  File "\\tdlpathology\docs\TDL\IT\Chris Ekin\GitHub\Global_Codes_App\Global Codes App\Global_Codes_App\sql.py", line 45, in exec_stored_procedure_list
+    cursor.execute(sql)
+ProgrammingError: ('42000', "[42000] [Microsoft][ODBC SQL Server Driver][SQL Server]Procedure or function 'spGlobalsApp_GlobalEditor' expects parameter '@department', which was not supplied. (201) (SQLExecDirectW)")
+-----25/10/2015 10:24
+Error executing spGlobalsApp_GlobalEditor:
+Traceback (most recent call last):
+  File "\\tdlpathology\docs\TDL\IT\Chris Ekin\GitHub\Global_Codes_App\Global Codes App\Global_Codes_App\views.py", line 261, in globalseditordata
+    result = sql.exec_stored_procedure_list('spGlobalsApp_GlobalEditor')
+  File "\\tdlpathology\docs\TDL\IT\Chris Ekin\GitHub\Global_Codes_App\Global Codes App\Global_Codes_App\sql.py", line 46, in exec_stored_procedure_list
+    raw_data = cursor.fetchall()
+ProgrammingError: No results.  Previous SQL was not a query.
+-----25/10/2015 10:31
+Error executing spGlobalsApp_GlobalEditor:
+Traceback (most recent call last):
+  File "\\tdlpathology\docs\TDL\IT\Chris Ekin\GitHub\Global_Codes_App\Global Codes App\Global_Codes_App\views.py", line 261, in globalseditordata
+    result = sql.exec_stored_procedure_list('spGlobalsApp_GlobalEditor')
+  File "\\tdlpathology\docs\TDL\IT\Chris Ekin\GitHub\Global_Codes_App\Global Codes App\Global_Codes_App\sql.py", line 46, in exec_stored_procedure_list
+    raw_data = cursor.fetchall()
+ProgrammingError: No results.  Previous SQL was not a query.
+-----25/10/2015 10:50
+Error executing spGlobalsApp_GlobalEditor:
+Traceback (most recent call last):
+  File "\\tdlpathology\docs\TDL\IT\Chris Ekin\GitHub\Global_Codes_App\Global Codes App\Global_Codes_App\views.py", line 261, in globalseditordata
+    result = sql.exec_stored_procedure_list('spGlobalsApp_GlobalEditor')
+  File "\\tdlpathology\docs\TDL\IT\Chris Ekin\GitHub\Global_Codes_App\Global Codes App\Global_Codes_App\sql.py", line 46, in exec_stored_procedure_list
+    raw_data = cursor.fetchall()
+ProgrammingError: No results.  Previous SQL was not a query.
+-----25/10/2015 10:52
+Error executing spGlobalsApp_GlobalEditor:
+Traceback (most recent call last):
+  File "\\tdlpathology\docs\TDL\IT\Chris Ekin\GitHub\Global_Codes_App\Global Codes App\Global_Codes_App\views.py", line 261, in globalseditordata
+    result = sql.exec_stored_procedure_list('spGlobalsApp_GlobalEditor')
+  File "\\tdlpathology\docs\TDL\IT\Chris Ekin\GitHub\Global_Codes_App\Global Codes App\Global_Codes_App\sql.py", line 46, in exec_stored_procedure_list
+    raw_data = cursor.fetchall()
+ProgrammingError: No results.  Previous SQL was not a query.
+-----25/10/2015 10:53
+Error executing spGlobalsApp_GlobalEditor:
+Traceback (most recent call last):
+  File "\\tdlpathology\docs\TDL\IT\Chris Ekin\GitHub\Global_Codes_App\Global Codes App\Global_Codes_App\views.py", line 261, in globalseditordata
+    result = sql.exec_stored_procedure_list('spGlobalsApp_GlobalEditor')
+  File "\\tdlpathology\docs\TDL\IT\Chris Ekin\GitHub\Global_Codes_App\Global Codes App\Global_Codes_App\sql.py", line 46, in exec_stored_procedure_list
+    raw_data = cursor.fetchall()
+ProgrammingError: No results.  Previous SQL was not a query.
+-----25/10/2015 11:47
+Error executing spGlobalsApp_GlobalEditor:
+Traceback (most recent call last):
+  File "\\tdlpathology\docs\TDL\IT\Chris Ekin\GitHub\Global_Codes_App\Global Codes App\Global_Codes_App\views.py", line 261, in globalseditordata
+    result = sql.exec_stored_procedure_list('spGlobalsApp_GlobalEditor',[department])
+  File "\\tdlpathology\docs\TDL\IT\Chris Ekin\GitHub\Global_Codes_App\Global Codes App\Global_Codes_App\sql.py", line 41, in exec_stored_procedure_list
+    sql = "EXEC %s %s;" % (stored_procedure,','.join(args))
+TypeError: sequence item 0: expected string, NoneType found

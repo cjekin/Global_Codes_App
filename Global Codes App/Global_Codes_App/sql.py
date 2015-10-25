@@ -40,6 +40,7 @@ def exec_stored_procedure_list(stored_procedure, arguements=[], header_row=False
     
     sql = "EXEC %s %s;" % (stored_procedure,','.join(args))
     data = {}
+    print 'Running SQL: ', sql
            
     cursor.execute(sql)
     raw_data = cursor.fetchall()
@@ -50,7 +51,7 @@ def exec_stored_procedure_list(stored_procedure, arguements=[], header_row=False
             try:
                 raw_data[i][j] = str(raw_data[i][j])
             except:
-                print 'Problem with ', raw_data[i][j]
+                print 'Problem with raw data row ', i, ' col ', j
             raw_data[i][j] =  ''.join([c if ord(c) < 128 else ' ' for c in raw_data[i][j]]) 
 
     output_list = []

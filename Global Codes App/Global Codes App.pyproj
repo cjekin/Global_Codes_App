@@ -421,6 +421,7 @@
     <Content Include="Global_Codes_App\static\images\profile.jpg" />
     <Content Include="Global_Codes_App\static\scripts\dashboard.js" />
     <Content Include="Global_Codes_App\static\scripts\editor.js" />
+    <Content Include="Global_Codes_App\static\scripts\globaleditor.js" />
     <Content Include="Global_Codes_App\static\styles\img\green%402x.png" />
     <Content Include="Global_Codes_App\static\styles\img\green.png" />
     <Content Include="Global_Codes_App\static\styles\static_custom.css" />
@@ -2706,6 +2707,8 @@
     <Content Include="Global_Codes_App\templates\dashboard.html" />
     <Content Include="Global_Codes_App\templates\editor.html" />
     <Content Include="Global_Codes_App\templates\editor_modal.html" />
+    <Content Include="Global_Codes_App\templates\globaleditor.html" />
+    <Content Include="Global_Codes_App\static\scripts\globaleditor_test.js" />
     <Content Include="requirements.txt" />
     <Content Include="Global_Codes_App\static\content\bootstrap.css" />
     <Content Include="Global_Codes_App\static\content\bootstrap.min.css" />

@@ -19,6 +19,7 @@ def error_log(error):
 
 @app.route('/')
 @app.route('/home')
+@app.route('/editor')
 @login_required
 def home():
     return render_template(
@@ -235,6 +236,46 @@ def dashboard():
         year=datetime.now().year, 
         data = data
     )
+
+
+
+# Global editor page
+
+@app.route('/globaleditor')
+@login_required
+def globalseditor():
+    return render_template(
+        'globaleditor.html',
+        title='Global code editor',
+        year=datetime.now().year,
+    )
+
+
+@app.route('/globalseditordata')
+@login_required
+def globalseditordata():
+
+    try:
+        department = request.args.get('department')
+
+        result = sql.exec_stored_procedure_list('spGlobalsApp_GlobalEditor',[department])
+
+    except Exception, err:
+        error_log('Error executing spGlobalsApp_GlobalEditor:\n' + str(traceback.format_exc()))
+        print ('-----------\nError pulling all globals' + str(traceback.format_exc()))
+        result = dict(data = 'ERROR', error_detail='Problem running query')
+
+    json_data = jsonify(result)
+    return json_data
+
+@app.route('/editglobaldata')
+@login_required
+def editglobaldata():
+    print 'Editing global data!'
+
+
+
+
 
 
 

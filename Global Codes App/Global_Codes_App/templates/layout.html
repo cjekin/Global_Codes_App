@@ -19,6 +19,11 @@
     <link rel="stylesheet" href="static/vendor/sweetalert/lib/sweet-alert.css" />
     <link rel="stylesheet" href="static/vendor/datatables_plugins/yadcf/jquery.dataTables.yadcf.css" />
 
+    <link rel="stylesheet" type="text/css" href="static/vendor/datatables_extensions/DataTables-1.10.9/css/dataTables.bootstrap.min.css"/>
+    <link rel="stylesheet" type="text/css" href="static/vendor/datatables_extensions/Editor-1.5.1/css/editor.bootstrap.min.css"/>
+    <link rel="stylesheet" type="text/css" href="static/vendor/datatables_extensions/Buttons-1.0.3/css/buttons.bootstrap.min.css"/>
+    <!--<link rel="stylesheet" type="text/css" href="static/vendor/datatables_extensions/Select-1.0.1/css/select.bootstrap.min.css"/>-->
+
     <!-- App styles -->
     <link rel="stylesheet" href="static/fonts/pe-icon-7-stroke/css/pe-icon-7-stroke.css" />
     <link rel="stylesheet" href="static/fonts/pe-icon-7-stroke/css/helper.css" />
@@ -86,14 +91,16 @@
 
             <ul class="nav" id="side-menu">
                 <li>
-                    <a href="index.html"><span class="nav-label">Mapping</span></a>
+                    <a href="/dashboard"><span class="nav-label">Dashboard</span></a>
                 </li>
                 <li>
-                    <a href="analytics.html"><span class="nav-label">Globals</span> </a>
+                    <a href="/editor"><span class="nav-label">Mapping Editor</span></a>
                 </li>
-
                 <li>
-                    <a href="widgets.html"><span class="nav-label">Referrals</span> <span class="label label-warning pull-right">Beta</span></a>
+                    <a href="/globaleditor"><span class="nav-label">Global Editor</span> </a>
+                </li>
+                <li>
+                    <a href="/referrals"><span class="nav-label">Referrals</span> <span class="label label-warning pull-right">Beta</span></a>
                 </li>
             </ul>
         </div>
@@ -127,6 +134,14 @@
     <script src="static/vendor/nestable/jquery.nestable.js"></script>
     <script src="static/vendor/datatables/media/js/jquery.dataTables.min.js"></script>
     <script src="static/vendor/datatables_plugins/integration/bootstrap/3/dataTables.bootstrap.min.js"></script>
+
+    <!--Extra vendor scripts not suplied with Homer theme-->
+    <script type="text/javascript" src="static/vendor/datatables_extensions/DataTables-1.10.9/js/jquery.dataTables.min.js"></script>
+    <script type="text/javascript" src="static/vendor/datatables_extensions/Editor-1.5.1/js/dataTables.editor.min.js"></script>
+    <script type="text/javascript" src="static/vendor/datatables_extensions/Buttons-1.0.3/js/dataTables.buttons.min.js"></script>
+    <script type="text/javascript" src="static/vendor/datatables_extensions/Buttons-1.0.3/js/buttons.bootstrap.min.js"></script>
+    <script type="text/javascript" src="static/vendor/datatables_extensions/Buttons-1.0.3/js/buttons.colVis.min.js"></script>
+
     <script src="static/vendor/datatables_plugins/yadcf/jquery.dataTables.yadcf.js"></script>
     <script src="static/vendor/sweetalert/lib/sweet-alert.min.js"></script>
 
