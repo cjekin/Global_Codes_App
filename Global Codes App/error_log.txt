@@ -306,3 +306,35 @@ Traceback (most recent call last):
   File "\\tdlpathology\docs\TDL\IT\Chris Ekin\GitHub\Global_Codes_App\Global Codes App\Global_Codes_App\sql.py", line 41, in exec_stored_procedure_list
     sql = "EXEC %s %s;" % (stored_procedure,','.join(args))
 TypeError: sequence item 0: expected string, NoneType found
+-----25/10/2015 22:59
+Error executing spGlobalsApp_GlobalEditor_DeptList:
+Traceback (most recent call last):
+  File "\\tdlpathology\docs\TDL\IT\Chris Ekin\GitHub\Global_Codes_App\Global Codes App\Global_Codes_App\views.py", line 290, in globals_department_list
+    departments = sql.exec_stored_procedure_list('spGlobalsApp_GlobalEditor_DeptList')
+  File "\\tdlpathology\docs\TDL\IT\Chris Ekin\GitHub\Global_Codes_App\Global Codes App\Global_Codes_App\sql.py", line 45, in exec_stored_procedure_list
+    cursor.execute(sql)
+ProgrammingError: ('42000', "[42000] [Microsoft][ODBC SQL Server Driver][SQL Server]Could not find stored procedure 'spGlobalsApp_GlobalEditor_DeptList'. (2812) (SQLExecDirectW)")
+-----25/10/2015 23:21
+Error executing spGlobalsApp_GlobalEditor:
+Traceback (most recent call last):
+  File "\\tdlpathology\docs\TDL\IT\Chris Ekin\GitHub\Global_Codes_App\Global Codes App\Global_Codes_App\views.py", line 282, in pull_all_tfcs_to_one_table
+    result = sql.exec_stored_procedure('spGlobalsApp_GlobalCodeDetail_LoadAllTFCs')
+  File "\\tdlpathology\docs\TDL\IT\Chris Ekin\GitHub\Global_Codes_App\Global Codes App\Global_Codes_App\sql.py", line 19, in exec_stored_procedure
+    headers = [column[0] for column in cursor.description]
+TypeError: 'NoneType' object is not iterable
+-----25/10/2015 23:23
+Error executing spGlobalsApp_GlobalEditor:
+Traceback (most recent call last):
+  File "\\tdlpathology\docs\TDL\IT\Chris Ekin\GitHub\Global_Codes_App\Global Codes App\Global_Codes_App\views.py", line 282, in pull_all_tfcs_to_one_table
+    result = sql.exec_stored_procedure('spGlobalsApp_GlobalCodeDetail_LoadAllTFCs')
+  File "\\tdlpathology\docs\TDL\IT\Chris Ekin\GitHub\Global_Codes_App\Global Codes App\Global_Codes_App\sql.py", line 19, in exec_stored_procedure
+    headers = [column[0] for column in cursor.description]
+TypeError: 'NoneType' object is not iterable
+-----25/10/2015 23:25
+Error executing spGlobalsApp_GlobalEditor:
+Traceback (most recent call last):
+  File "\\tdlpathology\docs\TDL\IT\Chris Ekin\GitHub\Global_Codes_App\Global Codes App\Global_Codes_App\views.py", line 282, in pull_all_tfcs_to_one_table
+    result = sql.exec_stored_procedure('spGlobalsApp_GlobalCodeDetail_LoadAllTFCs')
+  File "\\tdlpathology\docs\TDL\IT\Chris Ekin\GitHub\Global_Codes_App\Global Codes App\Global_Codes_App\sql.py", line 19, in exec_stored_procedure
+    headers = [column[0] for column in cursor.description]
+TypeError: 'NoneType' object is not iterable

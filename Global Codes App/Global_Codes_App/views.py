@@ -17,6 +17,40 @@ def error_log(error):
         print error
 
 
+@app.route('/logout')
+def logout():
+    logout_user()
+    flash('You were logged out.')
+
+    return redirect(url_for('show_posts'))
+
+
+@app.route('/login', methods=['GET', 'POST'])
+def login():
+    error = None
+
+    if request.method == 'POST':
+        try:
+            _user = User.from_login(
+                request.form['email'],
+                request.form['password'],
+            )
+            login_user(_user, remember=True)
+            flash('You were logged in.')
+
+            return redirect(url_for('home'))
+        except StormpathError, err:
+            error = err.message
+
+    return render_template('login.html', error=error)
+
+
+
+
+#
+# Editor page
+#
+
 @app.route('/')
 @app.route('/home')
 @app.route('/editor')
@@ -203,12 +237,8 @@ def get_more_tfc_info():
     return json_data
 
 
-@app.route('/logout')
-def logout():
-    logout_user()
-    flash('You were logged out.')
 
-    return redirect(url_for('show_posts'))
+
 
 
 
@@ -239,7 +269,28 @@ def dashboard():
 
 
 
+
+#
 # Global editor page
+#
+
+@app.route('/pull_all_tfcs_to_one_table')
+@login_required
+def pull_all_tfcs_to_one_table():
+    try:
+        cnxn = pyodbc.connect(config.connection_string)
+        cursor = cnxn.cursor()
+        sql = "EXEC spGlobalsApp_GlobalCodeDetail_LoadAllTFCs"
+        cursor.execute(sql)
+        result = dict(data = 'OK')
+    except:
+        error_log('Error executing pull_all_tfcs_to_one_table:\n' + str(traceback.format_exc()))
+        print ('-----------\nError pull_all_tfcs_to_one_table' + str(traceback.format_exc()))
+        result = dict(data = 'ERROR', error_detail='Problem running query')
+
+    json_data = jsonify(result)
+    return json_data
+
 
 @app.route('/globaleditor')
 @login_required
@@ -249,6 +300,19 @@ def globalseditor():
         title='Global code editor',
         year=datetime.now().year,
     )
+
+@app.route('/globals_department_list')
+@login_required
+def globals_department_list():
+    try:
+        result = sql.exec_stored_procedure_list('spGlobalsApp_GlobalCodeDetail_DeptList')
+    except Exception, err:
+        error_log('Error executing spGlobalsApp_GlobalEditor_DeptList:\n' + str(traceback.format_exc()))
+        print ('-----------\nError pulling all global departments' + str(traceback.format_exc()))
+        result = dict(data = 'ERROR', error_detail='Problem running query')
+
+    json_data = jsonify(result)
+    return json_data
 
 
 @app.route('/globalseditordata')
@@ -268,10 +332,30 @@ def globalseditordata():
     json_data = jsonify(result)
     return json_data
 
-@app.route('/editglobaldata')
+@app.route('/globalcodedetail')
 @login_required
-def editglobaldata():
-    print 'Editing global data!'
+def globalcodedetail():
+    print 'Clicked global code detail'
+
+    try:
+        code = request.args.get('code')
+        result = {}
+        result['info'] = sql.exec_stored_procedure('spGlobalsApp_GlobalCodeDetail_Info',[code])['result']
+        result['audit'] = sql.exec_stored_procedure('spGlobalsApp_GlobalCodeDetail_Audit',[code])['result']
+        result['mapping'] = sql.exec_stored_procedure('spGlobalsApp_GlobalCodeDetail_Mapping',[code])['result']
+        
+    except Exception, err:
+        error_log('Error executing spGlobalsApp_GlobalEditor:\n' + str(traceback.format_exc()))
+        print ('-----------\nError pulling all globals' + str(traceback.format_exc()))
+        result = dict(data = 'ERROR', error_detail='Problem running query')
+
+    json_data = jsonify(result)
+    return json_data
+
+
+
+
+
 
 
 
