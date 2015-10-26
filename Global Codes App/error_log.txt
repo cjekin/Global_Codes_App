@@ -338,3 +338,255 @@ Traceback (most recent call last):
   File "\\tdlpathology\docs\TDL\IT\Chris Ekin\GitHub\Global_Codes_App\Global Codes App\Global_Codes_App\sql.py", line 19, in exec_stored_procedure
     headers = [column[0] for column in cursor.description]
 TypeError: 'NoneType' object is not iterable
+-----26/10/2015 20:14
+Error getting dashboard data:
+Traceback (most recent call last):
+  File "\\tdlpathology\docs\TDL\IT\Chris Ekin\GitHub\Global_Codes_App\Global Codes App\Global_Codes_App\views.py", line 252, in dashboard
+    if row['System'] not in D:
+TypeError: string indices must be integers, not str
+-----26/10/2015 20:15
+Error getting dashboard data:
+Traceback (most recent call last):
+  File "\\tdlpathology\docs\TDL\IT\Chris Ekin\GitHub\Global_Codes_App\Global Codes App\Global_Codes_App\views.py", line 252, in dashboard
+    if row['System'] not in D:
+TypeError: string indices must be integers, not str
+-----26/10/2015 20:16
+Error getting dashboard data:
+Traceback (most recent call last):
+  File "\\tdlpathology\docs\TDL\IT\Chris Ekin\GitHub\Global_Codes_App\Global Codes App\Global_Codes_App\views.py", line 252, in dashboard
+    if row['System'] not in D:
+TypeError: string indices must be integers, not str
+-----26/10/2015 20:16
+Error getting dashboard data:
+Traceback (most recent call last):
+  File "\\tdlpathology\docs\TDL\IT\Chris Ekin\GitHub\Global_Codes_App\Global Codes App\Global_Codes_App\views.py", line 252, in dashboard
+    if row['System'] not in D:
+TypeError: string indices must be integers, not str
+-----26/10/2015 20:16
+Error getting dashboard data:
+Traceback (most recent call last):
+  File "\\tdlpathology\docs\TDL\IT\Chris Ekin\GitHub\Global_Codes_App\Global Codes App\Global_Codes_App\views.py", line 252, in dashboard
+    if row['System'] not in D:
+TypeError: string indices must be integers, not str
+-----26/10/2015 20:16
+Error getting dashboard data:
+Traceback (most recent call last):
+  File "\\tdlpathology\docs\TDL\IT\Chris Ekin\GitHub\Global_Codes_App\Global Codes App\Global_Codes_App\views.py", line 252, in dashboard
+    if row['System'] not in D:
+TypeError: string indices must be integers, not str
+-----26/10/2015 20:20
+Error getting dashboard data:
+Traceback (most recent call last):
+  File "\\tdlpathology\docs\TDL\IT\Chris Ekin\GitHub\Global_Codes_App\Global Codes App\Global_Codes_App\views.py", line 252, in dashboard
+    if row['System'] not in D:
+TypeError: string indices must be integers, not str
+-----26/10/2015 20:22
+Error getting dashboard data:
+Traceback (most recent call last):
+  File "\\tdlpathology\docs\TDL\IT\Chris Ekin\GitHub\Global_Codes_App\Global Codes App\Global_Codes_App\views.py", line 252, in dashboard
+    if row['System'] not in D:
+TypeError: string indices must be integers, not str
+-----26/10/2015 20:25
+Error getting dashboard data:
+Traceback (most recent call last):
+  File "\\tdlpathology\docs\TDL\IT\Chris Ekin\GitHub\Global_Codes_App\Global Codes App\Global_Codes_App\views.py", line 252, in dashboard
+    if row['System'] not in D:
+TypeError: string indices must be integers, not str
+-----26/10/2015 20:25
+Error getting dashboard data:
+Traceback (most recent call last):
+  File "\\tdlpathology\docs\TDL\IT\Chris Ekin\GitHub\Global_Codes_App\Global Codes App\Global_Codes_App\views.py", line 252, in dashboard
+    if row['System'] not in D:
+TypeError: string indices must be integers, not str
+-----26/10/2015 20:28
+Error getting dashboard data:
+Traceback (most recent call last):
+  File "\\tdlpathology\docs\TDL\IT\Chris Ekin\GitHub\Global_Codes_App\Global Codes App\Global_Codes_App\views.py", line 252, in dashboard
+    if row['System'] not in D:
+TypeError: string indices must be integers, not str
+-----26/10/2015 20:29
+Error getting dashboard data:
+Traceback (most recent call last):
+  File "\\tdlpathology\docs\TDL\IT\Chris Ekin\GitHub\Global_Codes_App\Global Codes App\Global_Codes_App\views.py", line 252, in dashboard
+    if row['System'] not in D:
+TypeError: string indices must be integers, not str
+-----26/10/2015 20:31
+Error getting dashboard data:
+Traceback (most recent call last):
+  File "\\tdlpathology\docs\TDL\IT\Chris Ekin\GitHub\Global_Codes_App\Global Codes App\Global_Codes_App\views.py", line 252, in dashboard
+    if row['System'] not in D:
+TypeError: string indices must be integers, not str
+-----26/10/2015 20:32
+Error getting dashboard data:
+Traceback (most recent call last):
+  File "\\tdlpathology\docs\TDL\IT\Chris Ekin\GitHub\Global_Codes_App\Global Codes App\Global_Codes_App\views.py", line 252, in dashboard
+    if row['System'] not in D:
+TypeError: string indices must be integers, not str
+-----26/10/2015 20:33
+Error getting dashboard data:
+Traceback (most recent call last):
+  File "\\tdlpathology\docs\TDL\IT\Chris Ekin\GitHub\Global_Codes_App\Global Codes App\Global_Codes_App\views.py", line 252, in dashboard
+    if row['System'] not in D:
+TypeError: string indices must be integers, not str
+-----26/10/2015 20:34
+Error getting dashboard data:
+Traceback (most recent call last):
+  File "\\tdlpathology\docs\TDL\IT\Chris Ekin\GitHub\Global_Codes_App\Global Codes App\Global_Codes_App\views.py", line 252, in dashboard
+    if row['System'] not in D:
+TypeError: string indices must be integers, not str
+-----26/10/2015 20:35
+Error getting dashboard data:
+Traceback (most recent call last):
+  File "\\tdlpathology\docs\TDL\IT\Chris Ekin\GitHub\Global_Codes_App\Global Codes App\Global_Codes_App\views.py", line 252, in dashboard
+    if row['System'] not in D:
+TypeError: string indices must be integers, not str
+-----26/10/2015 20:36
+Error getting dashboard data:
+Traceback (most recent call last):
+  File "\\tdlpathology\docs\TDL\IT\Chris Ekin\GitHub\Global_Codes_App\Global Codes App\Global_Codes_App\views.py", line 252, in dashboard
+    if row['System'] not in D:
+TypeError: string indices must be integers, not str
+-----26/10/2015 20:38
+Error getting dashboard data:
+Traceback (most recent call last):
+  File "\\tdlpathology\docs\TDL\IT\Chris Ekin\GitHub\Global_Codes_App\Global Codes App\Global_Codes_App\views.py", line 252, in dashboard
+    if row['System'] not in D:
+TypeError: string indices must be integers, not str
+-----26/10/2015 20:40
+Error getting dashboard data:
+Traceback (most recent call last):
+  File "\\tdlpathology\docs\TDL\IT\Chris Ekin\GitHub\Global_Codes_App\Global Codes App\Global_Codes_App\views.py", line 252, in dashboard
+    if row['System'] not in D:
+TypeError: string indices must be integers, not str
+-----26/10/2015 20:40
+Error getting dashboard data:
+Traceback (most recent call last):
+  File "\\tdlpathology\docs\TDL\IT\Chris Ekin\GitHub\Global_Codes_App\Global Codes App\Global_Codes_App\views.py", line 252, in dashboard
+    if row['System'] not in D:
+TypeError: string indices must be integers, not str
+-----26/10/2015 20:40
+Error getting dashboard data:
+Traceback (most recent call last):
+  File "\\tdlpathology\docs\TDL\IT\Chris Ekin\GitHub\Global_Codes_App\Global Codes App\Global_Codes_App\views.py", line 252, in dashboard
+    if row['System'] not in D:
+TypeError: string indices must be integers, not str
+-----26/10/2015 20:41
+Error getting dashboard data:
+Traceback (most recent call last):
+  File "\\tdlpathology\docs\TDL\IT\Chris Ekin\GitHub\Global_Codes_App\Global Codes App\Global_Codes_App\views.py", line 252, in dashboard
+    if row['System'] not in D:
+TypeError: string indices must be integers, not str
+-----26/10/2015 20:42
+Error getting dashboard data:
+Traceback (most recent call last):
+  File "\\tdlpathology\docs\TDL\IT\Chris Ekin\GitHub\Global_Codes_App\Global Codes App\Global_Codes_App\views.py", line 252, in dashboard
+    if row['System'] not in D:
+TypeError: string indices must be integers, not str
+-----26/10/2015 20:42
+Error getting dashboard data:
+Traceback (most recent call last):
+  File "\\tdlpathology\docs\TDL\IT\Chris Ekin\GitHub\Global_Codes_App\Global Codes App\Global_Codes_App\views.py", line 252, in dashboard
+    if row['System'] not in D:
+TypeError: string indices must be integers, not str
+-----26/10/2015 20:51
+Error getting dashboard data:
+Traceback (most recent call last):
+  File "\\tdlpathology\docs\TDL\IT\Chris Ekin\GitHub\Global_Codes_App\Global Codes App\Global_Codes_App\views.py", line 252, in dashboard
+    if row['System'] not in D:
+TypeError: string indices must be integers, not str
+-----26/10/2015 20:53
+Error getting dashboard data:
+Traceback (most recent call last):
+  File "\\tdlpathology\docs\TDL\IT\Chris Ekin\GitHub\Global_Codes_App\Global Codes App\Global_Codes_App\views.py", line 252, in dashboard
+    if row['System'] not in D:
+TypeError: string indices must be integers, not str
+-----26/10/2015 20:53
+Error getting dashboard data:
+Traceback (most recent call last):
+  File "\\tdlpathology\docs\TDL\IT\Chris Ekin\GitHub\Global_Codes_App\Global Codes App\Global_Codes_App\views.py", line 252, in dashboard
+    if row['System'] not in D:
+TypeError: string indices must be integers, not str
+-----26/10/2015 20:53
+Error getting dashboard data:
+Traceback (most recent call last):
+  File "\\tdlpathology\docs\TDL\IT\Chris Ekin\GitHub\Global_Codes_App\Global Codes App\Global_Codes_App\views.py", line 252, in dashboard
+    if row['System'] not in D:
+TypeError: string indices must be integers, not str
+-----26/10/2015 20:55
+Error getting dashboard data:
+Traceback (most recent call last):
+  File "\\tdlpathology\docs\TDL\IT\Chris Ekin\GitHub\Global_Codes_App\Global Codes App\Global_Codes_App\views.py", line 252, in dashboard
+    if row['System'] not in D:
+TypeError: string indices must be integers, not str
+-----26/10/2015 20:55
+Error getting dashboard data:
+Traceback (most recent call last):
+  File "\\tdlpathology\docs\TDL\IT\Chris Ekin\GitHub\Global_Codes_App\Global Codes App\Global_Codes_App\views.py", line 252, in dashboard
+    if row['System'] not in D:
+TypeError: string indices must be integers, not str
+-----26/10/2015 21:01
+Error getting dashboard data:
+Traceback (most recent call last):
+  File "\\tdlpathology\docs\TDL\IT\Chris Ekin\GitHub\Global_Codes_App\Global Codes App\Global_Codes_App\views.py", line 262, in dashboard_getdata
+    if row['System'] not in D:
+TypeError: string indices must be integers, not str
+-----26/10/2015 21:01
+Error getting dashboard data:
+Traceback (most recent call last):
+  File "\\tdlpathology\docs\TDL\IT\Chris Ekin\GitHub\Global_Codes_App\Global Codes App\Global_Codes_App\views.py", line 262, in dashboard_getdata
+    if row['System'] not in D:
+TypeError: string indices must be integers, not str
+-----26/10/2015 21:02
+Error getting dashboard data:
+Traceback (most recent call last):
+  File "\\tdlpathology\docs\TDL\IT\Chris Ekin\GitHub\Global_Codes_App\Global Codes App\Global_Codes_App\views.py", line 261, in dashboard_getdata
+    for row in data:
+NameError: global name 'data' is not defined
+-----26/10/2015 21:03
+Error getting dashboard data:
+Traceback (most recent call last):
+  File "\\tdlpathology\docs\TDL\IT\Chris Ekin\GitHub\Global_Codes_App\Global Codes App\Global_Codes_App\views.py", line 261, in dashboard_getdata
+    for row in data:
+NameError: global name 'data' is not defined
+-----26/10/2015 21:04
+Error getting dashboard data:
+Traceback (most recent call last):
+  File "\\tdlpathology\docs\TDL\IT\Chris Ekin\GitHub\Global_Codes_App\Global Codes App\Global_Codes_App\views.py", line 261, in dashboard_getdata
+    for row in data:
+NameError: global name 'data' is not defined
+-----26/10/2015 21:05
+Error getting dashboard data:
+Traceback (most recent call last):
+  File "\\tdlpathology\docs\TDL\IT\Chris Ekin\GitHub\Global_Codes_App\Global Codes App\Global_Codes_App\views.py", line 261, in dashboard_getdata
+    for row in data:
+NameError: global name 'data' is not defined
+-----26/10/2015 21:06
+Error getting dashboard data:
+Traceback (most recent call last):
+  File "\\tdlpathology\docs\TDL\IT\Chris Ekin\GitHub\Global_Codes_App\Global Codes App\Global_Codes_App\views.py", line 261, in dashboard_getdata
+    for row in data:
+NameError: global name 'data' is not defined
+-----26/10/2015 21:06
+Error getting dashboard data:
+Traceback (most recent call last):
+  File "\\tdlpathology\docs\TDL\IT\Chris Ekin\GitHub\Global_Codes_App\Global Codes App\Global_Codes_App\views.py", line 261, in dashboard_getdata
+    for row in data:
+NameError: global name 'data' is not defined
+-----26/10/2015 21:07
+Error getting dashboard data:
+Traceback (most recent call last):
+  File "\\tdlpathology\docs\TDL\IT\Chris Ekin\GitHub\Global_Codes_App\Global Codes App\Global_Codes_App\views.py", line 262, in dashboard_getdata
+    if row['System'] not in D:
+TypeError: string indices must be integers, not str
+-----26/10/2015 21:09
+Error getting dashboard data:
+Traceback (most recent call last):
+  File "\\tdlpathology\docs\TDL\IT\Chris Ekin\GitHub\Global_Codes_App\Global Codes App\Global_Codes_App\views.py", line 263, in dashboard_getdata
+    if row['System'] not in D:
+TypeError: string indices must be integers, not str
+-----26/10/2015 21:27
+Error getting dashboard data:
+Traceback (most recent call last):
+  File "\\tdlpathology\docs\TDL\IT\Chris Ekin\GitHub\Global_Codes_App\Global Codes App\Global_Codes_App\views.py", line 266, in dashboard_getdata
+    summary[system][0] += row[2]
+TypeError: unsupported operand type(s) for +=: 'int' and 'str'

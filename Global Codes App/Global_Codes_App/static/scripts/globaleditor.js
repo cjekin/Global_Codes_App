@@ -5,6 +5,7 @@ var current_global_code = 'BC_UE_NA';
 var current_global_name = 'Sodium';
 var info_headers = ['GlobalCode', 'Description', 'Sample', 'Type', 'Analyte', 'PrimaryLibrary', 'SubSection', 'Department', 'NLMC', 'SNOMEDCT_UK', 'LOINC', 'PBCL', 'Interface', 'MiddlewareCode'];
 
+$('.global_detail_class').hide();
 
 // Preload all the TFCs for quick lookup
 $.getJSON('/pull_all_tfcs_to_one_table', function (data) {
@@ -92,6 +93,7 @@ $("#global_code_datatable tbody").delegate("tr", "click", function () {
     current_global_name = $("td:eq(1)", this).text();
     console.log('You clicked: ' + current_global_code + ' : ' + current_global_name);
     fill_global_code_info(current_global_code);
+    $('.global_detail_class').show();
 });
 
 

@@ -239,33 +239,50 @@ def get_more_tfc_info():
 
 
 
-
-
+#
+# Dashboard
+#
 
 @app.route('/dashboard')
 def dashboard():
+    return render_template(
+        'dashboard.html',
+        title='Mapping Overview',
+        year=datetime.now().year
+    )
+
+
+@app.route('/dashboard_getdata')
+def dashboard_getdata():
 
     try:
-        data = sql.exec_stored_procedure('spGlobalsApp_AllSystemStats')
-        D = {}
-        for row in data:
-            if row['System'] not in D:
-                D[row['System']] = [row]
+        data = sql.exec_stored_procedure_list('spGlobalsApp_AllSystemStats')
+
+        summary = {}
+        for row in data['data']:
+            system = row[0]
+            if system not in summary:
+                summary[system] = [int(row[2]),int(row[3]),[row]]
             else:
-                D
+                summary[system][0] += int(row[2])
+                summary[system][1] += int(row[3])
+                summary[system][2].append(row)
+
+        for key in summary:
+            pct = int( float(summary[key][0]) / float(summary[key][1]) * 100 )
+            summary[key].append(pct)
+            summary[key][2] = sorted(summary[key][2])
+
+        data['data'] = summary
+        data['system'] = sorted([s for s in summary])
 
     except Exception, err:
         error_log('Error getting dashboard data:\n' + str(traceback.format_exc()))
         print ('-----------\n Error getting dashboard data:\n' + str(traceback.format_exc()))
         data = dict(data = 'ERROR', error_detail='Problem getting system overview')
 
-    print data
-    return render_template(
-        'dashboard.html',
-        title='Mapping Overview',
-        year=datetime.now().year, 
-        data = data
-    )
+    json_data = jsonify(data)
+    return json_data
 
 
 
