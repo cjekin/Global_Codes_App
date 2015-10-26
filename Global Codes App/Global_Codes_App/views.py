@@ -51,8 +51,6 @@ def login():
 # Editor page
 #
 
-@app.route('/')
-@app.route('/home')
 @app.route('/editor')
 @login_required
 def home():
@@ -243,7 +241,10 @@ def get_more_tfc_info():
 # Dashboard
 #
 
+@app.route('/')
+@app.route('/home')
 @app.route('/dashboard')
+@login_required
 def dashboard():
     return render_template(
         'dashboard.html',
@@ -253,6 +254,7 @@ def dashboard():
 
 
 @app.route('/dashboard_getdata')
+@login_required
 def dashboard_getdata():
 
     try:
