@@ -590,3 +590,45 @@ Traceback (most recent call last):
   File "\\tdlpathology\docs\TDL\IT\Chris Ekin\GitHub\Global_Codes_App\Global Codes App\Global_Codes_App\views.py", line 266, in dashboard_getdata
     summary[system][0] += row[2]
 TypeError: unsupported operand type(s) for +=: 'int' and 'str'
+-----08/11/2015 22:09
+Error reciving global code submission:
+Traceback (most recent call last):
+  File "\\tdlpathology\docs\TDL\IT\Chris Ekin\GitHub\Global_Codes_App\Global Codes App\Global_Codes_App\views.py", line 381, in global_edit_submit_changes
+    lookup = sql.exec_stored_procedure('spGlobalsApp_GlobalCodeDetail_Info',[code])['result']
+NameError: global name 'code' is not defined
+-----08/11/2015 22:26
+Error reciving global code submission:
+Traceback (most recent call last):
+  File "\\tdlpathology\docs\TDL\IT\Chris Ekin\GitHub\Global_Codes_App\Global Codes App\Global_Codes_App\views.py", line 386, in global_edit_submit_changes
+    print request.form[r]
+  File "C:\Anaconda\lib\site-packages\werkzeug\datastructures.py", line 393, in __getitem__
+    raise exceptions.BadRequestKeyError(key)
+BadRequestKeyError: 400: Bad Request
+-----08/11/2015 22:29
+Error reciving global code submission:
+Traceback (most recent call last):
+  File "\\tdlpathology\docs\TDL\IT\Chris Ekin\GitHub\Global_Codes_App\Global Codes App\Global_Codes_App\views.py", line 387, in global_edit_submit_changes
+    if lookup[r] <> request.form[r]:
+  File "C:\Anaconda\lib\site-packages\werkzeug\datastructures.py", line 393, in __getitem__
+    raise exceptions.BadRequestKeyError(key)
+BadRequestKeyError: 400: Bad Request
+-----08/11/2015 22:51
+Error reciving global code submission:
+Traceback (most recent call last):
+  File "\\tdlpathology\docs\TDL\IT\Chris Ekin\GitHub\Global_Codes_App\Global Codes App\Global_Codes_App\views.py", line 392, in global_edit_submit_changes
+    update_global_code_fields(code, updates)
+NameError: global name 'update_global_code_fields' is not defined
+-----08/11/2015 22:52
+Error reciving global code submission:
+Traceback (most recent call last):
+  File "\\tdlpathology\docs\TDL\IT\Chris Ekin\GitHub\Global_Codes_App\Global Codes App\Global_Codes_App\views.py", line 392, in global_edit_submit_changes
+    sql.update_global_code_fields(code, updates)
+  File "\\tdlpathology\docs\TDL\IT\Chris Ekin\GitHub\Global_Codes_App\Global Codes App\Global_Codes_App\sql.py", line 233, in update_global_code_fields
+    cursor.execute(sql)
+ProgrammingError: ('42S22', "[42S22] [Microsoft][ODBC SQL Server Driver][SQL Server]Invalid column name 'AFP2'. (207) (SQLExecDirectW)")
+-----09/11/2015 00:07
+Error reciving global code submission:
+Traceback (most recent call last):
+  File "\\tdlpathology\docs\TDL\IT\Chris Ekin\GitHub\Global_Codes_App\Global Codes App\Global_Codes_App\views.py", line 410, in global_edit_new_code
+    lookup = sql.exec_stored_procedure('spGlobalsApp_GlobalCodeDetail_Info',[code])['result'][0]
+IndexError: list index out of range

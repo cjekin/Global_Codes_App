@@ -372,6 +372,64 @@ def globalcodedetail():
     return json_data
 
 
+@app.route('/global_edit_submit_changes', methods=['POST'])
+@login_required
+def global_edit_submit_changes():
+    print 'Submitting global code changes'
+
+    try:
+        code = request.form['GlobalCode']
+        lookup = sql.exec_stored_procedure('spGlobalsApp_GlobalCodeDetail_Info',[code])['result'][0]
+        
+        # Find the changes       
+        updates = {}
+        for r in lookup:
+            if r <> 'Alias':
+                if lookup[r] <> request.form[r]:
+                    updates[r] = request.form[r]
+        result = dict(data='OK', updates=updates)
+
+        sql.update_global_code_fields(code, updates)
+
+    except Exception, err:
+        error_log('Error reciving global code submission:\n' + str(traceback.format_exc()))
+        print ('-----------\nError reciving global code submission' + str(traceback.format_exc()))
+        result = dict(data = 'ERROR', error_detail='Problem submitting global changes')
+
+    json_data = jsonify(result)
+    return json_data
+
+
+@app.route('/global_edit_new_code', methods=['POST'])
+@login_required
+def global_edit_new_code():
+    print 'Creating new global code'
+
+    try:
+        code = request.form['GlobalCode']
+        lookup = sql.exec_stored_procedure('spGlobalsApp_GlobalCodeDetail_Info',[code])['result'][0]
+        
+        # Find the changes       
+        updates = {}
+        for r in lookup:
+            if r <> 'Alias':
+                if lookup[r] <> request.form[r]:
+                    updates[r] = request.form[r]
+        result = dict(data='OK', updates=updates)
+
+        # 
+        # Need to put a check for existing code and exception handler
+        #
+        #sql.update_global_code_fields(code, updates)
+
+    except Exception, err:
+        error_log('Error reciving global code submission:\n' + str(traceback.format_exc()))
+        print ('-----------\nError reciving global code submission' + str(traceback.format_exc()))
+        result = dict(data = 'ERROR', error_detail='Problem submitting global changes')
+
+    json_data = jsonify(result)
+    return json_data
+
 
 
 

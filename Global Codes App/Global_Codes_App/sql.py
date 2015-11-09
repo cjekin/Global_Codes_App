@@ -215,3 +215,21 @@ def get_more_tfc_info(system, tfc):
 
     return data
 
+
+def update_global_code_fields(code, updates):
+    try:
+        cnxn = pyodbc.connect(config.connection_string)
+        cursor = cnxn.cursor()
+    except:
+        print 'Problem making connection'
+    
+    s = ''
+    for k,v in updates.iteritems():
+        s += ' ' + k + ' = ' + '\'' + v + '\''
+
+    sql = "update %s set %s where GlobalCode = '%s'" % (config.global_main_table,s,code)
+    print sql
+           
+    cursor.execute(sql)
+    cursor.commit()
+

@@ -3,7 +3,7 @@
 var current_dept = 'All';
 var current_global_code = 'BC_UE_NA';
 var current_global_name = 'Sodium';
-var info_headers = ['GlobalCode', 'Description', 'Sample', 'Type', 'Analyte', 'PrimaryLibrary', 'SubSection', 'Department', 'NLMC', 'SNOMEDCT_UK', 'LOINC', 'PBCL', 'Interface', 'MiddlewareCode'];
+var info_headers = ['GlobalCode', 'Description', 'Sample', 'Type', 'Analyte', 'PrimaryLibrary', 'SubSection', 'Department', 'BAFO_Subsection', 'BAFO_Department', 'HSL_Code', 'NLMC', 'SNOMEDCT_UK', 'LOINC', 'PBCL', 'Interface', 'MiddlewareCode'];
 
 $('.global_detail_class').hide();
 
@@ -57,6 +57,9 @@ var global_code_datatable = $('#global_code_datatable').DataTable({
         { title: "PrimaryLibrary" },
         { title: "SubSection" },
         { title: "Department" },
+        { title: "BAFO_Subsection" },
+        { title: "BAFO_Department" },
+        { title: "HSL_Code" },
         { title: "NLMC" },
         { title: "SNOMEDCT_UK" },
         { title: "PBCL" },
@@ -163,9 +166,74 @@ $("#global_edit_button").click(function () {
         var content = $('#info_' + info_headers[i] + ' p').text();
         $('#info_' + info_headers[i]).html('<input value="' + content + '" class="form-control"></div>');
     };
-    $('#global_info').append('<div class="form-group"><div class="col-sm-7 col-sm-offset-4"><button id="global_info_submit" type="button"  onClick="global_info_submit_click(); return false;" class="btn btn-success">Save changes</button></div></div>');
+    $('#global_info').append('<div class="form-group" id="global_info_submit_div"><div class="col-sm-7 col-sm-offset-4"><button id="global_info_submit" type="button"  onClick="global_info_submit_click(); return false;" class="btn btn-success">Save changes</button></div></div>');
 });
 
+// Respond to clicking SUBMIT button on global info
 function global_info_submit_click() {
     console.log('Clicked submit button');
+
+    var submission = {};
+    for (i = 0; i < info_headers.length; i++) {
+        var content = $('#info_' + info_headers[i] + ' input').val();
+        $('#info_' + info_headers[i]).html('<p class="form-control-static">' + content + '</p>');
+        submission[info_headers[i]] = content
+    };
+
+    $.post('\global_edit_submit_changes', submission);
+    $("#global_info_submit_div").remove();
+};
+
+// Respond to clicking NEW button
+$("#global_new_button").click(function () {
+    
+    // Put the header in
+    $('#global_header_code').text('NEW CODE');
+
+    // Build the basic info form
+    var info_html = '';
+    for (i = 0; i < info_headers.length; i++) {
+        info_html += '<div class="form-group"><label class="col-lg-4 control-label">';
+        info_html += info_headers[i] + '</label><div id="info_' + info_headers[i];
+        info_html += '" class="col-lg-8"><input value="" class="form-control"></div>';
+        info_html += '' + '</div>';
+    };
+    $('#global_info').html(info_html);
+    $('#global_info').append('<div class="form-group" id="global_info_create_div"><div class="col-sm-7 col-sm-offset-4"><button id="global_info_newcode" type="button"  onClick="global_info_new_click(); return false;" class="btn btn-success">Create New</button></div></div>');
+
+    // Clear the audit trail and mapping info
+    $('#global_audit').html('<tr><td></td><td></td><td></td></tr>');
+    $('#global_tfc_mapping').html('<tr><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td></tr>');
+
+    $('#global_audit').html('');
+    $('#global_tfc_mapping').html('');
+
+});
+
+// Respond to clicking CREATE NEW button on global info
+function global_info_new_click() {
+    console.log('Clicked CREATE NEW button');
+
+    if ($('#info_GlobalCode input').val() == '') {
+
+        swal({
+            title: "Please enter a code",
+            text: "Cannot submit a new code without a Global Code entry",
+            type: "warning"
+        });
+
+    } else {
+
+        var submission = {};
+        for (i = 0; i < info_headers.length; i++) {
+            var content = $('#info_' + info_headers[i] + ' input').val();
+            $('#info_' + info_headers[i]).html('<p class="form-control-static">' + content + '</p>');
+            submission[info_headers[i]] = content
+        };
+
+        $.post('\global_edit_new_code', submission);
+        $("#global_info_submit_div").remove();
+
+    };
+
 };
