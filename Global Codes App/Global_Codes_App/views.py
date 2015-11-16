@@ -389,7 +389,11 @@ def global_edit_submit_changes():
                     updates[r] = request.form[r]
         result = dict(data='OK', updates=updates)
 
-        sql.update_global_code_fields(code, updates)
+        sql.update_global_code_fields(code, updates, user.email)
+
+        result['info'] = sql.exec_stored_procedure('spGlobalsApp_GlobalCodeDetail_Info',[code])['result']
+        result['audit'] = sql.exec_stored_procedure('spGlobalsApp_GlobalCodeDetail_Audit',[code])['result']
+        result['mapping'] = sql.exec_stored_procedure('spGlobalsApp_GlobalCodeDetail_Mapping',[code])['result']
 
     except Exception, err:
         error_log('Error reciving global code submission:\n' + str(traceback.format_exc()))
@@ -406,21 +410,16 @@ def global_edit_new_code():
     print 'Creating new global code'
 
     try:
-        code = request.form['GlobalCode']
-        lookup = sql.exec_stored_procedure('spGlobalsApp_GlobalCodeDetail_Info',[code])['result'][0]
-        
-        # Find the changes       
-        updates = {}
-        for r in lookup:
-            if r <> 'Alias':
-                if lookup[r] <> request.form[r]:
-                    updates[r] = request.form[r]
-        result = dict(data='OK', updates=updates)
+        submission = {r:request.form[r] for r in request.form}
+        code = submission['GlobalCode']
 
-        # 
-        # Need to put a check for existing code and exception handler
-        #
-        #sql.update_global_code_fields(code, updates)
+        sql.insert_new_global_code(code, submission, user.email)
+
+        result = dict(data = 'OK')
+
+        result['info'] = sql.exec_stored_procedure('spGlobalsApp_GlobalCodeDetail_Info',[code])['result']
+        result['audit'] = sql.exec_stored_procedure('spGlobalsApp_GlobalCodeDetail_Audit',[code])['result']
+        result['mapping'] = sql.exec_stored_procedure('spGlobalsApp_GlobalCodeDetail_Mapping',[code])['result']
 
     except Exception, err:
         error_log('Error reciving global code submission:\n' + str(traceback.format_exc()))

@@ -1,0 +1,1 @@
+insert into GlobalCodes_Main_Test ('LOINC', 'Description', 'HSL_Code', 'GlobalCode', 'Type', 'PBCL', 'SubSection', 'Sample', 'Interface', 'PrimaryLibrary', 'BAFO_Subsection', 'SNOMEDCT_UK', 'Department', 'MiddlewareCode', 'NLMC', 'BAFO_Department', 'Analyte') values ('', 'Test result', '', 'TEST_5', 'Result', '', '', 'Serum', '', '', '', '', '', '', '', '', '')

@@ -632,3 +632,151 @@ Traceback (most recent call last):
   File "\\tdlpathology\docs\TDL\IT\Chris Ekin\GitHub\Global_Codes_App\Global Codes App\Global_Codes_App\views.py", line 410, in global_edit_new_code
     lookup = sql.exec_stored_procedure('spGlobalsApp_GlobalCodeDetail_Info',[code])['result'][0]
 IndexError: list index out of range
+-----12/11/2015 21:35
+Error reciving global code submission:
+Traceback (most recent call last):
+  File "\\tdlpathology\docs\TDL\IT\Chris Ekin\GitHub\Global_Codes_App\Global Codes App\Global_Codes_App\views.py", line 392, in global_edit_submit_changes
+    sql.update_global_code_fields(code, updates)
+  File "\\tdlpathology\docs\TDL\IT\Chris Ekin\GitHub\Global_Codes_App\Global Codes App\Global_Codes_App\sql.py", line 233, in update_global_code_fields
+    cursor.execute(sql)
+ProgrammingError: ('42000', "[42000] [Microsoft][ODBC SQL Server Driver][SQL Server]Incorrect syntax near the keyword 'where'. (156) (SQLExecDirectW)")
+-----12/11/2015 21:35
+Error executing spGlobalsApp_GlobalEditor:
+Traceback (most recent call last):
+  File "\\tdlpathology\docs\TDL\IT\Chris Ekin\GitHub\Global_Codes_App\Global Codes App\Global_Codes_App\views.py", line 362, in globalcodedetail
+    result['info'] = sql.exec_stored_procedure('spGlobalsApp_GlobalCodeDetail_Info',[code])['result']
+  File "\\tdlpathology\docs\TDL\IT\Chris Ekin\GitHub\Global_Codes_App\Global Codes App\Global_Codes_App\sql.py", line 18, in exec_stored_procedure
+    cursor.execute(sql)
+ProgrammingError: ('42000', "[42000] [Microsoft][ODBC SQL Server Driver][SQL Server]Procedure or function 'spGlobalsApp_GlobalCodeDetail_Info' expects parameter '@globalcode', which was not supplied. (201) (SQLExecDirectW)")
+-----12/11/2015 21:36
+Error reciving global code submission:
+Traceback (most recent call last):
+  File "\\tdlpathology\docs\TDL\IT\Chris Ekin\GitHub\Global_Codes_App\Global Codes App\Global_Codes_App\views.py", line 392, in global_edit_submit_changes
+    sql.update_global_code_fields(code, updates)
+  File "\\tdlpathology\docs\TDL\IT\Chris Ekin\GitHub\Global_Codes_App\Global Codes App\Global_Codes_App\sql.py", line 233, in update_global_code_fields
+    cursor.execute(sql)
+ProgrammingError: ('42000', "[42000] [Microsoft][ODBC SQL Server Driver][SQL Server]Incorrect syntax near the keyword 'where'. (156) (SQLExecDirectW)")
+-----12/11/2015 21:36
+Error executing spGlobalsApp_GlobalEditor:
+Traceback (most recent call last):
+  File "\\tdlpathology\docs\TDL\IT\Chris Ekin\GitHub\Global_Codes_App\Global Codes App\Global_Codes_App\views.py", line 362, in globalcodedetail
+    result['info'] = sql.exec_stored_procedure('spGlobalsApp_GlobalCodeDetail_Info',[code])['result']
+  File "\\tdlpathology\docs\TDL\IT\Chris Ekin\GitHub\Global_Codes_App\Global Codes App\Global_Codes_App\sql.py", line 18, in exec_stored_procedure
+    cursor.execute(sql)
+ProgrammingError: ('42000', "[42000] [Microsoft][ODBC SQL Server Driver][SQL Server]Procedure or function 'spGlobalsApp_GlobalCodeDetail_Info' expects parameter '@globalcode', which was not supplied. (201) (SQLExecDirectW)")
+-----12/11/2015 21:36
+Error reciving global code submission:
+Traceback (most recent call last):
+  File "\\tdlpathology\docs\TDL\IT\Chris Ekin\GitHub\Global_Codes_App\Global Codes App\Global_Codes_App\views.py", line 392, in global_edit_submit_changes
+    sql.update_global_code_fields(code, updates)
+  File "\\tdlpathology\docs\TDL\IT\Chris Ekin\GitHub\Global_Codes_App\Global Codes App\Global_Codes_App\sql.py", line 233, in update_global_code_fields
+    cursor.execute(sql)
+ProgrammingError: ('42000', "[42000] [Microsoft][ODBC SQL Server Driver][SQL Server]Incorrect syntax near the keyword 'where'. (156) (SQLExecDirectW)")
+-----12/11/2015 21:37
+Error reciving global code submission:
+Traceback (most recent call last):
+  File "\\tdlpathology\docs\TDL\IT\Chris Ekin\GitHub\Global_Codes_App\Global Codes App\Global_Codes_App\views.py", line 392, in global_edit_submit_changes
+    sql.update_global_code_fields(code, updates)
+  File "\\tdlpathology\docs\TDL\IT\Chris Ekin\GitHub\Global_Codes_App\Global Codes App\Global_Codes_App\sql.py", line 233, in update_global_code_fields
+    cursor.execute(sql)
+ProgrammingError: ('42000', "[42000] [Microsoft][ODBC SQL Server Driver][SQL Server]Incorrect syntax near the keyword 'where'. (156) (SQLExecDirectW)")
+-----12/11/2015 21:44
+Error reciving global code submission:
+Traceback (most recent call last):
+  File "\\tdlpathology\docs\TDL\IT\Chris Ekin\GitHub\Global_Codes_App\Global Codes App\Global_Codes_App\views.py", line 392, in global_edit_submit_changes
+    sql.update_global_code_fields(code, updates)
+  File "\\tdlpathology\docs\TDL\IT\Chris Ekin\GitHub\Global_Codes_App\Global Codes App\Global_Codes_App\sql.py", line 233, in update_global_code_fields
+    cursor.execute(sql)
+ProgrammingError: ('42000', "[42000] [Microsoft][ODBC SQL Server Driver][SQL Server]Incorrect syntax near the keyword 'where'. (156) (SQLExecDirectW)")
+-----12/11/2015 23:21
+Error reciving global code submission:
+Traceback (most recent call last):
+  File "\\tdlpathology\docs\TDL\IT\Chris Ekin\GitHub\Global_Codes_App\Global Codes App\Global_Codes_App\views.py", line 392, in global_edit_submit_changes
+    sql.update_global_code_fields(code, updates, user.email)
+  File "\\tdlpathology\docs\TDL\IT\Chris Ekin\GitHub\Global_Codes_App\Global Codes App\Global_Codes_App\sql.py", line 238, in update_global_code_fields
+    cursor.execute(sql)
+ProgrammingError: ('42000', "[42000] [Microsoft][ODBC SQL Server Driver][SQL Server]Incorrect syntax near 'PARA2'. (102) (SQLExecDirectW)")
+-----12/11/2015 23:30
+Error reciving global code submission:
+Traceback (most recent call last):
+  File "\\tdlpathology\docs\TDL\IT\Chris Ekin\GitHub\Global_Codes_App\Global Codes App\Global_Codes_App\views.py", line 392, in global_edit_submit_changes
+    sql.update_global_code_fields(code, updates, user.email)
+  File "\\tdlpathology\docs\TDL\IT\Chris Ekin\GitHub\Global_Codes_App\Global Codes App\Global_Codes_App\sql.py", line 238, in update_global_code_fields
+    cursor.execute(sql)
+ProgrammingError: ('42000', "[42000] [Microsoft][ODBC SQL Server Driver][SQL Server]Incorrect syntax near 'AFP'. (102) (SQLExecDirectW)")
+-----12/11/2015 23:33
+Error reciving global code submission:
+Traceback (most recent call last):
+  File "\\tdlpathology\docs\TDL\IT\Chris Ekin\GitHub\Global_Codes_App\Global Codes App\Global_Codes_App\views.py", line 392, in global_edit_submit_changes
+    sql.update_global_code_fields(code, updates, user.email)
+  File "\\tdlpathology\docs\TDL\IT\Chris Ekin\GitHub\Global_Codes_App\Global Codes App\Global_Codes_App\sql.py", line 240, in update_global_code_fields
+    cursor.execute(sql)
+ProgrammingError: ('42000', "[42000] [Microsoft][ODBC SQL Server Driver][SQL Server]Incorrect syntax near 'AFP2'. (102) (SQLExecDirectW)")
+-----12/11/2015 23:44
+Error reciving global code submission:
+Traceback (most recent call last):
+  File "\\tdlpathology\docs\TDL\IT\Chris Ekin\GitHub\Global_Codes_App\Global Codes App\Global_Codes_App\views.py", line 392, in global_edit_submit_changes
+    sql.update_global_code_fields(code, updates, user.email)
+  File "\\tdlpathology\docs\TDL\IT\Chris Ekin\GitHub\Global_Codes_App\Global Codes App\Global_Codes_App\sql.py", line 233, in update_global_code_fields
+    cursor.execute(sql)
+ProgrammingError: ('42000', "[42000] [Microsoft][ODBC SQL Server Driver][SQL Server]Incorrect syntax near 'BAFO_Department'. (102) (SQLExecDirectW)")
+-----12/11/2015 23:51
+Error reciving global code submission:
+Traceback (most recent call last):
+  File "\\tdlpathology\docs\TDL\IT\Chris Ekin\GitHub\Global_Codes_App\Global Codes App\Global_Codes_App\views.py", line 392, in global_edit_submit_changes
+    sql.update_global_code_fields(code, updates, user.email)
+  File "\\tdlpathology\docs\TDL\IT\Chris Ekin\GitHub\Global_Codes_App\Global Codes App\Global_Codes_App\sql.py", line 231, in update_global_code_fields
+    cursor.execute(sql)
+ProgrammingError: ('42000', "[42000] [Microsoft][ODBC SQL Server Driver][SQL Server]Incorrect syntax near '='. (102) (SQLExecDirectW)")
+-----15/11/2015 23:37
+Error reciving global code submission:
+Traceback (most recent call last):
+  File "\\tdlpathology\docs\TDL\IT\Chris Ekin\GitHub\Global_Codes_App\Global Codes App\Global_Codes_App\views.py", line 415, in global_edit_new_code
+    submission = {key: value for (key, value) in request.form}
+  File "\\tdlpathology\docs\TDL\IT\Chris Ekin\GitHub\Global_Codes_App\Global Codes App\Global_Codes_App\views.py", line 415, in <dictcomp>
+    submission = {key: value for (key, value) in request.form}
+ValueError: too many values to unpack
+-----16/11/2015 00:05
+Error reciving global code submission:
+Traceback (most recent call last):
+  File "\\tdlpathology\docs\TDL\IT\Chris Ekin\GitHub\Global_Codes_App\Global Codes App\Global_Codes_App\views.py", line 415, in global_edit_new_code
+    sql.insert_new_global_code(submission, user.email)
+  File "\\tdlpathology\docs\TDL\IT\Chris Ekin\GitHub\Global_Codes_App\Global Codes App\Global_Codes_App\sql.py", line 256, in insert_new_global_code
+    cursor.execute(sql)
+ProgrammingError: ('42S22', "[42S22] [Microsoft][ODBC SQL Server Driver][SQL Server]Invalid column name 'LOINC'. (207) (SQLExecDirectW); [42S22] [Microsoft][ODBC SQL Server Driver][SQL Server]Invalid column name 'Description'. (207); [42S22] [Microsoft][ODBC SQL Server Driver][SQL Server]Invalid column name 'HSL_Code'. (207); [42S22] [Microsoft][ODBC SQL Server Driver][SQL Server]Invalid column name 'GlobalCode'. (207); [42S22] [Microsoft][ODBC SQL Server Driver][SQL Server]Invalid column name 'Type'. (207); [42S22] [Microsoft][ODBC SQL Server Driver][SQL Server]Invalid column name 'PBCL'. (207); [42S22] [Microsoft][ODBC SQL Server Driver][SQL Server]Invalid column name 'SubSection'. (207); [42S22] [Microsoft][ODBC SQL Server Driver][SQL Server]Invalid column name 'Sample'. (207); [42S22] [Microsoft][ODBC SQL Server Driver][SQL Server]Invalid column name 'Interface'. (207); [42S22] [Microsoft][ODBC SQL Server Driver][SQL Server]Invalid column name 'PrimaryLibrary'. (207); [42S22] [Microsoft][ODBC SQL Server Driver][SQL Server]Invalid column name 'BAFO_Subsection'. (207); [42S22] [Microsoft][ODBC SQL Server Driver][SQL Server]Invalid column name 'SNOMEDCT_UK'. (207); [42S22] [Microsoft][ODBC SQL Server Driver][SQL Server]Invalid column name 'Department'. (207); [42S22] [Microsoft][ODBC SQL Server Driver][SQL Server]Invalid column name 'MiddlewareCode'. (207); [42S22] [Microsoft][ODBC SQL Server Driver][SQL Server]Invalid column name 'NLMC'. (207); [42S22] [Microsoft][ODBC SQL Server Driver][SQL Server]Invalid column name 'BAFO_Department'. (207); [42S22] [Microsoft][ODBC SQL Server Driver][SQL Server]Invalid column name 'Analyte'. (207)")
+-----16/11/2015 00:08
+Error reciving global code submission:
+Traceback (most recent call last):
+  File "\\tdlpathology\docs\TDL\IT\Chris Ekin\GitHub\Global_Codes_App\Global Codes App\Global_Codes_App\views.py", line 415, in global_edit_new_code
+    sql.insert_new_global_code(submission, user.email)
+  File "\\tdlpathology\docs\TDL\IT\Chris Ekin\GitHub\Global_Codes_App\Global Codes App\Global_Codes_App\sql.py", line 256, in insert_new_global_code
+    cursor.execute(sql)
+ProgrammingError: ('42S22', "[42S22] [Microsoft][ODBC SQL Server Driver][SQL Server]Invalid column name 'LOINC'. (207) (SQLExecDirectW); [42S22] [Microsoft][ODBC SQL Server Driver][SQL Server]Invalid column name 'Description'. (207); [42S22] [Microsoft][ODBC SQL Server Driver][SQL Server]Invalid column name 'HSL_Code'. (207); [42S22] [Microsoft][ODBC SQL Server Driver][SQL Server]Invalid column name 'GlobalCode'. (207); [42S22] [Microsoft][ODBC SQL Server Driver][SQL Server]Invalid column name 'Type'. (207); [42S22] [Microsoft][ODBC SQL Server Driver][SQL Server]Invalid column name 'PBCL'. (207); [42S22] [Microsoft][ODBC SQL Server Driver][SQL Server]Invalid column name 'SubSection'. (207); [42S22] [Microsoft][ODBC SQL Server Driver][SQL Server]Invalid column name 'Sample'. (207); [42S22] [Microsoft][ODBC SQL Server Driver][SQL Server]Invalid column name 'Interface'. (207); [42S22] [Microsoft][ODBC SQL Server Driver][SQL Server]Invalid column name 'PrimaryLibrary'. (207); [42S22] [Microsoft][ODBC SQL Server Driver][SQL Server]Invalid column name 'BAFO_Subsection'. (207); [42S22] [Microsoft][ODBC SQL Server Driver][SQL Server]Invalid column name 'SNOMEDCT_UK'. (207); [42S22] [Microsoft][ODBC SQL Server Driver][SQL Server]Invalid column name 'Department'. (207); [42S22] [Microsoft][ODBC SQL Server Driver][SQL Server]Invalid column name 'MiddlewareCode'. (207); [42S22] [Microsoft][ODBC SQL Server Driver][SQL Server]Invalid column name 'NLMC'. (207); [42S22] [Microsoft][ODBC SQL Server Driver][SQL Server]Invalid column name 'BAFO_Department'. (207); [42S22] [Microsoft][ODBC SQL Server Driver][SQL Server]Invalid column name 'Analyte'. (207)")
+-----16/11/2015 00:10
+Error reciving global code submission:
+Traceback (most recent call last):
+  File "\\tdlpathology\docs\TDL\IT\Chris Ekin\GitHub\Global_Codes_App\Global Codes App\Global_Codes_App\views.py", line 415, in global_edit_new_code
+    sql.insert_new_global_code(submission, user.email)
+  File "\\tdlpathology\docs\TDL\IT\Chris Ekin\GitHub\Global_Codes_App\Global Codes App\Global_Codes_App\sql.py", line 259, in insert_new_global_code
+    cursor.execute(sql)
+ProgrammingError: ('42S22', "[42S22] [Microsoft][ODBC SQL Server Driver][SQL Server]Invalid column name 'LOINC'. (207) (SQLExecDirectW); [42S22] [Microsoft][ODBC SQL Server Driver][SQL Server]Invalid column name 'Description'. (207); [42S22] [Microsoft][ODBC SQL Server Driver][SQL Server]Invalid column name 'HSL_Code'. (207); [42S22] [Microsoft][ODBC SQL Server Driver][SQL Server]Invalid column name 'GlobalCode'. (207); [42S22] [Microsoft][ODBC SQL Server Driver][SQL Server]Invalid column name 'Type'. (207); [42S22] [Microsoft][ODBC SQL Server Driver][SQL Server]Invalid column name 'PBCL'. (207); [42S22] [Microsoft][ODBC SQL Server Driver][SQL Server]Invalid column name 'SubSection'. (207); [42S22] [Microsoft][ODBC SQL Server Driver][SQL Server]Invalid column name 'Sample'. (207); [42S22] [Microsoft][ODBC SQL Server Driver][SQL Server]Invalid column name 'Interface'. (207); [42S22] [Microsoft][ODBC SQL Server Driver][SQL Server]Invalid column name 'PrimaryLibrary'. (207); [42S22] [Microsoft][ODBC SQL Server Driver][SQL Server]Invalid column name 'BAFO_Subsection'. (207); [42S22] [Microsoft][ODBC SQL Server Driver][SQL Server]Invalid column name 'SNOMEDCT_UK'. (207); [42S22] [Microsoft][ODBC SQL Server Driver][SQL Server]Invalid column name 'Department'. (207); [42S22] [Microsoft][ODBC SQL Server Driver][SQL Server]Invalid column name 'MiddlewareCode'. (207); [42S22] [Microsoft][ODBC SQL Server Driver][SQL Server]Invalid column name 'NLMC'. (207); [42S22] [Microsoft][ODBC SQL Server Driver][SQL Server]Invalid column name 'BAFO_Department'. (207); [42S22] [Microsoft][ODBC SQL Server Driver][SQL Server]Invalid column name 'Analyte'. (207)")
+-----16/11/2015 00:14
+Error reciving global code submission:
+Traceback (most recent call last):
+  File "\\tdlpathology\docs\TDL\IT\Chris Ekin\GitHub\Global_Codes_App\Global Codes App\Global_Codes_App\views.py", line 415, in global_edit_new_code
+    sql.insert_new_global_code(submission, user.email)
+  File "\\tdlpathology\docs\TDL\IT\Chris Ekin\GitHub\Global_Codes_App\Global Codes App\Global_Codes_App\sql.py", line 259, in insert_new_global_code
+    cursor.execute(sql)
+ProgrammingError: ('42S22', "[42S22] [Microsoft][ODBC SQL Server Driver][SQL Server]Invalid column name 'LOINC, Description, HSL_Code, GlobalCode, Type, PBCL, SubSection, Sample, Interface, PrimaryLibrary, BAFO_Subsection, SNOMEDCT_UK, Department, MiddlewareCode, NLMC, BAFO_Department, Analyte'. (207) (SQLExecDirectW)")
+-----16/11/2015 00:21
+Error reciving global code submission:
+Traceback (most recent call last):
+  File "\\tdlpathology\docs\TDL\IT\Chris Ekin\GitHub\Global_Codes_App\Global Codes App\Global_Codes_App\views.py", line 415, in global_edit_new_code
+    sql.insert_new_global_code(submission, user.email)
+TypeError: insert_new_global_code() takes exactly 3 arguments (2 given)
+-----16/11/2015 00:33
+Error reciving global code submission:
+Traceback (most recent call last):
+  File "\\tdlpathology\docs\TDL\IT\Chris Ekin\GitHub\Global_Codes_App\Global Codes App\Global_Codes_App\views.py", line 419, in global_edit_new_code
+    result['info'] = sql.exec_stored_procedure('spGlobalsApp_GlobalCodeDetail_Info',[code])['result']
+NameError: global name 'code' is not defined

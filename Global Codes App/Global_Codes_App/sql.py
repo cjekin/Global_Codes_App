@@ -216,20 +216,48 @@ def get_more_tfc_info(system, tfc):
     return data
 
 
-def update_global_code_fields(code, updates):
+def update_global_code_fields(code, updates, user):
     try:
         cnxn = pyodbc.connect(config.connection_string)
         cursor = cnxn.cursor()
     except:
         print 'Problem making connection'
     
-    s = ''
-    for k,v in updates.iteritems():
-        s += ' ' + k + ' = ' + '\'' + v + '\''
+    u = [' ' + k + ' = ' + '\'' + v + '\'' for k,v in updates.iteritems()]
 
-    sql = "update %s set %s where GlobalCode = '%s'" % (config.global_main_table,s,code)
+    sql = "update %s set %s where GlobalCode = '%s'" % (config.global_main_table,', '.join(u),code)
     print sql
            
     cursor.execute(sql)
     cursor.commit()
+
+    sql = "insert into %s values(getdate(), '%s', 'GlobalCodes_Main', '%s', '%s', 'GlobalUpdate')" % (config.global_audit_table, user, code, '|'.join(u).replace("'","''"))
+
+    print '\n', sql, '\n'
+
+    cursor.execute(sql)
+    cursor.commit()
+
+
+def insert_new_global_code(code, submission, user):
+    try:
+        cnxn = pyodbc.connect(config.connection_string)
+        cursor = cnxn.cursor()
+    except:
+        print 'Problem making connection'
+    
+    fields = [f for f in submission]
+    values = [submission[f] for f in fields]
+
+    sql = "insert into %s ([%s]) values ('%s')" % (config.global_main_table,"], [".join(fields), "', '".join(values))
+               
+    cursor.execute(sql)
+    cursor.commit()
+
+    sql = "insert into %s values(getdate(), '%s', 'GlobalCodes_Main', '%s', '%s', 'NewGlobal')" % (config.global_audit_table, user, code, 'See code details')
+    
+    cursor.execute(sql)
+    cursor.commit()
+
+
 

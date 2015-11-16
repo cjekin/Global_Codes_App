@@ -6,8 +6,9 @@ var current_global_name = 'Sodium';
 var info_headers = ['GlobalCode', 'Description', 'Sample', 'Type', 'Analyte', 'PrimaryLibrary', 'SubSection', 'Department', 'BAFO_Subsection', 'BAFO_Department', 'HSL_Code', 'NLMC', 'SNOMEDCT_UK', 'LOINC', 'PBCL', 'Interface', 'MiddlewareCode'];
 
 $('.global_detail_class').hide();
+$(window.scrollTo(0, 0));
 
-// Preload all the TFCs for quick lookup
+// Preload all the TFCs for quick lookup in subsequent SQL queries
 $.getJSON('/pull_all_tfcs_to_one_table', function (data) {
     if (data['data'] == 'ERROR') {
         swal({
@@ -44,6 +45,8 @@ var global_code_datatable = $('#global_code_datatable').DataTable({
         $('#results tbody tr').each(function () {
             $(this).find('td:eq(0)').attr('nowrap', 'nowrap');
         });
+        $('.global_detail_class').show();
+        window.scrollTo(0,0);
     },
     ajax: '/globalseditordata?department=All',
     sPlaceHolder: "head:before",
@@ -95,9 +98,11 @@ $("#global_code_datatable tbody").delegate("tr", "click", function () {
     current_global_code = $("td:eq(0)", this).text();
     current_global_name = $("td:eq(1)", this).text();
     console.log('You clicked: ' + current_global_code + ' : ' + current_global_name);
-    fill_global_code_info(current_global_code);
-    $('.global_detail_class').show();
+    get_global_code_info(current_global_code);
 });
+
+// Preload a global code
+$(get_global_code_info(current_global_code));
 
 
 ///////////////////////////////
@@ -105,7 +110,7 @@ $("#global_code_datatable tbody").delegate("tr", "click", function () {
 ///////////////////////////////
 
 //Fill in the library code detail
-function fill_global_code_info(code) {
+function get_global_code_info(code) {
 
     var url = '/globalcodedetail?code=' + code;
 
@@ -117,47 +122,55 @@ function fill_global_code_info(code) {
                 type: "warning"
             });
         } else {
-
-            // Put the header in
-            $('#global_header_code').text(current_global_code);
-
-            // Fill in the basic information
-            var info_html = '';
-            for (i = 0; i < info_headers.length; i++) {
-                info_html += '<div class="form-group"><label class="col-lg-4 control-label">';
-                info_html += info_headers[i] + '</label><div id="info_' + info_headers[i];
-                info_html += '" class="col-lg-8"><p class="form-control-static">';
-                info_html += data['info'][0][info_headers[i]] + '</p></div></div>';
-            };
-            $('#global_info').html(info_html);
-
-            // Fill in the audit trail
-            var audit_html = '';
-            for (i = 0; i < data['audit'].length; i++) {
-                audit_html += '<tr><td>' + data['audit'][i]['ChangeType'] + ' ' + data['audit'][i]['Code'] + '<br/><small><i class="fa fa-clock-o"></i>';
-                audit_html += data['audit'][i]['Date'] + '</small></td><td><strong>' + data['audit'][i]['Origin'] + '</strong></td><td>';
-                audit_html += data['audit'][i]['UserName'] + '</td></tr>';
-            };
-            $('#global_audit').html(audit_html);
-
-            // Fill in the mapping information
-            var mapping_html = '';
-            for (i = 0; i < data['mapping'].length; i++) {
-                mapping_html += '<tr><td>' +  data['mapping'][i]['Origin'] + '</td>';
-                mapping_html += '<td>' +  data['mapping'][i]['Code'] + '</td>';
-                mapping_html += '<td>' +  data['mapping'][i]['Description'] + '</td>';
-                mapping_html += '<td>' +  data['mapping'][i]['MostCommon'] + '</td>';
-                mapping_html += '<td>' +  data['mapping'][i]['Units'] + '</td>';
-                mapping_html += '<td>' +  data['mapping'][i]['NumLastYear'] + '</td>';
-                mapping_html += '<td>' +  data['mapping'][i]['LastSeen'] + '</td>';
-                mapping_html += '<td>' +  data['mapping'][i]['GlobalCode'] + '</td>';
-                mapping_html += '<td>' +  data['mapping'][i]['Excluded'] + '</td>';
-                mapping_html += '<td><button class="btn btn-danger btn-xs global_tfc_mapping_del">DEL</button></td>';
-                mapping_html += '<td><button class="btn btn-success btn-xs global_tfc_mapping_edit">EDIT</button></td></tr>';
-            };
-            $('#global_tfc_mapping').html(mapping_html);
+            fill_global_data(data);
         };
     });
+};
+
+function fill_global_data(data) {
+
+    // Put the header in
+    $('#global_header_code').text(current_global_code);
+
+    // Fill in the basic information
+    var info_html = '';
+    for (i = 0; i < info_headers.length; i++) {
+        info_html += '<div class="form-group"><label class="col-lg-4 control-label">';
+        info_html += info_headers[i] + '</label><div id="info_' + info_headers[i];
+        info_html += '" class="col-lg-8"><p class="form-control-static">';
+        info_html += data['info'][0][info_headers[i]] + '</p></div></div>';
+    };
+    $('#global_info').html(info_html);
+
+    // Fill in the audit trail
+    var audit_html = '';
+    for (i = 0; i < data['audit'].length; i++) {
+        if (data['audit'][i]['Origin'] == 'GlobalCodes_Main') {
+            audit_html += '<tr><td>' + data['audit'][i]['Change'].split("|").join("<br/>") + '<br/><small><i class="fa fa-clock-o"></i> ';
+        } else {
+            audit_html += '<tr><td>' + data['audit'][i]['ChangeType'] + ' ' + data['audit'][i]['Code'] + '<br/><small><i class="fa fa-clock-o"></i> ';
+        };
+        audit_html += data['audit'][i]['Date'] + '</small></td><td><strong>' + data['audit'][i]['Origin'] + '</strong></td><td>';
+        audit_html += data['audit'][i]['UserName'] + '</td></tr>';
+    };
+    $('#global_audit').html(audit_html);
+
+    // Fill in the mapping information
+    var mapping_html = '';
+    for (i = 0; i < data['mapping'].length; i++) {
+        mapping_html += '<tr><td>' + data['mapping'][i]['Origin'] + '</td>';
+        mapping_html += '<td>' + data['mapping'][i]['Code'] + '</td>';
+        mapping_html += '<td>' + data['mapping'][i]['Description'] + '</td>';
+        mapping_html += '<td>' + data['mapping'][i]['MostCommon'] + '</td>';
+        mapping_html += '<td>' + data['mapping'][i]['Units'] + '</td>';
+        mapping_html += '<td>' + data['mapping'][i]['NumLastYear'] + '</td>';
+        mapping_html += '<td>' + data['mapping'][i]['LastSeen'] + '</td>';
+        mapping_html += '<td>' + data['mapping'][i]['GlobalCode'] + '</td>';
+        mapping_html += '<td>' + data['mapping'][i]['Excluded'] + '</td>';
+        mapping_html += '<td><button class="btn btn-danger btn-xs global_tfc_mapping_del">DEL</button></td>';
+        mapping_html += '<td><button class="btn btn-success btn-xs global_tfc_mapping_edit">EDIT</button></td></tr>';
+    };
+    $('#global_tfc_mapping').html(mapping_html);
 };
 
 // Respond to clicking EDIT button
@@ -173,15 +186,25 @@ $("#global_edit_button").click(function () {
 function global_info_submit_click() {
     console.log('Clicked submit button');
 
+    $('#global_info_submit').html('Submitting...');
+
     var submission = {};
     for (i = 0; i < info_headers.length; i++) {
         var content = $('#info_' + info_headers[i] + ' input').val();
-        $('#info_' + info_headers[i]).html('<p class="form-control-static">' + content + '</p>');
         submission[info_headers[i]] = content
     };
 
-    $.post('\global_edit_submit_changes', submission);
-    $("#global_info_submit_div").remove();
+    $.post('\global_edit_submit_changes', submission)
+        .done(function (data) {
+            fill_global_data(data);
+        })
+        .fail(function () {
+            swal({
+                title: "Problem submitting changes" + code,
+                text: "There was an issue submitting your changes. Please check the code details",
+                type: "warning"
+            });
+        });
 };
 
 // Respond to clicking NEW button
@@ -214,8 +237,8 @@ $("#global_new_button").click(function () {
 function global_info_new_click() {
     console.log('Clicked CREATE NEW button');
 
+    // Check if there is a code
     if ($('#info_GlobalCode input').val() == '') {
-
         swal({
             title: "Please enter a code",
             text: "Cannot submit a new code without a Global Code entry",
@@ -224,16 +247,39 @@ function global_info_new_click() {
 
     } else {
 
+        // Get the data
         var submission = {};
         for (i = 0; i < info_headers.length; i++) {
             var content = $('#info_' + info_headers[i] + ' input').val();
-            $('#info_' + info_headers[i]).html('<p class="form-control-static">' + content + '</p>');
             submission[info_headers[i]] = content
         };
 
-        $.post('\global_edit_new_code', submission);
-        $("#global_info_submit_div").remove();
+        // Check if the code already exists
+        console.log(submission);
+        var all_global_codes_array = $.makeArray(global_code_datatable.column(1).data());
+        if ($.inArray(submission['GlobalCode'], all_global_codes_array) != -1) {
+            swal({
+                title: "Code already exists",
+                text: "There is already a global code for " + submission['GlobalCode'],
+                type: "warning"
+            });
+        } else {
 
+            // Submit the code and run the query
+            current_global_code = submission['GlobalCode']
+            $.post('\global_edit_new_code', submission)
+                .done(function (data) {
+                    fill_global_data(data);
+                })
+                .fail(function () {
+                    swal({
+                        title: "Problem submitting changes" + code,
+                        text: "There was an issue submitting your changes. Please check the code details",
+                        type: "warning"
+                    });
+                });
+        };
+        
     };
 
 };
