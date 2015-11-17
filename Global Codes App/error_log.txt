@@ -780,3 +780,47 @@ Traceback (most recent call last):
   File "\\tdlpathology\docs\TDL\IT\Chris Ekin\GitHub\Global_Codes_App\Global Codes App\Global_Codes_App\views.py", line 419, in global_edit_new_code
     result['info'] = sql.exec_stored_procedure('spGlobalsApp_GlobalCodeDetail_Info',[code])['result']
 NameError: global name 'code' is not defined
+-----17/11/2015 19:36
+Error deleting global code:
+Traceback (most recent call last):
+  File "\\tdlpathology\docs\TDL\IT\Chris Ekin\GitHub\Global_Codes_App\Global Codes App\Global_Codes_App\views.py", line 441, in global_edit_delete_code
+    sql.exec_stored_procedure_list('spGlobalsApp_DeleteGlobalCode',[code, exclusion, user.email])
+  File "\\tdlpathology\docs\TDL\IT\Chris Ekin\GitHub\Global_Codes_App\Global Codes App\Global_Codes_App\sql.py", line 46, in exec_stored_procedure_list
+    raw_data = cursor.fetchall()
+ProgrammingError: No results.  Previous SQL was not a query.
+-----17/11/2015 19:37
+Error deleting global code:
+Traceback (most recent call last):
+  File "\\tdlpathology\docs\TDL\IT\Chris Ekin\GitHub\Global_Codes_App\Global Codes App\Global_Codes_App\views.py", line 441, in global_edit_delete_code
+    sql.exec_stored_procedure_list('spGlobalsApp_DeleteGlobalCode',[code, exclusion, user.email])
+  File "\\tdlpathology\docs\TDL\IT\Chris Ekin\GitHub\Global_Codes_App\Global Codes App\Global_Codes_App\sql.py", line 46, in exec_stored_procedure_list
+    raw_data = cursor.fetchall()
+ProgrammingError: No results.  Previous SQL was not a query.
+-----17/11/2015 19:39
+Error executing code detail lookup:
+Traceback (most recent call last):
+  File "\\tdlpathology\docs\TDL\IT\Chris Ekin\GitHub\Global_Codes_App\Global Codes App\Global_Codes_App\views.py", line 362, in globalcodedetail
+    result['info'] = sql.exec_stored_procedure('spGlobalsApp_GlobalCodeDetail_Info',[code])['result']
+TypeError: string indices must be integers, not str
+-----17/11/2015 19:42
+Error deleting global code:
+Traceback (most recent call last):
+  File "\\tdlpathology\docs\TDL\IT\Chris Ekin\GitHub\Global_Codes_App\Global Codes App\Global_Codes_App\views.py", line 441, in global_edit_delete_code
+    sql.exec_stored_procedure_list('spGlobalsApp_DeleteGlobalCode',[code, exclusion, user.email], return_value = True)
+TypeError: exec_stored_procedure_list() got an unexpected keyword argument 'return_value'
+-----17/11/2015 19:43
+Error deleting global code:
+Traceback (most recent call last):
+  File "\\tdlpathology\docs\TDL\IT\Chris Ekin\GitHub\Global_Codes_App\Global Codes App\Global_Codes_App\views.py", line 441, in global_edit_delete_code
+    sql.exec_stored_procedure_list('spGlobalsApp_DeleteGlobalCode',[code, exclusion, user.email])
+  File "\\tdlpathology\docs\TDL\IT\Chris Ekin\GitHub\Global_Codes_App\Global Codes App\Global_Codes_App\sql.py", line 61, in exec_stored_procedure_list
+    raw_data = cursor.fetchall()
+ProgrammingError: No results.  Previous SQL was not a query.
+-----17/11/2015 19:43
+Error deleting global code:
+Traceback (most recent call last):
+  File "\\tdlpathology\docs\TDL\IT\Chris Ekin\GitHub\Global_Codes_App\Global Codes App\Global_Codes_App\views.py", line 441, in global_edit_delete_code
+    sql.exec_stored_procedure_noreturn('spGlobalsApp_DeleteGlobalCode',[code, exclusion, user.email])
+  File "\\tdlpathology\docs\TDL\IT\Chris Ekin\GitHub\Global_Codes_App\Global Codes App\Global_Codes_App\sql.py", line 36, in exec_stored_procedure_noreturn
+    cursor.execute(sql)
+ProgrammingError: ('42000', "[42000] [Microsoft][ODBC SQL Server Driver][SQL Server]Incorrect syntax near the keyword 'Not'. (156) (SQLExecDirectW)")

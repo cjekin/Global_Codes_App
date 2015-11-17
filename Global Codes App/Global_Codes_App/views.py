@@ -364,8 +364,8 @@ def globalcodedetail():
         result['mapping'] = sql.exec_stored_procedure('spGlobalsApp_GlobalCodeDetail_Mapping',[code])['result']
         
     except Exception, err:
-        error_log('Error executing spGlobalsApp_GlobalEditor:\n' + str(traceback.format_exc()))
-        print ('-----------\nError pulling all globals' + str(traceback.format_exc()))
+        error_log('Error executing code detail lookup:\n' + str(traceback.format_exc()))
+        print ('-----------\nError executing code detail lookup' + str(traceback.format_exc()))
         result = dict(data = 'ERROR', error_detail='Problem running query')
 
     json_data = jsonify(result)
@@ -396,8 +396,8 @@ def global_edit_submit_changes():
         result['mapping'] = sql.exec_stored_procedure('spGlobalsApp_GlobalCodeDetail_Mapping',[code])['result']
 
     except Exception, err:
-        error_log('Error reciving global code submission:\n' + str(traceback.format_exc()))
-        print ('-----------\nError reciving global code submission' + str(traceback.format_exc()))
+        error_log('Error reciving global code edit submission:\n' + str(traceback.format_exc()))
+        print ('-----------\nError reciving global code edit submission' + str(traceback.format_exc()))
         result = dict(data = 'ERROR', error_detail='Problem submitting global changes')
 
     json_data = jsonify(result)
@@ -422,9 +422,30 @@ def global_edit_new_code():
         result['mapping'] = sql.exec_stored_procedure('spGlobalsApp_GlobalCodeDetail_Mapping',[code])['result']
 
     except Exception, err:
-        error_log('Error reciving global code submission:\n' + str(traceback.format_exc()))
-        print ('-----------\nError reciving global code submission' + str(traceback.format_exc()))
-        result = dict(data = 'ERROR', error_detail='Problem submitting global changes')
+        error_log('Problem creating a new global code:\n' + str(traceback.format_exc()))
+        print ('-----------\nProblem creating a new global code' + str(traceback.format_exc()))
+        result = dict(data = 'ERROR', error_detail='Problem creating a new global code')
+
+    json_data = jsonify(result)
+    return json_data
+
+@app.route('/global_edit_delete_code')
+@login_required
+def global_edit_delete_code():
+    print 'Deleting global code'
+
+    try:
+        code = request.args.get('code')
+        exclusion = request.args.get('exclusion')
+
+        sql.exec_stored_procedure_noreturn('spGlobalsApp_DeleteGlobalCode',[code, exclusion, user.email])
+
+        result = dict(data = 'OK')
+
+    except Exception, err:
+        error_log('Error deleting global code:\n' + str(traceback.format_exc()))
+        print ('-----------\nError deleting global code' + str(traceback.format_exc()))
+        result = dict(data = 'ERROR', error_detail='Problem deleting the code')
 
     json_data = jsonify(result)
     return json_data

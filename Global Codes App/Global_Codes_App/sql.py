@@ -16,12 +16,27 @@ def exec_stored_procedure(stored_procedure,arguements=[]):
     data = {}
 
     cursor.execute(sql)
-    headers = [column[0] for column in cursor.description]
-            
+    headers = [column[0] for column in cursor.description]     
+       
     raw_data = cursor.fetchall()
     data = dict(result=[dict(zip(headers,row)) for row in raw_data])
 
     return data
+
+def exec_stored_procedure_noreturn(stored_procedure,arguements=[]):
+    try:
+        cnxn = pyodbc.connect(config.connection_string)
+        cursor = cnxn.cursor()
+    except:
+        print 'Problem making connection'
+    
+    sql = "EXEC %s '%s';" % (stored_procedure,"','".join(arguements))
+    data = {}
+
+    cursor.execute(sql)
+    cursor.commit()
+  
+       
 
 def exec_stored_procedure_list(stored_procedure, arguements=[], header_row=False):
     try:
@@ -258,6 +273,9 @@ def insert_new_global_code(code, submission, user):
     
     cursor.execute(sql)
     cursor.commit()
+
+
+
 
 
 

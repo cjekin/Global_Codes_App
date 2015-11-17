@@ -3,10 +3,17 @@
 var current_dept = 'All';
 var current_global_code = 'BC_UE_NA';
 var current_global_name = 'Sodium';
+var current_global_data = {};
 var info_headers = ['GlobalCode', 'Description', 'Sample', 'Type', 'Analyte', 'PrimaryLibrary', 'SubSection', 'Department', 'BAFO_Subsection', 'BAFO_Department', 'HSL_Code', 'NLMC', 'SNOMEDCT_UK', 'LOINC', 'PBCL', 'Interface', 'MiddlewareCode'];
 
 $('.global_detail_class').hide();
 $(window.scrollTo(0, 0));
+
+function scroll_to_this(element,speed) {
+    $('html, body').animate({
+        scrollTop: element.offset().top
+    }, speed);
+};
 
 // Preload all the TFCs for quick lookup in subsequent SQL queries
 $.getJSON('/pull_all_tfcs_to_one_table', function (data) {
@@ -129,6 +136,8 @@ function get_global_code_info(code) {
 
 function fill_global_data(data) {
 
+    current_global_data = data;
+
     // Put the header in
     $('#global_header_code').text(current_global_code);
 
@@ -167,8 +176,8 @@ function fill_global_data(data) {
         mapping_html += '<td>' + data['mapping'][i]['LastSeen'] + '</td>';
         mapping_html += '<td>' + data['mapping'][i]['GlobalCode'] + '</td>';
         mapping_html += '<td>' + data['mapping'][i]['Excluded'] + '</td>';
-        mapping_html += '<td><button class="btn btn-danger btn-xs global_tfc_mapping_del">DEL</button></td>';
-        mapping_html += '<td><button class="btn btn-success btn-xs global_tfc_mapping_edit">EDIT</button></td></tr>';
+        mapping_html += '<td><button class="btn btn-danger btn-xs global_tfc_mapping_del disabled">DEL</button></td>';
+        mapping_html += '<td><button class="btn btn-success btn-xs global_tfc_mapping_edit disabled">EDIT</button></td></tr>';
     };
     $('#global_tfc_mapping').html(mapping_html);
 };
@@ -278,8 +287,98 @@ function global_info_new_click() {
                         type: "warning"
                     });
                 });
-        };
-        
+        };  
+    };
+};
+
+
+// Respond to clicking DELETE button
+$("#global_delete_button").click(function () {
+    console.log('Clicked DELETE button');
+    //scroll_to_this($(this), 500);
+    $(window.scrollTo($(window).scrollTop(), 0));
+
+    // Check if there is a code to delete
+    if (current_global_code == "") {
+        swal({
+            title: 'Please select a code to delete',
+            type: 'info'
+        });
+        return;
     };
 
+    // Check if there is anything mapped to the code
+    if (current_global_data['mapping'].length > 0) {
+
+        swal({
+            title: "Codes mapped",
+            text: "There are " + current_global_data['mapping'].length + " codes mapped to this. Type an optional exclusion here",
+            type: "input",
+            showCancelButton: true,
+            closeOnConfirm: true,
+            confirmButtonText: "Delete",
+            confirmButtonColor: "#ff6666",
+            inputPlaceholder: "Exclusion (optional)"
+        },
+        function (inputValue) {
+
+            console.log(inputValue);
+
+            if (inputValue == false) {
+                console.log('Cancelled delete');
+            } else {
+                delete_current_global_code(inputValue);
+            };
+        });
+        return;
+    };
+
+    // Straight deletion of an unmapped code
+    swal({
+        title: "Are you sure?",
+        text: "You are about to delete " + current_global_code,
+        type: "warning",
+        showCancelButton: true,
+        confirmButtonColor: "#DD6B55",
+        confirmButtonText: "Delete code",
+        closeOnConfirm: true
+    },
+    function () {
+        delete_current_global_code('');
+    });
+});
+
+function delete_current_global_code(exclusion) {
+
+    console.log('Confirmed click with exclusion: ' + exclusion);
+
+    $.getJSON('/global_edit_delete_code?code=' + current_global_code + '&exclusion=' + exclusion, function (data) {
+        if (data['data'] == 'ERROR') {
+            swal({
+                title: "Error deleting the code",
+                text: "An exception occurred while deleting the global code. The details have been recorded in the error log. " + data['error_detail'],
+                type: "warning"
+            });
+        } else {
+
+            // Clear the global code
+            current_global_code = "";
+
+            // Clear the form info
+            for (i = 0; i < info_headers.length; i++) {
+                current_global_data['info'][0][info_headers[i]] = "";
+            };
+
+            // Clear the audit trail and mapping info
+            current_global_data['audit'] = [];
+            current_global_data['mapping'] = [];
+
+            fill_global_data(current_global_data);
+
+            // Reload the global table
+            var url_val = '/globalseditordata?department=' + current_dept;
+            global_code_datatable.ajax.url(url_val).load();
+
+        };
+    });
 };
