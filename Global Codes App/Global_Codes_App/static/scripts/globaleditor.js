@@ -278,14 +278,15 @@ function global_info_new_click() {
             current_global_code = submission['GlobalCode']
             $.post('\global_edit_new_code', submission)
                 .done(function (data) {
-                    fill_global_data(data);
-                })
-                .fail(function () {
-                    swal({
-                        title: "Problem submitting changes" + code,
-                        text: "There was an issue submitting your changes. Please check the code details",
-                        type: "warning"
-                    });
+                    if (data['data'] == 'ERROR') {
+                        swal({
+                            title: "Problem submitting changes" + code,
+                            text: "There was an issue submitting your changes. Please check the code details",
+                            type: "warning"
+                        });
+                    } else {
+                        fill_global_data(data);
+                    };
                 });
         };  
     };
