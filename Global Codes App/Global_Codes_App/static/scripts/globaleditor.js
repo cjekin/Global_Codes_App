@@ -205,14 +205,19 @@ function global_info_submit_click() {
 
     $.post('\global_edit_submit_changes', submission)
         .done(function (data) {
-            fill_global_data(data);
-        })
-        .fail(function () {
-            swal({
-                title: "Problem submitting changes" + code,
-                text: "There was an issue submitting your changes. Please check the code details",
-                type: "warning"
-            });
+            if (data['data'] == 'ERROR') {
+                swal({
+                    title: "Problem submitting changes" + code,
+                    text: "There was an issue submitting your changes. Please check the code details",
+                    type: "warning"
+                });
+            } else {
+                fill_global_data(data);
+
+                // Reload the global table
+                var url_val = '/globalseditordata?department=' + current_dept;
+                global_code_datatable.ajax.url(url_val).load();
+            };
         });
 };
 
@@ -286,6 +291,10 @@ function global_info_new_click() {
                         });
                     } else {
                         fill_global_data(data);
+
+                        // Reload the global table
+                        var url_val = '/globalseditordata?department=' + current_dept;
+                        global_code_datatable.ajax.url(url_val).load();
                     };
                 });
         };  
