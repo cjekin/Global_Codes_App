@@ -269,7 +269,7 @@ def insert_new_global_code(code, submission, user):
     cursor.execute(sql)
     cursor.commit()
 
-    sql = "insert into %s values(getdate(), '%s', 'GlobalCodes_Main', '%s', '%s', 'NewGlobal')" % (config.global_audit_table, user, code, 'See code details')
+    sql = "insert into %s values(getdate(), '%s', 'GlobalCodes_Main', '%s', '%s', 'NewGlobal')" % (config.global_audit_table, user, code, 'New code created')
     
     cursor.execute(sql)
     cursor.commit()
