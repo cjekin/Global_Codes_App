@@ -468,6 +468,35 @@ def global_edit_delete_code():
     return json_data
 
 
+#
+# Spreadsheet
+#
+
+@app.route('/spreadsheet')
+@login_required
+def spreadsheet():
+    return render_template(
+        'spreadsheet.html',
+        title='Spreadsheet Editor',
+        year=datetime.now().year,
+    )
+
+@app.route('/pull_spreadsheet_globals')
+@login_required
+def pull_spreadsheet_globals():
+
+    try:
+        result = sql.exec_stored_procedure_list('spGlobalsApp_GlobalEditor', header_row=True)
+
+    except Exception, err:
+        error_log('Error executing spGlobalsApp_GlobalEditor:\n' + str(traceback.format_exc()))
+        print ('-----------\nError pulling all globals' + str(traceback.format_exc()))
+        result = dict(data = 'ERROR', error_detail='Problem running query')
+
+    json_data = jsonify(result)
+    return json_data
+
+
 
 
 

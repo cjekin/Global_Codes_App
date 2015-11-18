@@ -880,3 +880,141 @@ Traceback (most recent call last):
   File "\\tdlpathology\docs\TDL\IT\Chris Ekin\GitHub\Global_Codes_App\Global Codes App\Global_Codes_App\sql.py", line 38, in exec_stored_procedure_noreturn
     cursor.execute(sql)
 ProgrammingError: ('42000', '[42000] [Microsoft][ODBC SQL Server Driver][SQL Server]Procedure spGlobalsApp_GetNewTFC has no parameters and arguments were supplied. (8146) (SQLExecDirectW)')
+-----18/11/2015 20:48
+Error getting dashboard data:
+Traceback (most recent call last):
+  File "C:\Users\cekin\Documents\GitHub\Global_Codes_App\Global Codes App\Global_Codes_App\views.py", line 278, in dashboard_getdata
+    data = sql.exec_stored_procedure_list('spGlobalsApp_AllSystemStats')
+  File "C:\Users\cekin\Documents\GitHub\Global_Codes_App\Global Codes App\Global_Codes_App\sql.py", line 66, in exec_stored_procedure_list
+    cursor.execute(sql)
+ProgrammingError: ('42000', "[42000] [Microsoft][ODBC SQL Server Driver][SQL Server]Could not find stored procedure 'spGlobalsApp_AllSystemStats'. (2812) (SQLExecDirectW)")
+-----18/11/2015 21:02
+Error getting dashboard data:
+Traceback (most recent call last):
+  File "C:\Users\cekin\Documents\GitHub\Global_Codes_App\Global Codes App\Global_Codes_App\views.py", line 278, in dashboard_getdata
+    data = sql.exec_stored_procedure_list('spGlobalsApp_AllSystemStats')
+  File "C:\Users\cekin\Documents\GitHub\Global_Codes_App\Global Codes App\Global_Codes_App\sql.py", line 66, in exec_stored_procedure_list
+    cursor.execute(sql)
+ProgrammingError: ('42000', "[42000] [Microsoft][ODBC SQL Server Driver][SQL Server]Could not find stored procedure 'spGlobalsApp_AllSystemStats'. (2812) (SQLExecDirectW)")
+-----18/11/2015 21:03
+Error getting dashboard data:
+Traceback (most recent call last):
+  File "C:\Users\cekin\Documents\GitHub\Global_Codes_App\Global Codes App\Global_Codes_App\views.py", line 278, in dashboard_getdata
+    data = sql.exec_stored_procedure_list('spGlobalsApp_AllSystemStats')
+  File "C:\Users\cekin\Documents\GitHub\Global_Codes_App\Global Codes App\Global_Codes_App\sql.py", line 66, in exec_stored_procedure_list
+    cursor.execute(sql)
+ProgrammingError: ('42000', "[42000] [Microsoft][ODBC SQL Server Driver][SQL Server]Could not find stored procedure 'spGlobalsApp_AllSystemStats'. (2812) (SQLExecDirectW)")
+-----18/11/2015 21:13
+Error getting dashboard data:
+Traceback (most recent call last):
+  File "C:\Users\cekin\Documents\GitHub\Global_Codes_App\Global Codes App\Global_Codes_App\views.py", line 278, in dashboard_getdata
+    data = sql.exec_stored_procedure_list('spGlobalsApp_AllSystemStats')
+  File "C:\Users\cekin\Documents\GitHub\Global_Codes_App\Global Codes App\Global_Codes_App\sql.py", line 66, in exec_stored_procedure_list
+    cursor.execute(sql)
+ProgrammingError: ('42000', "[42000] [Microsoft][ODBC SQL Server Driver][SQL Server]Could not find stored procedure 'spGlobalsApp_AllSystemStats'. (2812) (SQLExecDirectW)")
+-----18/11/2015 21:13
+Error executing pull_all_tfcs_to_one_table:
+Traceback (most recent call last):
+  File "C:\Users\cekin\Documents\GitHub\Global_Codes_App\Global Codes App\Global_Codes_App\views.py", line 320, in pull_all_tfcs_to_one_table
+    cursor.execute(sql)
+ProgrammingError: ('42000', "[42000] [Microsoft][ODBC SQL Server Driver][SQL Server]Could not find stored procedure 'spGlobalsApp_GlobalCodeDetail_LoadAllTFCs'. (2812) (SQLExecDirectW)")
+-----18/11/2015 21:13
+Error executing spGlobalsApp_GlobalEditor_DeptList:
+Traceback (most recent call last):
+  File "C:\Users\cekin\Documents\GitHub\Global_Codes_App\Global Codes App\Global_Codes_App\views.py", line 344, in globals_department_list
+    result = sql.exec_stored_procedure_list('spGlobalsApp_GlobalCodeDetail_DeptList')
+  File "C:\Users\cekin\Documents\GitHub\Global_Codes_App\Global Codes App\Global_Codes_App\sql.py", line 66, in exec_stored_procedure_list
+    cursor.execute(sql)
+ProgrammingError: ('42000', "[42000] [Microsoft][ODBC SQL Server Driver][SQL Server]Could not find stored procedure 'spGlobalsApp_GlobalCodeDetail_DeptList'. (2812) (SQLExecDirectW)")
+-----18/11/2015 21:13
+Error executing code detail lookup:
+Traceback (most recent call last):
+  File "C:\Users\cekin\Documents\GitHub\Global_Codes_App\Global Codes App\Global_Codes_App\views.py", line 379, in globalcodedetail
+    result['info'] = sql.exec_stored_procedure('spGlobalsApp_GlobalCodeDetail_Info',[code])['result']
+  File "C:\Users\cekin\Documents\GitHub\Global_Codes_App\Global Codes App\Global_Codes_App\sql.py", line 18, in exec_stored_procedure
+    cursor.execute(sql)
+ProgrammingError: ('42000', "[42000] [Microsoft][ODBC SQL Server Driver][SQL Server]Could not find stored procedure 'spGlobalsApp_GlobalCodeDetail_Info'. (2812) (SQLExecDirectW)")
+-----18/11/2015 21:14
+Error getting dashboard data:
+Traceback (most recent call last):
+  File "C:\Users\cekin\Documents\GitHub\Global_Codes_App\Global Codes App\Global_Codes_App\views.py", line 278, in dashboard_getdata
+    data = sql.exec_stored_procedure_list('spGlobalsApp_AllSystemStats')
+  File "C:\Users\cekin\Documents\GitHub\Global_Codes_App\Global Codes App\Global_Codes_App\sql.py", line 66, in exec_stored_procedure_list
+    cursor.execute(sql)
+ProgrammingError: ('42000', "[42000] [Microsoft][ODBC SQL Server Driver][SQL Server]Could not find stored procedure 'spGlobalsApp_AllSystemStats'. (2812) (SQLExecDirectW)")
+-----18/11/2015 21:20
+Error executing spGlobalsApp_GlobalEditor:
+Traceback (most recent call last):
+  File "C:\Users\cekin\Documents\GitHub\Global_Codes_App\Global Codes App\Global_Codes_App\views.py", line 489, in pull_spreadsheet_globals
+    result = sql.exec_stored_procedure_list('spGlobalsApp_GlobalEditor',[department])
+NameError: global name 'department' is not defined
+-----18/11/2015 21:20
+Error executing spGlobalsApp_GlobalEditor:
+Traceback (most recent call last):
+  File "C:\Users\cekin\Documents\GitHub\Global_Codes_App\Global Codes App\Global_Codes_App\views.py", line 489, in pull_spreadsheet_globals
+    result = sql.exec_stored_procedure_list('spGlobalsApp_GlobalEditor')
+  File "C:\Users\cekin\Documents\GitHub\Global_Codes_App\Global Codes App\Global_Codes_App\sql.py", line 66, in exec_stored_procedure_list
+    cursor.execute(sql)
+ProgrammingError: ('42S02', "[42S02] [Microsoft][ODBC SQL Server Driver][SQL Server]Invalid object name 'GlobalCodes_Main'. (208) (SQLExecDirectW)")
+-----18/11/2015 21:24
+Error executing spGlobalsApp_GlobalEditor:
+Traceback (most recent call last):
+  File "C:\Users\cekin\Documents\GitHub\Global_Codes_App\Global Codes App\Global_Codes_App\views.py", line 489, in pull_spreadsheet_globals
+    result = sql.exec_stored_procedure_list('spGlobalsApp_GlobalEditor')
+  File "C:\Users\cekin\Documents\GitHub\Global_Codes_App\Global Codes App\Global_Codes_App\sql.py", line 66, in exec_stored_procedure_list
+    cursor.execute(sql)
+ProgrammingError: ('42S02', "[42S02] [Microsoft][ODBC SQL Server Driver][SQL Server]Invalid object name 'SNOMED.dbo.LOINC'. (208) (SQLExecDirectW)")
+-----18/11/2015 22:16
+Error getting dashboard data:
+Traceback (most recent call last):
+  File "C:\Users\cekin\Documents\GitHub\Global_Codes_App\Global Codes App\Global_Codes_App\views.py", line 278, in dashboard_getdata
+    data = sql.exec_stored_procedure_list('spGlobalsApp_AllSystemStats')
+  File "C:\Users\cekin\Documents\GitHub\Global_Codes_App\Global Codes App\Global_Codes_App\sql.py", line 66, in exec_stored_procedure_list
+    cursor.execute(sql)
+ProgrammingError: ('42000', "[42000] [Microsoft][ODBC SQL Server Driver][SQL Server]Could not find stored procedure 'spGlobalsApp_AllSystemStats'. (2812) (SQLExecDirectW)")
+-----18/11/2015 22:26
+Error getting dashboard data:
+Traceback (most recent call last):
+  File "C:\Users\cekin\Documents\GitHub\Global_Codes_App\Global Codes App\Global_Codes_App\views.py", line 278, in dashboard_getdata
+    data = sql.exec_stored_procedure_list('spGlobalsApp_AllSystemStats')
+  File "C:\Users\cekin\Documents\GitHub\Global_Codes_App\Global Codes App\Global_Codes_App\sql.py", line 66, in exec_stored_procedure_list
+    cursor.execute(sql)
+ProgrammingError: ('42000', "[42000] [Microsoft][ODBC SQL Server Driver][SQL Server]Could not find stored procedure 'spGlobalsApp_AllSystemStats'. (2812) (SQLExecDirectW)")
+-----18/11/2015 22:28
+Error getting dashboard data:
+Traceback (most recent call last):
+  File "C:\Users\cekin\Documents\GitHub\Global_Codes_App\Global Codes App\Global_Codes_App\views.py", line 278, in dashboard_getdata
+    data = sql.exec_stored_procedure_list('spGlobalsApp_AllSystemStats')
+  File "C:\Users\cekin\Documents\GitHub\Global_Codes_App\Global Codes App\Global_Codes_App\sql.py", line 66, in exec_stored_procedure_list
+    cursor.execute(sql)
+ProgrammingError: ('42000', "[42000] [Microsoft][ODBC SQL Server Driver][SQL Server]Could not find stored procedure 'spGlobalsApp_AllSystemStats'. (2812) (SQLExecDirectW)")
+-----18/11/2015 22:29
+Error getting dashboard data:
+Traceback (most recent call last):
+  File "C:\Users\cekin\Documents\GitHub\Global_Codes_App\Global Codes App\Global_Codes_App\views.py", line 278, in dashboard_getdata
+    data = sql.exec_stored_procedure_list('spGlobalsApp_AllSystemStats')
+  File "C:\Users\cekin\Documents\GitHub\Global_Codes_App\Global Codes App\Global_Codes_App\sql.py", line 66, in exec_stored_procedure_list
+    cursor.execute(sql)
+ProgrammingError: ('42000', "[42000] [Microsoft][ODBC SQL Server Driver][SQL Server]Could not find stored procedure 'spGlobalsApp_AllSystemStats'. (2812) (SQLExecDirectW)")
+-----18/11/2015 23:49
+Error executing pull_all_tfcs_to_one_table:
+Traceback (most recent call last):
+  File "C:\Users\cekin\Documents\GitHub\Global_Codes_App\Global Codes App\Global_Codes_App\views.py", line 320, in pull_all_tfcs_to_one_table
+    cursor.execute(sql)
+ProgrammingError: ('42000', "[42000] [Microsoft][ODBC SQL Server Driver][SQL Server]Could not find stored procedure 'spGlobalsApp_GlobalCodeDetail_LoadAllTFCs'. (2812) (SQLExecDirectW)")
+-----18/11/2015 23:49
+Error executing spGlobalsApp_GlobalEditor_DeptList:
+Traceback (most recent call last):
+  File "C:\Users\cekin\Documents\GitHub\Global_Codes_App\Global Codes App\Global_Codes_App\views.py", line 344, in globals_department_list
+    result = sql.exec_stored_procedure_list('spGlobalsApp_GlobalCodeDetail_DeptList')
+  File "C:\Users\cekin\Documents\GitHub\Global_Codes_App\Global Codes App\Global_Codes_App\sql.py", line 66, in exec_stored_procedure_list
+    cursor.execute(sql)
+ProgrammingError: ('42000', "[42000] [Microsoft][ODBC SQL Server Driver][SQL Server]Could not find stored procedure 'spGlobalsApp_GlobalCodeDetail_DeptList'. (2812) (SQLExecDirectW)")
+-----18/11/2015 23:49
+Error executing code detail lookup:
+Traceback (most recent call last):
+  File "C:\Users\cekin\Documents\GitHub\Global_Codes_App\Global Codes App\Global_Codes_App\views.py", line 379, in globalcodedetail
+    result['info'] = sql.exec_stored_procedure('spGlobalsApp_GlobalCodeDetail_Info',[code])['result']
+  File "C:\Users\cekin\Documents\GitHub\Global_Codes_App\Global Codes App\Global_Codes_App\sql.py", line 18, in exec_stored_procedure
+    cursor.execute(sql)
+ProgrammingError: ('42000', "[42000] [Microsoft][ODBC SQL Server Driver][SQL Server]Could not find stored procedure 'spGlobalsApp_GlobalCodeDetail_Info'. (2812) (SQLExecDirectW)")
