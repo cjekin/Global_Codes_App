@@ -30,7 +30,13 @@ def exec_stored_procedure_noreturn(stored_procedure,arguements=[]):
     except:
         print 'Problem making connection'
     
-    sql = "EXEC %s '%s';" % (stored_procedure,"','".join(arguements))
+    if arguements <> []:
+        args = "'" + "','".join(arguements) + "'"
+    else:
+        args = ''
+
+    sql = "EXEC %s %s;" % (stored_procedure,args)
+
     data = {}
 
     cursor.execute(sql)

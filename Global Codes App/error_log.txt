@@ -824,3 +824,59 @@ Traceback (most recent call last):
   File "\\tdlpathology\docs\TDL\IT\Chris Ekin\GitHub\Global_Codes_App\Global Codes App\Global_Codes_App\sql.py", line 36, in exec_stored_procedure_noreturn
     cursor.execute(sql)
 ProgrammingError: ('42000', "[42000] [Microsoft][ODBC SQL Server Driver][SQL Server]Incorrect syntax near the keyword 'Not'. (156) (SQLExecDirectW)")
+-----18/11/2015 16:49
+Error getting TLC list:
+Traceback (most recent call last):
+  File "\\tdlpathology\docs\TDL\IT\Chris Ekin\GitHub\Global_Codes_App\Global Codes App\Global_Codes_App\views.py", line 75, in tlc_data
+    result = sql.exec_stored_procedure_list('spGlobalsApp_GetTLCList',args)
+  File "\\tdlpathology\docs\TDL\IT\Chris Ekin\GitHub\Global_Codes_App\Global Codes App\Global_Codes_App\sql.py", line 60, in exec_stored_procedure_list
+    cursor.execute(sql)
+ProgrammingError: ('42000', "[42000] [Microsoft][ODBC SQL Server Driver][SQL Server]Incorrect syntax near 'A'. (102) (SQLExecDirectW)")
+-----18/11/2015 16:49
+Error getting TLC list:
+Traceback (most recent call last):
+  File "\\tdlpathology\docs\TDL\IT\Chris Ekin\GitHub\Global_Codes_App\Global Codes App\Global_Codes_App\views.py", line 75, in tlc_data
+    result = sql.exec_stored_procedure_list('spGlobalsApp_GetTLCList',args)
+  File "\\tdlpathology\docs\TDL\IT\Chris Ekin\GitHub\Global_Codes_App\Global Codes App\Global_Codes_App\sql.py", line 60, in exec_stored_procedure_list
+    cursor.execute(sql)
+ProgrammingError: ('42000', "[42000] [Microsoft][ODBC SQL Server Driver][SQL Server]Incorrect syntax near 'A'. (102) (SQLExecDirectW)")
+-----18/11/2015 16:50
+Error getting TLC list:
+Traceback (most recent call last):
+  File "\\tdlpathology\docs\TDL\IT\Chris Ekin\GitHub\Global_Codes_App\Global Codes App\Global_Codes_App\views.py", line 75, in tlc_data
+    result = sql.exec_stored_procedure_list('spGlobalsApp_GetTLCList',args)
+  File "\\tdlpathology\docs\TDL\IT\Chris Ekin\GitHub\Global_Codes_App\Global Codes App\Global_Codes_App\sql.py", line 60, in exec_stored_procedure_list
+    cursor.execute(sql)
+ProgrammingError: ('42000', "[42000] [Microsoft][ODBC SQL Server Driver][SQL Server]Incorrect syntax near 'A'. (102) (SQLExecDirectW)")
+-----18/11/2015 17:13
+Error getting new TFCs in the mapping table:
+Traceback (most recent call last):
+  File "\\tdlpathology\docs\TDL\IT\Chris Ekin\GitHub\Global_Codes_App\Global Codes App\Global_Codes_App\views.py", line 69, in get_new_tfc
+    sql.exec_stored_procedure_noreturn('spGlobalsApp_GetNewTFC',[])
+  File "\\tdlpathology\docs\TDL\IT\Chris Ekin\GitHub\Global_Codes_App\Global Codes App\Global_Codes_App\sql.py", line 36, in exec_stored_procedure_noreturn
+    cursor.execute(sql)
+ProgrammingError: ('42000', '[42000] [Microsoft][ODBC SQL Server Driver][SQL Server]Procedure spGlobalsApp_GetNewTFC has no parameters and arguments were supplied. (8146) (SQLExecDirectW)')
+-----18/11/2015 17:13
+Error getting new TFCs in the mapping table:
+Traceback (most recent call last):
+  File "\\tdlpathology\docs\TDL\IT\Chris Ekin\GitHub\Global_Codes_App\Global Codes App\Global_Codes_App\views.py", line 69, in get_new_tfc
+    sql.exec_stored_procedure_noreturn('spGlobalsApp_GetNewTFC',[])
+  File "\\tdlpathology\docs\TDL\IT\Chris Ekin\GitHub\Global_Codes_App\Global Codes App\Global_Codes_App\sql.py", line 36, in exec_stored_procedure_noreturn
+    cursor.execute(sql)
+ProgrammingError: ('42000', '[42000] [Microsoft][ODBC SQL Server Driver][SQL Server]Procedure spGlobalsApp_GetNewTFC has no parameters and arguments were supplied. (8146) (SQLExecDirectW)')
+-----18/11/2015 17:14
+Error getting new TFCs in the mapping table:
+Traceback (most recent call last):
+  File "\\tdlpathology\docs\TDL\IT\Chris Ekin\GitHub\Global_Codes_App\Global Codes App\Global_Codes_App\views.py", line 69, in get_new_tfc
+    sql.exec_stored_procedure_noreturn('spGlobalsApp_GetNewTFC')
+  File "\\tdlpathology\docs\TDL\IT\Chris Ekin\GitHub\Global_Codes_App\Global Codes App\Global_Codes_App\sql.py", line 36, in exec_stored_procedure_noreturn
+    cursor.execute(sql)
+ProgrammingError: ('42000', '[42000] [Microsoft][ODBC SQL Server Driver][SQL Server]Procedure spGlobalsApp_GetNewTFC has no parameters and arguments were supplied. (8146) (SQLExecDirectW)')
+-----18/11/2015 17:15
+Error getting new TFCs in the mapping table:
+Traceback (most recent call last):
+  File "\\tdlpathology\docs\TDL\IT\Chris Ekin\GitHub\Global_Codes_App\Global Codes App\Global_Codes_App\views.py", line 69, in get_new_tfc
+    sql.exec_stored_procedure_noreturn('spGlobalsApp_GetNewTFC')
+  File "\\tdlpathology\docs\TDL\IT\Chris Ekin\GitHub\Global_Codes_App\Global Codes App\Global_Codes_App\sql.py", line 38, in exec_stored_procedure_noreturn
+    cursor.execute(sql)
+ProgrammingError: ('42000', '[42000] [Microsoft][ODBC SQL Server Driver][SQL Server]Procedure spGlobalsApp_GetNewTFC has no parameters and arguments were supplied. (8146) (SQLExecDirectW)')

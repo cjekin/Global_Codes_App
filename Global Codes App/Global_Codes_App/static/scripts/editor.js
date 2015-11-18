@@ -7,6 +7,14 @@ var current_tlc_type = 'G';
 var current_system = 'CROM_ALL_DW';
 
 
+// Load any new TFCs in to the mapping table
+$($.getJSON('/get_new_tfc', function (data) {
+    if (data['result'] == 'ERROR') {
+        swal('Error getting new TFCs');
+    };
+})
+);
+
 // Get all the data preloaded including: Worksection and library
 $(function () {
     $('#data_preload_splash').hide();
@@ -24,7 +32,7 @@ $(function () {
     });
 
     // Load the library code data
-    var url_val = '/tlc_data?system=' + current_system + '&section=' + $('#tlc_search_section').val().substring(0, 1) + '&primary=0&unmapped=0';
+    var url_val = '/tlc_data?system=' + current_system + '&section=0' + '&primary=0&unmapped=0';
     console.log(url_val);
     library_code_datatable.ajax.url(url_val).load();
     fill_library_code_detail(current_system, current_tlc);
@@ -36,7 +44,7 @@ $(function () {
 // Populate the worksections in the library code lookup based on value selected
 function get_worksections(system) {
     var worksections = worksection_data[system];
-    var options = '';
+    var options = '<option>0 - ALL</option>';
     for (i = 0; i < worksections.length; i++) {
         options += '<option>' + worksections[i][0] + ' - ' + worksections[i][1] + '</option>';
     }

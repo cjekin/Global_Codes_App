@@ -247,6 +247,28 @@ $("#global_new_button").click(function () {
 
 });
 
+// Respond to clicking COPY button
+$("#global_copy_button").click(function () {
+
+    // Put the header in
+    $('#global_header_code').text('NEW CODE');
+
+    // Build the basic info form
+    for (i = 0; i < info_headers.length; i++) {
+        var content = $('#info_' + info_headers[i] + ' p').text();
+        $('#info_' + info_headers[i]).html('<input value="' + content + '" class="form-control"></div>');
+    };
+    $('#global_info').append('<div class="form-group" id="global_info_create_div"><div class="col-sm-7 col-sm-offset-4"><button id="global_info_newcode" type="button"  onClick="global_info_new_click(); return false;" class="btn btn-success">Create New</button></div></div>');
+
+    // Clear the audit trail and mapping info
+    $('#global_audit').html('<tr><td></td><td></td><td></td></tr>');
+    $('#global_tfc_mapping').html('<tr><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td></tr>');
+
+    $('#global_audit').html('');
+    $('#global_tfc_mapping').html('');
+
+});
+
 // Respond to clicking CREATE NEW button on global info
 function global_info_new_click() {
     console.log('Clicked CREATE NEW button');

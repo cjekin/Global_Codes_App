@@ -60,6 +60,23 @@ def home():
         year=datetime.now().year,
     )
 
+@app.route('/get_new_tfc')
+@login_required
+def get_new_tfc():
+    print 'Getting new TFCs'
+
+    try:
+        sql.exec_stored_procedure_noreturn('spGlobalsApp_GetNewTFC')
+        result = dict(data = 'OK')
+
+    except Exception, err:
+        error_log('Error getting new TFCs in the mapping table:\n' + str(traceback.format_exc()))
+        print ('-----------\nError getting new TFCs in the mapping table' + str(traceback.format_exc()))
+        result = dict(data = 'ERROR', error_detail='Error getting new TFCs in the mapping table')
+
+    json_data = jsonify(result)
+    return json_data
+
 
 @app.route('/tlc_data')
 @login_required
