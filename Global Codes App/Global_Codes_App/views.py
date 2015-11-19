@@ -481,17 +481,61 @@ def spreadsheet():
         year=datetime.now().year,
     )
 
+
 @app.route('/pull_spreadsheet_globals')
 @login_required
 def pull_spreadsheet_globals():
 
     try:
-        result = sql.exec_stored_procedure_list('spGlobalsApp_GlobalEditor', header_row=True)
+        result = sql.exec_stored_procedure_list('spGlobalsApp_GlobalSpreadsheet', header_row=True)
 
     except Exception, err:
-        error_log('Error executing spGlobalsApp_GlobalEditor:\n' + str(traceback.format_exc()))
+        error_log('Error executing spGlobalsApp_GlobalSpreadsheet:\n' + str(traceback.format_exc()))
         print ('-----------\nError pulling all globals' + str(traceback.format_exc()))
         result = dict(data = 'ERROR', error_detail='Problem running query')
+
+    json_data = jsonify(result)
+    return json_data
+
+
+@app.route('/spreadsheet_changefield', methods=['POST'])
+@login_required
+def spreadsheet_changefield():
+    print 'Submitting change to field from spreadsheet'
+
+    try:
+        updates = {r:request.form[r] for r in request.form if r <> 'GlobalCode'}
+        code = request.form['GlobalCode']
+        print 'spreadsheet_changefield\n', code, '\n', updates
+        sql.update_global_code_fields(code, updates, user.email)
+        result = dict(data = 'OK')
+
+    except Exception, err:
+        error_log('Error reciving global code spreadsheet edit submission:\n' + str(traceback.format_exc()))
+        print ('-----------\nError reciving global code spreadsheet edit submission' + str(traceback.format_exc()))
+        result = dict(data = 'ERROR', error_detail='Problem submitting global changes')
+
+    json_data = jsonify(result)
+    return json_data
+
+
+@app.route('/spreadsheet_newcode', methods=['POST'])
+@login_required
+def spreadsheet_newcode():
+    print 'Spreadsheet: Creating new global code'
+
+    try:
+        submission = {r:request.form[r] for r in request.form}
+        code = submission['GlobalCode']
+
+        sql.insert_new_global_code(code, submission, user.email)
+
+        result = dict(data = 'OK')
+
+    except Exception, err:
+        error_log('Problem creating a new global code from spreadsheet:\n' + str(traceback.format_exc()))
+        print ('-----------\nProblem creating a new global code from spreadsheet' + str(traceback.format_exc()))
+        result = dict(data = 'ERROR', error_detail='Problem creating a new global code')
 
     json_data = jsonify(result)
     return json_data
