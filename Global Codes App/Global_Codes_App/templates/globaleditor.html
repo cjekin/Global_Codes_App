@@ -1,5 +1,16 @@
 {% extends "layout.html" %}
 
+
+{% block customstyle %}
+<style>
+    .auditpanel {
+        height: 700px;
+        overflow-y: scroll;
+    }
+
+</style>
+{% endblock %}
+
 {% block content %}
 
 <div class="normalheader transition animated fadeIn">
@@ -113,14 +124,14 @@
                 </div>
                 Audit trail
             </div>
-            <div class="panel-body list">
+            <div class="panel-body list auditpanel">
                 <div class="table-responsive project-list">
                     <table class="table table-striped">
                         <thead>
                             <tr>
-                                <th>Event</th>
-                                <th>System</th>
-                                <th>User</th>
+                                <th>Old Value</th>
+                                <th>New Value</th>
+                                <th>Info</th>
                             </tr>
                         </thead>
 

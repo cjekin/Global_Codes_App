@@ -19,7 +19,7 @@ def exec_stored_procedure(stored_procedure,arguements=[]):
     headers = [column[0] for column in cursor.description]     
        
     raw_data = cursor.fetchall()
-    data = dict(result=[dict(zip(headers,row)) for row in raw_data])
+    data = dict(result=[dict(zip(headers,[str(i) for i in row])) for row in raw_data])
 
     return data
 
@@ -160,8 +160,8 @@ def add_mapping(system,tfc,new_global_code,user):
 
     # Add to the audit trail
     sql = """
-    INSERT INTO %s ([Date],[UserName],[Origin],[Code],[Change],[ChangeType])
-    VALUES (getdate(),'%s','%s','%s','%s','Add Mapping')
+    INSERT INTO %s ([Date],[UserName],[Origin],[Code],[Field],[OldValue],[NewValue],[ChangeType])
+    VALUES (getdate(),'%s','%s','%s','GlobalCode','','%s','Add Mapping')
     """ % (config.global_audit_table,user,system,tfc,new_global_code)
     cursor.execute(sql.replace('\n',' '))
     cursor.commit()
@@ -183,8 +183,8 @@ def remove_mapping(system,tfc,old_global_code,user):
 
     # Add to the audit trail
     sql = """
-    INSERT INTO %s ([Date],[UserName],[Origin],[Code],[Change],[ChangeType])
-    VALUES (getdate(),'%s','%s','%s','%s','Removed mapping')
+    INSERT INTO %s ([Date],[UserName],[Origin],[Code],[Field],[OldValue],[NewValue],[ChangeType])
+    VALUES (getdate(),'%s','%s','%s','GlobalCode','%s','','Removed mapping')
     """ % (config.global_audit_table,user,system,tfc,old_global_code)
     cursor.execute(sql.replace('\n',' '))
     cursor.commit()
@@ -209,8 +209,8 @@ def exclude_tfc(system,tfc,exclusion,user):
 
     # Add to the audit trail
     sql = """
-    INSERT INTO %s ([Date],[UserName],[Origin],[Code],[Change],[ChangeType])
-    VALUES (getdate(),'%s','%s','%s','%s','Exclusion Changed')
+    INSERT INTO %s ([Date],[UserName],[Origin],[Code],[Field],[OldValue],[NewValue],[ChangeType])
+    VALUES (getdate(),'%s','%s','%s','Excluded','','%s','Exclusion Changed')
     """ % (config.global_audit_table,user,system,tfc,exclusion)
     cursor.execute(sql.replace('\n',' '))
     cursor.commit()
@@ -244,21 +244,21 @@ def update_global_code_fields(code, updates, user):
     except:
         print 'Problem making connection'
     
-    u = [' ' + k + ' = ' + '\'' + v + '\'' for k,v in updates.iteritems()]
+    #o = [' ' + k + ' = ' + '\'' + v[0] + '\'' for k,v in updates.iteritems()]
+    #n = [' ' + k + ' = ' + '\'' + v[1] + '\'' for k,v in updates.iteritems()]
 
-    sql = "update %s set %s where GlobalCode = '%s'" % (config.global_main_table,', '.join(u),code)
-    print sql
-           
-    cursor.execute(sql)
+    for k,v in updates.iteritems():
+        sql = "insert into %s values(getdate(), '%s', 'GlobalCodes_Main', '%s', '%s', '%s', '%s', 'GlobalUpdate')" % (config.global_audit_table, user, code, k, v[0], v[1])
+        print 'Update audit trail:\n', sql, '\n'
+        cursor.execute(sql)
+
+        sql = "update %s set [%s] = '%s' where GlobalCode = '%s'" % (config.global_main_table,k,v[1],code)
+        print 'Update global codes main:\n', sql, '\n'   
+        cursor.execute(sql)
+
     cursor.commit()
 
-    sql = "insert into %s values(getdate(), '%s', 'GlobalCodes_Main', '%s', '%s', 'GlobalUpdate')" % (config.global_audit_table, user, code, '|'.join(u).replace("'","''"))
-
-    print '\n', sql, '\n'
-
-    cursor.execute(sql)
-    cursor.commit()
-
+    
 
 def insert_new_global_code(code, submission, user):
     try:
@@ -273,11 +273,12 @@ def insert_new_global_code(code, submission, user):
     sql = "insert into %s ([%s]) values ('%s')" % (config.global_main_table,"], [".join(fields), "', '".join(values))
                
     cursor.execute(sql)
-    cursor.commit()
 
-    sql = "insert into %s values(getdate(), '%s', 'GlobalCodes_Main', '%s', '%s', 'NewGlobal')" % (config.global_audit_table, user, code, 'New code created')
-    
-    cursor.execute(sql)
+    for f in fields:
+        if submission[f] <> '':
+            sql = "insert into %s values(getdate(), '%s', 'GlobalCodes_Main', '%s', '%s', '', '%s', 'NewGlobal')" % (config.global_audit_table, user, code, f, submission[f])
+            cursor.execute(sql)
+
     cursor.commit()
 
 

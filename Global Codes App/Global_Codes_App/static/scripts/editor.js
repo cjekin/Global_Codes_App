@@ -89,7 +89,7 @@ function update_system_info() {
         if (data['result'] == 'ERROR') {
             $('#system-overview-total').text('ERROR');
         } else {
-            $('#system-overview-total').text(data['result'][0]['Total'] + data['result'][0]['Total'] + ' total');
+            $('#system-overview-total').text(data['result'][0]['Total'] + ' total');
             $('#system-overview-total-percent').text('Percent mapped (' + data['result'][0]['PctMapped'] + '%)');
             $("#system-overview-total-progress").css("width", data['result'][0]['PctMapped'] + '%');
             $('#system-overview-codesinsection').text(data['result'][0]['NumSection']);

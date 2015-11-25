@@ -16,3 +16,205 @@ Traceback (most recent call last):
   File "\\tdlpathology\docs\TDL\IT\Chris Ekin\GitHub\Global_Codes_App\Global Codes App\Global_Codes_App\views.py", line 509, in spreadsheet_changefield
     print 'spreadsheet_changefield\n', code, '\n', submission
 NameError: global name 'submission' is not defined
+-----24/11/2015 10:30
+Error executing code detail lookup:
+Traceback (most recent call last):
+  File "\\tdlpathology\docs\TDL\IT\Chris Ekin\GitHub\Global_Codes_App\Global Codes App\Global_Codes_App\views.py", line 380, in globalcodedetail
+    result['audit'] = sql.exec_stored_procedure('spGlobalsApp_GlobalCodeDetail_Audit',[code])['result']
+  File "\\tdlpathology\docs\TDL\IT\Chris Ekin\GitHub\Global_Codes_App\Global Codes App\Global_Codes_App\sql.py", line 18, in exec_stored_procedure
+    cursor.execute(sql)
+ProgrammingError: ('42S22', "[42S22] [Microsoft][ODBC SQL Server Driver][SQL Server]Invalid column name 'Change'. (207) (SQLExecDirectW); [42S22] [Microsoft][ODBC SQL Server Driver][SQL Server]Invalid column name 'Date'. (207)")
+-----24/11/2015 18:36
+Error executing code detail lookup:
+Traceback (most recent call last):
+  File "H:\IT\Chris Ekin\GitHub\Global_Codes_App\Global Codes App\Global_Codes_App\views.py", line 380, in globalcodedetail
+    result['audit'] = sql.exec_stored_procedure('spGlobalsApp_GlobalCodeDetail_Audit',[code])['result']
+  File "H:\IT\Chris Ekin\GitHub\Global_Codes_App\Global Codes App\Global_Codes_App\sql.py", line 18, in exec_stored_procedure
+    cursor.execute(sql)
+ProgrammingError: ('42S22', "[42S22] [Microsoft][ODBC SQL Server Driver][SQL Server]Invalid column name 'Change'. (207) (SQLExecDirectW); [42S22] [Microsoft][ODBC SQL Server Driver][SQL Server]Invalid column name 'Date'. (207)")
+-----24/11/2015 19:13
+Error reciving global code spreadsheet edit submission:
+Traceback (most recent call last):
+  File "H:\IT\Chris Ekin\GitHub\Global_Codes_App\Global Codes App\Global_Codes_App\views.py", line 512, in spreadsheet_changefield
+    sql.update_global_code_fields(code, updates, user.email)
+  File "H:\IT\Chris Ekin\GitHub\Global_Codes_App\Global Codes App\Global_Codes_App\sql.py", line 247, in update_global_code_fields
+    o = [' ' + k + ' = ' + '\'' + v[0] + '\'' for k,v in updates.iteritems()]
+IndexError: string index out of range
+-----24/11/2015 19:16
+Error reciving global code spreadsheet edit submission:
+Traceback (most recent call last):
+  File "H:\IT\Chris Ekin\GitHub\Global_Codes_App\Global Codes App\Global_Codes_App\views.py", line 512, in spreadsheet_changefield
+    sql.update_global_code_fields(code, updates, user.email)
+  File "H:\IT\Chris Ekin\GitHub\Global_Codes_App\Global Codes App\Global_Codes_App\sql.py", line 260, in update_global_code_fields
+    cursor.execute(sql)
+DataError: ('22001', '[22001] [Microsoft][ODBC SQL Server Driver][SQL Server]String or binary data would be truncated. (8152) (SQLExecDirectW); [01000] [Microsoft][ODBC SQL Server Driver][SQL Server]The statement has been terminated. (3621)')
+-----24/11/2015 19:17
+Error reciving global code spreadsheet edit submission:
+Traceback (most recent call last):
+  File "H:\IT\Chris Ekin\GitHub\Global_Codes_App\Global Codes App\Global_Codes_App\views.py", line 512, in spreadsheet_changefield
+    sql.update_global_code_fields(code, updates, user.email)
+  File "H:\IT\Chris Ekin\GitHub\Global_Codes_App\Global Codes App\Global_Codes_App\sql.py", line 260, in update_global_code_fields
+    cursor.execute(sql)
+DataError: ('22001', '[22001] [Microsoft][ODBC SQL Server Driver][SQL Server]String or binary data would be truncated. (8152) (SQLExecDirectW); [01000] [Microsoft][ODBC SQL Server Driver][SQL Server]The statement has been terminated. (3621)')
+-----24/11/2015 19:18
+Error reciving global code spreadsheet edit submission:
+Traceback (most recent call last):
+  File "H:\IT\Chris Ekin\GitHub\Global_Codes_App\Global Codes App\Global_Codes_App\views.py", line 512, in spreadsheet_changefield
+    sql.update_global_code_fields(code, updates, user.email)
+  File "H:\IT\Chris Ekin\GitHub\Global_Codes_App\Global Codes App\Global_Codes_App\sql.py", line 260, in update_global_code_fields
+    cursor.execute(sql)
+DataError: ('22001', '[22001] [Microsoft][ODBC SQL Server Driver][SQL Server]String or binary data would be truncated. (8152) (SQLExecDirectW); [01000] [Microsoft][ODBC SQL Server Driver][SQL Server]The statement has been terminated. (3621)')
+-----24/11/2015 19:22
+Error reciving global code spreadsheet edit submission:
+Traceback (most recent call last):
+  File "H:\IT\Chris Ekin\GitHub\Global_Codes_App\Global Codes App\Global_Codes_App\views.py", line 512, in spreadsheet_changefield
+    sql.update_global_code_fields(code, updates, user.email)
+  File "H:\IT\Chris Ekin\GitHub\Global_Codes_App\Global Codes App\Global_Codes_App\sql.py", line 248, in update_global_code_fields
+    n = [' ' + k + ' = ' + '\'' + v[1] + '\'' for k,v in updates.iteritems()]
+IndexError: string index out of range
+-----24/11/2015 19:24
+Error reciving global code spreadsheet edit submission:
+Traceback (most recent call last):
+  File "H:\IT\Chris Ekin\GitHub\Global_Codes_App\Global Codes App\Global_Codes_App\views.py", line 513, in spreadsheet_changefield
+    sql.update_global_code_fields(code, updates, user.email)
+  File "H:\IT\Chris Ekin\GitHub\Global_Codes_App\Global Codes App\Global_Codes_App\sql.py", line 248, in update_global_code_fields
+    n = [' ' + k + ' = ' + '\'' + v[1] + '\'' for k,v in updates.iteritems()]
+IndexError: string index out of range
+-----24/11/2015 19:37
+Error reciving global code spreadsheet edit submission:
+Traceback (most recent call last):
+  File "H:\IT\Chris Ekin\GitHub\Global_Codes_App\Global Codes App\Global_Codes_App\views.py", line 513, in spreadsheet_changefield
+    field = request.form['Field']
+  File "C:\Anaconda\lib\site-packages\werkzeug\datastructures.py", line 393, in __getitem__
+    raise exceptions.BadRequestKeyError(key)
+BadRequestKeyError: 400: Bad Request
+-----24/11/2015 19:38
+Error reciving global code spreadsheet edit submission:
+Traceback (most recent call last):
+  File "H:\IT\Chris Ekin\GitHub\Global_Codes_App\Global Codes App\Global_Codes_App\views.py", line 518, in spreadsheet_changefield
+    sql.update_global_code_fields(code, field, oldval, newval, user.email)
+  File "H:\IT\Chris Ekin\GitHub\Global_Codes_App\Global Codes App\Global_Codes_App\sql.py", line 260, in update_global_code_fields
+    cursor.execute(sql)
+DataError: ('22001', '[22001] [Microsoft][ODBC SQL Server Driver][SQL Server]String or binary data would be truncated. (8152) (SQLExecDirectW); [01000] [Microsoft][ODBC SQL Server Driver][SQL Server]The statement has been terminated. (3621)')
+-----24/11/2015 19:45
+Error reciving global code edit submission:
+Traceback (most recent call last):
+  File "H:\IT\Chris Ekin\GitHub\Global_Codes_App\Global Codes App\Global_Codes_App\views.py", line 411, in global_edit_submit_changes
+    sql.update_global_code_fields(code, updates, user.email)
+TypeError: update_global_code_fields() takes exactly 5 arguments (3 given)
+-----24/11/2015 19:53
+Error reciving global code spreadsheet edit submission:
+Traceback (most recent call last):
+  File "H:\IT\Chris Ekin\GitHub\Global_Codes_App\Global Codes App\Global_Codes_App\views.py", line 519, in spreadsheet_changefield
+    sql.update_global_code_fields(code, updates, user.email)
+  File "H:\IT\Chris Ekin\GitHub\Global_Codes_App\Global Codes App\Global_Codes_App\sql.py", line 250, in update_global_code_fields
+    sql = "update %s set %s where GlobalCode = '%s'" % (config.global_main_table,', '.join(u),code)
+NameError: global name 'u' is not defined
+-----24/11/2015 20:02
+Error reciving global code spreadsheet edit submission:
+Traceback (most recent call last):
+  File "H:\IT\Chris Ekin\GitHub\Global_Codes_App\Global Codes App\Global_Codes_App\views.py", line 512, in spreadsheet_changefield
+    update[request.form['Field']] = [request.form['OldVal'],request.form['NewVal']]
+NameError: global name 'update' is not defined
+-----24/11/2015 20:05
+Error reciving global code spreadsheet edit submission:
+Traceback (most recent call last):
+  File "H:\IT\Chris Ekin\GitHub\Global_Codes_App\Global Codes App\Global_Codes_App\views.py", line 516, in spreadsheet_changefield
+    print 'spreadsheet_changefield\n', code, updates
+NameError: global name 'updates' is not defined
+-----24/11/2015 20:09
+Error reciving global code spreadsheet edit submission:
+Traceback (most recent call last):
+  File "H:\IT\Chris Ekin\GitHub\Global_Codes_App\Global Codes App\Global_Codes_App\views.py", line 516, in spreadsheet_changefield
+    #updates = [update]
+NameError: global name 'updates' is not defined
+-----25/11/2015 00:04
+Error reciving global code edit submission:
+Traceback (most recent call last):
+  File "H:\IT\Chris Ekin\GitHub\Global_Codes_App\Global Codes App\Global_Codes_App\views.py", line 401, in global_edit_submit_changes
+    lookup = sql.exec_stored_procedure('spGlobalsApp_GlobalCodeDetail_Info',[code])['result'][0]
+IndexError: list index out of range
+-----25/11/2015 00:10
+Error reciving global code edit submission:
+Traceback (most recent call last):
+  File "H:\IT\Chris Ekin\GitHub\Global_Codes_App\Global Codes App\Global_Codes_App\views.py", line 401, in global_edit_submit_changes
+    lookup = sql.exec_stored_procedure('spGlobalsApp_GlobalCodeDetail_Info',[code])['result'][0]
+IndexError: list index out of range
+-----25/11/2015 00:14
+Error reciving global code edit submission:
+Traceback (most recent call last):
+  File "H:\IT\Chris Ekin\GitHub\Global_Codes_App\Global Codes App\Global_Codes_App\views.py", line 401, in global_edit_submit_changes
+    lookup = sql.exec_stored_procedure('spGlobalsApp_GlobalCodeDetail_Info',[code])['result'][0]
+IndexError: list index out of range
+-----25/11/2015 00:19
+Error reciving global code edit submission:
+Traceback (most recent call last):
+  File "H:\IT\Chris Ekin\GitHub\Global_Codes_App\Global Codes App\Global_Codes_App\views.py", line 412, in global_edit_submit_changes
+    sql.update_global_code_fields(code, updates, user.email)
+  File "H:\IT\Chris Ekin\GitHub\Global_Codes_App\Global Codes App\Global_Codes_App\sql.py", line 251, in update_global_code_fields
+    sql = "insert into %s values(getdate(), '%s', 'GlobalCodes_Main', '%s', '%s', '%s', 'GlobalUpdate')" % (config.global_audit_table, user, code, k, v[0], v[1])
+TypeError: not all arguments converted during string formatting
+-----25/11/2015 00:21
+Error reciving global code edit submission:
+Traceback (most recent call last):
+  File "H:\IT\Chris Ekin\GitHub\Global_Codes_App\Global Codes App\Global_Codes_App\views.py", line 412, in global_edit_submit_changes
+    sql.update_global_code_fields(code, updates, user.email)
+  File "H:\IT\Chris Ekin\GitHub\Global_Codes_App\Global Codes App\Global_Codes_App\sql.py", line 253, in update_global_code_fields
+    cursor.execute(sql)
+ProgrammingError: ('42S02', "[42S02] [Microsoft][ODBC SQL Server Driver][SQL Server]Invalid object name 'GlobalCodes_Audit_Test'. (208) (SQLExecDirectW)")
+-----25/11/2015 00:23
+Error reciving global code edit submission:
+Traceback (most recent call last):
+  File "H:\IT\Chris Ekin\GitHub\Global_Codes_App\Global Codes App\Global_Codes_App\views.py", line 412, in global_edit_submit_changes
+    sql.update_global_code_fields(code, updates, user.email)
+  File "H:\IT\Chris Ekin\GitHub\Global_Codes_App\Global Codes App\Global_Codes_App\sql.py", line 257, in update_global_code_fields
+    cursor.execute(sql)
+ProgrammingError: ('42000', "[42000] [Microsoft][ODBC SQL Server Driver][SQL Server]Incorrect syntax near 'Serum'. (102) (SQLExecDirectW)")
+-----25/11/2015 00:27
+Problem creating a new global code:
+Traceback (most recent call last):
+  File "H:\IT\Chris Ekin\GitHub\Global_Codes_App\Global Codes App\Global_Codes_App\views.py", line 436, in global_edit_new_code
+    sql.insert_new_global_code(code, submission, user.email)
+  File "H:\IT\Chris Ekin\GitHub\Global_Codes_App\Global Codes App\Global_Codes_App\sql.py", line 280, in insert_new_global_code
+    cursor.execute(sql)
+Error: ('21S01', '[21S01] [Microsoft][ODBC SQL Server Driver][SQL Server]Column name or number of supplied values does not match table definition. (213) (SQLExecDirectW)')
+-----25/11/2015 00:33
+Problem creating a new global code:
+Traceback (most recent call last):
+  File "H:\IT\Chris Ekin\GitHub\Global_Codes_App\Global Codes App\Global_Codes_App\views.py", line 436, in global_edit_new_code
+    sql.insert_new_global_code(code, submission, user.email)
+  File "H:\IT\Chris Ekin\GitHub\Global_Codes_App\Global Codes App\Global_Codes_App\sql.py", line 278, in insert_new_global_code
+    sql = "insert into %s values(getdate(), '%s', 'GlobalCodes_Main', '%s', '%s', '', '%s', 'NewGlobal')" % (config.global_audit_table, user, code, f, submission[f], 'New code created')
+TypeError: not all arguments converted during string formatting
+-----25/11/2015 19:29
+Error deleting global code:
+Traceback (most recent call last):
+  File "H:\IT\Chris Ekin\GitHub\Global_Codes_App\Global Codes App\Global_Codes_App\views.py", line 461, in global_edit_delete_code
+    sql.exec_stored_procedure_noreturn('spGlobalsApp_DeleteGlobalCode',[code, exclusion, user.email])
+  File "H:\IT\Chris Ekin\GitHub\Global_Codes_App\Global Codes App\Global_Codes_App\sql.py", line 42, in exec_stored_procedure_noreturn
+    cursor.execute(sql)
+Error: ('21S01', '[21S01] [Microsoft][ODBC SQL Server Driver][SQL Server]Column name or number of supplied values does not match table definition. (213) (SQLExecDirectW)')
+-----25/11/2015 19:50
+Unable to add code to mapping:
+Traceback (most recent call last):
+  File "H:\IT\Chris Ekin\GitHub\Global_Codes_App\Global Codes App\Global_Codes_App\views.py", line 192, in add_mapping
+    result = sql.add_mapping(system,tfc,new_global_code,user.email)
+  File "H:\IT\Chris Ekin\GitHub\Global_Codes_App\Global Codes App\Global_Codes_App\sql.py", line 166, in add_mapping
+    cursor.execute(sql.replace('\n',' '))
+IntegrityError: ('23000', "[23000] [Microsoft][ODBC SQL Server Driver][SQL Server]Cannot insert the value NULL into column 'Field', table 'Warehouse.dbo.GlobalCodes_Audit'; column does not allow nulls. INSERT fails. (515) (SQLExecDirectW); [01000] [Microsoft][ODBC SQL Server Driver][SQL Server]The statement has been terminated. (3621)")
+-----25/11/2015 20:43
+Unable to add code to mapping:
+Traceback (most recent call last):
+  File "H:\IT\Chris Ekin\GitHub\Global_Codes_App\Global Codes App\Global_Codes_App\views.py", line 228, in exclude_tfc
+    result = sql.exclude_tfc(system,tfc,exclusion,user.email)
+  File "H:\IT\Chris Ekin\GitHub\Global_Codes_App\Global Codes App\Global_Codes_App\sql.py", line 215, in exclude_tfc
+    cursor.execute(sql.replace('\n',' '))
+IntegrityError: ('23000', "[23000] [Microsoft][ODBC SQL Server Driver][SQL Server]Cannot insert the value NULL into column 'Field', table 'Warehouse.dbo.GlobalCodes_Audit'; column does not allow nulls. INSERT fails. (515) (SQLExecDirectW); [01000] [Microsoft][ODBC SQL Server Driver][SQL Server]The statement has been terminated. (3621)")
+-----25/11/2015 21:00
+Error reciving global code spreadsheet edit submission:
+Traceback (most recent call last):
+  File "H:\IT\Chris Ekin\GitHub\Global_Codes_App\Global Codes App\Global_Codes_App\views.py", line 515, in spreadsheet_changefield
+    sql.update_global_code_fields(code, updates, user.email)
+  File "H:\IT\Chris Ekin\GitHub\Global_Codes_App\Global Codes App\Global_Codes_App\sql.py", line 251, in update_global_code_fields
+    sql = "insert into %s values(getdate(), '%s', 'GlobalCodes_Main', '%s', '%s', '%s', '%s', 'GlobalUpdate')" % (config.global_audit_table, user, code, k, v[0], v[1])
+IndexError: string index out of range

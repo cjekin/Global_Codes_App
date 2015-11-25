@@ -154,14 +154,16 @@ function fill_global_data(data) {
     // Fill in the audit trail
     var audit_html = '';
     for (i = 0; i < data['audit'].length; i++) {
-        if (data['audit'][i]['Origin'] == 'GlobalCodes_Main') {
-            audit_html += '<tr><td>' + data['audit'][i]['Change'].split("|").join("<br/>") + '<br/><small><i class="fa fa-clock-o"></i> ';
-        } else {
-            audit_html += '<tr><td>' + data['audit'][i]['ChangeType'] + ' ' + data['audit'][i]['Code'] + '<br/><small><i class="fa fa-clock-o"></i> ';
+        audit_html += '<tr><td>' +
+            data['audit'][i]['Origin'] + '<br/>' +
+            data['audit'][i]['Code'] + '<br/>' +
+            data['audit'][i]['Field'] + '<br/></td><td>' +
+            '<strong>Old:</strong> ' + data['audit'][i]['OldValue'] + '<br/>' + 
+            '<strong>New:</strong> ' + data['audit'][i]['NewValue'] + '<br/></td><td>' +
+            data['audit'][i]['ChangeType'] + '<br/>' +
+            data['audit'][i]['UserName'] + '<br/>' +
+            '<small><i class="fa fa-clock-o"></i> ' + data['audit'][i]['Date'].substring(0,16) + '</td></tr>'
         };
-        audit_html += data['audit'][i]['Date'] + '</small></td><td><strong>' + data['audit'][i]['Origin'] + '</strong></td><td>';
-        audit_html += data['audit'][i]['UserName'] + '</td></tr>';
-    };
     $('#global_audit').html(audit_html);
 
     // Fill in the mapping information
@@ -207,7 +209,7 @@ function global_info_submit_click() {
         .done(function (data) {
             if (data['data'] == 'ERROR') {
                 swal({
-                    title: "Problem submitting changes" + code,
+                    title: "Problem submitting changes",
                     text: "There was an issue submitting your changes. Please check the code details",
                     type: "warning"
                 });

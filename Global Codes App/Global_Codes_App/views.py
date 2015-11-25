@@ -385,7 +385,9 @@ def globalcodedetail():
         print ('-----------\nError executing code detail lookup' + str(traceback.format_exc()))
         result = dict(data = 'ERROR', error_detail='Problem running query')
 
+    print 'Returned audit: ', result['audit']
     json_data = jsonify(result)
+    print 'JSON conversion:\n', json_data
     return json_data
 
 
@@ -397,13 +399,14 @@ def global_edit_submit_changes():
     try:
         code = request.form['GlobalCode']
         lookup = sql.exec_stored_procedure('spGlobalsApp_GlobalCodeDetail_Info',[code])['result'][0]
+        print 'Lookup: ', lookup
         
         # Find the changes       
         updates = {}
         for r in lookup:
             if r <> 'Alias':
                 if lookup[r] <> request.form[r]:
-                    updates[r] = request.form[r]
+                    updates[r] = (lookup[r],request.form[r])
         result = dict(data='OK', updates=updates)
 
         sql.update_global_code_fields(code, updates, user.email)
@@ -504,9 +507,20 @@ def spreadsheet_changefield():
     print 'Submitting change to field from spreadsheet'
 
     try:
-        updates = {r:request.form[r] for r in request.form if r <> 'GlobalCode'}
+        print 'Raw submission: ', request.form  
         code = request.form['GlobalCode']
-        print 'spreadsheet_changefield\n', code, '\n', updates
+
+        lookup = sql.exec_stored_procedure('spGlobalsApp_GlobalCodeDetail_Info',[code])['result'][0]
+        print 'Looking up previous code', lookup
+
+        updates = {}
+        for r in [r for r in request.form if r <> 'GlobalCode']:
+            if r in lookup:
+                updates[r] = (lookup[r],request.form[r])
+            else:
+                updates[r] = ('',request.form[r])
+
+        print 'spreadsheet_changefield\n', code, updates
         sql.update_global_code_fields(code, updates, user.email)
         result = dict(data = 'OK')
 

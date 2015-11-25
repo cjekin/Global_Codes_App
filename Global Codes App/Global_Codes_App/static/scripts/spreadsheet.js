@@ -37,11 +37,16 @@ function build_spreadsheet(data) {
         columns: column_headers,
         rowHeaders: true,
         colHeaders: true,
-        contextMenu: true,
+        contextMenu: ['row_above', 'row_below'],
         afterChange: function (changes, source) {
             //console.log('afterChange event: ' + (changes || 'nochange').toString() + ' from ' + source);
             if (changes != null && source == 'edit') {
                 cell_changed(changes, source);
+            } else if(changes != null && source == 'autofill') {
+                for (i = 0; i < changes.length; i++) {
+                    //console.log('Passed changes: ', [(changes || 'nochange')[i]]);
+                    cell_changed([changes[i]], source);
+                };
             };
         }
     });
@@ -54,7 +59,7 @@ $('#do_something').click(function () {
 
 function cell_changed(changes, source) {
 
-    //console.log('cell_changed value: ' + changes.toString());
+    console.log('cell_changed value: ' + changes.toString());
 
     var row = changes[0][0];
     var col = changes[0][1];
@@ -63,6 +68,8 @@ function cell_changed(changes, source) {
 
     var edited_global = hot.getDataAtCell(row, 0);
     var edited_field = column_headers[col]['title'];
+
+    console.log(row, col, oldval, newval, edited_global, edited_field);
 
 
     // Check if they are editing a global
@@ -100,6 +107,7 @@ function cell_changed(changes, source) {
 };
 
 function submit_field_change(submission, row, col, oldval, newval) {
+
     $.post('\spreadsheet_changefield', submission)
         .done(function (data) {
             if (data['data'] == 'ERROR') {
