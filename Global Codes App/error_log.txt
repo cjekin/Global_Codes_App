@@ -218,3 +218,43 @@ Traceback (most recent call last):
   File "H:\IT\Chris Ekin\GitHub\Global_Codes_App\Global Codes App\Global_Codes_App\sql.py", line 251, in update_global_code_fields
     sql = "insert into %s values(getdate(), '%s', 'GlobalCodes_Main', '%s', '%s', '%s', '%s', 'GlobalUpdate')" % (config.global_audit_table, user, code, k, v[0], v[1])
 IndexError: string index out of range
+-----27/11/2015 22:39
+Error getting dashboard data:
+Traceback (most recent call last):
+  File "H:\IT\Chris Ekin\GitHub\Global_Codes_App\Global Codes App\Global_Codes_App\views.py", line 278, in dashboard_getdata
+    data = sql.exec_stored_procedure_list('spGlobalsApp_AllSystemStats')
+  File "H:\IT\Chris Ekin\GitHub\Global_Codes_App\Global Codes App\Global_Codes_App\sql.py", line 66, in exec_stored_procedure_list
+    cursor.execute(sql)
+Error: ('HY007', '[HY007] [Microsoft][ODBC SQL Server Driver]Associated statement is not prepared (0) (SQLNumResultCols)')
+-----27/11/2015 22:40
+Error getting dashboard data:
+Traceback (most recent call last):
+  File "H:\IT\Chris Ekin\GitHub\Global_Codes_App\Global Codes App\Global_Codes_App\views.py", line 278, in dashboard_getdata
+    data = sql.exec_stored_procedure_list('spGlobalsApp_AllSystemStats')
+  File "H:\IT\Chris Ekin\GitHub\Global_Codes_App\Global Codes App\Global_Codes_App\sql.py", line 66, in exec_stored_procedure_list
+    cursor.execute(sql)
+Error: ('HY007', '[HY007] [Microsoft][ODBC SQL Server Driver]Associated statement is not prepared (0) (SQLNumResultCols)')
+-----27/11/2015 22:46
+Error getting dashboard data:
+Traceback (most recent call last):
+  File "H:\IT\Chris Ekin\GitHub\Global_Codes_App\Global Codes App\Global_Codes_App\views.py", line 278, in dashboard_getdata
+    data = sql.exec_stored_procedure_list('spGlobalsApp_AllSystemStats')
+  File "H:\IT\Chris Ekin\GitHub\Global_Codes_App\Global Codes App\Global_Codes_App\sql.py", line 66, in exec_stored_procedure_list
+    cursor.execute(sql)
+Error: ('HY007', '[HY007] [Microsoft][ODBC SQL Server Driver]Associated statement is not prepared (0) (SQLNumResultCols)')
+-----27/11/2015 22:50
+Error getting dashboard data:
+Traceback (most recent call last):
+  File "\\tdlpathology\docs\TDL\IT\Chris Ekin\GitHub\Global_Codes_App\Global Codes App\Global_Codes_App\views.py", line 278, in dashboard_getdata
+    data = sql.exec_stored_procedure_list('spGlobalsApp_AllSystemStats')
+  File "\\tdlpathology\docs\TDL\IT\Chris Ekin\GitHub\Global_Codes_App\Global Codes App\Global_Codes_App\sql.py", line 66, in exec_stored_procedure_list
+    cursor.execute(sql)
+Error: ('HY007', '[HY007] [Microsoft][ODBC SQL Server Driver]Associated statement is not prepared (0) (SQLNumResultCols)')
+-----27/11/2015 22:50
+Error getting dashboard data:
+Traceback (most recent call last):
+  File "\\tdlpathology\docs\TDL\IT\Chris Ekin\GitHub\Global_Codes_App\Global Codes App\Global_Codes_App\views.py", line 278, in dashboard_getdata
+    data = sql.exec_stored_procedure_list('spGlobalsApp_AllSystemStats')
+  File "\\tdlpathology\docs\TDL\IT\Chris Ekin\GitHub\Global_Codes_App\Global Codes App\Global_Codes_App\sql.py", line 66, in exec_stored_procedure_list
+    cursor.execute(sql)
+Error: ('HY007', '[HY007] [Microsoft][ODBC SQL Server Driver]Associated statement is not prepared (0) (SQLNumResultCols)')

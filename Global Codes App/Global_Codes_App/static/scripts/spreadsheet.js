@@ -30,12 +30,13 @@ $.getJSON('/pull_spreadsheet_globals', function (returned_data) {
 function build_spreadsheet(data) {
 
     column_headers = data[0].map(function (item) { return { title: item }; });
+    row_headers = [for (i of data.slice(1,data.length-1)) i[0]];
 
     hot = new Handsontable(container, {
         data: data.slice(1,data.length-1),
         minSpareRows: 1,
         columns: column_headers,
-        rowHeaders: true,
+        rowHeaders: row_headers,
         colHeaders: true,
         contextMenu: ['row_above', 'row_below'],
         afterChange: function (changes, source) {
