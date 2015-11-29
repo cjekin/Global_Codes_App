@@ -49,6 +49,7 @@ function build_spreadsheet(display_data) {
         sortIndicator: true,
         manualColumnFreeze: true,
         fixedColumnsLeft: 0,
+        manualColumnResize: true,
         afterChange: function (changes, source) {
             //console.log('afterChange event: ' + (changes || 'nochange').toString() + ' from ' + source);
             if (changes != null && source == 'edit') {
