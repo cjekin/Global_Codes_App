@@ -3,6 +3,7 @@
 var container = document.getElementById('spreadsheet');
 var hot = ''; //Placeholder for handsontable
 var data = [];
+var display_data = [];
 var column_headers = [];
 
 $(window.scrollTo(0, 0));
@@ -23,22 +24,31 @@ $.getJSON('/pull_spreadsheet_globals', function (returned_data) {
         });
     } else {
         data = returned_data['data'];
-        build_spreadsheet(data);
+        display_data = data;
+        add_filter_item(data);
+        build_spreadsheet(display_data);
     };
 });
 
-function build_spreadsheet(data) {
+
+function build_spreadsheet(display_data) {
 
     column_headers = data[0].map(function (item) { return { title: item }; });
-    row_headers = [for (i of data.slice(1,data.length-1)) i[0]];
+    row_headers = [for (i of display_data.slice(1,display_data.length-1)) i[0]];
 
     hot = new Handsontable(container, {
-        data: data.slice(1,data.length-1),
+        data: display_data.slice(1,display_data.length-1),
         minSpareRows: 1,
         columns: column_headers,
-        rowHeaders: row_headers,
+        //rowHeaders: row_headers,
+        rowHeaders: true,
         colHeaders: true,
-        contextMenu: ['row_above', 'row_below'],
+        //contextMenu: ['row_above', 'row_below'],
+        contextMenu: true,
+        columnSorting: true,
+        sortIndicator: true,
+        manualColumnFreeze: true,
+        fixedColumnsLeft: 0,
         afterChange: function (changes, source) {
             //console.log('afterChange event: ' + (changes || 'nochange').toString() + ' from ' + source);
             if (changes != null && source == 'edit') {
@@ -53,9 +63,101 @@ function build_spreadsheet(data) {
     });
 };
 
-$('#do_something').click(function () {
-    hot.setDataAtCell(2, 2, 'Changed!', 'AUTO')
-    console.log(hot.getDataAtCell(2, 5));
+
+
+//
+// Filtering panel functions
+//
+
+function add_filter_item(data){
+
+    //Remove the last list buttons and their event handlers
+    $('#filter-list-ul li').last().find(".filter-more").off();
+    $('#filter-list-ul li').last().find(".filter-less").off();
+    $('#filter-list-ul li').last().find(".filter-more").html('');
+    $('#filter-list-ul li').last().find(".filter-less").html('');
+
+    var filter_fields = data[0].map( 
+        function (item) { 
+            return '<option>' + item + '</option>'; 
+        });
+
+    var full_html = '<div class="form-group col-lg-4"><select class="form-control input-sm filter-criteria">';
+    full_html += '<option></option>' + filter_fields; // Filter fields
+    full_html += '</select></div><div class="form-group col-lg-2 filter-operator"><select class="form-control input-sm">';
+    full_html += '<option>Contains</option>';  // Operator
+    full_html += '</select></div>';
+    full_html += '<div class="form-group col-lg-4"><input id="Text2" class="form-control filter-text" type="text" placeholder="Search value" name="" value=""></div>';
+    full_html += '<div class="form-group col-lg-1 filter-more"><i class="pe pe-7s-plus pe-2x"></i></div>';
+    full_html += '<div class="form-group col-lg-1 filter-less"><i class="pe pe-7s-less pe-2x"></i></div>';
+
+    $('#filter-list-ul').append($("<li>").html(full_html));
+    $('#filter-list-ul li').last().find(".filter-more").on('click', more_filter_click);
+    $('#filter-list-ul li').last().find(".filter-less").on('click', less_filter_click);
+};
+
+
+function more_filter_click(){
+    add_filter_item(data);
+};
+function less_filter_click(){
+
+    if($('#filter-list-ul li').size() == 1) {
+        return;
+    }
+    
+    $('#filter-list-ul li').last().remove();
+
+    // Add the buttons and their event handlers to the new last row
+    $('#filter-list-ul li').last().find(".filter-less").html('<i class="pe pe-7s-less pe-2x"></i>');
+    $('#filter-list-ul li').last().find(".filter-more").on('click', more_filter_click);
+
+    $('#filter-list-ul li').last().find(".filter-more").html('<i class="pe pe-7s-plus pe-2x"></i>');
+    $('#filter-list-ul li').last().find(".filter-less").on('click', less_filter_click);
+};
+
+
+
+$('#global_spreadsheet_refresh').click(function () {
+
+    // Reset the table if there are no filters
+    if($('#filter-list-ul li').size() == 1 && $('#filter-list-ul li').last().find(".filter-criteria").val() == '') {
+        console.log('Resetting table to original data');
+        display_data = data;
+        hot.destroy();
+        build_spreadsheet(display_data);
+        return;
+    }
+
+    // Get the filters from the table
+    var filters = {};
+    $( "#filter-list-ul li" ).each( function( index, element ){
+        var field = $( element ).find(".filter-criteria").val();
+        var value = $( element ).find(".filter-text").val();
+
+        field_num = data[0].indexOf(field); 
+        if(field_num >= 0){
+            filters[field_num] = (value || '');
+        };
+    });
+
+    display_data = [data[0]];
+    for( i=1; i<data.length-1; i++) {
+
+        var include = true;
+        for (var key in filters) {
+            //console.log(key, filters[key], data[i][key]);
+            if(data[i][key].toLowerCase().indexOf(filters[key].toLowerCase()) < 0){
+                include = false;
+                //console.log('  excluded this');
+            };       
+        };
+        if(include == true){
+            display_data.push(data[i]);
+        };
+    };
+    hot.destroy();
+    build_spreadsheet(display_data);
 });
 
 function cell_changed(changes, source) {

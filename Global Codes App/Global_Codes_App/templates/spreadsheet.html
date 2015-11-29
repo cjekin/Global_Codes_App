@@ -9,10 +9,17 @@
         overflow: hidden;
     }
 
-    .handsontable col.rowHeader {
+    /*.handsontable col.rowHeader {
     width: 120px;
     text-align:left;
-}
+    }*/
+
+    .filter-list {
+        list-style-type: none;
+        list-style:none;
+        padding-left:0px;
+        margin-left: 0px;
+    }
 
 </style>
 {% endblock %}
@@ -38,11 +45,73 @@
 </div>
 
 
+<div class="normalheader transition animated fadeIn">
+    <div class="hpanel">
+        <div class="panel-body">
+            
+            <a class="small-header-action" href="">
+                <div class="clip-header">
+                    <i class="fa fa-arrow-up"></i>
+                    <a class="closebox"><i class="fa fa-times"></i></a>
+                </div>
+            </a>
+
+            <div class="col-lg-1">
+                <i class="fa fa-exclamation-triangle fa-5x text-danger"></i>
+            </div>
+
+            <div class="col-lg-11">
+                <h2 class="font-light m-b-xs">
+                    Warning!
+                </h2>
+                <small>
+                    This module is still in development. Do not delete rows or columns as it will mess with the data model.<br />
+                    Also, only freeze the first column (global codes).
+                    Anything else will cause an error when you try to make changes as the position of the global codes column will have changed.
+                </small>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+
 <!--<div id="global_code_editor_main" class="content animate-panel" data-effect="fadeIn">-->
 <div id="global_code_editor_main" class="content animate-panel">
 
+<!--Filtering panel-->
+<div class="row">
+    <div class="col-lg-9 col-md-9">
+        <div class="hpanel">
+            <div class="panel-heading">
+                <div class="panel-tools"><a class="showhide"><i class="fa fa-chevron-up"></i></a></div>
+                Filters
+            </div>
+            <div class="panel-body">
+                
+                <div class="row">
+                    <ul id="filter-list-ul" class="filter-list">
 
-<!--Global code editor-->
+                    </ul>
+                </div>
+
+                <div class="row">
+                    <div class="col-lg-4">
+                        <button id="global_spreadsheet_refresh" class="btn btn-success">Refresh</button>
+                    </div>
+                    <div class="col-lg-8"></div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+    <div class="col-lg-3 col-md-3">
+
+    </div>
+</div>
+
+<!--Global code spreadsheet-->
 <div id="global_code_table" class="hpanel">
     <div class="panel-heading">
         <div class="panel-tools">

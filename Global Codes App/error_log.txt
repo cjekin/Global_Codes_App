@@ -290,3 +290,11 @@ Traceback (most recent call last):
   File "H:\IT\Chris Ekin\GitHub\Global_Codes_App\Global Codes App\Global_Codes_App\sql.py", line 66, in exec_stored_procedure_list
     cursor.execute(sql)
 Error: ('HY007', '[HY007] [Microsoft][ODBC SQL Server Driver]Associated statement is not prepared (0) (SQLNumResultCols)')
+-----29/11/2015 21:34
+Error reciving global code spreadsheet edit submission:
+Traceback (most recent call last):
+  File "H:\IT\Chris Ekin\GitHub\Global_Codes_App\Global Codes App\Global_Codes_App\views.py", line 513, in spreadsheet_changefield
+    lookup = sql.exec_stored_procedure('spGlobalsApp_GlobalCodeDetail_Info',[code])['result'][0]
+  File "H:\IT\Chris Ekin\GitHub\Global_Codes_App\Global Codes App\Global_Codes_App\sql.py", line 18, in exec_stored_procedure
+    cursor.execute(sql)
+ProgrammingError: ('42000', "[42000] [Microsoft][ODBC SQL Server Driver][SQL Server]Incorrect syntax near 'protein'. (102) (SQLExecDirectW)")
