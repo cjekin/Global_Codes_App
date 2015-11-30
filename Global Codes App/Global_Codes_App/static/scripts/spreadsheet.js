@@ -241,3 +241,27 @@ function create_new_globalcode(submission, row, col, oldval, newval) {
             };
         });
 };
+
+
+// Function to go full screen
+// http://bootsnipp.com/snippets/6l3zr
+$(document).ready(function () {
+    //Toggle fullscreen
+    $("#panel-fullscreen_INACTIVE").click(function (e) {
+        e.preventDefault();
+        
+        var $this = $(this);
+    
+        if ($this.children('i').hasClass('glyphicon-resize-full'))
+        {
+            $this.children('i').removeClass('glyphicon-resize-full');
+            $this.children('i').addClass('glyphicon-resize-small');
+        }
+        else if ($this.children('i').hasClass('glyphicon-resize-small'))
+        {
+            $this.children('i').removeClass('glyphicon-resize-small');
+            $this.children('i').addClass('glyphicon-resize-full');
+        }
+        $(this).closest('.hpanel').toggleClass('panel-fullscreen');
+    });
+});

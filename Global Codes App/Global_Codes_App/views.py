@@ -521,7 +521,7 @@ def spreadsheet_changefield():
                 updates[r] = ('',request.form[r])
 
         print 'spreadsheet_changefield\n', code, updates
-        #sql.update_global_code_fields(code, updates, user.email)
+        sql.update_global_code_fields(code, updates, user.email)
         result = dict(data = 'OK')
 
     except Exception, err:

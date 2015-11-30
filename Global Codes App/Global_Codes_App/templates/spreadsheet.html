@@ -21,6 +21,28 @@
         margin-left: 0px;
     }
 
+    .panel-actions {
+      margin-top: -20px;
+      margin-bottom: 0;
+      text-align: right;
+    }
+    .panel-actions a {
+      color:#333;
+    }
+    .panel-fullscreen {
+        display: block;
+        z-index: 9999;
+        position: fixed;
+        width: 100%;
+        height: 100%;
+        top: 0;
+        right: 0;
+        left: 0;
+        bottom: 0;
+        overflow: auto;
+    }
+
+
 </style>
 {% endblock %}
 
@@ -114,9 +136,12 @@
 <!--Global code spreadsheet-->
 <div id="global_code_table" class="hpanel">
     <div class="panel-heading">
-        <div class="panel-tools">
+        <!--<div class="panel-tools">
             <a class="showhide"><i class="fa fa-chevron-up"></i></a>
-        </div>
+        </div>-->
+        <ul class="list-inline panel-actions">
+            <li><a href="#" id="panel-fullscreen" role="button" title="Toggle fullscreen"><i class="glyphicon glyphicon-resize-full"></i></a></li>
+        </ul>
         Global Codes
     </div>
     <div class="panel-body">
