@@ -157,6 +157,7 @@ $('#global_spreadsheet_refresh').click(function () {
             display_data.push(data[i]);
         };
     };
+    console.log('Display_data: ', display_data);
     hot.destroy();
     build_spreadsheet(display_data);
 });
@@ -265,3 +266,44 @@ $(document).ready(function () {
         $(this).closest('.hpanel').toggleClass('panel-fullscreen');
     });
 });
+
+$('#panel_fullscreen_icon').click(function(){
+
+    console.log('Clicked full screen icon');
+
+    if($('#header').is(":visible")){
+        $('link[rel=stylesheet][href~="static/styles/style.css"]').prop( "disabled", true );
+        $('#splash').hide();
+        $('#header').hide();
+        $('#menu').hide();
+        $('#spreadsheet_title').hide();
+        $('#spreadsheet_title_warning').hide();
+        $('#global_code_filter_panel').hide();
+
+        $('#spreadsheet_header_text').text('');
+
+        $('#spreadsheet').removeClass('spreadsheet-inpanel');
+        $('#panel-fullscreen').addClass('panel-fullscreen');
+
+        hot.destroy();
+        build_spreadsheet(display_data);
+    } else {
+        $('link[rel=stylesheet][href~="static/styles/style.css"]').prop( "disabled", false );
+        $('#splash').show();
+        $('#header').show();
+        $('#menu').show();
+        $('#spreadsheet_title').show();
+        $('#spreadsheet_title_warning').show();
+        $('#global_code_filter_panel').show();
+
+        $('#spreadsheet_header_text').text('Global Codes');
+
+        $('#spreadsheet').addClass('spreadsheet-inpanel');
+        $('#panel-fullscreen').removeClass('panel-fullscreen');
+
+        hot.destroy();
+        build_spreadsheet(display_data);
+    };
+});
+
+
