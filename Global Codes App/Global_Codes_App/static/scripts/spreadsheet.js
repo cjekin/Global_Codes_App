@@ -295,28 +295,6 @@ function create_new_globalcode(submission, row, col, oldval, newval) {
 };
 
 
-// Function to go full screen
-// http://bootsnipp.com/snippets/6l3zr
-$(document).ready(function () {
-    //Toggle fullscreen
-    $("#panel-fullscreen_INACTIVE").click(function (e) {
-        e.preventDefault();
-        
-        var $this = $(this);
-    
-        if ($this.children('i').hasClass('glyphicon-resize-full'))
-        {
-            $this.children('i').removeClass('glyphicon-resize-full');
-            $this.children('i').addClass('glyphicon-resize-small');
-        }
-        else if ($this.children('i').hasClass('glyphicon-resize-small'))
-        {
-            $this.children('i').removeClass('glyphicon-resize-small');
-            $this.children('i').addClass('glyphicon-resize-full');
-        }
-        $(this).closest('.hpanel').toggleClass('panel-fullscreen');
-    });
-});
 
 $('#panel_fullscreen_icon').click(function(){
 
@@ -330,11 +308,12 @@ $('#panel_fullscreen_icon').click(function(){
         $('#spreadsheet_title').hide();
         $('#spreadsheet_title_warning').hide();
         $('#global_code_filter_panel').hide();
+        $('#main-footer').hide();
 
         $('#spreadsheet_header_text').text('');
 
         $('#spreadsheet').removeClass('spreadsheet-inpanel');
-        $('#panel-fullscreen').addClass('panel-fullscreen');
+        $('#global_code_table').addClass('panel-fullscreen');
 
         hot.destroy();
         build_spreadsheet(display_data);
@@ -346,11 +325,12 @@ $('#panel_fullscreen_icon').click(function(){
         $('#spreadsheet_title').show();
         $('#spreadsheet_title_warning').show();
         $('#global_code_filter_panel').show();
+        $('#main-footer').show();
 
         $('#spreadsheet_header_text').text('Global Codes');
 
         $('#spreadsheet').addClass('spreadsheet-inpanel');
-        $('#panel-fullscreen').removeClass('panel-fullscreen');
+        $('#global_code_table').removeClass('panel-fullscreen');
 
         hot.destroy();
         build_spreadsheet(display_data);
