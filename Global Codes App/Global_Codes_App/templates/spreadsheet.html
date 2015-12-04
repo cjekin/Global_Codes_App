@@ -49,6 +49,10 @@
 
     }
 
+    #number_results_returned {
+        margin-left: 10px;
+    }
+
 
 </style>
 {% endblock %}
@@ -97,6 +101,7 @@
                     This module is still in development. Do not delete rows or columns as it will mess with the data model.<br />
                     Also, only freeze the first column (global codes).
                     Anything else will cause an error when you try to make changes as the position of the global codes column will have changed.
+                    Copy and paste does not update the datbase yet.
                 </small>
             </div>
         </div>
@@ -111,7 +116,7 @@
 
 <!--Filtering panel-->
 <div id="global_code_filter_panel" class="row">
-    <div class="col-lg-9 col-md-9">
+    <div class="col-lg-8 col-md-9 col-sm-9">
         <div class="hpanel">
             <div class="panel-heading">
                 <div class="panel-tools"><a class="showhide"><i class="fa fa-chevron-up"></i></a></div>
@@ -128,6 +133,7 @@
                 <div class="row">
                     <div class="col-lg-4">
                         <button id="global_spreadsheet_refresh" class="btn btn-success">Refresh</button>
+                        <span id="number_results_returned"></span>
                     </div>
                     <div class="col-lg-8"></div>
                 </div>
@@ -135,7 +141,7 @@
             </div>
         </div>
     </div>
-    <div class="col-lg-3 col-md-3">
+    <div class="col-lg-4 col-md-3 col-sm-3">
 
     </div>
 </div>
@@ -144,20 +150,12 @@
 <!--Global code spreadsheet-->
 <div id="global_code_table" class="hpanel">
     <div class="panel-heading">
-        <!--<div class="panel-tools">
-            <a class="showhide"><i class="fa fa-chevron-up"></i></a>
-        </div>-->
-        <!--<ul class="list-inline panel-actions">
-            <li><a href="#" id="panel_fullscreen_icon" role="button" title="Toggle fullscreen"><i class="glyphicon glyphicon-resize-full"></i></a></li>
-        </ul>-->
         <a href="#" id="panel_fullscreen_icon" class="pull-right" role="button" title="Toggle fullscreen">
             <i class="pe pe-7s-expand1 pe-2x"></i>
         </a>
         <span id="spreadsheet_header_text">Global Codes</span>
     </div>
     <div class="panel-body">
-        <!--<div><button id="do_something" class="btn btn-success">Do something</button></div>
-        <br />-->
         <div id="spreadsheet" class="spreadsheet-inpanel"></div>
     </div>
 </div>

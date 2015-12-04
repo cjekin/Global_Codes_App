@@ -37,8 +37,8 @@ function build_spreadsheet(display_data) {
     row_headers = [for (i of display_data.slice(1,display_data.length-1)) i[0]];
 
     hot = new Handsontable(container, {
-        data: display_data.slice(1,display_data.length-1),
-        minSpareRows: 1,
+        data: display_data.slice(1,display_data.length),
+        minSpareRows: 0,
         columns: column_headers,
         //rowHeaders: row_headers,
         rowHeaders: true,
@@ -85,39 +85,72 @@ function add_filter_item(data){
 
     var full_html = '<div class="form-group col-lg-4"><select class="form-control input-sm filter-criteria">';
     full_html += '<option></option>' + filter_fields; // Filter fields
-    full_html += '</select></div><div class="form-group col-lg-2 filter-operator"><select class="form-control input-sm">';
-    full_html += '<option>Contains</option>';  // Operator
+    full_html += '</select></div><div class="form-group col-lg-2"><select class="form-control input-sm filter-operator">';
+    full_html += "<option>Contains</option><option>Doesn't Contain</option><option>Equals</option><option>Not Equal</option>";  // Operator
     full_html += '</select></div>';
-    full_html += '<div class="form-group col-lg-4"><input id="Text2" class="form-control filter-text" type="text" placeholder="Search value" name="" value=""></div>';
-    full_html += '<div class="form-group col-lg-1 filter-more"><i class="pe pe-7s-plus pe-2x"></i></div>';
-    full_html += '<div class="form-group col-lg-1 filter-less"><i class="pe pe-7s-less pe-2x"></i></div>';
+    full_html += '<div class="form-group col-lg-4 filter-text-div"><input class="form-control filter-text" type="text" placeholder="Search value" name="" value=""></div>';
+    full_html += '<div class="form-group col-lg-1 filter-more"><a href="#"><i class="pe pe-7s-plus pe-2x"></i></a></div>';
+    full_html += '<div class="form-group col-lg-1 filter-less"><a href="#"><i class="pe pe-7s-less pe-2x"></i></a></div>';
 
     $('#filter-list-ul').append($("<li>").html(full_html));
     $('#filter-list-ul li').last().find(".filter-more").on('click', more_filter_click);
     $('#filter-list-ul li').last().find(".filter-less").on('click', less_filter_click);
+    $('#filter-list-ul li').last().find(".filter-operator").on('change', filter_operator_change);
+    $('#filter-list-ul li').last().find(".filter-criteria").on('change', filter_operator_change);
 };
 
 
 function more_filter_click(){
     add_filter_item(data);
 };
+
+
 function less_filter_click(){
 
     if($('#filter-list-ul li').size() == 1) {
+        $('#filter-list-ul li').last().find(".filter-criteria").val('');
+        $('#filter-list-ul li').last().find(".filter-operator").val('Contains');
+        $('#filter-list-ul li').last().find(".filter-text").val('');
         return;
     }
     
     $('#filter-list-ul li').last().remove();
 
     // Add the buttons and their event handlers to the new last row
-    $('#filter-list-ul li').last().find(".filter-less").html('<i class="pe pe-7s-less pe-2x"></i>');
+    $('#filter-list-ul li').last().find(".filter-less").html('<a href="#"><i class="pe pe-7s-less pe-2x"></i></a>');
     $('#filter-list-ul li').last().find(".filter-more").on('click', more_filter_click);
 
-    $('#filter-list-ul li').last().find(".filter-more").html('<i class="pe pe-7s-plus pe-2x"></i>');
+    $('#filter-list-ul li').last().find(".filter-more").html('<a href="#"><i class="pe pe-7s-plus pe-2x"></i></a>');
     $('#filter-list-ul li').last().find(".filter-less").on('click', less_filter_click);
 };
 
 
+function filter_operator_change(){
+    var operator = $(this).closest('li').find(".filter-operator").val();
+    var field = $(this).closest('li').find(".filter-criteria").val();
+    var field_num = data[0].indexOf(field);
+    var options = '<select class="form-control input-sm filter-text">';
+
+    //console.log('Changed item', operator, field);
+
+    if(operator == 'Equals' || operator == 'Not Equal'){
+        var list = [];
+        for( i=1; i<data.length-1; i++) {
+            if( $.inArray(data[i][field_num],list) < 0 ) {
+                list.push(data[i][field_num]);
+            }
+        };
+        var sorted_list = list.sort();
+        for(i=0; i<sorted_list.length; i++) {
+            options += '<option>' + sorted_list[i] + '</option>';
+        }
+        options += '</options>';
+        $(this).closest('li').find(".filter-text-div").html(options);
+    } else if (operator == 'Contains' || operator == "Doesn't Contain"){
+        var input_html = '<input class="form-control filter-text" type="text" placeholder="Search value" name="" value=""></div>';
+        $(this).closest('li').find(".filter-text-div").html(input_html);
+    };
+};
 
 $('#global_spreadsheet_refresh').click(function () {
 
@@ -127,6 +160,7 @@ $('#global_spreadsheet_refresh').click(function () {
         display_data = data;
         hot.destroy();
         build_spreadsheet(display_data);
+        $('#number_results_returned').text(display_data.length-1 + ' rows');
         return;
     }
 
@@ -134,32 +168,49 @@ $('#global_spreadsheet_refresh').click(function () {
     var filters = {};
     $( "#filter-list-ul li" ).each( function( index, element ){
         var field = $( element ).find(".filter-criteria").val();
+        var operator = $( element ).find(".filter-operator").val();
         var value = $( element ).find(".filter-text").val();
+
+        console.log('Searching for: ', field, operator, value);
 
         field_num = data[0].indexOf(field); 
         if(field_num >= 0){
-            filters[field_num] = (value || '');
+            filters[field_num] = [operator,(value || '')];
         };
     });
 
+    // Run through the data and create a filtered set
     display_data = [data[0]];
     for( i=1; i<data.length-1; i++) {
 
         var include = true;
         for (var key in filters) {
             //console.log(key, filters[key], data[i][key]);
-            if(data[i][key].toLowerCase().indexOf(filters[key].toLowerCase()) < 0){
-                include = false;
-                //console.log('  excluded this');
-            };       
+            if(filters[key][0] == 'Contains'){
+                if(data[i][key].toLowerCase().indexOf(filters[key][1].toLowerCase()) < 0){
+                    include = false;
+                };
+            } else if(filters[key][0] == 'Equals') {
+                if(data[i][key].toLowerCase() != filters[key][1].toLowerCase()){
+                    include = false;
+                };
+            } else if(filters[key][0] == 'Not Equal') {
+                if(data[i][key].toLowerCase() == filters[key][1].toLowerCase()){
+                    include = false;
+                };
+            } else if(filters[key][0] == "Doesn't Contain") {
+                if(data[i][key].toLowerCase().indexOf(filters[key][1].toLowerCase()) >= 0){
+                    include = false;
+                };
+            }  
         };
         if(include == true){
             display_data.push(data[i]);
         };
     };
-    console.log('Display_data: ', display_data);
     hot.destroy();
     build_spreadsheet(display_data);
+    $('#number_results_returned').text(display_data.length-1 + ' rows');
 });
 
 function cell_changed(changes, source) {
