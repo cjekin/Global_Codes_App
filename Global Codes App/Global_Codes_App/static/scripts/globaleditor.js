@@ -210,8 +210,9 @@ function global_info_submit_click() {
             if (data['data'] == 'ERROR') {
                 swal({
                     title: "Problem submitting changes",
-                    text: "There was an issue submitting your changes. Please check the code details",
-                    type: "warning"
+                    text: "There was an issue submitting your changes. Please check the code details" + '<br/><br/><span class="code">' + data['error_detail'] + '</span>',
+                    type: "warning",
+                    html: true
                 });
             } else {
                 fill_global_data(data);

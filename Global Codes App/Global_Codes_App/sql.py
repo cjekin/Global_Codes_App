@@ -12,8 +12,10 @@ def exec_stored_procedure(stored_procedure,arguements=[]):
     except:
         print 'Problem making connection'
     
-    sql = "EXEC %s %s;" % (stored_procedure,','.join(arguements))
+    sql = "EXEC %s '%s';" % (stored_procedure,"','".join(arguements))
     data = {}
+
+    print(sql)
 
     cursor.execute(sql)
     headers = [column[0] for column in cursor.description]     
@@ -248,11 +250,16 @@ def update_global_code_fields(code, updates, user):
     #n = [' ' + k + ' = ' + '\'' + v[1] + '\'' for k,v in updates.iteritems()]
 
     for k,v in updates.iteritems():
-        sql = "insert into %s values(getdate(), '%s', 'GlobalCodes_Main', '%s', '%s', '%s', '%s', 'GlobalUpdate')" % (config.global_audit_table, user, code, k, v[0], v[1])
+
+        # Escape dodgy characters
+        old = v[0].replace('\'','\'\'')
+        new = v[1].replace('\'','\'\'')
+
+        sql = "insert into %s values(getdate(), '%s', 'GlobalCodes_Main', '%s', '%s', '%s', '%s', 'GlobalUpdate')" % (config.global_audit_table, user, code, k, old, new)
         print 'Update audit trail:\n', sql, '\n'
         cursor.execute(sql)
 
-        sql = "update %s set [%s] = '%s' where GlobalCode = '%s'" % (config.global_main_table,k,v[1],code)
+        sql = "update %s set [%s] = '%s' where GlobalCode = '%s'" % (config.global_main_table,k,new,code)
         print 'Update global codes main:\n', sql, '\n'   
         cursor.execute(sql)
 

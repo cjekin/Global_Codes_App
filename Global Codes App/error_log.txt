@@ -314,3 +314,99 @@ Traceback (most recent call last):
   File "H:\IT\Chris Ekin\GitHub\Global_Codes_App\Global Codes App\Global_Codes_App\sql.py", line 66, in exec_stored_procedure_list
     cursor.execute(sql)
 Error: ('HY007', '[HY007] [Microsoft][ODBC SQL Server Driver]Associated statement is not prepared (0) (SQLNumResultCols)')
+-----04/12/2015 21:46
+Error reciving global code edit submission:
+Traceback (most recent call last):
+  File "H:\IT\Chris Ekin\GitHub\Global_Codes_App\Global Codes App\Global_Codes_App\views.py", line 412, in global_edit_submit_changes
+    sql.update_global_code_fields(code, updates, user.email)
+  File "H:\IT\Chris Ekin\GitHub\Global_Codes_App\Global Codes App\Global_Codes_App\sql.py", line 253, in update_global_code_fields
+    cursor.execute(sql)
+ProgrammingError: ('42000', "[42000] [Microsoft][ODBC SQL Server Driver][SQL Server]Incorrect syntax near 's'. (102) (SQLExecDirectW); [42000] [Microsoft][ODBC SQL Server Driver][SQL Server]Unclosed quotation mark after the character string ')'. (105)")
+-----04/12/2015 21:47
+Error reciving global code edit submission:
+Traceback (most recent call last):
+  File "H:\IT\Chris Ekin\GitHub\Global_Codes_App\Global Codes App\Global_Codes_App\views.py", line 412, in global_edit_submit_changes
+    sql.update_global_code_fields(code, updates, user.email)
+  File "H:\IT\Chris Ekin\GitHub\Global_Codes_App\Global Codes App\Global_Codes_App\sql.py", line 253, in update_global_code_fields
+    cursor.execute(sql)
+ProgrammingError: ('42000', "[42000] [Microsoft][ODBC SQL Server Driver][SQL Server]Incorrect syntax near 's'. (102) (SQLExecDirectW); [42000] [Microsoft][ODBC SQL Server Driver][SQL Server]Unclosed quotation mark after the character string ')'. (105)")
+-----04/12/2015 21:48
+Error reciving global code edit submission:
+Traceback (most recent call last):
+  File "H:\IT\Chris Ekin\GitHub\Global_Codes_App\Global Codes App\Global_Codes_App\views.py", line 412, in global_edit_submit_changes
+    sql.update_global_code_fields(code, updates, user.email)
+  File "H:\IT\Chris Ekin\GitHub\Global_Codes_App\Global Codes App\Global_Codes_App\sql.py", line 253, in update_global_code_fields
+    cursor.execute(sql)
+ProgrammingError: ('42000', "[42000] [Microsoft][ODBC SQL Server Driver][SQL Server]Incorrect syntax near 's'. (102) (SQLExecDirectW); [42000] [Microsoft][ODBC SQL Server Driver][SQL Server]Unclosed quotation mark after the character string ')'. (105)")
+-----04/12/2015 21:48
+Error reciving global code edit submission:
+Traceback (most recent call last):
+  File "H:\IT\Chris Ekin\GitHub\Global_Codes_App\Global Codes App\Global_Codes_App\views.py", line 412, in global_edit_submit_changes
+    sql.update_global_code_fields(code, updates, user.email)
+  File "H:\IT\Chris Ekin\GitHub\Global_Codes_App\Global Codes App\Global_Codes_App\sql.py", line 253, in update_global_code_fields
+    cursor.execute(sql)
+ProgrammingError: ('42000', "[42000] [Microsoft][ODBC SQL Server Driver][SQL Server]Incorrect syntax near 's'. (102) (SQLExecDirectW); [42000] [Microsoft][ODBC SQL Server Driver][SQL Server]Unclosed quotation mark after the character string ')'. (105)")
+-----06/12/2015 17:23
+Error reciving global code spreadsheet edit submission:
+Traceback (most recent call last):
+  File "H:\IT\Chris Ekin\GitHub\Global_Codes_App\Global Codes App\Global_Codes_App\views.py", line 513, in spreadsheet_changefield
+    lookup = sql.exec_stored_procedure('spGlobalsApp_GlobalCodeDetail_Info',[code])['result'][0]
+  File "H:\IT\Chris Ekin\GitHub\Global_Codes_App\Global Codes App\Global_Codes_App\sql.py", line 18, in exec_stored_procedure
+    cursor.execute(sql)
+ProgrammingError: ('42000', "[42000] [Microsoft][ODBC SQL Server Driver][SQL Server]Incorrect syntax near '/'. (102) (SQLExecDirectW)")
+-----06/12/2015 17:24
+Error reciving global code spreadsheet edit submission:
+Traceback (most recent call last):
+  File "H:\IT\Chris Ekin\GitHub\Global_Codes_App\Global Codes App\Global_Codes_App\views.py", line 513, in spreadsheet_changefield
+    lookup = sql.exec_stored_procedure('spGlobalsApp_GlobalCodeDetail_Info',[code])['result'][0]
+  File "H:\IT\Chris Ekin\GitHub\Global_Codes_App\Global Codes App\Global_Codes_App\sql.py", line 18, in exec_stored_procedure
+    cursor.execute(sql)
+ProgrammingError: ('42000', "[42000] [Microsoft][ODBC SQL Server Driver][SQL Server]Incorrect syntax near '/'. (102) (SQLExecDirectW)")
+-----06/12/2015 17:26
+Error reciving global code spreadsheet edit submission:
+Traceback (most recent call last):
+  File "H:\IT\Chris Ekin\GitHub\Global_Codes_App\Global Codes App\Global_Codes_App\views.py", line 513, in spreadsheet_changefield
+    lookup = sql.exec_stored_procedure('spGlobalsApp_GlobalCodeDetail_Info',[code])['result'][0]
+  File "H:\IT\Chris Ekin\GitHub\Global_Codes_App\Global Codes App\Global_Codes_App\sql.py", line 20, in exec_stored_procedure
+    cursor.execute(sql)
+ProgrammingError: ('42000', "[42000] [Microsoft][ODBC SQL Server Driver][SQL Server]Incorrect syntax near '/'. (102) (SQLExecDirectW)")
+-----06/12/2015 17:43
+Error reciving global code spreadsheet edit submission:
+Traceback (most recent call last):
+  File "H:\IT\Chris Ekin\GitHub\Global_Codes_App\Global Codes App\Global_Codes_App\views.py", line 513, in spreadsheet_changefield
+    lookup = sql.exec_stored_procedure('spGlobalsApp_GlobalCodeDetail_Info',[code])['result'][0]
+  File "H:\IT\Chris Ekin\GitHub\Global_Codes_App\Global Codes App\Global_Codes_App\sql.py", line 24, in exec_stored_procedure
+    data = dict(result=[dict(zip(headers,[str(i) for i in row])) for row in raw_data])
+UnicodeEncodeError: 'ascii' codec can't encode character u'\u2010' in position 8: ordinal not in range(128)
+-----06/12/2015 17:43
+Error reciving global code spreadsheet edit submission:
+Traceback (most recent call last):
+  File "H:\IT\Chris Ekin\GitHub\Global_Codes_App\Global Codes App\Global_Codes_App\views.py", line 513, in spreadsheet_changefield
+    lookup = sql.exec_stored_procedure('spGlobalsApp_GlobalCodeDetail_Info',[code])['result'][0]
+  File "H:\IT\Chris Ekin\GitHub\Global_Codes_App\Global Codes App\Global_Codes_App\sql.py", line 24, in exec_stored_procedure
+    data = dict(result=[dict(zip(headers,[str(i) for i in row])) for row in raw_data])
+UnicodeEncodeError: 'ascii' codec can't encode character u'\u2010' in position 8: ordinal not in range(128)
+-----06/12/2015 17:43
+Error reciving global code spreadsheet edit submission:
+Traceback (most recent call last):
+  File "H:\IT\Chris Ekin\GitHub\Global_Codes_App\Global Codes App\Global_Codes_App\views.py", line 513, in spreadsheet_changefield
+    lookup = sql.exec_stored_procedure('spGlobalsApp_GlobalCodeDetail_Info',[code])['result'][0]
+  File "H:\IT\Chris Ekin\GitHub\Global_Codes_App\Global Codes App\Global_Codes_App\sql.py", line 24, in exec_stored_procedure
+    data = dict(result=[dict(zip(headers,[str(i) for i in row])) for row in raw_data])
+UnicodeEncodeError: 'ascii' codec can't encode character u'\u2010' in position 19: ordinal not in range(128)
+-----06/12/2015 17:43
+Error reciving global code spreadsheet edit submission:
+Traceback (most recent call last):
+  File "H:\IT\Chris Ekin\GitHub\Global_Codes_App\Global Codes App\Global_Codes_App\views.py", line 513, in spreadsheet_changefield
+    lookup = sql.exec_stored_procedure('spGlobalsApp_GlobalCodeDetail_Info',[code])['result'][0]
+  File "H:\IT\Chris Ekin\GitHub\Global_Codes_App\Global Codes App\Global_Codes_App\sql.py", line 24, in exec_stored_procedure
+    data = dict(result=[dict(zip(headers,[str(i) for i in row])) for row in raw_data])
+UnicodeEncodeError: 'ascii' codec can't encode character u'\u2010' in position 19: ordinal not in range(128)
+-----06/12/2015 17:43
+Error reciving global code spreadsheet edit submission:
+Traceback (most recent call last):
+  File "H:\IT\Chris Ekin\GitHub\Global_Codes_App\Global Codes App\Global_Codes_App\views.py", line 513, in spreadsheet_changefield
+    lookup = sql.exec_stored_procedure('spGlobalsApp_GlobalCodeDetail_Info',[code])['result'][0]
+  File "H:\IT\Chris Ekin\GitHub\Global_Codes_App\Global Codes App\Global_Codes_App\sql.py", line 24, in exec_stored_procedure
+    data = dict(result=[dict(zip(headers,[str(i) for i in row])) for row in raw_data])
+UnicodeEncodeError: 'ascii' codec can't encode character u'\u2010' in position 8: ordinal not in range(128)

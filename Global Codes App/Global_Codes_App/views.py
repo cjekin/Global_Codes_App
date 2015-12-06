@@ -418,7 +418,7 @@ def global_edit_submit_changes():
     except Exception, err:
         error_log('Error reciving global code edit submission:\n' + str(traceback.format_exc()))
         print ('-----------\nError reciving global code edit submission' + str(traceback.format_exc()))
-        result = dict(data = 'ERROR', error_detail='Problem submitting global changes')
+        result = dict(data = 'ERROR', error_detail=str(traceback.format_exc()))
 
     json_data = jsonify(result)
     return json_data

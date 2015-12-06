@@ -426,6 +426,7 @@
     <Content Include="Global_Codes_App\static\styles\img\green%402x.png" />
     <Content Include="Global_Codes_App\static\styles\img\green.png" />
     <Content Include="Global_Codes_App\static\styles\static_custom.css" />
+    <Content Include="Global_Codes_App\static\styles\code_style.css" />
     <Content Include="Global_Codes_App\static\styles\style.css" />
     <Content Include="Global_Codes_App\static\vendor\._fooTable" />
     <Content Include="Global_Codes_App\static\vendor\._jquery-validation" />
