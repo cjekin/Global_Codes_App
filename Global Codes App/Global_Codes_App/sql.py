@@ -11,8 +11,13 @@ def exec_stored_procedure(stored_procedure,arguements=[]):
         cursor = cnxn.cursor()
     except:
         print 'Problem making connection'
+
+    if len(arguements) > 0:
+        args = "'" + "','".join(arguements) + "'"
+    else:
+        args = ''
     
-    sql = "EXEC %s '%s';" % (stored_procedure,"','".join(arguements))
+    sql = "EXEC %s %s;" % (stored_procedure,args)
     data = {}
 
     print(sql)
