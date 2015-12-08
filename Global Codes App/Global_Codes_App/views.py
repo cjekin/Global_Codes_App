@@ -330,7 +330,7 @@ def pull_all_tfcs_to_one_table():
     try:
         if last_database_update == None:
             print('\n\n\n*** Performing pre-load and setting up globals ***\n\n\n')
-            sql.exec_stored_procedure_noreturn('spGlobalsApp_GetNewTFC')
+            sql.exec_stored_procedure_noreturn('spGlobalsApp_GlobalCodeDetail_LoadAllTFCs')
             last_database_update = datetime.now()
         elif datetime.now() - last_database_update > timedelta(seconds=(3600*8)):
             sql.exec_stored_procedure_noreturn('spGlobalsApp_GlobalCodeDetail_LoadAllTFCs')
