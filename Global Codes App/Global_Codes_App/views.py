@@ -1,7 +1,7 @@
 # Imports
 import config
 import pyodbc
-from datetime import datetime
+from datetime import date, datetime, timedelta
 from flask import render_template, jsonify, Response, request, json
 from Global_Codes_App import app
 import sql
@@ -9,6 +9,11 @@ import traceback
 import sys
 import time
 from flask.ext.stormpath import login_required, user
+
+
+# Global variables and prep scripts
+last_database_update = None
+
 
 def error_log(error):
     with open(config.error_log_file,'a') as F:
@@ -64,9 +69,16 @@ def home():
 @login_required
 def get_new_tfc():
     print 'Getting new TFCs'
+    global last_database_update
 
     try:
-        sql.exec_stored_procedure_noreturn('spGlobalsApp_GetNewTFC')
+        if last_database_update == None:
+            print('\n\n\n*** Performing pre-load and setting up globals ***\n\n\n')
+            sql.exec_stored_procedure_noreturn('spGlobalsApp_GetNewTFC')
+            last_database_update = datetime.now()
+        elif datetime.now() - last_database_update > timedelta(seconds=(3600*8)):
+            sql.exec_stored_procedure_noreturn('spGlobalsApp_GetNewTFC')
+            last_database_update = datetime.now()
         result = dict(data = 'OK')
 
     except Exception, err:
@@ -313,11 +325,16 @@ def dashboard_getdata():
 @app.route('/pull_all_tfcs_to_one_table')
 @login_required
 def pull_all_tfcs_to_one_table():
+    global last_database_update
+
     try:
-        cnxn = pyodbc.connect(config.connection_string)
-        cursor = cnxn.cursor()
-        sql = "EXEC spGlobalsApp_GlobalCodeDetail_LoadAllTFCs"
-        cursor.execute(sql)
+        if last_database_update == None:
+            print('\n\n\n*** Performing pre-load and setting up globals ***\n\n\n')
+            sql.exec_stored_procedure_noreturn('spGlobalsApp_GetNewTFC')
+            last_database_update = datetime.now()
+        elif datetime.now() - last_database_update > timedelta(seconds=(3600*8)):
+            sql.exec_stored_procedure_noreturn('spGlobalsApp_GlobalCodeDetail_LoadAllTFCs')
+            last_database_update = datetime.now()
         result = dict(data = 'OK')
     except:
         error_log('Error executing pull_all_tfcs_to_one_table:\n' + str(traceback.format_exc()))
