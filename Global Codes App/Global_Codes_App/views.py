@@ -222,7 +222,7 @@ def remove_mapping():
 
     try:  
         result = sql.remove_mapping(system,tfc,old_global_code,user.email)
-
+        
     except Exception, err:
         error_log('Unable to remove code from mapping:\n' + str(traceback.format_exc()))
         result = dict(result = 'ERROR', error_detail='Problem removing mapping')
@@ -402,9 +402,7 @@ def globalcodedetail():
         print ('-----------\nError executing code detail lookup' + str(traceback.format_exc()))
         result = dict(data = 'ERROR', error_detail='Problem running query')
 
-    print 'Returned audit: ', result['audit']
     json_data = jsonify(result)
-    print 'JSON conversion:\n', json_data
     return json_data
 
 

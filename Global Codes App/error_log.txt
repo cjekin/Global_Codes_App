@@ -410,3 +410,75 @@ Traceback (most recent call last):
   File "H:\IT\Chris Ekin\GitHub\Global_Codes_App\Global Codes App\Global_Codes_App\sql.py", line 24, in exec_stored_procedure
     data = dict(result=[dict(zip(headers,[str(i) for i in row])) for row in raw_data])
 UnicodeEncodeError: 'ascii' codec can't encode character u'\u2010' in position 8: ordinal not in range(128)
+-----13/12/2015 19:33
+Error executing code detail lookup:
+Traceback (most recent call last):
+  File "H:\IT\Chris Ekin\GitHub\Global_Codes_App\Global Codes App\Global_Codes_App\views.py", line 398, in globalcodedetail
+    result['mapping'] = sql.exec_stored_procedure('spGlobalsApp_GlobalCodeDetail_Mapping',[code])['result']
+  File "H:\IT\Chris Ekin\GitHub\Global_Codes_App\Global Codes App\Global_Codes_App\sql.py", line 25, in exec_stored_procedure
+    cursor.execute(sql)
+ProgrammingError: ('42S02', "[42S02] [Microsoft][ODBC SQL Server Driver][SQL Server]Invalid object name 'GlobalCodes_AllTFCs'. (208) (SQLExecDirectW)")
+-----13/12/2015 20:02
+Error executing code detail lookup:
+Traceback (most recent call last):
+  File "H:\IT\Chris Ekin\GitHub\Global_Codes_App\Global Codes App\Global_Codes_App\views.py", line 396, in globalcodedetail
+    result['info'] = sql.exec_stored_procedure('spGlobalsApp_GlobalCodeDetail_Info',[code])['result']
+  File "H:\IT\Chris Ekin\GitHub\Global_Codes_App\Global Codes App\Global_Codes_App\sql.py", line 25, in exec_stored_procedure
+    cursor.execute(sql)
+ProgrammingError: ('42S22', "[42S22] [Microsoft][ODBC SQL Server Driver][SQL Server]Invalid column name 'BAFO_Subsection'. (207) (SQLExecDirectW); [42S22] [Microsoft][ODBC SQL Server Driver][SQL Server]Invalid column name 'BAFO_Department'. (207)")
+-----13/12/2015 20:02
+Error executing spGlobalsApp_GlobalEditor:
+Traceback (most recent call last):
+  File "H:\IT\Chris Ekin\GitHub\Global_Codes_App\Global Codes App\Global_Codes_App\views.py", line 378, in globalseditordata
+    result = sql.exec_stored_procedure_list('spGlobalsApp_GlobalEditor',[department])
+  File "H:\IT\Chris Ekin\GitHub\Global_Codes_App\Global Codes App\Global_Codes_App\sql.py", line 73, in exec_stored_procedure_list
+    cursor.execute(sql)
+ProgrammingError: ('42S22', "[42S22] [Microsoft][ODBC SQL Server Driver][SQL Server]Invalid column name 'BAFO_Subsection'. (207) (SQLExecDirectW); [42S22] [Microsoft][ODBC SQL Server Driver][SQL Server]Invalid column name 'BAFO_Department'. (207)")
+-----13/12/2015 20:04
+Error executing spGlobalsApp_GlobalEditor:
+Traceback (most recent call last):
+  File "H:\IT\Chris Ekin\GitHub\Global_Codes_App\Global Codes App\Global_Codes_App\views.py", line 378, in globalseditordata
+    result = sql.exec_stored_procedure_list('spGlobalsApp_GlobalEditor',[department])
+  File "H:\IT\Chris Ekin\GitHub\Global_Codes_App\Global Codes App\Global_Codes_App\sql.py", line 73, in exec_stored_procedure_list
+    cursor.execute(sql)
+ProgrammingError: ('42S22', "[42S22] [Microsoft][ODBC SQL Server Driver][SQL Server]Invalid column name 'BAFO_Subsection'. (207) (SQLExecDirectW); [42S22] [Microsoft][ODBC SQL Server Driver][SQL Server]Invalid column name 'BAFO_Department'. (207)")
+-----14/12/2015 19:36
+Error executing spGlobalsApp_GlobalSpreadsheet:
+Traceback (most recent call last):
+  File "H:\IT\Chris Ekin\GitHub\Global_Codes_App\Global Codes App\Global_Codes_App\views.py", line 508, in pull_spreadsheet_globals
+    result = sql.exec_stored_procedure_list('spGlobalsApp_GlobalSpreadsheet', header_row=True)
+  File "H:\IT\Chris Ekin\GitHub\Global_Codes_App\Global Codes App\Global_Codes_App\sql.py", line 73, in exec_stored_procedure_list
+    cursor.execute(sql)
+ProgrammingError: ('42S22', "[42S22] [Microsoft][ODBC SQL Server Driver][SQL Server]Invalid column name 'BAFO_Subsection'. (207) (SQLExecDirectW); [42S22] [Microsoft][ODBC SQL Server Driver][SQL Server]Invalid column name 'BAFO_Department'. (207)")
+-----14/12/2015 19:36
+Error executing spGlobalsApp_GlobalSpreadsheet:
+Traceback (most recent call last):
+  File "H:\IT\Chris Ekin\GitHub\Global_Codes_App\Global Codes App\Global_Codes_App\views.py", line 508, in pull_spreadsheet_globals
+    result = sql.exec_stored_procedure_list('spGlobalsApp_GlobalSpreadsheet', header_row=True)
+  File "H:\IT\Chris Ekin\GitHub\Global_Codes_App\Global Codes App\Global_Codes_App\sql.py", line 73, in exec_stored_procedure_list
+    cursor.execute(sql)
+ProgrammingError: ('42S22', "[42S22] [Microsoft][ODBC SQL Server Driver][SQL Server]Invalid column name 'BAFO_Subsection'. (207) (SQLExecDirectW); [42S22] [Microsoft][ODBC SQL Server Driver][SQL Server]Invalid column name 'BAFO_Department'. (207)")
+-----14/12/2015 20:38
+Error looking up TLC detail:
+Traceback (most recent call last):
+  File "H:\IT\Chris Ekin\GitHub\Global_Codes_App\Global Codes App\Global_Codes_App\views.py", line 162, in system_info
+    result = sql.exec_stored_procedure('spGlobalsApp_SystemOverview', [system,section])
+  File "H:\IT\Chris Ekin\GitHub\Global_Codes_App\Global Codes App\Global_Codes_App\sql.py", line 25, in exec_stored_procedure
+    cursor.execute(sql)
+ProgrammingError: ('42000', "[42000] [Microsoft][ODBC SQL Server Driver][SQL Server]The object name 'Loading....dbo.FORM' contains more than the maximum number of prefixes. The maximum is 3. (117) (SQLExecDirectW)")
+-----14/12/2015 20:39
+Error looking up TLC detail:
+Traceback (most recent call last):
+  File "H:\IT\Chris Ekin\GitHub\Global_Codes_App\Global Codes App\Global_Codes_App\views.py", line 162, in system_info
+    result = sql.exec_stored_procedure('spGlobalsApp_SystemOverview', [system,section])
+  File "H:\IT\Chris Ekin\GitHub\Global_Codes_App\Global Codes App\Global_Codes_App\sql.py", line 25, in exec_stored_procedure
+    cursor.execute(sql)
+ProgrammingError: ('42000', "[42000] [Microsoft][ODBC SQL Server Driver][SQL Server]The object name 'Loading....dbo.FORM' contains more than the maximum number of prefixes. The maximum is 3. (117) (SQLExecDirectW)")
+-----14/12/2015 21:41
+Error deleting global code:
+Traceback (most recent call last):
+  File "H:\IT\Chris Ekin\GitHub\Global_Codes_App\Global Codes App\Global_Codes_App\views.py", line 476, in global_edit_delete_code
+    sql.exec_stored_procedure_noreturn('spGlobalsApp_DeleteGlobalCode',[code, exclusion, user.email])
+  File "H:\IT\Chris Ekin\GitHub\Global_Codes_App\Global Codes App\Global_Codes_App\sql.py", line 49, in exec_stored_procedure_noreturn
+    cursor.execute(sql)
+Error: ('21S01', '[21S01] [Microsoft][ODBC SQL Server Driver][SQL Server]Column name or number of supplied values does not match table definition. (213) (SQLExecDirectW)')

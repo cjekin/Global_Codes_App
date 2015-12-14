@@ -5,6 +5,7 @@ var current_tlc = 'U/E';
 var current_tlc_name = 'UREA AND ELECTROLYTES';
 var current_tlc_type = 'G';
 var current_system = 'CROM_ALL_DW';
+var global_code_datatable = $('#global_code_datatable').DataTable();
 
 
 // Load any new TFCs in to the mapping table
@@ -351,66 +352,109 @@ $.getJSON('/global_table', function (global_data) {
             type: "warning"
         });
     } else {
-        var global_code_datatable = $('#global_code_datatable').DataTable({
-            data: global_data['result'],
-            sPlaceHolder: "head:before",
-            columns: [
-                { title: "BenchCode" },
-                { title: "Description" },
-                { title: "Sample" },
-                { title: "Type." },
-                { title: "Analyte" },
-                { title: "PrimaryLibrary" },
-                { title: "SubSection" },
-                { title: "Department" }
-            ],
-            "columnDefs": [
-            {
-                "render": function (data) {
-                    return '<div class="global-drag"><button type="button" class="btn btn-primary btn-xs">' + data + '</button></div>';
-                },
-                "targets": 0
-            },
-            {
-                "visible": false,
-                "targets": 8
-            }
-            ]
-        });
-
-        yadcf.init(global_code_datatable, [
-            {
-                column_number: 2,
-                column_data_type: "html",
-                html_data_type: "text",
-                filter_default_label: "Filter"
-            },
-            {
-                column_number: 3,
-                column_data_type: "html",
-                html_data_type: "text",
-                filter_default_label: "Filter"
-            },
-            {
-                column_number: 6,
-                column_data_type: "html",
-                html_data_type: "text",
-                filter_default_label: "Filter"
-            },
-            {
-                column_number: 7,
-                column_data_type: "html",
-                html_data_type: "text",
-                filter_default_label: "Filter"
-            }
-            ]);
+        global_code_datatable.destroy();
+        draw_global_table(global_data['result']);
     };
 });
+
+function draw_global_table(global_data) {
+    console.log('Call draw table function');
+
+    global_code_datatable = $('#global_code_datatable').DataTable({
+        data: global_data,
+        sPlaceHolder: "head:before",
+        columns: [
+            { title: "BenchCode" },
+            { title: "Description" },
+            { title: "Sample" },
+            { title: "Type." },
+            { title: "Analyte" },
+            { title: "PrimaryLibrary" },
+            { title: "SubSection" },
+            { title: "Department" },
+            { title: "Alias" }
+        ],
+        "columnDefs": [
+        {
+            "render": function (data) {
+                return '<div class="global-drag"><button type="button" class="btn btn-primary btn-xs">' + data + '</button></div>';
+            },
+            "targets": 0
+        }
+        ,
+        {
+            "visible": false
+            ,
+            "targets": 8
+        }
+        ]
+        //,bDestroy: true
+    });
+
+    yadcf.init(global_code_datatable, [
+        {
+            column_number: 2,
+            column_data_type: "html",
+            html_data_type: "text",
+            filter_default_label: "Filter"
+        },
+        {
+            column_number: 3,
+            column_data_type: "html",
+            html_data_type: "text",
+            filter_default_label: "Filter"
+        },
+        {
+            column_number: 6,
+            column_data_type: "html",
+            html_data_type: "text",
+            filter_default_label: "Filter"
+        },
+        {
+            column_number: 7,
+            column_data_type: "html",
+            html_data_type: "text",
+            filter_default_label: "Filter"
+        }
+    ]);
+};
 // Need to reinitialise the event handlers when you search
 $('#global_code_datatable').on('draw.dt', function () {
     event_handlers();
 });
 
+$('#global_codes_table_refresh').click(function () {
+
+    console.log('clicked refresh...');
+
+    $.getJSON('/global_table', function (global_data) {
+
+        if (global_data['result'] == 'ERROR') {
+            swal({
+                title: "Problem loading the globals",
+                text: "An exception occurred when we were preloading the data. The details have been recorded in the error log.",
+                type: "warning"
+            });
+        } else {
+            console.log('Got info...');
+
+            
+            //global_code_datatable.destroy();
+
+            //global_code_datatable.fnDestroy();
+
+            //global_code_datatable.empty();
+            
+            //draw_global_table(global_data['result']);
+
+
+            global_code_datatable.clear();
+            global_code_datatable.rows.add(global_data['result']);
+            global_code_datatable.draw();
+        };
+
+    });
+});
 
 
 

@@ -4,7 +4,20 @@ var current_dept = 'All';
 var current_global_code = 'BC_UE_NA';
 var current_global_name = 'Sodium';
 var current_global_data = {};
-var info_headers = ['GlobalCode', 'Description', 'Sample', 'Type', 'Analyte', 'PrimaryLibrary', 'SubSection', 'Department', 'BAFO_Subsection', 'BAFO_Department', 'HSL_Code', 'NLMC', 'SNOMEDCT_UK', 'LOINC', 'PBCL', 'Interface', 'MiddlewareCode'];
+var mapping_exclusions = {};
+var all_depts = [];
+var info_headers = ['GlobalCode', 'Description', 'Sample', 'Type', 'Analyte', 'PrimaryLibrary', 'SubSection', 'Department',
+    'HALO_Subsection', 'HALO_Department', 'HSL_Code', 'REF_Code', 'NLMC', 'SNOMEDCT_UK', 'LOINC', 'PBCL', 'Interface', 'MiddlewareCode'];
+
+// Custom renderers for fields (default is input)
+var header_val = {
+    'Sample':'select',
+    'Type': 'select',
+    'Department':'department',
+    'SubSection': 'subsection'
+};
+
+
 
 $('.global_detail_class').hide();
 $(window.scrollTo(0, 0));
@@ -38,9 +51,14 @@ $.getJSON('/globals_department_list', function (data) {
             type: "warning"
         });
     } else {
+        all_depts = data['data'];
+        var departments = []
         var dept_filter = '<option>All</option>';
         for (i = 0; i < data['data'].length; i++) {
-            dept_filter += '<option>' + data['data'][i] + '</option>';
+            if ($.inArray(data['data'][i][1], departments) < 0) {
+                dept_filter += '<option>' + data['data'][i][1] + '</option>';
+                departments.push(data['data'][i][1]);
+            };
         };
         $('#global_dept_filter').html(dept_filter);
     };
@@ -58,24 +76,25 @@ var global_code_datatable = $('#global_code_datatable').DataTable({
     ajax: '/globalseditordata?department=All',
     sPlaceHolder: "head:before",
     columns: [
-        { title: "Alias" },
-        { title: "GlobalCode" },
-        { title: "Description" },
-        { title: "Sample" },
-        { title: "Type" },
-        { title: "Analyte" },
-        { title: "PrimaryLibrary" },
-        { title: "SubSection" },
-        { title: "Department" },
-        { title: "BAFO_Subsection" },
-        { title: "BAFO_Department" },
-        { title: "HSL_Code" },
-        { title: "NLMC" },
-        { title: "SNOMEDCT_UK" },
-        { title: "PBCL" },
-        { title: "LOINC" },
-        { title: "Interface" },
-        { title: "MiddlewareCode" }
+        { title: "Alias", name: "Alias" },
+        { title: "GlobalCode", name: "GlobalCode" },
+        { title: "Description", name: "Description"},
+        { title: "Sample", name: "Sample" },
+        { title: "Type", name: "Type" },
+        { title: "Analyte", name: "Analyte" },
+        { title: "PrimaryLibrary", name: "PrimaryLibrary" },
+        { title: "SubSection", name: "SubSection" },
+        { title: "Department", name: "Department" },
+        { title: "HALO_Subsection", name: "HALO_Subsection" },
+        { title: "HALO_Department", name: "HALO_Department" },
+        { title: "HSL_Code", name: "HSL_Code" },
+        { title: "REF_Code", name: "REF_Code" },
+        { title: "NLMC", name: "NLMC" },
+        { title: "SNOMEDCT_UK", name: "SNOMEDCT_UK" },
+        { title: "PBCL", name: "PBCL" },
+        { title: "LOINC", name: "LOINC" },
+        { title: "Interface", name: "Interface" },
+        { title: "MiddlewareCode", name: "MiddlewareCode" }
     ],
     "columnDefs": [
     {
@@ -178,17 +197,93 @@ function fill_global_data(data) {
         mapping_html += '<td>' + data['mapping'][i]['LastSeen'] + '</td>';
         mapping_html += '<td>' + data['mapping'][i]['GlobalCode'] + '</td>';
         mapping_html += '<td>' + data['mapping'][i]['Excluded'] + '</td>';
-        mapping_html += '<td><button class="btn btn-danger btn-xs global_tfc_mapping_del disabled">DEL</button></td>';
-        mapping_html += '<td><button class="btn btn-success btn-xs global_tfc_mapping_edit disabled">EDIT</button></td></tr>';
+        mapping_html += '<td><button type="button" onClick="mapping_del_click(this); return false;" class="btn btn-danger btn-xs global_tfc_mapping_del">DEL</button></td>';
+        mapping_html += '<td><button type="button" onClick="mapping_edit_click(this); return false;" class="btn btn-success btn-xs global_tfc_mapping_edit">EDIT</button></td></tr>';
+        mapping_exclusions[data['mapping'][i]['Origin'] + '|' + data['mapping'][i]['Code']] = data['mapping'][i]['Excluded']; // Store the exclusion to check against when changed later
     };
     $('#global_tfc_mapping').html(mapping_html);
 };
 
+
+// Functions to fill in the form with the right data type
+function input_type(field, content) {
+    
+
+    // Regular input field
+    if(!header_val.hasOwnProperty(field)){
+        return '<input value="' + content + '" class="form-control"></div>'
+    };
+    
+
+    // Select field (based on datatables.unique())
+    if (header_val[field] == 'select') {
+        var input = '<select class="form-control">';
+        var colindex = global_code_datatable.column(field + ':name').index();
+        var values = global_code_datatable.column(colindex).data().unique();
+
+        for (j = 0; j < values.length; j++) {
+            input += '<option>' + values[j] + '</option>';
+        }
+        input += '</select>';
+        input = input.replace('<option>' + content, '<option selected="selected">' + content);
+        return input;
+    };
+
+
+    // Department custom field
+    if (header_val[field] == 'department') {
+        var input = '<select class="form-control">';
+        var departments = [];
+
+        for (j = 0; j < all_depts.length; j++) {
+            var this_department = all_depts[j][1];
+            if ($.inArray(this_department, departments) < 0) {
+                input += '<option>' + this_department + '</option>';
+            };
+            departments.push(this_department);
+        }
+        input += '</select>';
+        input = input.replace('<option>' + content + '</option>', '<option selected="selected">' + content + '</option>');
+        return input;
+    };
+
+    // Subsection custom field
+    if (header_val[field] == 'subsection') {
+        var input = '<select class="form-control">';
+        var departments = [];
+        var last_department = '';
+
+        for (j = 0; j < all_depts.length; j++) {
+
+            var this_department = all_depts[j][1];
+            var this_subsection = all_depts[j][0];
+
+            if (this_department != last_department && j > 0) {
+                input += '</optgroup>';
+            };
+
+            if ($.inArray(this_department, departments) < 0) {
+                input += '<optgroup label="' + this_department + '"><option>' + this_subsection + '</option>';
+                departments.push(this_department);
+            } else {
+                input += '<option>' + this_subsection + '</option>';
+            };
+
+            last_department = this_department;
+        };
+        input += '</optgroup></select>';
+        input = input.replace('<option>' + content + '</option>', '<option selected="selected">' + content + '</option>');
+        return input;
+    };
+};
+
+
 // Respond to clicking EDIT button
 $("#global_edit_button").click(function () {
+    console.log('info_headers.length: ', info_headers.length);
     for (i = 0; i < info_headers.length; i++) {
         var content = $('#info_' + info_headers[i] + ' p').text();
-        $('#info_' + info_headers[i]).html('<input value="' + content + '" class="form-control"></div>');
+        $('#info_' + info_headers[i]).html(input_type(info_headers[i], content));
     };
     $('#global_info').append('<div class="form-group" id="global_info_submit_div"><div class="col-sm-7 col-sm-offset-4"><button id="global_info_submit" type="button"  onClick="global_info_submit_click(); return false;" class="btn btn-success">Save changes</button></div></div>');
 });
@@ -201,9 +296,13 @@ function global_info_submit_click() {
 
     var submission = {};
     for (i = 0; i < info_headers.length; i++) {
-        var content = $('#info_' + info_headers[i] + ' input').val();
+        var select_content = $('#info_' + info_headers[i] + ' select option:selected').text();
+        var input_content = $('#info_' + info_headers[i] + ' input').val();
+        var content = (input_content || select_content);
         submission[info_headers[i]] = content
     };
+
+    console.log(submission);
 
     $.post('\global_edit_submit_changes', submission)
         .done(function (data) {
@@ -231,14 +330,9 @@ $("#global_new_button").click(function () {
     $('#global_header_code').text('NEW CODE');
 
     // Build the basic info form
-    var info_html = '';
     for (i = 0; i < info_headers.length; i++) {
-        info_html += '<div class="form-group"><label class="col-lg-4 control-label">';
-        info_html += info_headers[i] + '</label><div id="info_' + info_headers[i];
-        info_html += '" class="col-lg-8"><input value="" class="form-control"></div>';
-        info_html += '' + '</div>';
+        $('#info_' + info_headers[i]).html(input_type(info_headers[i], ''));
     };
-    $('#global_info').html(info_html);
     $('#global_info').append('<div class="form-group" id="global_info_create_div"><div class="col-sm-7 col-sm-offset-4"><button id="global_info_newcode" type="button"  onClick="global_info_new_click(); return false;" class="btn btn-success">Create New</button></div></div>');
 
     // Clear the audit trail and mapping info
@@ -259,7 +353,8 @@ $("#global_copy_button").click(function () {
     // Build the basic info form
     for (i = 0; i < info_headers.length; i++) {
         var content = $('#info_' + info_headers[i] + ' p').text();
-        $('#info_' + info_headers[i]).html('<input value="' + content + '" class="form-control"></div>');
+        //$('#info_' + info_headers[i]).html('<input value="' + content + '" class="form-control"></div>');
+        $('#info_' + info_headers[i]).html(input_type(info_headers[i], content));
     };
     $('#global_info').append('<div class="form-group" id="global_info_create_div"><div class="col-sm-7 col-sm-offset-4"><button id="global_info_newcode" type="button"  onClick="global_info_new_click(); return false;" class="btn btn-success">Create New</button></div></div>');
 
@@ -289,12 +384,13 @@ function global_info_new_click() {
         // Get the data
         var submission = {};
         for (i = 0; i < info_headers.length; i++) {
-            var content = $('#info_' + info_headers[i] + ' input').val();
+            var select_content = $('#info_' + info_headers[i] + ' select option:selected').text();
+            var input_content = $('#info_' + info_headers[i] + ' input').val();
+            var content = (input_content || select_content);
             submission[info_headers[i]] = content
         };
 
         // Check if the code already exists
-        console.log(submission);
         var all_global_codes_array = $.makeArray(global_code_datatable.column(1).data());
         if ($.inArray(submission['GlobalCode'], all_global_codes_array) != -1) {
             swal({
@@ -414,6 +510,203 @@ function delete_current_global_code(exclusion) {
             var url_val = '/globalseditordata?department=' + current_dept;
             global_code_datatable.ajax.url(url_val).load();
 
+        };
+    });
+};
+
+
+
+// Click the mapping DELETE buttons
+function mapping_del_click(element) {
+    var row = $(element).parent().parent();
+    var origin = row.find('td:eq(0)').text();
+    var tfc = row.find('td:eq(1)').text();
+    
+    console.log($(element).parent().parent().text());
+    console.log(origin, ': ', tfc);
+
+    swal({
+        title: "Are you sure?",
+        text: "This will delete the mapping of " + current_global_code + " from " + tfc,
+        type: "warning",
+        showCancelButton: true,
+        confirmButtonColor: "#DD6B55",
+        confirmButtonText: "Delete Mapping"
+    },
+        function () {
+            var result = remove_mapping(origin, tfc, current_global_code);
+            console.log('REsult = ', result);
+            if (result == 'OK') {
+                row.remove();
+            };
+    });
+};
+
+
+
+// Click the mapping EDIT buttons
+function mapping_edit_click(element) {
+
+    var row = $(element).parent().parent();
+    var origin = row.find('td:eq(0)').text();
+    var tfc = row.find('td:eq(1)').text();
+
+    var global_content = row.find('td:eq(7)').text();
+    var global_width = row.find('td:eq(7)').width();
+    row.find('td:eq(7)').html('<input onkeyup="mapping_global_keyup(this); return false;" value="' + global_content + '" class="form-control">');
+
+    var exclusion_content = row.find('td:eq(8)').text();
+    var exclusion_width = row.find('td:eq(8)').width();
+    row.find('td:eq(8)').html('<input value="' + exclusion_content + '" class="form-control">');
+
+    $(element).parent().html('<button type="button" onClick="mapping_save_click(this); return false;" class="btn btn-info btn-xs global_tfc_mapping_save">SAVE</button>');
+};
+
+
+// Monitor global code changes and highlight if global not available
+function mapping_global_keyup(element) {
+    var text = $(element).val();
+
+    if (text == '') {
+        $(element).css({ 'background-color': '#ffffff' }); // No text
+    } else if (global_code_datatable.column(1).data().indexOf(text) > -1) {
+        $(element).css({ 'background-color': '#c6ffb3' }); // Found
+    } else {
+        $(element).css({ 'background-color': '#ffcccc' }); // Not found
+    };  
+};
+
+
+// Respond to clicking SAVE on the mapping
+function mapping_save_click(element) {
+
+    var row = $(element).parent().parent();
+    var global_content = row.find('td:eq(7) input').val();
+    var exclusion_content = row.find('td:eq(8) input').val();
+    var origin = row.find('td:eq(0)').text();
+    var tfc = row.find('td:eq(1)').text();
+
+    console.log('Global: ', global_content, ' Exclusion: ', exclusion_content);
+
+    // Reject if both global and exclusion exist
+    if (global_content != '' && exclusion_content != '') {
+        swal({
+            title: "Can't have a global and exclusion",
+            text: "You can't put both a global mapping and an exclusion in place at the same time. Please pick one or the other.",
+            type: "warning"
+        });
+        return;
+    };
+
+    // Change the global code if different
+    if (global_content != '') {
+        if (global_code_datatable.column(1).data().indexOf(global_content) == -1) {
+            swal({
+                title: "Not a valid global code",
+                text: "The global code you have chosen doesn't exist. Please check.",
+                type: "warning"
+            });
+            return;
+        };
+        if (global_content != current_global_code) {
+            console.log('Switching global code from ', current_global_code, ' to ', global_content);
+            remove_mapping(origin, tfc, current_global_code);
+            add_mapping(origin, tfc, global_content);
+        } else {
+            console.log('Same global code of ', global_content, '. No need to change');
+        };
+    };
+
+    // Remove the global code mapping if blank
+    if (global_content == '') {
+        console.log('Removing global code ', current_global_code, ' from ', origin + ':' + tfc);
+        remove_mapping(origin, tfc, current_global_code);
+    };
+
+    // If the exclusion exists
+    if (exclusion_content != '') {
+        console.log('Excluding test ', origin, ':', tfc, ' with exclusion ', exclusion_content);
+        exclude_mapping(origin, tfc, exclusion_content);
+    }
+
+    // If the exclusion is blank
+    var previous_exclusion = mapping_exclusions[origin + '|' + tfc];
+    console.log('Previous exclusion: ', previous_exclusion);
+    if (exclusion_content == '' && previous_exclusion != '') {
+        console.log('Removing exclusion ', origin, ':', tfc);
+        exclude_mapping(origin, tfc, 'None');
+    }
+
+
+    // Reset the form elements
+    row.find('td:eq(7)').html(global_content);
+    row.find('td:eq(8)').html(exclusion_content);
+    row.find('td:eq(10)').html('<td><button type="button" onClick="mapping_edit_click(this); return false;" class="btn btn-success btn-xs global_tfc_mapping_edit">EDIT</button></td></tr>');
+    
+    // Remove if mapped differently
+    if (global_content != current_global_code) {
+        row.remove();
+    };
+
+
+    console.log('Finished...');
+};
+
+
+
+
+//
+// Functions to change global and exclusion mapping
+//
+
+function remove_mapping(origin, tfc, global_code) {
+    var url = '/remove_mapping?system=' + origin + '&tfc=' + tfc + '&global_code=' + current_global_code + '&user=' + '';
+    $.getJSON(url, function (data) {
+        if (data['result'] == 'ERROR') {
+            swal({
+                title: "Unable to remove",
+                text: "An error occurred while removing " + current_global_code + " from " + tfc + ". The details have been recorded in the error log.",
+                type: "warning"
+            });
+            return 'ERROR';
+        } else {
+            console.log("Removed " + current_global_code + " from " + origin + ':' + tfc);
+            return 'OK';
+        };
+    });
+};
+
+
+function add_mapping(origin, tfc, global_code) {
+    var url = '/add_mapping?system=' + origin + '&tfc=' + tfc + '&global_code=' + global_code;
+    $.getJSON(url, function (data) {
+        if (data['result'] == 'ERROR') {
+            swal({
+                title: "Unable",
+                text: "An error occurred while adding " + ui.draggable.text() + " to " + $(this).find(".TFC").text() + ". The details have been recorded in the error log.",
+                type: "warning"
+            });
+            return 'ERROR';
+        } else {
+            console.log("Added " + global_code + " to " + origin + ':' + tfc);
+            return 'OK';
+        };
+    });
+};
+
+
+function exclude_mapping(origin, tfc, exclusion) {
+    var url = '/exclude_tfc?system=' + origin + '&tfc=' + tfc + '&exclusion=' + exclusion;
+    $.getJSON(url, function (data) {
+        if (data['result'] == 'ERROR') {
+            swal({
+                title: "Error excluding TFC",
+                text: "The details have been recorded in the error log.",
+                type: "warning"
+            });
+            return 'ERROR';
+        } else {
+            return 'OK';
         };
     });
 };
