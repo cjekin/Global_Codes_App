@@ -185,6 +185,7 @@ function fill_global_data(data) {
         };
     $('#global_audit').html(audit_html);
 
+
     // Fill in the mapping information
     var mapping_html = '';
     for (i = 0; i < data['mapping'].length; i++) {
