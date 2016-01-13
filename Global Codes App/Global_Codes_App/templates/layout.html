@@ -103,6 +103,9 @@
                 <li>
                     <a href="/spreadsheet"><span class="nav-label">Spreadsheet</span> <span class="label label-warning pull-right">Beta</span></a>
                 </li>
+                <li>
+                    <a href="/locations"><span class="nav-label">Locations</span> <span class="label label-warning pull-right">Beta</span></a>
+                </li>
             </ul>
         </div>
     </aside>
@@ -169,6 +172,34 @@
         #yadcf-filter--global_code_datatable-7 {
             max-width: 70px !important;
         }
+
+    /* Style to allow Jquery UI to look okay with Bootstrap*/
+    .ui-autocomplete {
+        position: absolute;
+        z-index: 1000;
+        cursor: default;
+        padding: 0;
+        margin-top: 2px;
+        list-style: none;
+        background-color: #ffffff;
+        border: 1px solid #ccc
+        -webkit-border-radius: 5px;
+           -moz-border-radius: 5px;
+                border-radius: 5px;
+        -webkit-box-shadow: 0 5px 10px rgba(0, 0, 0, 0.2);
+           -moz-box-shadow: 0 5px 10px rgba(0, 0, 0, 0.2);
+                box-shadow: 0 5px 10px rgba(0, 0, 0, 0.2);
+    }
+    .ui-autocomplete > li {
+        padding: 3px 20px;
+    }
+    .ui-autocomplete > li.ui-state-focus {
+        background-color: #DDD;
+    }
+    .ui-helper-hidden-accessible {
+        display: none;
+    }
+
 
     </style>
 

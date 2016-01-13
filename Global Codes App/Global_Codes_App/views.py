@@ -570,7 +570,86 @@ def spreadsheet_newcode():
     return json_data
 
 
+#
+# Locations
+#
 
+@app.route('/locations')
+@login_required
+def locations():
+    return render_template(
+        'locationeditor.html',
+        title='Location Editor',
+        year=datetime.now().year,
+    )
+
+@app.route('/location_department_list')
+@login_required
+def location_department_list():
+    try:
+        result = sql.exec_stored_procedure_list('spGlobalsApp_LocationEditor_DepartmentList')
+    except Exception, err:
+        error_log('Error executing spGlobalsApp_LocationEditor_DepartmentList:\n' + str(traceback.format_exc()))
+        print ('-----------\nError pulling all locations' + str(traceback.format_exc()))
+        result = dict(data = 'ERROR', error_detail='Problem running query')
+
+    json_data = jsonify(result)
+    return json_data
+
+
+@app.route('/location_detail')
+@login_required
+def location_detail():
+    print 'Clicked location detail'
+
+    try:
+        code = request.args.get('code')
+        result = {}
+        result['info'] = sql.exec_stored_procedure('spGlobalsApp_LocationEditor_Info',[code])['result']
+        #result['audit'] = sql.exec_stored_procedure('spGlobalsApp_GlobalCodeDetail_Audit',[code])['result']
+        #result['mapping'] = sql.exec_stored_procedure('spGlobalsApp_GlobalCodeDetail_Mapping',[code])['result']
+        
+    except Exception, err:
+        error_log('Error executing location detail lookup:\n' + str(traceback.format_exc()))
+        print ('-----------\nError executing code detail lookup' + str(traceback.format_exc()))
+        result = dict(data = 'ERROR', error_detail='Problem running query')
+
+    json_data = jsonify(result)
+    return json_data
+
+
+@app.route('/location_edit_submit_changes', methods=['POST'])
+@login_required
+def location_edit_submit_changes():
+    print 'Submitting location changes'
+
+    try:
+        code = request.form['SubSectionCode']
+        lookup = sql.exec_stored_procedure('spGlobalsApp_LocationEditor_Info',[code])['result'][0]
+        print 'Lookup: ', lookup
+        
+        # Find the changes       
+        updates = {}
+        for r in lookup:
+            if r <> 'Alias':
+                print 'Checking', lookup[r], type(lookup[r]), ' against ', request.form[r], type(request.form[r])
+                if lookup[r] <> request.form[r]:
+                    updates[r] = (lookup[r],request.form[r])
+        result = dict(data='OK', updates=updates)
+        
+        sql.update_location_fields(code, updates, user.email)
+
+        result['info'] = sql.exec_stored_procedure('spGlobalsApp_LocationEditor_Info',[code])['result']
+        #result['audit'] = sql.exec_stored_procedure('spGlobalsApp_GlobalCodeDetail_Audit',[code])['result']
+        #result['mapping'] = sql.exec_stored_procedure('spGlobalsApp_GlobalCodeDetail_Mapping',[code])['result']
+
+    except Exception, err:
+        error_log('Error reciving location edit submission:\n' + str(traceback.format_exc()))
+        print ('-----------\nError reciving location edit submission' + str(traceback.format_exc()))
+        result = dict(data = 'ERROR', error_detail=str(traceback.format_exc()))
+
+    json_data = jsonify(result)
+    return json_data
 
 
 

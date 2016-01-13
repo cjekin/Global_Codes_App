@@ -4,6 +4,14 @@ import string
 import traceback
 import sys
 
+def safe_str(obj):
+    """ return the byte string representation of obj """
+    try:
+        return str(obj)
+    except UnicodeEncodeError:
+        # obj is unicode
+        return unicode(obj).encode('unicode_escape')
+
 
 def exec_stored_procedure(stored_procedure,arguements=[]):
     try:
@@ -26,7 +34,7 @@ def exec_stored_procedure(stored_procedure,arguements=[]):
     headers = [column[0] for column in cursor.description]     
        
     raw_data = cursor.fetchall()
-    data = dict(result=[dict(zip(headers,[str(i) for i in row])) for row in raw_data])
+    data = dict(result=[dict(zip(headers,[safe_str(i) for i in row])) for row in raw_data])
 
     return data
 
@@ -290,6 +298,34 @@ def insert_new_global_code(code, submission, user):
         if submission[f] <> '':
             sql = "insert into %s values(getdate(), '%s', 'GlobalCodes_Main', '%s', '%s', '', '%s', 'NewGlobal')" % (config.global_audit_table, user, code, f, submission[f])
             cursor.execute(sql)
+
+    cursor.commit()
+
+
+
+def update_location_fields(code, updates, user):
+    try:
+        cnxn = pyodbc.connect(config.connection_string)
+        cursor = cnxn.cursor()
+    except:
+        print 'Problem making connection'
+    
+    #o = [' ' + k + ' = ' + '\'' + v[0] + '\'' for k,v in updates.iteritems()]
+    #n = [' ' + k + ' = ' + '\'' + v[1] + '\'' for k,v in updates.iteritems()]
+
+    for k,v in updates.iteritems():
+
+        # Escape dodgy characters
+        old = v[0].replace('\'','\'\'')
+        new = v[1].replace('\'','\'\'')
+
+        #sql = "insert into %s values(getdate(), '%s', 'GlobalCodes_Main', '%s', '%s', '%s', '%s', 'GlobalUpdate')" % (config.global_audit_table, user, code, k, old, new)
+        #print 'Update audit trail:\n', sql, '\n'
+        #cursor.execute(sql)
+
+        sql = "update %s set [%s] = '%s' where SubSectionCode = '%s'" % (config.location_table,k,new,code)
+        print 'Update global codes main:\n', sql, '\n'   
+        cursor.execute(sql)
 
     cursor.commit()
 

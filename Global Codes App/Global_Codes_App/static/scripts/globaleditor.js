@@ -13,8 +13,11 @@ var info_headers = ['GlobalCode', 'Description', 'Sample', 'Type', 'Analyte', 'P
 var header_val = {
     'Sample':'select',
     'Type': 'select',
+    'Analyte': 'autocomplete',
     'Department':'department',
-    'SubSection': 'subsection'
+    'SubSection': 'subsection',
+    'HALO_Subsection': 'autocomplete',
+    'HALO_Department': 'autocomplete'
 };
 
 
@@ -209,10 +212,19 @@ function fill_global_data(data) {
 // Functions to fill in the form with the right data type
 function input_type(field, content) {
     
-
     // Regular input field
-    if(!header_val.hasOwnProperty(field)){
-        return '<input value="' + content + '" class="form-control"></div>'
+    if (!header_val.hasOwnProperty(field)) {
+        return '<input id="form-input-' + field + '" value="' + content + '" class="form-control"></input>'
+    };
+
+    // Regular text area
+    if (header_val[field] == 'textarea') {
+        return '<textarea class="form-control">' + content + '</textarea>'
+    };
+
+    // Autocomplete input
+    if (header_val[field] == 'autocomplete') {
+        return '<input id="form-input-' + field + '" value="' + content + '" class="form-control"></input>'
     };
     
 
@@ -220,7 +232,7 @@ function input_type(field, content) {
     if (header_val[field] == 'select') {
         var input = '<select class="form-control">';
         var colindex = global_code_datatable.column(field + ':name').index();
-        var values = global_code_datatable.column(colindex).data().unique();
+        var values = global_code_datatable.column(colindex).data().unique().sort();
 
         for (j = 0; j < values.length; j++) {
             input += '<option>' + values[j] + '</option>';
@@ -285,6 +297,18 @@ $("#global_edit_button").click(function () {
     for (i = 0; i < info_headers.length; i++) {
         var content = $('#info_' + info_headers[i] + ' p').text();
         $('#info_' + info_headers[i]).html(input_type(info_headers[i], content));
+
+        // Apply an autocomplete
+        if (header_val[info_headers[i]] == 'autocomplete') {
+            var colindex = global_code_datatable.column(info_headers[i] + ':name').index();
+            var values = global_code_datatable.column(colindex).data().unique().toArray();
+            $('#' + 'form-input-' + info_headers[i]).autocomplete({ source: values });
+        };
+
+        // Disable the GlobalCode field
+        if (info_headers[i] == 'GlobalCode') {
+            $('#' + 'form-input-' + info_headers[i]).prop( "disabled", true );
+        };
     };
     $('#global_info').append('<div class="form-group" id="global_info_submit_div"><div class="col-sm-7 col-sm-offset-4"><button id="global_info_submit" type="button"  onClick="global_info_submit_click(); return false;" class="btn btn-success">Save changes</button></div></div>');
 });

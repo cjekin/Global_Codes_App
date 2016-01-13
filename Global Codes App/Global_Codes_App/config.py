@@ -12,6 +12,7 @@ connection_string = 'DSN=Warehouse'
 global_map_table = 'GlobalCodes_Map'
 global_main_table = 'GlobalCodes_Main'
 global_audit_table = 'GlobalCodes_Audit'
+location_table = 'GlobalCodes_Departments'
 
 
 # Other

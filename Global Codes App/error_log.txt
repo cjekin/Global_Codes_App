@@ -482,3 +482,67 @@ Traceback (most recent call last):
   File "H:\IT\Chris Ekin\GitHub\Global_Codes_App\Global Codes App\Global_Codes_App\sql.py", line 49, in exec_stored_procedure_noreturn
     cursor.execute(sql)
 Error: ('21S01', '[21S01] [Microsoft][ODBC SQL Server Driver][SQL Server]Column name or number of supplied values does not match table definition. (213) (SQLExecDirectW)')
+-----11/01/2016 18:58
+Error executing code detail lookup:
+Traceback (most recent call last):
+  File "H:\IT\Chris Ekin\GitHub\Global_Codes_App\Global Codes App\Global_Codes_App\views.py", line 397, in globalcodedetail
+    result['audit'] = sql.exec_stored_procedure('spGlobalsApp_GlobalCodeDetail_Audit',[code])['result']
+  File "H:\IT\Chris Ekin\GitHub\Global_Codes_App\Global Codes App\Global_Codes_App\sql.py", line 29, in exec_stored_procedure
+    data = dict(result=[dict(zip(headers,[i.encode('utf-8') for i in row])) for row in raw_data])
+AttributeError: 'datetime.datetime' object has no attribute 'encode'
+-----13/01/2016 19:29
+Error reciving location edit submission:
+Traceback (most recent call last):
+  File "H:\IT\Chris Ekin\GitHub\Global_Codes_App\Global Codes App\Global_Codes_App\views.py", line 635, in location_edit_submit_changes
+    if lookup[r] <> request.form[r]:
+  File "C:\Anaconda\lib\site-packages\werkzeug\datastructures.py", line 393, in __getitem__
+    raise exceptions.BadRequestKeyError(key)
+BadRequestKeyError: 400: Bad Request
+-----13/01/2016 19:32
+Error reciving location edit submission:
+Traceback (most recent call last):
+  File "H:\IT\Chris Ekin\GitHub\Global_Codes_App\Global Codes App\Global_Codes_App\views.py", line 635, in location_edit_submit_changes
+    print 'Checking', lookup[r], ' against ', request.form[r]
+  File "C:\Anaconda\lib\site-packages\werkzeug\datastructures.py", line 393, in __getitem__
+    raise exceptions.BadRequestKeyError(key)
+BadRequestKeyError: 400: Bad Request
+-----13/01/2016 19:33
+Error reciving location edit submission:
+Traceback (most recent call last):
+  File "H:\IT\Chris Ekin\GitHub\Global_Codes_App\Global Codes App\Global_Codes_App\views.py", line 635, in location_edit_submit_changes
+    print 'Checking', lookup[r], type(lookup[r]), ' against ', request.form[r], type(request.form[r])
+  File "C:\Anaconda\lib\site-packages\werkzeug\datastructures.py", line 393, in __getitem__
+    raise exceptions.BadRequestKeyError(key)
+BadRequestKeyError: 400: Bad Request
+-----13/01/2016 19:36
+Error reciving location edit submission:
+Traceback (most recent call last):
+  File "H:\IT\Chris Ekin\GitHub\Global_Codes_App\Global Codes App\Global_Codes_App\views.py", line 635, in location_edit_submit_changes
+    print 'Checking', lookup[r], type(lookup[r]), ' against ', request.form[r], type(request.form[r])
+  File "C:\Anaconda\lib\site-packages\werkzeug\datastructures.py", line 393, in __getitem__
+    raise exceptions.BadRequestKeyError(key)
+BadRequestKeyError: 400: Bad Request
+-----13/01/2016 19:37
+Error reciving location edit submission:
+Traceback (most recent call last):
+  File "H:\IT\Chris Ekin\GitHub\Global_Codes_App\Global Codes App\Global_Codes_App\views.py", line 635, in location_edit_submit_changes
+    print 'Checking', lookup[r], type(lookup[r]), ' against ', request.form[r], type(request.form[r])
+  File "C:\Anaconda\lib\site-packages\werkzeug\datastructures.py", line 393, in __getitem__
+    raise exceptions.BadRequestKeyError(key)
+BadRequestKeyError: 400: Bad Request
+-----13/01/2016 19:37
+Error reciving location edit submission:
+Traceback (most recent call last):
+  File "H:\IT\Chris Ekin\GitHub\Global_Codes_App\Global Codes App\Global_Codes_App\views.py", line 635, in location_edit_submit_changes
+    print 'Checking', lookup[r], type(lookup[r]), ' against ', request.form[r], type(request.form[r])
+  File "C:\Anaconda\lib\site-packages\werkzeug\datastructures.py", line 393, in __getitem__
+    raise exceptions.BadRequestKeyError(key)
+BadRequestKeyError: 400: Bad Request
+-----13/01/2016 19:39
+Error reciving location edit submission:
+Traceback (most recent call last):
+  File "H:\IT\Chris Ekin\GitHub\Global_Codes_App\Global Codes App\Global_Codes_App\views.py", line 635, in location_edit_submit_changes
+    print 'Checking', lookup[r], type(lookup[r]), ' against ', request.form[r], type(request.form[r])
+  File "C:\Anaconda\lib\site-packages\werkzeug\datastructures.py", line 393, in __getitem__
+    raise exceptions.BadRequestKeyError(key)
+BadRequestKeyError: 400: Bad Request
