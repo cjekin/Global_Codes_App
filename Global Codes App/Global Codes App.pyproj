@@ -421,6 +421,7 @@
     <Content Include="Global_Codes_App\static\images\profile.jpg" />
     <Content Include="Global_Codes_App\static\scripts\dashboard.js" />
     <Content Include="Global_Codes_App\static\scripts\editor.js" />
+    <Content Include="Global_Codes_App\static\scripts\locationeditor.js" />
     <Content Include="Global_Codes_App\static\scripts\spreadsheet.js" />
     <Content Include="Global_Codes_App\static\scripts\globaleditor.js" />
     <Content Include="Global_Codes_App\static\styles\img\green%402x.png" />
@@ -2709,6 +2710,7 @@
     <Content Include="Global_Codes_App\templates\dashboard.html" />
     <Content Include="Global_Codes_App\templates\editor.html" />
     <Content Include="Global_Codes_App\templates\editor_modal.html" />
+    <Content Include="Global_Codes_App\templates\locationeditor.html" />
     <Content Include="Global_Codes_App\templates\spreadsheet.html" />
     <Content Include="Global_Codes_App\templates\spreadsheet_old.html" />
     <Content Include="Global_Codes_App\templates\globaleditor.html" />

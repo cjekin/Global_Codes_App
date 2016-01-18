@@ -23,9 +23,10 @@ $(function () {
     // Get the work section data
     $.getJSON('/worksection_data', function (data) {
         worksection_data = data;
+        var winpath_systems = worksection_data['systems'].sort();
         var options = '';
-        for (var i = 0; i < worksection_data['systems'].length; i++) {
-            options += '<option>' + worksection_data['systems'][i] + '</option>';
+        for (var i = 0; i < winpath_systems.length; i++) {
+            options += '<option>' + winpath_systems[i] + '</option>';
         }
         $('#tlc_search_system').html(options);
         $('#tlc_search_system').val(current_system);
@@ -391,32 +392,32 @@ function draw_global_table(global_data) {
         //,bDestroy: true
     });
 
-    yadcf.init(global_code_datatable, [
-        {
-            column_number: 2,
-            column_data_type: "html",
-            html_data_type: "text",
-            filter_default_label: "Filter"
-        },
-        {
-            column_number: 3,
-            column_data_type: "html",
-            html_data_type: "text",
-            filter_default_label: "Filter"
-        },
-        {
-            column_number: 6,
-            column_data_type: "html",
-            html_data_type: "text",
-            filter_default_label: "Filter"
-        },
-        {
-            column_number: 7,
-            column_data_type: "html",
-            html_data_type: "text",
-            filter_default_label: "Filter"
-        }
-    ]);
+    //yadcf.init(global_code_datatable, [
+    //    {
+    //        column_number: 2,
+    //        column_data_type: "html",
+    //        html_data_type: "text",
+    //        filter_default_label: "Filter"
+    //    },
+    //    {
+    //        column_number: 3,
+    //        column_data_type: "html",
+    //        html_data_type: "text",
+    //        filter_default_label: "Filter"
+    //    },
+    //    {
+    //        column_number: 6,
+    //        column_data_type: "html",
+    //        html_data_type: "text",
+    //        filter_default_label: "Filter"
+    //    },
+    //    {
+    //        column_number: 7,
+    //        column_data_type: "html",
+    //        html_data_type: "text",
+    //        filter_default_label: "Filter"
+    //    }
+    //]);
 };
 // Need to reinitialise the event handlers when you search
 $('#global_code_datatable').on('draw.dt', function () {

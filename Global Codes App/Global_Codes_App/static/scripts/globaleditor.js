@@ -5,19 +5,25 @@ var current_global_code = 'BC_UE_NA';
 var current_global_name = 'Sodium';
 var current_global_data = {};
 var mapping_exclusions = {};
-var all_depts = [];
-var info_headers = ['GlobalCode', 'Description', 'Sample', 'Type', 'Analyte', 'PrimaryLibrary', 'SubSection', 'Department',
-    'HALO_Subsection', 'HALO_Department', 'HSL_Code', 'REF_Code', 'NLMC', 'SNOMEDCT_UK', 'LOINC', 'PBCL', 'Interface', 'MiddlewareCode'];
+var wsl_depts = [];
+var halo_depts = [];
+var info_headers = ['GlobalCode', 'Description', 'Sample', 'Type', 'Analyte', 'PrimaryLibrary', 'SubSectionCode', 'SubSection', 'Department',
+    'HALO_SubSectionCode', 'HALO_SubSection', 'HALO_Department', 'HSL_Code', 'NLMC', 'SNOMEDCT_UK', 'LOINC', 'PBCL', 'Interface', 'MiddlewareCode'];
 
 // Custom renderers for fields (default is input)
 var header_val = {
     'Sample':'select',
     'Type': 'select',
+    'Description': 'autocomplete',
     'Analyte': 'autocomplete',
-    'Department':'department',
-    'SubSection': 'subsection',
-    'HALO_Subsection': 'autocomplete',
-    'HALO_Department': 'autocomplete'
+    'PrimaryLibrary': 'autocomplete',
+    'Department': 'department',
+    'SubSectionCode': 'disabled',
+    'SubSection': 'subsection_wsl',
+    'Department': 'disabled',
+    'HALO_SubSectionCode': 'disabled',
+    'HALO_SubSection': 'subsection_halo',
+    'HALO_Department': 'disabled'
 };
 
 
@@ -47,7 +53,7 @@ $.getJSON('/pull_all_tfcs_to_one_table', function (data) {
 
 // Get the list of departments
 $.getJSON('/globals_department_list', function (data) {
-    if (data['data'] == 'ERROR') {
+    if (data['result'] == 'ERROR') {
         swal({
             title: "Error looking up departments",
             text: "An exception occurred loading the list of departments. The details have been recorded in the error log. " + data['error_detail'],
@@ -57,10 +63,30 @@ $.getJSON('/globals_department_list', function (data) {
         all_depts = data['data'];
         var departments = []
         var dept_filter = '<option>All</option>';
-        for (i = 0; i < data['data'].length; i++) {
-            if ($.inArray(data['data'][i][1], departments) < 0) {
-                dept_filter += '<option>' + data['data'][i][1] + '</option>';
-                departments.push(data['data'][i][1]);
+        for (i = 0; i < data['result'].length; i++) {
+
+            // Build the filter list of departments (WSL only)
+            if ($.inArray(data['result'][i]['Department'], departments) < 0 && data['result'][i]['WSL'] == 'Y') {
+                dept_filter += '<option>' + data['result'][i]['Department'] + '</option>';
+                departments.push(data['result'][i]['Department']);
+            };
+
+            // Build the list of WSL departments
+            if (data['result'][i]['WSL'] == 'Y') {
+                wsl_depts.push([
+                    data['result'][i]['Department'],
+                    data['result'][i]['SubSection'],
+                    data['result'][i]['SubSectionCode']
+                ]);
+            };
+
+            // Build the list of Halo departments
+            if (data['result'][i]['HALO'] == 'Y') {
+                halo_depts.push([
+                    data['result'][i]['Department'],
+                    data['result'][i]['SubSection'],
+                    data['result'][i]['SubSectionCode']
+                ]);
             };
         };
         $('#global_dept_filter').html(dept_filter);
@@ -86,12 +112,13 @@ var global_code_datatable = $('#global_code_datatable').DataTable({
         { title: "Type", name: "Type" },
         { title: "Analyte", name: "Analyte" },
         { title: "PrimaryLibrary", name: "PrimaryLibrary" },
+        { title: "SubSectionCode", name: "SubSectionCode" },
         { title: "SubSection", name: "SubSection" },
         { title: "Department", name: "Department" },
+        { title: "HALO_SubSectionCode", name: "HALO_SubSectionCode" },
         { title: "HALO_Subsection", name: "HALO_Subsection" },
         { title: "HALO_Department", name: "HALO_Department" },
         { title: "HSL_Code", name: "HSL_Code" },
-        { title: "REF_Code", name: "REF_Code" },
         { title: "NLMC", name: "NLMC" },
         { title: "SNOMEDCT_UK", name: "SNOMEDCT_UK" },
         { title: "PBCL", name: "PBCL" },
@@ -210,7 +237,7 @@ function fill_global_data(data) {
 
 
 // Functions to fill in the form with the right data type
-function input_type(field, content) {
+function input_type(field, content, val) {
     
     // Regular input field
     if (!header_val.hasOwnProperty(field)) {
@@ -225,6 +252,11 @@ function input_type(field, content) {
     // Autocomplete input
     if (header_val[field] == 'autocomplete') {
         return '<input id="form-input-' + field + '" value="' + content + '" class="form-control"></input>'
+    };
+
+    // Disabled input field
+    if (header_val[field] == 'disabled') {
+        return '<input id="form-input-' + field + '" value="' + content + '" class="form-control" disabled="True"></input>'
     };
     
 
@@ -243,51 +275,66 @@ function input_type(field, content) {
     };
 
 
-    // Department custom field
-    if (header_val[field] == 'department') {
-        var input = '<select class="form-control">';
-        var departments = [];
-
-        for (j = 0; j < all_depts.length; j++) {
-            var this_department = all_depts[j][1];
-            if ($.inArray(this_department, departments) < 0) {
-                input += '<option>' + this_department + '</option>';
-            };
-            departments.push(this_department);
-        }
-        input += '</select>';
-        input = input.replace('<option>' + content + '</option>', '<option selected="selected">' + content + '</option>');
-        return input;
-    };
-
-    // Subsection custom field
-    if (header_val[field] == 'subsection') {
-        var input = '<select class="form-control">';
+    // Subsection by code
+    if (header_val[field] == 'subsection_wsl' || header_val[field] == 'subsection_halo') {
         var departments = [];
         var last_department = '';
 
+        // Get the list of departments
+        var all_depts = [];
+        if (header_val[field] == 'subsection_wsl') {
+            all_depts = wsl_depts;
+            var current_subsectioncode = current_global_data['info'][0]['SubSectionCode']
+            var input = '<select class="form-control" onchange="change_wsl_subsection_code()">';
+        } else {
+            all_depts = halo_depts;
+            var current_subsectioncode = current_global_data['info'][0]['HALO_SubSectionCode']
+            var input = '<select class="form-control" onchange="change_halo_subsection_code()">';
+        };
+
+
         for (j = 0; j < all_depts.length; j++) {
 
-            var this_department = all_depts[j][1];
-            var this_subsection = all_depts[j][0];
+            var this_department = all_depts[j][0];
+            var this_subsection = all_depts[j][1];
+            var this_subsectioncode = all_depts[j][2];
 
             if (this_department != last_department && j > 0) {
                 input += '</optgroup>';
             };
 
             if ($.inArray(this_department, departments) < 0) {
-                input += '<optgroup label="' + this_department + '"><option>' + this_subsection + '</option>';
+                input += '<optgroup label="' + this_department + '"><option value="' + this_subsectioncode + '">' + this_subsection + '</option>';
                 departments.push(this_department);
             } else {
-                input += '<option>' + this_subsection + '</option>';
+                input += '<option value="' + this_subsectioncode + '">' + this_subsection + '</option>';
             };
 
             last_department = this_department;
         };
         input += '</optgroup></select>';
-        input = input.replace('<option>' + content + '</option>', '<option selected="selected">' + content + '</option>');
+        input = input.replace('<option value="' + current_subsectioncode + '">', '<option value="' + current_subsectioncode + '"' + ' selected="selected">');
         return input;
     };
+
+};
+
+// Respond to changing the SubSection code
+function change_wsl_subsection_code() {
+    var select_subsection = $('#info_SubSection' + ' select option:selected').text();
+    var select_val = $('#info_SubSection' + ' select option:selected').val();
+    var select_dept = $('#info_SubSection' + ' select option:selected').closest('optgroup').attr('label');
+    $('#info_SubSectionCode input').val(select_val);
+    $('#info_Department input').val(select_dept);
+};
+
+// Respond to changing the HALO_SubSection code
+function change_halo_subsection_code() {
+    var select_subsection = $('#info_HALO_SubSection' + ' select option:selected').text();
+    var select_val = $('#info_HALO_SubSection' + ' select option:selected').val();
+    var select_dept = $('#info_HALO_SubSection' + ' select option:selected').closest('optgroup').attr('label');
+    $('#info_HALO_SubSectionCode input').val(select_val);
+    $('#info_HALO_Department input').val(select_dept);
 };
 
 
@@ -357,6 +404,14 @@ $("#global_new_button").click(function () {
     // Build the basic info form
     for (i = 0; i < info_headers.length; i++) {
         $('#info_' + info_headers[i]).html(input_type(info_headers[i], ''));
+
+        // Apply an autocomplete
+        if (header_val[info_headers[i]] == 'autocomplete') {
+            var colindex = global_code_datatable.column(info_headers[i] + ':name').index();
+            var values = global_code_datatable.column(colindex).data().unique().toArray();
+            $('#' + 'form-input-' + info_headers[i]).autocomplete({ source: values });
+        };
+
     };
     $('#global_info').append('<div class="form-group" id="global_info_create_div"><div class="col-sm-7 col-sm-offset-4"><button id="global_info_newcode" type="button"  onClick="global_info_new_click(); return false;" class="btn btn-success">Create New</button></div></div>');
 
@@ -560,7 +615,7 @@ function mapping_del_click(element) {
     },
         function () {
             var result = remove_mapping(origin, tfc, current_global_code);
-            console.log('REsult = ', result);
+            console.log('Result = ', result);
             if (result == 'OK') {
                 row.remove();
             };

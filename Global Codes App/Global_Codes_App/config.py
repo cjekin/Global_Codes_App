@@ -17,6 +17,7 @@ location_table = 'GlobalCodes_Departments'
 
 # Other
 error_log_file = 'error_log.txt'
+excluded_fields = ['HALO_SubSection','HALO_Department','SubSection','Department']
 
 
 

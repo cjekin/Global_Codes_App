@@ -546,3 +546,235 @@ Traceback (most recent call last):
   File "C:\Anaconda\lib\site-packages\werkzeug\datastructures.py", line 393, in __getitem__
     raise exceptions.BadRequestKeyError(key)
 BadRequestKeyError: 400: Bad Request
+-----15/01/2016 12:58
+Error executing code detail lookup:
+Traceback (most recent call last):
+  File "H:\IT\Chris Ekin\GitHub\Global_Codes_App\Global Codes App\Global_Codes_App\views.py", line 396, in globalcodedetail
+    result['info'] = sql.exec_stored_procedure('spGlobalsApp_GlobalCodeDetail_Info',[code])['result']
+  File "H:\IT\Chris Ekin\GitHub\Global_Codes_App\Global Codes App\Global_Codes_App\sql.py", line 33, in exec_stored_procedure
+    cursor.execute(sql)
+ProgrammingError: ('42S22', "[42S22] [Microsoft][ODBC SQL Server Driver][SQL Server]Invalid column name 'SubSection'. (207) (SQLExecDirectW); [42S22] [Microsoft][ODBC SQL Server Driver][SQL Server]Invalid column name 'Department'. (207); [42S22] [Microsoft][ODBC SQL Server Driver][SQL Server]Invalid column name 'HALO_Subsection'. (207); [42S22] [Microsoft][ODBC SQL Server Driver][SQL Server]Invalid column name 'HALO_Department'. (207); [42S22] [Microsoft][ODBC SQL Server Driver][SQL Server]Invalid column name 'REF_Code'. (207)")
+-----15/01/2016 12:58
+Error executing spGlobalsApp_GlobalEditor:
+Traceback (most recent call last):
+  File "H:\IT\Chris Ekin\GitHub\Global_Codes_App\Global Codes App\Global_Codes_App\views.py", line 378, in globalseditordata
+    result = sql.exec_stored_procedure_list('spGlobalsApp_GlobalEditor',[department])
+  File "H:\IT\Chris Ekin\GitHub\Global_Codes_App\Global Codes App\Global_Codes_App\sql.py", line 81, in exec_stored_procedure_list
+    cursor.execute(sql)
+ProgrammingError: ('42S22', "[42S22] [Microsoft][ODBC SQL Server Driver][SQL Server]Invalid column name 'SubSection'. (207) (SQLExecDirectW); [42S22] [Microsoft][ODBC SQL Server Driver][SQL Server]Invalid column name 'Department'. (207); [42S22] [Microsoft][ODBC SQL Server Driver][SQL Server]Invalid column name 'HALO_Subsection'. (207); [42S22] [Microsoft][ODBC SQL Server Driver][SQL Server]Invalid column name 'HALO_Department'. (207); [42S22] [Microsoft][ODBC SQL Server Driver][SQL Server]Invalid column name 'REF_Code'. (207)")
+-----15/01/2016 13:17
+Error executing code detail lookup:
+Traceback (most recent call last):
+  File "H:\IT\Chris Ekin\GitHub\Global_Codes_App\Global Codes App\Global_Codes_App\views.py", line 396, in globalcodedetail
+    result['info'] = sql.exec_stored_procedure('spGlobalsApp_GlobalCodeDetail_Info',[code])['result']
+  File "H:\IT\Chris Ekin\GitHub\Global_Codes_App\Global Codes App\Global_Codes_App\sql.py", line 33, in exec_stored_procedure
+    cursor.execute(sql)
+ProgrammingError: ('42S22', "[42S22] [Microsoft][ODBC SQL Server Driver][SQL Server]Invalid column name 'SubSection'. (207) (SQLExecDirectW); [42S22] [Microsoft][ODBC SQL Server Driver][SQL Server]Invalid column name 'Department'. (207); [42S22] [Microsoft][ODBC SQL Server Driver][SQL Server]Invalid column name 'HALO_Subsection'. (207); [42S22] [Microsoft][ODBC SQL Server Driver][SQL Server]Invalid column name 'HALO_Department'. (207); [42S22] [Microsoft][ODBC SQL Server Driver][SQL Server]Invalid column name 'REF_Code'. (207)")
+-----15/01/2016 13:17
+Error executing code detail lookup:
+Traceback (most recent call last):
+  File "H:\IT\Chris Ekin\GitHub\Global_Codes_App\Global Codes App\Global_Codes_App\views.py", line 396, in globalcodedetail
+    result['info'] = sql.exec_stored_procedure('spGlobalsApp_GlobalCodeDetail_Info',[code])['result']
+  File "H:\IT\Chris Ekin\GitHub\Global_Codes_App\Global Codes App\Global_Codes_App\sql.py", line 33, in exec_stored_procedure
+    cursor.execute(sql)
+ProgrammingError: ('42S22', "[42S22] [Microsoft][ODBC SQL Server Driver][SQL Server]Invalid column name 'SubSection'. (207) (SQLExecDirectW); [42S22] [Microsoft][ODBC SQL Server Driver][SQL Server]Invalid column name 'Department'. (207); [42S22] [Microsoft][ODBC SQL Server Driver][SQL Server]Invalid column name 'HALO_Subsection'. (207); [42S22] [Microsoft][ODBC SQL Server Driver][SQL Server]Invalid column name 'HALO_Department'. (207); [42S22] [Microsoft][ODBC SQL Server Driver][SQL Server]Invalid column name 'REF_Code'. (207)")
+-----15/01/2016 13:21
+Error executing code detail lookup:
+Traceback (most recent call last):
+  File "H:\IT\Chris Ekin\GitHub\Global_Codes_App\Global Codes App\Global_Codes_App\views.py", line 396, in globalcodedetail
+    result = {}
+  File "H:\IT\Chris Ekin\GitHub\Global_Codes_App\Global Codes App\Global_Codes_App\sql.py", line 33, in exec_stored_procedure
+    cursor.execute(sql)
+ProgrammingError: ('42S22', "[42S22] [Microsoft][ODBC SQL Server Driver][SQL Server]Invalid column name 'SubSection'. (207) (SQLExecDirectW); [42S22] [Microsoft][ODBC SQL Server Driver][SQL Server]Invalid column name 'Department'. (207); [42S22] [Microsoft][ODBC SQL Server Driver][SQL Server]Invalid column name 'HALO_Subsection'. (207); [42S22] [Microsoft][ODBC SQL Server Driver][SQL Server]Invalid column name 'HALO_Department'. (207); [42S22] [Microsoft][ODBC SQL Server Driver][SQL Server]Invalid column name 'REF_Code'. (207)")
+-----15/01/2016 13:22
+Error executing code detail lookup:
+Traceback (most recent call last):
+  File "H:\IT\Chris Ekin\GitHub\Global_Codes_App\Global Codes App\Global_Codes_App\views.py", line 397, in globalcodedetail
+    result['info'] = sql.exec_stored_procedure('spGlobalsApp_GlobalCodeDetail_Info',[code])['result']
+  File "H:\IT\Chris Ekin\GitHub\Global_Codes_App\Global Codes App\Global_Codes_App\sql.py", line 33, in exec_stored_procedure
+    cursor.execute(sql)
+ProgrammingError: ('42S22', "[42S22] [Microsoft][ODBC SQL Server Driver][SQL Server]Invalid column name 'SubSection'. (207) (SQLExecDirectW); [42S22] [Microsoft][ODBC SQL Server Driver][SQL Server]Invalid column name 'Department'. (207); [42S22] [Microsoft][ODBC SQL Server Driver][SQL Server]Invalid column name 'HALO_Subsection'. (207); [42S22] [Microsoft][ODBC SQL Server Driver][SQL Server]Invalid column name 'HALO_Department'. (207); [42S22] [Microsoft][ODBC SQL Server Driver][SQL Server]Invalid column name 'REF_Code'. (207)")
+-----15/01/2016 13:22
+Error executing spGlobalsApp_GlobalEditor_DeptList:
+Traceback (most recent call last):
+  File "H:\IT\Chris Ekin\GitHub\Global_Codes_App\Global Codes App\Global_Codes_App\views.py", line 362, in globals_department_list
+    raise Exception(err)
+UnboundLocalError: local variable 'err' referenced before assignment
+-----15/01/2016 13:23
+Error executing code detail lookup:
+Traceback (most recent call last):
+  File "H:\IT\Chris Ekin\GitHub\Global_Codes_App\Global Codes App\Global_Codes_App\views.py", line 396, in globalcodedetail
+    result['info'] = sql.exec_stored_procedure('spGlobalsApp_GlobalCodeDetail_Info',[code])['result']
+  File "H:\IT\Chris Ekin\GitHub\Global_Codes_App\Global Codes App\Global_Codes_App\sql.py", line 33, in exec_stored_procedure
+    cursor.execute(sql)
+ProgrammingError: ('42S22', "[42S22] [Microsoft][ODBC SQL Server Driver][SQL Server]Invalid column name 'SubSection'. (207) (SQLExecDirectW); [42S22] [Microsoft][ODBC SQL Server Driver][SQL Server]Invalid column name 'Department'. (207); [42S22] [Microsoft][ODBC SQL Server Driver][SQL Server]Invalid column name 'HALO_Subsection'. (207); [42S22] [Microsoft][ODBC SQL Server Driver][SQL Server]Invalid column name 'HALO_Department'. (207); [42S22] [Microsoft][ODBC SQL Server Driver][SQL Server]Invalid column name 'REF_Code'. (207)")
+-----15/01/2016 13:26
+Error executing code detail lookup:
+Traceback (most recent call last):
+  File "H:\IT\Chris Ekin\GitHub\Global_Codes_App\Global Codes App\Global_Codes_App\views.py", line 396, in globalcodedetail
+    result['info'] = sql.exec_stored_procedure('spGlobalsApp_GlobalCodeDetail_Info',[code])['result']
+  File "H:\IT\Chris Ekin\GitHub\Global_Codes_App\Global Codes App\Global_Codes_App\sql.py", line 33, in exec_stored_procedure
+    cursor.execute(sql)
+ProgrammingError: ('42S22', "[42S22] [Microsoft][ODBC SQL Server Driver][SQL Server]Invalid column name 'SubSection'. (207) (SQLExecDirectW); [42S22] [Microsoft][ODBC SQL Server Driver][SQL Server]Invalid column name 'Department'. (207); [42S22] [Microsoft][ODBC SQL Server Driver][SQL Server]Invalid column name 'HALO_Subsection'. (207); [42S22] [Microsoft][ODBC SQL Server Driver][SQL Server]Invalid column name 'HALO_Department'. (207); [42S22] [Microsoft][ODBC SQL Server Driver][SQL Server]Invalid column name 'REF_Code'. (207)")
+-----15/01/2016 13:26
+Error executing code detail lookup:
+Traceback (most recent call last):
+  File "H:\IT\Chris Ekin\GitHub\Global_Codes_App\Global Codes App\Global_Codes_App\views.py", line 396, in globalcodedetail
+    result['info'] = sql.exec_stored_procedure('spGlobalsApp_GlobalCodeDetail_Info',[code])['result']
+  File "H:\IT\Chris Ekin\GitHub\Global_Codes_App\Global Codes App\Global_Codes_App\sql.py", line 33, in exec_stored_procedure
+    cursor.execute(sql)
+ProgrammingError: ('42S22', "[42S22] [Microsoft][ODBC SQL Server Driver][SQL Server]Invalid column name 'SubSection'. (207) (SQLExecDirectW); [42S22] [Microsoft][ODBC SQL Server Driver][SQL Server]Invalid column name 'Department'. (207); [42S22] [Microsoft][ODBC SQL Server Driver][SQL Server]Invalid column name 'HALO_Subsection'. (207); [42S22] [Microsoft][ODBC SQL Server Driver][SQL Server]Invalid column name 'HALO_Department'. (207); [42S22] [Microsoft][ODBC SQL Server Driver][SQL Server]Invalid column name 'REF_Code'. (207)")
+-----15/01/2016 13:39
+Error executing code detail lookup:
+Traceback (most recent call last):
+  File "H:\IT\Chris Ekin\GitHub\Global_Codes_App\Global Codes App\Global_Codes_App\views.py", line 396, in globalcodedetail
+    result['info'] = sql.exec_stored_procedure('spGlobalsApp_GlobalCodeDetail_Info',[code])['result']
+  File "H:\IT\Chris Ekin\GitHub\Global_Codes_App\Global Codes App\Global_Codes_App\sql.py", line 33, in exec_stored_procedure
+    cursor.execute(sql)
+ProgrammingError: ('42S22', "[42S22] [Microsoft][ODBC SQL Server Driver][SQL Server]Invalid column name 'SubSection'. (207) (SQLExecDirectW); [42S22] [Microsoft][ODBC SQL Server Driver][SQL Server]Invalid column name 'Department'. (207); [42S22] [Microsoft][ODBC SQL Server Driver][SQL Server]Invalid column name 'HALO_Subsection'. (207); [42S22] [Microsoft][ODBC SQL Server Driver][SQL Server]Invalid column name 'HALO_Department'. (207); [42S22] [Microsoft][ODBC SQL Server Driver][SQL Server]Invalid column name 'REF_Code'. (207)")
+-----15/01/2016 13:41
+Error executing code detail lookup:
+Traceback (most recent call last):
+  File "H:\IT\Chris Ekin\GitHub\Global_Codes_App\Global Codes App\Global_Codes_App\views.py", line 396, in globalcodedetail
+    result['info'] = sql.exec_stored_procedure('spGlobalsApp_GlobalCodeDetail_Info',[code])['result']
+  File "H:\IT\Chris Ekin\GitHub\Global_Codes_App\Global Codes App\Global_Codes_App\sql.py", line 33, in exec_stored_procedure
+    cursor.execute(sql)
+ProgrammingError: ('42S22', "[42S22] [Microsoft][ODBC SQL Server Driver][SQL Server]Invalid column name 'SubSection'. (207) (SQLExecDirectW); [42S22] [Microsoft][ODBC SQL Server Driver][SQL Server]Invalid column name 'Department'. (207); [42S22] [Microsoft][ODBC SQL Server Driver][SQL Server]Invalid column name 'HALO_Subsection'. (207); [42S22] [Microsoft][ODBC SQL Server Driver][SQL Server]Invalid column name 'HALO_Department'. (207); [42S22] [Microsoft][ODBC SQL Server Driver][SQL Server]Invalid column name 'REF_Code'. (207)")
+-----15/01/2016 13:43
+Error executing code detail lookup:
+Traceback (most recent call last):
+  File "H:\IT\Chris Ekin\GitHub\Global_Codes_App\Global Codes App\Global_Codes_App\views.py", line 396, in globalcodedetail
+    result['info'] = sql.exec_stored_procedure('spGlobalsApp_GlobalCodeDetail_Info',[code])['result']
+  File "H:\IT\Chris Ekin\GitHub\Global_Codes_App\Global Codes App\Global_Codes_App\sql.py", line 33, in exec_stored_procedure
+    cursor.execute(sql)
+ProgrammingError: ('42S22', "[42S22] [Microsoft][ODBC SQL Server Driver][SQL Server]Invalid column name 'SubSection'. (207) (SQLExecDirectW); [42S22] [Microsoft][ODBC SQL Server Driver][SQL Server]Invalid column name 'Department'. (207); [42S22] [Microsoft][ODBC SQL Server Driver][SQL Server]Invalid column name 'HALO_Subsection'. (207); [42S22] [Microsoft][ODBC SQL Server Driver][SQL Server]Invalid column name 'HALO_Department'. (207); [42S22] [Microsoft][ODBC SQL Server Driver][SQL Server]Invalid column name 'REF_Code'. (207)")
+-----15/01/2016 13:43
+Error executing code detail lookup:
+Traceback (most recent call last):
+  File "H:\IT\Chris Ekin\GitHub\Global_Codes_App\Global Codes App\Global_Codes_App\views.py", line 396, in globalcodedetail
+    result['info'] = sql.exec_stored_procedure('spGlobalsApp_GlobalCodeDetail_Info',[code])['result']
+  File "H:\IT\Chris Ekin\GitHub\Global_Codes_App\Global Codes App\Global_Codes_App\sql.py", line 33, in exec_stored_procedure
+    cursor.execute(sql)
+ProgrammingError: ('42S22', "[42S22] [Microsoft][ODBC SQL Server Driver][SQL Server]Invalid column name 'SubSection'. (207) (SQLExecDirectW); [42S22] [Microsoft][ODBC SQL Server Driver][SQL Server]Invalid column name 'Department'. (207); [42S22] [Microsoft][ODBC SQL Server Driver][SQL Server]Invalid column name 'HALO_Subsection'. (207); [42S22] [Microsoft][ODBC SQL Server Driver][SQL Server]Invalid column name 'HALO_Department'. (207); [42S22] [Microsoft][ODBC SQL Server Driver][SQL Server]Invalid column name 'REF_Code'. (207)")
+-----15/01/2016 13:45
+Error executing code detail lookup:
+Traceback (most recent call last):
+  File "H:\IT\Chris Ekin\GitHub\Global_Codes_App\Global Codes App\Global_Codes_App\views.py", line 396, in globalcodedetail
+    result['info'] = sql.exec_stored_procedure('spGlobalsApp_GlobalCodeDetail_Info',[code])['result']
+  File "H:\IT\Chris Ekin\GitHub\Global_Codes_App\Global Codes App\Global_Codes_App\sql.py", line 33, in exec_stored_procedure
+    cursor.execute(sql)
+ProgrammingError: ('42S22', "[42S22] [Microsoft][ODBC SQL Server Driver][SQL Server]Invalid column name 'SubSection'. (207) (SQLExecDirectW); [42S22] [Microsoft][ODBC SQL Server Driver][SQL Server]Invalid column name 'Department'. (207); [42S22] [Microsoft][ODBC SQL Server Driver][SQL Server]Invalid column name 'HALO_Subsection'. (207); [42S22] [Microsoft][ODBC SQL Server Driver][SQL Server]Invalid column name 'HALO_Department'. (207); [42S22] [Microsoft][ODBC SQL Server Driver][SQL Server]Invalid column name 'REF_Code'. (207)")
+-----15/01/2016 15:15
+Error reciving global code edit submission:
+Traceback (most recent call last):
+  File "H:\IT\Chris Ekin\GitHub\Global_Codes_App\Global Codes App\Global_Codes_App\views.py", line 423, in global_edit_submit_changes
+    if lookup[r] <> request.form[r]:
+  File "C:\Anaconda\lib\site-packages\werkzeug\datastructures.py", line 393, in __getitem__
+    raise exceptions.BadRequestKeyError(key)
+BadRequestKeyError: 400: Bad Request
+-----15/01/2016 15:19
+Error reciving global code edit submission:
+Traceback (most recent call last):
+  File "H:\IT\Chris Ekin\GitHub\Global_Codes_App\Global Codes App\Global_Codes_App\views.py", line 419, in global_edit_submit_changes
+    print(req_json['ajax'])
+TypeError: 'NoneType' object has no attribute '__getitem__'
+-----15/01/2016 15:21
+Error reciving global code edit submission:
+Traceback (most recent call last):
+  File "H:\IT\Chris Ekin\GitHub\Global_Codes_App\Global Codes App\Global_Codes_App\views.py", line 432, in global_edit_submit_changes
+    result['info'] = sql.exec_stored_procedure('spGlobalsApp_GlobalCodeDetail_Info',[code])['result']
+UnboundLocalError: local variable 'result' referenced before assignment
+-----15/01/2016 15:23
+Error reciving global code edit submission:
+Traceback (most recent call last):
+  File "H:\IT\Chris Ekin\GitHub\Global_Codes_App\Global Codes App\Global_Codes_App\views.py", line 425, in global_edit_submit_changes
+    print 'Comparing ', lookup[r], submitted_data[r]
+KeyError: 'HALO_Subsection'
+-----18/01/2016 17:54
+Error executing spGlobalsApp_GlobalEditor:
+Traceback (most recent call last):
+  File "H:\IT\Chris Ekin\GitHub\Global_Codes_App\Global Codes App\Global_Codes_App\views.py", line 378, in globalseditordata
+    result = sql.exec_stored_procedure_list('spGlobalsApp_GlobalEditor',[department])
+  File "H:\IT\Chris Ekin\GitHub\Global_Codes_App\Global Codes App\Global_Codes_App\sql.py", line 81, in exec_stored_procedure_list
+    cursor.execute(sql)
+ProgrammingError: ('42S22', "[42S22] [Microsoft][ODBC SQL Server Driver][SQL Server]Invalid column name 'SubSectionCode'. (207) (SQLExecDirectW); [42S22] [Microsoft][ODBC SQL Server Driver][SQL Server]Invalid column name 'SubSectionCode'. (207); [42S22] [Microsoft][ODBC SQL Server Driver][SQL Server]Invalid column name 'HALO_SubSectionCode'. (207); [42S22] [Microsoft][ODBC SQL Server Driver][SQL Server]Invalid column name 'HALO_SubSectionCode'. (207); [42S22] [Microsoft][ODBC SQL Server Driver][SQL Server]Invalid column name 'SubSectionCode'. (207); [42S22] [Microsoft][ODBC SQL Server Driver][SQL Server]Invalid column name 'HALO_SubSectionCode'. (207); [42S22] [Microsoft][ODBC SQL Server Driver][SQL Server]Invalid column name 'SubSectionCode'. (207); [42S22] [Microsoft][ODBC SQL Server Driver][SQL Server]Invalid column name 'SubSectionCode'. (207); [42S22] [Microsoft][ODBC SQL Server Driver][SQL Server]Invalid column name 'HALO_SubSectionCode'. (207); [42S22] [Microsoft][ODBC SQL Server Driver][SQL Server]Invalid column name 'HALO_SubSectionCode'. (207); [42S22] [Microsoft][ODBC SQL Server Driver][SQL Server]Invalid column name 'SubSectionCode'. (207); [42S22] [Microsoft][ODBC SQL Server Driver][SQL Server]Invalid column name 'HALO_SubSectionCode'. (207)")
+-----18/01/2016 17:54
+Error executing code detail lookup:
+Traceback (most recent call last):
+  File "H:\IT\Chris Ekin\GitHub\Global_Codes_App\Global Codes App\Global_Codes_App\views.py", line 396, in globalcodedetail
+    result['info'] = sql.exec_stored_procedure('spGlobalsApp_GlobalCodeDetail_Info',[code])['result']
+  File "H:\IT\Chris Ekin\GitHub\Global_Codes_App\Global Codes App\Global_Codes_App\sql.py", line 33, in exec_stored_procedure
+    cursor.execute(sql)
+ProgrammingError: ('42S22', "[42S22] [Microsoft][ODBC SQL Server Driver][SQL Server]Invalid column name 'SubSectionCode'. (207) (SQLExecDirectW); [42S22] [Microsoft][ODBC SQL Server Driver][SQL Server]Invalid column name 'SubSectionCode'. (207); [42S22] [Microsoft][ODBC SQL Server Driver][SQL Server]Invalid column name 'HALO_SubSectionCode'. (207); [42S22] [Microsoft][ODBC SQL Server Driver][SQL Server]Invalid column name 'HALO_SubSectionCode'. (207); [42S22] [Microsoft][ODBC SQL Server Driver][SQL Server]Invalid column name 'SubSectionCode'. (207); [42S22] [Microsoft][ODBC SQL Server Driver][SQL Server]Invalid column name 'HALO_SubSectionCode'. (207)")
+-----18/01/2016 17:57
+Error getting global codes together:
+Traceback (most recent call last):
+  File "H:\IT\Chris Ekin\GitHub\Global_Codes_App\Global Codes App\Global_Codes_App\views.py", line 183, in global_table
+    L['result'].append([r['GlobalCode'], r['Description'], r['Sample'], r['Type'], r['Analyte'], r['PrimaryLibrary'], r['SubSection'], r['Department'], r['Alias']])
+TypeError: string indices must be integers, not str
+-----18/01/2016 17:58
+Error getting global codes together:
+Traceback (most recent call last):
+  File "H:\IT\Chris Ekin\GitHub\Global_Codes_App\Global Codes App\Global_Codes_App\views.py", line 183, in global_table
+    L['result'].append([r['GlobalCode'], r['Description'], r['Sample'], r['Type'], r['Analyte'], r['PrimaryLibrary'], r['SubSection'], r['Department'], r['Alias']])
+TypeError: string indices must be integers, not str
+-----18/01/2016 18:05
+Error reciving global code edit submission:
+Traceback (most recent call last):
+  File "H:\IT\Chris Ekin\GitHub\Global_Codes_App\Global Codes App\Global_Codes_App\views.py", line 424, in global_edit_submit_changes
+    if lookup[r] <> str(submitted_data[r][0]):
+NameError: global name 'submitted_data' is not defined
+-----18/01/2016 18:18
+Problem creating a new global code:
+Traceback (most recent call last):
+  File "H:\IT\Chris Ekin\GitHub\Global_Codes_App\Global Codes App\Global_Codes_App\views.py", line 453, in global_edit_new_code
+    sql.insert_new_global_code(code, submission, user.email)
+  File "H:\IT\Chris Ekin\GitHub\Global_Codes_App\Global Codes App\Global_Codes_App\sql.py", line 295, in insert_new_global_code
+    cursor.execute(sql)
+ProgrammingError: ('42S22', "[42S22] [Microsoft][ODBC SQL Server Driver][SQL Server]Invalid column name 'HALO_SubSection'. (207) (SQLExecDirectW); [42S22] [Microsoft][ODBC SQL Server Driver][SQL Server]Invalid column name 'HALO_Department'. (207); [42S22] [Microsoft][ODBC SQL Server Driver][SQL Server]Invalid column name 'Department'. (207); [42S22] [Microsoft][ODBC SQL Server Driver][SQL Server]Invalid column name 'SubSection'. (207)")
+-----18/01/2016 18:19
+Problem creating a new global code:
+Traceback (most recent call last):
+  File "H:\IT\Chris Ekin\GitHub\Global_Codes_App\Global Codes App\Global_Codes_App\views.py", line 453, in global_edit_new_code
+    sql.insert_new_global_code(code, submission, user.email)
+  File "H:\IT\Chris Ekin\GitHub\Global_Codes_App\Global Codes App\Global_Codes_App\sql.py", line 295, in insert_new_global_code
+    cursor.execute(sql)
+ProgrammingError: ('42S22', "[42S22] [Microsoft][ODBC SQL Server Driver][SQL Server]Invalid column name 'HALO_SubSection'. (207) (SQLExecDirectW); [42S22] [Microsoft][ODBC SQL Server Driver][SQL Server]Invalid column name 'HALO_Department'. (207); [42S22] [Microsoft][ODBC SQL Server Driver][SQL Server]Invalid column name 'Department'. (207); [42S22] [Microsoft][ODBC SQL Server Driver][SQL Server]Invalid column name 'SubSection'. (207)")
+-----18/01/2016 18:27
+Problem creating a new global code:
+Traceback (most recent call last):
+  File "H:\IT\Chris Ekin\GitHub\Global_Codes_App\Global Codes App\Global_Codes_App\views.py", line 451, in global_edit_new_code
+    submission = {r:request.form[r] for r in request.form if r not in config.excluded_fields}
+  File "H:\IT\Chris Ekin\GitHub\Global_Codes_App\Global Codes App\Global_Codes_App\views.py", line 451, in <dictcomp>
+    submission = {r:request.form[r] for r in request.form if r not in config.excluded_fields}
+AttributeError: 'module' object has no attribute 'excluded_fields'
+-----18/01/2016 18:31
+Error deleting global code:
+Traceback (most recent call last):
+  File "H:\IT\Chris Ekin\GitHub\Global_Codes_App\Global Codes App\Global_Codes_App\views.py", line 479, in global_edit_delete_code
+    sql.exec_stored_procedure_noreturn('spGlobalsApp_DeleteGlobalCode',[code, exclusion, user.email])
+  File "H:\IT\Chris Ekin\GitHub\Global_Codes_App\Global Codes App\Global_Codes_App\sql.py", line 57, in exec_stored_procedure_noreturn
+    cursor.execute(sql)
+Error: ('21S01', '[21S01] [Microsoft][ODBC SQL Server Driver][SQL Server]Column name or number of supplied values does not match table definition. (213) (SQLExecDirectW)')
+-----18/01/2016 18:41
+Error getting global codes together:
+Traceback (most recent call last):
+  File "H:\IT\Chris Ekin\GitHub\Global_Codes_App\Global Codes App\Global_Codes_App\views.py", line 184, in global_table
+    L['result'].append([r['GlobalCode'], r['Description'], r['Sample'], r['Type'], r['Analyte'], r['PrimaryLibrary'], r['SubSection'], r['Department'], r['Alias']])
+TypeError: string indices must be integers, not str
+-----18/01/2016 18:53
+Error getting TFC info:
+Traceback (most recent call last):
+  File "H:\IT\Chris Ekin\GitHub\Global_Codes_App\Global Codes App\Global_Codes_App\views.py", line 258, in get_more_tfc_info
+    result = sql.exec_stored_procedure_list('spGlobalsApp_GetMoreTFCInfo', [system, tfc], True)
+  File "H:\IT\Chris Ekin\GitHub\Global_Codes_App\Global Codes App\Global_Codes_App\sql.py", line 81, in exec_stored_procedure_list
+    cursor.execute(sql)
+ProgrammingError: ('42000', "[42000] [Microsoft][ODBC SQL Server Driver][SQL Server]Incorrect syntax near the keyword 'as'. (156) (SQLExecDirectW)")
+-----18/01/2016 18:54
+Error executing spGlobalsApp_GlobalSpreadsheet:
+Traceback (most recent call last):
+  File "H:\IT\Chris Ekin\GitHub\Global_Codes_App\Global Codes App\Global_Codes_App\views.py", line 511, in pull_spreadsheet_globals
+    result = sql.exec_stored_procedure_list('spGlobalsApp_GlobalSpreadsheet', header_row=True)
+  File "H:\IT\Chris Ekin\GitHub\Global_Codes_App\Global Codes App\Global_Codes_App\sql.py", line 81, in exec_stored_procedure_list
+    cursor.execute(sql)
+ProgrammingError: ('42S22', "[42S22] [Microsoft][ODBC SQL Server Driver][SQL Server]Invalid column name 'SubSection'. (207) (SQLExecDirectW); [42S22] [Microsoft][ODBC SQL Server Driver][SQL Server]Invalid column name 'Department'. (207); [42S22] [Microsoft][ODBC SQL Server Driver][SQL Server]Invalid column name 'HALO_Subsection'. (207); [42S22] [Microsoft][ODBC SQL Server Driver][SQL Server]Invalid column name 'HALO_Department'. (207); [42S22] [Microsoft][ODBC SQL Server Driver][SQL Server]Invalid column name 'REF_Code'. (207)")

@@ -15,6 +15,7 @@ from flask.ext.stormpath import login_required, user
 last_database_update = None
 
 
+
 def error_log(error):
     with open(config.error_log_file,'a') as F:
         current_time = time.strftime("%d/%m/%Y %H:%M")
@@ -358,11 +359,11 @@ def globalseditor():
 @login_required
 def globals_department_list():
     try:
-        result = sql.exec_stored_procedure_list('spGlobalsApp_GlobalCodeDetail_DeptList')
+        result = sql.exec_stored_procedure('spGlobalsApp_GlobalCodeDetail_DeptList')
     except Exception, err:
         error_log('Error executing spGlobalsApp_GlobalEditor_DeptList:\n' + str(traceback.format_exc()))
         print ('-----------\nError pulling all global departments' + str(traceback.format_exc()))
-        result = dict(data = 'ERROR', error_detail='Problem running query')
+        result = dict(result = 'ERROR', error_detail='Problem running query')
 
     json_data = jsonify(result)
     return json_data
@@ -414,15 +415,17 @@ def global_edit_submit_changes():
     try:
         code = request.form['GlobalCode']
         lookup = sql.exec_stored_procedure('spGlobalsApp_GlobalCodeDetail_Info',[code])['result'][0]
-        print 'Lookup: ', lookup
-        
+        print '\n\nLookup: ', lookup
+
         # Find the changes       
         updates = {}
         for r in lookup:
             if r <> 'Alias':
-                if lookup[r] <> request.form[r]:
-                    updates[r] = (lookup[r],request.form[r])
+                if r not in config.excluded_fields:
+                    if lookup[r] <> str(request.form[r]):
+                        updates[r] = (lookup[r],str(request.form[r]))
         result = dict(data='OK', updates=updates)
+        print '\n\n', result, '\n\n'
 
         sql.update_global_code_fields(code, updates, user.email)
 
@@ -445,7 +448,7 @@ def global_edit_new_code():
     print 'Creating new global code'
 
     try:
-        submission = {r:request.form[r] for r in request.form}
+        submission = {r:request.form[r] for r in request.form if r not in config.excluded_fields}
         code = submission['GlobalCode']
 
         sql.insert_new_global_code(code, submission, user.email)
