@@ -655,6 +655,32 @@ def location_edit_submit_changes():
     return json_data
 
 
+@app.route('/location_edit_new_code', methods=['POST'])
+@login_required
+def location_edit_new_code():
+    print 'Creating new location code'
+
+    try:
+        submission = {r:request.form[r] for r in request.form}
+        code = submission['SubSectionCode']
+
+        sql.insert_new_location_code(code, submission, user.email)
+
+        result = dict(data = 'OK')
+
+        result['info'] = sql.exec_stored_procedure('spGlobalsApp_LocationEditor_Info',[code])['result']
+        #result['audit'] = sql.exec_stored_procedure('spGlobalsApp_GlobalCodeDetail_Audit',[code])['result']
+        #result['mapping'] = sql.exec_stored_procedure('spGlobalsApp_GlobalCodeDetail_Mapping',[code])['result']
+
+    except Exception, err:
+        error_log('Problem creating a new location code:\n' + str(traceback.format_exc()))
+        print ('-----------\nProblem creating a new location code' + str(traceback.format_exc()))
+        result = dict(data = 'ERROR', error_detail='Problem creating a new location code')
+
+    json_data = jsonify(result)
+    return json_data
+
+
 
 
 

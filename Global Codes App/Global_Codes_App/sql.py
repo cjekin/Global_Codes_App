@@ -8,9 +8,18 @@ def safe_str(obj):
     """ return the byte string representation of obj """
     try:
         return str(obj)
+        #return obj.encode('utf-8').strip()
     except UnicodeEncodeError:
         # obj is unicode
         return unicode(obj).encode('unicode_escape')
+    #if type(obj) == str:
+    #    #obj.decode('iso-8859-1').encode('utf-8', 'ignore')
+    #    obj.encode('utf8','ignore')
+    #if type(obj) != unicode:
+    #    newobj =  obj.decode('utf-8')
+    #    return newobj
+    #else:
+    #    return obj
 
 
 def exec_stored_procedure(stored_procedure,arguements=[]):
@@ -34,6 +43,9 @@ def exec_stored_procedure(stored_procedure,arguements=[]):
     headers = [column[0] for column in cursor.description]     
        
     raw_data = cursor.fetchall()
+    for r in raw_data:
+        for c in r:
+            print c, type(c)
     data = dict(result=[dict(zip(headers,[safe_str(i) for i in row])) for row in raw_data])
 
     return data
@@ -324,8 +336,30 @@ def update_location_fields(code, updates, user):
         #cursor.execute(sql)
 
         sql = "update %s set [%s] = '%s' where SubSectionCode = '%s'" % (config.location_table,k,new,code)
-        print 'Update global codes main:\n', sql, '\n'   
+        print 'Update Departments table:\n', sql, '\n'   
         cursor.execute(sql)
+
+    cursor.commit()
+
+
+def insert_new_location_code(code, submission, user):
+    try:
+        cnxn = pyodbc.connect(config.connection_string)
+        cursor = cnxn.cursor()
+    except:
+        print 'Problem making connection'
+    
+    fields = [f for f in submission]
+    values = [strip_non_ascii(submission[f]) for f in fields]
+
+    sql = "insert into %s ([%s]) values ('%s')" % (config.location_table,"], [".join(fields), "', '".join(values))
+               
+    cursor.execute(sql)
+
+    for f in fields:
+        if submission[f] <> '':
+            sql = "insert into %s values(getdate(), '%s', 'GlobalCodes_Departments', '%s', '%s', '', '%s', 'NewLocation')" % (config.global_audit_table, user, code, f, submission[f])
+            cursor.execute(sql)
 
     cursor.commit()
 

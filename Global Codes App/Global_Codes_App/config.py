@@ -8,7 +8,7 @@ global_codes = {}
 
 
 # SQL database config
-connection_string = 'DSN=Warehouse'
+connection_string = 'DSN=Warehouse;CHARSET=UTF8'
 global_map_table = 'GlobalCodes_Map'
 global_main_table = 'GlobalCodes_Main'
 global_audit_table = 'GlobalCodes_Audit'

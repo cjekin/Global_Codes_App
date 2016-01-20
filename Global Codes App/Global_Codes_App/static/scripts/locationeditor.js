@@ -116,10 +116,13 @@ function generate_location_form(data) {
     // Fill in the basic information
     var info_html = '';
     for (i = 0; i < info_headers.length; i++) {
+        var header = info_headers[i];
+        var content = data['info'][0][info_headers[i]].replace(/(?:\r\n|\r|\n)/g, '<br />');
+
         info_html += '<div class="form-group"><label class="col-lg-4 control-label">';
-        info_html += info_headers[i] + '</label><div id="info_' + info_headers[i];
+        info_html += header + '</label><div id="info_' + header;
         info_html += '" class="col-lg-8"><p class="form-control-static">';
-        info_html += data['info'][0][info_headers[i]] + '</p></div></div>';
+        info_html += content + '</p></div></div>';
     };
     $('#location_info').html(info_html);
 
@@ -157,7 +160,12 @@ function input_type(field, content) {
             input += '<option>' + values[j] + '</option>';
         }
         input += '</select>';
-        input = input.replace('<option>' + content, '<option selected="selected">' + content);
+        if (content != '') {
+            input = input.replace('<option>' + content, '<option selected="selected">' + content);
+        } else {
+            input = input.replace('<select class="form-control">', '<select class="form-control">' + '<option selected disabled hidden value=""></option>');
+        };
+        
         return input;
     };
 
@@ -214,7 +222,7 @@ function input_type(field, content) {
 $("#location_edit_button").click(function () {
     console.log('info_headers.length: ', info_headers.length);
     for (i = 0; i < info_headers.length; i++) {
-        var content = $('#info_' + info_headers[i] + ' p').text();
+        var content = $('#info_' + info_headers[i] + ' p').html().replace(/<br\s*[\/]?>/gi, "\n");;
         $('#info_' + info_headers[i]).html(input_type(info_headers[i], content));
 
         // Apply an autocomplete
@@ -234,13 +242,10 @@ $("#location_edit_button").click(function () {
 
 });
 
-// Respond to clicking SUBMIT button on location info
-function location_info_submit_click() {
-    console.log('Clicked submit button');
-
-    $('#location_info_submit').html('Submitting...');
+function get_form_value() {
 
     var submission = {};
+
     for (i = 0; i < info_headers.length; i++) {
         var select_content = $('#info_' + info_headers[i] + ' select option:selected').text();
         var input_content = $('#info_' + info_headers[i] + ' input').val();
@@ -248,6 +253,17 @@ function location_info_submit_click() {
         var content = (input_content || select_content || textarea_content || '');
         submission[info_headers[i]] = content
     };
+    
+    return submission;
+};
+
+// Respond to clicking SUBMIT button on location info
+function location_info_submit_click() {
+    console.log('Clicked submit button');
+
+    $('#location_info_submit').html('Submitting...');
+
+    var submission = get_form_value();
     
     $.post('\location_edit_submit_changes', submission)
         .done(function (data) {
@@ -274,7 +290,18 @@ $("#location_new_button").click(function () {
     // Put the header in
     $('#location_header_code').text('NEW CODE');
 
-    // Build the basic info form
+
+    // Fill in the basic information
+    var info_html = '';
+    for (i = 0; i < info_headers.length; i++) {
+        info_html += '<div class="form-group"><label class="col-lg-4 control-label">';
+        info_html += info_headers[i] + '</label><div id="info_' + info_headers[i];
+        info_html += '" class="col-lg-8"><p class="form-control-static">';
+        info_html += '</p></div></div>';
+    };
+    $('#location_info').html(info_html);
+
+    // Apply the field types
     for (i = 0; i < info_headers.length; i++) {
         $('#info_' + info_headers[i]).html(input_type(info_headers[i], ''));
 
@@ -295,3 +322,65 @@ $("#location_new_button").click(function () {
     //$('#global_tfc_mapping').html('');
 
 });
+
+
+// Respond to clicking CREATE NEW button on location
+function location_info_new_click() {
+    console.log('Clicked CREATE NEW button');
+
+    // Check if there is a code
+    if ($('#info_SubSectionCode input').val() == '') {
+        swal({
+            title: "Please enter a code",
+            text: "Cannot submit a new code without a location code entry",
+            type: "warning"
+        });
+
+    // Check if there is a department
+    } else if ($('#info_Department select option:selected').text() == '') {
+        swal({
+            title: "Please enter a department",
+            text: "Cannot submit a new code without a department code entry",
+            type: "warning"
+        });
+
+    } else {
+
+        // Get the data
+        var submission = get_form_value();
+
+        // Check if the code already exists
+        var all_location_codes_array = $.makeArray(location_datatable.column(1).data());
+        if ($.inArray(submission['SubSectionCode'], all_location_codes_array) != -1) {
+            swal({
+                title: "Code already exists",
+                text: "There is already a global code for " + submission['SubSectionCode'],
+                type: "warning"
+            });
+        } else {
+
+            // Submit the code and run the query
+            current_location_code = submission['SubSectionCode'];
+            console.log('Submitting', submission);
+
+            $.post('\location_edit_new_code', submission)
+                .done(function (data) {
+                    if (data['data'] == 'ERROR') {
+                        swal({
+                            title: "Problem submitting data",
+                            text: "There was an issue submitting your data. Please check the code details",
+                            type: "warning"
+                        });
+                    } else {
+                        get_location_info(current_location_code);
+
+                        // Reload the location table
+                        var url_val = '/location_department_list';
+                        location_datatable.ajax.url(url_val).load();
+                    };
+                });
+
+        };
+    };
+};
+

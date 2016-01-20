@@ -778,3 +778,79 @@ Traceback (most recent call last):
   File "H:\IT\Chris Ekin\GitHub\Global_Codes_App\Global Codes App\Global_Codes_App\sql.py", line 81, in exec_stored_procedure_list
     cursor.execute(sql)
 ProgrammingError: ('42S22', "[42S22] [Microsoft][ODBC SQL Server Driver][SQL Server]Invalid column name 'SubSection'. (207) (SQLExecDirectW); [42S22] [Microsoft][ODBC SQL Server Driver][SQL Server]Invalid column name 'Department'. (207); [42S22] [Microsoft][ODBC SQL Server Driver][SQL Server]Invalid column name 'HALO_Subsection'. (207); [42S22] [Microsoft][ODBC SQL Server Driver][SQL Server]Invalid column name 'HALO_Department'. (207); [42S22] [Microsoft][ODBC SQL Server Driver][SQL Server]Invalid column name 'REF_Code'. (207)")
+-----20/01/2016 18:29
+Error executing location detail lookup:
+Traceback (most recent call last):
+  File "H:\IT\Chris Ekin\GitHub\Global_Codes_App\Global Codes App\Global_Codes_App\views.py", line 611, in location_detail
+    result['info'] = sql.exec_stored_procedure('spGlobalsApp_LocationEditor_Info',[code])['result']
+  File "H:\IT\Chris Ekin\GitHub\Global_Codes_App\Global Codes App\Global_Codes_App\sql.py", line 38, in exec_stored_procedure
+    data = dict(result=[dict(zip(headers,[safe_str(i) for i in row])) for row in raw_data])
+  File "H:\IT\Chris Ekin\GitHub\Global_Codes_App\Global Codes App\Global_Codes_App\sql.py", line 11, in safe_str
+    return obj.encode('utf-8').strip()
+UnicodeDecodeError: 'ascii' codec can't decode byte 0x96 in position 34: ordinal not in range(128)
+-----20/01/2016 18:30
+Error executing location detail lookup:
+Traceback (most recent call last):
+  File "H:\IT\Chris Ekin\GitHub\Global_Codes_App\Global Codes App\Global_Codes_App\views.py", line 611, in location_detail
+    result['info'] = sql.exec_stored_procedure('spGlobalsApp_LocationEditor_Info',[code])['result']
+  File "H:\IT\Chris Ekin\GitHub\Global_Codes_App\Global Codes App\Global_Codes_App\sql.py", line 38, in exec_stored_procedure
+    data = dict(result=[dict(zip(headers,[safe_str(i) for i in row])) for row in raw_data])
+  File "H:\IT\Chris Ekin\GitHub\Global_Codes_App\Global Codes App\Global_Codes_App\sql.py", line 11, in safe_str
+    return obj.encode('utf-8').strip()
+UnicodeDecodeError: 'ascii' codec can't decode byte 0x96 in position 34: ordinal not in range(128)
+-----20/01/2016 18:33
+Error executing location detail lookup:
+Traceback (most recent call last):
+  File "H:\IT\Chris Ekin\GitHub\Global_Codes_App\Global Codes App\Global_Codes_App\views.py", line 611, in location_detail
+    result['info'] = sql.exec_stored_procedure('spGlobalsApp_LocationEditor_Info',[code])['result']
+  File "H:\IT\Chris Ekin\GitHub\Global_Codes_App\Global Codes App\Global_Codes_App\sql.py", line 44, in exec_stored_procedure
+    data = dict(result=[dict(zip(headers,[safe_str(i) for i in row])) for row in raw_data])
+  File "H:\IT\Chris Ekin\GitHub\Global_Codes_App\Global Codes App\Global_Codes_App\sql.py", line 17, in safe_str
+    newobj =  obj.decode('utf-8')
+  File "C:\Anaconda\lib\encodings\utf_8.py", line 16, in decode
+    return codecs.utf_8_decode(input, errors, True)
+UnicodeDecodeError: 'utf8' codec can't decode byte 0x96 in position 34: invalid start byte
+-----20/01/2016 18:55
+Error executing location detail lookup:
+Traceback (most recent call last):
+  File "H:\IT\Chris Ekin\GitHub\Global_Codes_App\Global Codes App\Global_Codes_App\views.py", line 611, in location_detail
+    result['info'] = sql.exec_stored_procedure('spGlobalsApp_LocationEditor_Info',[code])['result']
+  File "H:\IT\Chris Ekin\GitHub\Global_Codes_App\Global Codes App\Global_Codes_App\sql.py", line 45, in exec_stored_procedure
+    data = dict(result=[dict(zip(headers,[safe_str(i) for i in row])) for row in raw_data])
+  File "H:\IT\Chris Ekin\GitHub\Global_Codes_App\Global Codes App\Global_Codes_App\sql.py", line 18, in safe_str
+    newobj =  obj.decode('utf-8')
+  File "C:\Anaconda\lib\encodings\utf_8.py", line 16, in decode
+    return codecs.utf_8_decode(input, errors, True)
+UnicodeDecodeError: 'utf8' codec can't decode byte 0x96 in position 34: invalid start byte
+-----20/01/2016 18:58
+Error executing location detail lookup:
+Traceback (most recent call last):
+  File "H:\IT\Chris Ekin\GitHub\Global_Codes_App\Global Codes App\Global_Codes_App\views.py", line 611, in location_detail
+    result['info'] = sql.exec_stored_procedure('spGlobalsApp_LocationEditor_Info',[code])['result']
+  File "H:\IT\Chris Ekin\GitHub\Global_Codes_App\Global Codes App\Global_Codes_App\sql.py", line 45, in exec_stored_procedure
+    data = dict(result=[dict(zip(headers,[safe_str(i) for i in row])) for row in raw_data])
+  File "H:\IT\Chris Ekin\GitHub\Global_Codes_App\Global Codes App\Global_Codes_App\sql.py", line 18, in safe_str
+    newobj =  obj.decode('utf-8')
+  File "C:\Anaconda\lib\encodings\utf_8.py", line 16, in decode
+    return codecs.utf_8_decode(input, errors, True)
+UnicodeDecodeError: 'utf8' codec can't decode byte 0x96 in position 34: invalid start byte
+-----20/01/2016 19:08
+Error executing location detail lookup:
+Traceback (most recent call last):
+  File "H:\IT\Chris Ekin\GitHub\Global_Codes_App\Global Codes App\Global_Codes_App\views.py", line 611, in location_detail
+    result['info'] = sql.exec_stored_procedure('spGlobalsApp_LocationEditor_Info',[code])['result']
+  File "H:\IT\Chris Ekin\GitHub\Global_Codes_App\Global Codes App\Global_Codes_App\sql.py", line 46, in exec_stored_procedure
+    data = dict(result=[dict(zip(headers,[safe_str(i) for i in row])) for row in raw_data])
+  File "H:\IT\Chris Ekin\GitHub\Global_Codes_App\Global Codes App\Global_Codes_App\sql.py", line 17, in safe_str
+    obj.encode('utf8','ignore')
+UnicodeDecodeError: 'ascii' codec can't decode byte 0x96 in position 34: ordinal not in range(128)
+-----20/01/2016 19:13
+Error executing location detail lookup:
+Traceback (most recent call last):
+  File "H:\IT\Chris Ekin\GitHub\Global_Codes_App\Global Codes App\Global_Codes_App\views.py", line 611, in location_detail
+    result['info'] = sql.exec_stored_procedure('spGlobalsApp_LocationEditor_Info',[code])['result']
+  File "H:\IT\Chris Ekin\GitHub\Global_Codes_App\Global Codes App\Global_Codes_App\sql.py", line 49, in exec_stored_procedure
+    data = dict(result=[dict(zip(headers,[safe_str(i) for i in row])) for row in raw_data])
+  File "H:\IT\Chris Ekin\GitHub\Global_Codes_App\Global Codes App\Global_Codes_App\sql.py", line 17, in safe_str
+    obj.encode('utf8','ignore')
+UnicodeDecodeError: 'ascii' codec can't decode byte 0x96 in position 34: ordinal not in range(128)
