@@ -43,9 +43,6 @@ def exec_stored_procedure(stored_procedure,arguements=[]):
     headers = [column[0] for column in cursor.description]     
        
     raw_data = cursor.fetchall()
-    for r in raw_data:
-        for c in r:
-            print c, type(c)
     data = dict(result=[dict(zip(headers,[safe_str(i) for i in row])) for row in raw_data])
 
     return data
