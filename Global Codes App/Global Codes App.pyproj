@@ -31,6 +31,7 @@
     <Compile Include="Global_Codes_App\config.py">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="Global_Codes_App\spreadsheet_queries.py" />
     <Compile Include="Global_Codes_App\sql.py" />
     <Compile Include="runserver.py" />
     <Compile Include="Global_Codes_App\__init__.py" />
@@ -422,6 +423,7 @@
     <Content Include="Global_Codes_App\static\scripts\dashboard.js" />
     <Content Include="Global_Codes_App\static\scripts\editor.js" />
     <Content Include="Global_Codes_App\static\scripts\locationeditor.js" />
+    <Content Include="Global_Codes_App\static\scripts\spreadsheet_pro.js" />
     <Content Include="Global_Codes_App\static\scripts\spreadsheet.js" />
     <Content Include="Global_Codes_App\static\scripts\globaleditor.js" />
     <Content Include="Global_Codes_App\static\styles\img\green%402x.png" />

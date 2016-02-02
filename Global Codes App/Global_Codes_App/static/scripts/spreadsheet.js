@@ -52,11 +52,15 @@ function build_spreadsheet(display_data) {
         manualColumnResize: true,
         afterChange: function (changes, source) {
             //console.log('afterChange event: ' + (changes || 'nochange').toString() + ' from ' + source);
+            
+            console.log(hot);
+            
             if (changes != null && source == 'edit') {
                 cell_changed(changes, source);
             } else if(changes != null && source == 'autofill') {
                 for (i = 0; i < changes.length; i++) {
                     //console.log('Passed changes: ', [(changes || 'nochange')[i]]);
+                    
                     cell_changed([changes[i]], source);
                 };
             };

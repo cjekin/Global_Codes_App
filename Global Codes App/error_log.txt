@@ -854,3 +854,386 @@ Traceback (most recent call last):
   File "H:\IT\Chris Ekin\GitHub\Global_Codes_App\Global Codes App\Global_Codes_App\sql.py", line 17, in safe_str
     obj.encode('utf8','ignore')
 UnicodeDecodeError: 'ascii' codec can't decode byte 0x96 in position 34: ordinal not in range(128)
+-----30/01/2016 16:28
+Error getting dashboard data:
+Traceback (most recent call last):
+  File "C:\Users\cekin\Documents\GitHub\Global_Codes_App\Global Codes App\Global_Codes_App\views.py", line 291, in dashboard_getdata
+    data = sql.exec_stored_procedure_list('spGlobalsApp_AllSystemStats')
+  File "C:\Users\cekin\Documents\GitHub\Global_Codes_App\Global Codes App\Global_Codes_App\sql.py", line 90, in exec_stored_procedure_list
+    cursor.execute(sql)
+ProgrammingError: ('42S02', "[42S02] [Microsoft][ODBC SQL Server Driver][SQL Server]Invalid object name 'RFH_BIO_DW.dbo.FORM'. (208) (SQLExecDirectW)")
+-----30/01/2016 16:28
+Error getting global codes together:
+Traceback (most recent call last):
+  File "C:\Users\cekin\Documents\GitHub\Global_Codes_App\Global Codes App\Global_Codes_App\views.py", line 184, in global_table
+    L['result'].append([r['GlobalCode'], r['Description'], r['Sample'], r['Type'], r['Analyte'], r['PrimaryLibrary'], r['SubSection'], r['Department'], r['Alias']])
+TypeError: string indices must be integers, not str
+-----30/01/2016 16:28
+Error getting TLC list:
+Traceback (most recent call last):
+  File "C:\Users\cekin\Documents\GitHub\Global_Codes_App\Global Codes App\Global_Codes_App\views.py", line 105, in tlc_data
+    result = sql.exec_stored_procedure_list('spGlobalsApp_GetTLCList',args)
+  File "C:\Users\cekin\Documents\GitHub\Global_Codes_App\Global Codes App\Global_Codes_App\sql.py", line 90, in exec_stored_procedure_list
+    cursor.execute(sql)
+ProgrammingError: ('42S02', "[42S02] [Microsoft][ODBC SQL Server Driver][SQL Server]Invalid object name 'GlobalCodes_TEST_STAGING'. (208) (SQLExecDirectW)")
+-----30/01/2016 16:28
+Error getting TLC list:
+Traceback (most recent call last):
+  File "C:\Users\cekin\Documents\GitHub\Global_Codes_App\Global Codes App\Global_Codes_App\views.py", line 105, in tlc_data
+    result = sql.exec_stored_procedure_list('spGlobalsApp_GetTLCList',args)
+  File "C:\Users\cekin\Documents\GitHub\Global_Codes_App\Global Codes App\Global_Codes_App\sql.py", line 90, in exec_stored_procedure_list
+    cursor.execute(sql)
+ProgrammingError: ('42S02', "[42S02] [Microsoft][ODBC SQL Server Driver][SQL Server]Invalid object name 'GlobalCodes_TEST_STAGING'. (208) (SQLExecDirectW)")
+-----30/01/2016 16:29
+Error executing spGlobalsApp_GlobalEditor:
+Traceback (most recent call last):
+  File "C:\Users\cekin\Documents\GitHub\Global_Codes_App\Global Codes App\Global_Codes_App\views.py", line 379, in globalseditordata
+    result = sql.exec_stored_procedure_list('spGlobalsApp_GlobalEditor',[department])
+  File "C:\Users\cekin\Documents\GitHub\Global_Codes_App\Global Codes App\Global_Codes_App\sql.py", line 90, in exec_stored_procedure_list
+    cursor.execute(sql)
+ProgrammingError: ('42S02', "[42S02] [Microsoft][ODBC SQL Server Driver][SQL Server]Invalid object name 'SNOMED.dbo.LOINC'. (208) (SQLExecDirectW)")
+-----30/01/2016 16:29
+Error executing code detail lookup:
+Traceback (most recent call last):
+  File "C:\Users\cekin\Documents\GitHub\Global_Codes_App\Global Codes App\Global_Codes_App\views.py", line 397, in globalcodedetail
+    result['info'] = sql.exec_stored_procedure('spGlobalsApp_GlobalCodeDetail_Info',[code])['result']
+  File "C:\Users\cekin\Documents\GitHub\Global_Codes_App\Global Codes App\Global_Codes_App\sql.py", line 42, in exec_stored_procedure
+    cursor.execute(sql)
+ProgrammingError: ('42S02', "[42S02] [Microsoft][ODBC SQL Server Driver][SQL Server]Invalid object name 'SNOMED.dbo.LOINC'. (208) (SQLExecDirectW)")
+-----31/01/2016 16:20
+Error getting dashboard data:
+Traceback (most recent call last):
+  File "C:\Users\cekin\Documents\GitHub\Global_Codes_App\Global Codes App\Global_Codes_App\views.py", line 291, in dashboard_getdata
+    data = sql.exec_stored_procedure_list('spGlobalsApp_AllSystemStats')
+  File "C:\Users\cekin\Documents\GitHub\Global_Codes_App\Global Codes App\Global_Codes_App\sql.py", line 90, in exec_stored_procedure_list
+    cursor.execute(sql)
+ProgrammingError: ('42S02', "[42S02] [Microsoft][ODBC SQL Server Driver][SQL Server]Invalid object name 'RFH_BIO_DW.dbo.FORM'. (208) (SQLExecDirectW)")
+-----31/01/2016 18:01
+Problem running spreadsheet query-----31/01/2016 18:01
+Problem running spreadsheet query-----31/01/2016 18:03
+Problem running spreadsheet query-----31/01/2016 18:05
+Problem running spreadsheet query
+Traceback (most recent call last):
+  File "C:\Users\cekin\Documents\GitHub\Global_Codes_App\Global Codes App\Global_Codes_App\views.py", line 716, in get_spreadsheet_data
+    methodToCall = getattr(spreadsheet_queries, query)
+AttributeError: 'module' object has no attribute 'Lexical_Table2'
+-----31/01/2016 18:08
+Spreadsheet query not in scripts
+-----31/01/2016 18:09
+Spreadsheet query not in scripts
+-----31/01/2016 18:10
+Spreadsheet query not in scripts
+-----31/01/2016 18:12
+Spreadsheet query not in scripts
+-----31/01/2016 18:13
+Spreadsheet query not in scripts
+-----31/01/2016 18:30
+Spreadsheet query not in scripts
+-----31/01/2016 18:35
+Problem running spreadsheet query
+Traceback (most recent call last):
+  File "C:\Users\cekin\Documents\GitHub\Global_Codes_App\Global Codes App\Global_Codes_App\views.py", line 714, in get_spreadsheet_data
+    result = methodToCall()
+  File "C:\Users\cekin\Documents\GitHub\Global_Codes_App\Global Codes App\Global_Codes_App\spreadsheet_queries.py", line 40, in Lexical_Table
+    result = run_odbc_query(sql)
+  File "C:\Users\cekin\Documents\GitHub\Global_Codes_App\Global Codes App\Global_Codes_App\spreadsheet_queries.py", line 21, in run_odbc_query
+    cursor.execute(sql.replace('\n',' '))
+ProgrammingError: ('42S22', "[42S22] [Microsoft][ODBC SQL Server Driver][SQL Server]Invalid column name ''Origin', 'Code', 'Description', 'Excluded', 'GlobalCode''. (207) (SQLExecDirectW)")
+-----31/01/2016 21:44
+Problem running spreadsheet query
+Traceback (most recent call last):
+  File "C:\Users\cekin\Documents\GitHub\Global_Codes_App\Global Codes App\Global_Codes_App\views.py", line 714, in get_spreadsheet_data
+    result = methodToCall()
+  File "C:\Users\cekin\Documents\GitHub\Global_Codes_App\Global Codes App\Global_Codes_App\spreadsheet_queries.py", line 50, in Lexical_Table
+    result['data'] = run_odbc_query(sql)
+NameError: global name 'result' is not defined
+-----01/02/2016 00:09
+Error reciving global code spreadsheet edit submission:
+Traceback (most recent call last):
+  File "C:\Users\cekin\Documents\GitHub\Global_Codes_App\Global Codes App\Global_Codes_App\views.py", line 538, in spreadsheet_changefield
+    lookup = sql.exec_stored_procedure('spGlobalsApp_GlobalCodeDetail_Info',[code])['result'][0]
+  File "C:\Users\cekin\Documents\GitHub\Global_Codes_App\Global Codes App\Global_Codes_App\sql.py", line 42, in exec_stored_procedure
+    cursor.execute(sql)
+ProgrammingError: ('42S02', "[42S02] [Microsoft][ODBC SQL Server Driver][SQL Server]Invalid object name 'SNOMED.dbo.LOINC'. (208) (SQLExecDirectW)")
+
+-----01/02/2016 00:10
+Error reciving global code spreadsheet edit submission:
+Traceback (most recent call last):
+  File "C:\Users\cekin\Documents\GitHub\Global_Codes_App\Global Codes App\Global_Codes_App\views.py", line 538, in spreadsheet_changefield
+    lookup = sql.exec_stored_procedure('spGlobalsApp_GlobalCodeDetail_Info',[code])['result'][0]
+  File "C:\Users\cekin\Documents\GitHub\Global_Codes_App\Global Codes App\Global_Codes_App\sql.py", line 42, in exec_stored_procedure
+    cursor.execute(sql)
+ProgrammingError: ('42S02', "[42S02] [Microsoft][ODBC SQL Server Driver][SQL Server]Invalid object name 'SNOMED.dbo.LOINC'. (208) (SQLExecDirectW)")
+
+-----01/02/2016 19:50
+Error getting dashboard data:
+Traceback (most recent call last):
+  File "C:\Users\cekin\Documents\GitHub\Global_Codes_App\Global Codes App\Global_Codes_App\views.py", line 298, in dashboard_getdata
+    data = sql.exec_stored_procedure_list('spGlobalsApp_AllSystemStats')
+  File "C:\Users\cekin\Documents\GitHub\Global_Codes_App\Global Codes App\Global_Codes_App\sql.py", line 90, in exec_stored_procedure_list
+    cursor.execute(sql)
+ProgrammingError: ('42S02', "[42S02] [Microsoft][ODBC SQL Server Driver][SQL Server]Invalid object name 'RFH_BIO_DW.dbo.FORM'. (208) (SQLExecDirectW)")
+
+-----01/02/2016 19:51
+Error getting TLC list:
+Traceback (most recent call last):
+  File "C:\Users\cekin\Documents\GitHub\Global_Codes_App\Global Codes App\Global_Codes_App\views.py", line 112, in tlc_data
+    result = sql.exec_stored_procedure_list('spGlobalsApp_GetTLCList',args)
+  File "C:\Users\cekin\Documents\GitHub\Global_Codes_App\Global Codes App\Global_Codes_App\sql.py", line 90, in exec_stored_procedure_list
+    cursor.execute(sql)
+ProgrammingError: ('42S02', "[42S02] [Microsoft][ODBC SQL Server Driver][SQL Server]Invalid object name 'GlobalCodes_TEST_STAGING'. (208) (SQLExecDirectW)")
+
+-----01/02/2016 19:51
+Error getting global codes together:
+Traceback (most recent call last):
+  File "C:\Users\cekin\Documents\GitHub\Global_Codes_App\Global Codes App\Global_Codes_App\views.py", line 191, in global_table
+    L['result'].append([r['GlobalCode'], r['Description'], r['Sample'], r['Type'], r['Analyte'], r['PrimaryLibrary'], r['SubSection'], r['Department'], r['Alias']])
+TypeError: string indices must be integers, not str
+
+-----01/02/2016 19:51
+Error getting TLC list:
+Traceback (most recent call last):
+  File "C:\Users\cekin\Documents\GitHub\Global_Codes_App\Global Codes App\Global_Codes_App\views.py", line 112, in tlc_data
+    result = sql.exec_stored_procedure_list('spGlobalsApp_GetTLCList',args)
+  File "C:\Users\cekin\Documents\GitHub\Global_Codes_App\Global Codes App\Global_Codes_App\sql.py", line 90, in exec_stored_procedure_list
+    cursor.execute(sql)
+ProgrammingError: ('42S02', "[42S02] [Microsoft][ODBC SQL Server Driver][SQL Server]Invalid object name 'GlobalCodes_TEST_STAGING'. (208) (SQLExecDirectW)")
+
+-----01/02/2016 19:51
+Error getting dashboard data:
+Traceback (most recent call last):
+  File "C:\Users\cekin\Documents\GitHub\Global_Codes_App\Global Codes App\Global_Codes_App\views.py", line 298, in dashboard_getdata
+    data = sql.exec_stored_procedure_list('spGlobalsApp_AllSystemStats')
+  File "C:\Users\cekin\Documents\GitHub\Global_Codes_App\Global Codes App\Global_Codes_App\sql.py", line 90, in exec_stored_procedure_list
+    cursor.execute(sql)
+ProgrammingError: ('42S02', "[42S02] [Microsoft][ODBC SQL Server Driver][SQL Server]Invalid object name 'RFH_BIO_DW.dbo.FORM'. (208) (SQLExecDirectW)")
+
+-----01/02/2016 20:02
+Error getting TLC list:
+Traceback (most recent call last):
+  File "C:\Users\cekin\Documents\GitHub\Global_Codes_App\Global Codes App\Global_Codes_App\views.py", line 112, in tlc_data
+    result = sql.exec_stored_procedure_list('spGlobalsApp_GetTLCList',args)
+  File "C:\Users\cekin\Documents\GitHub\Global_Codes_App\Global Codes App\Global_Codes_App\sql.py", line 90, in exec_stored_procedure_list
+    cursor.execute(sql)
+ProgrammingError: ('42S02', "[42S02] [Microsoft][ODBC SQL Server Driver][SQL Server]Invalid object name 'GlobalCodes_TEST_STAGING'. (208) (SQLExecDirectW)")
+
+-----01/02/2016 20:02
+Error getting global codes together:
+Traceback (most recent call last):
+  File "C:\Users\cekin\Documents\GitHub\Global_Codes_App\Global Codes App\Global_Codes_App\views.py", line 191, in global_table
+    L['result'].append([r['GlobalCode'], r['Description'], r['Sample'], r['Type'], r['Analyte'], r['PrimaryLibrary'], r['SubSection'], r['Department'], r['Alias']])
+TypeError: string indices must be integers, not str
+
+-----01/02/2016 20:02
+Error getting TLC list:
+Traceback (most recent call last):
+  File "C:\Users\cekin\Documents\GitHub\Global_Codes_App\Global Codes App\Global_Codes_App\views.py", line 112, in tlc_data
+    result = sql.exec_stored_procedure_list('spGlobalsApp_GetTLCList',args)
+  File "C:\Users\cekin\Documents\GitHub\Global_Codes_App\Global Codes App\Global_Codes_App\sql.py", line 90, in exec_stored_procedure_list
+    cursor.execute(sql)
+ProgrammingError: ('42S02', "[42S02] [Microsoft][ODBC SQL Server Driver][SQL Server]Invalid object name 'GlobalCodes_TEST_STAGING'. (208) (SQLExecDirectW)")
+
+-----01/02/2016 20:21
+Error executing spGlobalsApp_GlobalEditor:
+Traceback (most recent call last):
+  File "C:\Users\cekin\Documents\GitHub\Global_Codes_App\Global Codes App\Global_Codes_App\views.py", line 386, in globalseditordata
+    result = sql.exec_stored_procedure_list('spGlobalsApp_GlobalEditor',[department])
+  File "C:\Users\cekin\Documents\GitHub\Global_Codes_App\Global Codes App\Global_Codes_App\sql.py", line 90, in exec_stored_procedure_list
+    cursor.execute(sql)
+ProgrammingError: ('42S02', "[42S02] [Microsoft][ODBC SQL Server Driver][SQL Server]Invalid object name 'SNOMED.dbo.LOINC'. (208) (SQLExecDirectW)")
+
+-----01/02/2016 20:21
+Error executing code detail lookup:
+Traceback (most recent call last):
+  File "C:\Users\cekin\Documents\GitHub\Global_Codes_App\Global Codes App\Global_Codes_App\views.py", line 404, in globalcodedetail
+    result['info'] = sql.exec_stored_procedure('spGlobalsApp_GlobalCodeDetail_Info',[code])['result']
+  File "C:\Users\cekin\Documents\GitHub\Global_Codes_App\Global Codes App\Global_Codes_App\sql.py", line 42, in exec_stored_procedure
+    cursor.execute(sql)
+ProgrammingError: ('42S02', "[42S02] [Microsoft][ODBC SQL Server Driver][SQL Server]Invalid object name 'SNOMED.dbo.LOINC'. (208) (SQLExecDirectW)")
+
+-----01/02/2016 20:21
+Error executing code detail lookup:
+Traceback (most recent call last):
+  File "C:\Users\cekin\Documents\GitHub\Global_Codes_App\Global Codes App\Global_Codes_App\views.py", line 404, in globalcodedetail
+    result['info'] = sql.exec_stored_procedure('spGlobalsApp_GlobalCodeDetail_Info',[code])['result']
+  File "C:\Users\cekin\Documents\GitHub\Global_Codes_App\Global Codes App\Global_Codes_App\sql.py", line 42, in exec_stored_procedure
+    cursor.execute(sql)
+ProgrammingError: ('42S02', "[42S02] [Microsoft][ODBC SQL Server Driver][SQL Server]Invalid object name 'SNOMED.dbo.LOINC'. (208) (SQLExecDirectW)")
+
+-----01/02/2016 20:51
+Error reciving global code spreadsheet edit submission:
+Traceback (most recent call last):
+  File "C:\Users\cekin\Documents\GitHub\Global_Codes_App\Global Codes App\Global_Codes_App\views.py", line 538, in spreadsheet_changefield
+    lookup = sql.exec_stored_procedure('spGlobalsApp_GlobalCodeDetail_Info',[code])['result'][0]
+  File "C:\Users\cekin\Documents\GitHub\Global_Codes_App\Global Codes App\Global_Codes_App\sql.py", line 42, in exec_stored_procedure
+    cursor.execute(sql)
+ProgrammingError: ('42S02', "[42S02] [Microsoft][ODBC SQL Server Driver][SQL Server]Invalid object name 'SNOMED.dbo.LOINC'. (208) (SQLExecDirectW)")
+
+-----01/02/2016 20:51
+Error reciving global code spreadsheet edit submission:
+Traceback (most recent call last):
+  File "C:\Users\cekin\Documents\GitHub\Global_Codes_App\Global Codes App\Global_Codes_App\views.py", line 538, in spreadsheet_changefield
+    lookup = sql.exec_stored_procedure('spGlobalsApp_GlobalCodeDetail_Info',[code])['result'][0]
+  File "C:\Users\cekin\Documents\GitHub\Global_Codes_App\Global Codes App\Global_Codes_App\sql.py", line 42, in exec_stored_procedure
+    cursor.execute(sql)
+ProgrammingError: ('42S02', "[42S02] [Microsoft][ODBC SQL Server Driver][SQL Server]Invalid object name 'SNOMED.dbo.LOINC'. (208) (SQLExecDirectW)")
+
+-----01/02/2016 20:52
+Error reciving global code spreadsheet edit submission:
+Traceback (most recent call last):
+  File "C:\Users\cekin\Documents\GitHub\Global_Codes_App\Global Codes App\Global_Codes_App\views.py", line 538, in spreadsheet_changefield
+    lookup = sql.exec_stored_procedure('spGlobalsApp_GlobalCodeDetail_Info',[code])['result'][0]
+  File "C:\Users\cekin\Documents\GitHub\Global_Codes_App\Global Codes App\Global_Codes_App\sql.py", line 42, in exec_stored_procedure
+    cursor.execute(sql)
+ProgrammingError: ('42S02', "[42S02] [Microsoft][ODBC SQL Server Driver][SQL Server]Invalid object name 'SNOMED.dbo.LOINC'. (208) (SQLExecDirectW)")
+
+-----01/02/2016 22:29
+Problem updating SQL table
+Traceback (most recent call last):
+  File "C:\Users\cekin\Documents\GitHub\Global_Codes_App\Global Codes App\Global_Codes_App\views.py", line 750, in spreadsheet_pro_change
+    spreadsheet_queries.update_odbc_table(submission,user.email)
+NameError: global name 'submission' is not defined
+-----01/02/2016 22:32
+Problem updating SQL table
+Traceback (most recent call last):
+  File "C:\Users\cekin\Documents\GitHub\Global_Codes_App\Global Codes App\Global_Codes_App\views.py", line 752, in spreadsheet_pro_change
+    spreadsheet_queries.update_odbc_table(submission,user.email)
+  File "C:\Users\cekin\Documents\GitHub\Global_Codes_App\Global Codes App\Global_Codes_App\spreadsheet_queries.py", line 44, in update_odbc_table
+    id_name = submission['id_name'],
+KeyError: 'id_name'
+-----01/02/2016 22:35
+Problem updating SQL table
+Traceback (most recent call last):
+  File "C:\Users\cekin\Documents\GitHub\Global_Codes_App\Global Codes App\Global_Codes_App\views.py", line 753, in spreadsheet_pro_change
+    spreadsheet_queries.update_odbc_table(submission,user.email)
+  File "C:\Users\cekin\Documents\GitHub\Global_Codes_App\Global Codes App\Global_Codes_App\spreadsheet_queries.py", line 44, in update_odbc_table
+    id_name = submission['id_name'],
+KeyError: 'id_name'
+-----01/02/2016 22:38
+Problem updating SQL table
+Traceback (most recent call last):
+  File "C:\Users\cekin\Documents\GitHub\Global_Codes_App\Global Codes App\Global_Codes_App\views.py", line 753, in spreadsheet_pro_change
+    spreadsheet_queries.update_odbc_table(submission,user.email)
+  File "C:\Users\cekin\Documents\GitHub\Global_Codes_App\Global Codes App\Global_Codes_App\spreadsheet_queries.py", line 44, in update_odbc_table
+    id_name = submission['id_name'],
+KeyError: 'id_name'
+-----01/02/2016 22:41
+Problem updating SQL table
+Traceback (most recent call last):
+  File "C:\Users\cekin\Documents\GitHub\Global_Codes_App\Global Codes App\Global_Codes_App\views.py", line 753, in spreadsheet_pro_change
+    spreadsheet_queries.update_odbc_table(submission,user.email)
+  File "C:\Users\cekin\Documents\GitHub\Global_Codes_App\Global Codes App\Global_Codes_App\spreadsheet_queries.py", line 60, in update_odbc_table
+    date = submission['date'],
+KeyError: 'date'
+-----01/02/2016 22:46
+Problem updating SQL table
+Traceback (most recent call last):
+  File "C:\Users\cekin\Documents\GitHub\Global_Codes_App\Global Codes App\Global_Codes_App\views.py", line 753, in spreadsheet_pro_change
+    spreadsheet_queries.update_odbc_table(submission,user.email)
+  File "C:\Users\cekin\Documents\GitHub\Global_Codes_App\Global Codes App\Global_Codes_App\spreadsheet_queries.py", line 70, in update_odbc_table
+    cursor.execute(sql_update.replace('\n',' '))
+ProgrammingError: ('42S22', "[42S22] [Microsoft][ODBC SQL Server Driver][SQL Server]Invalid column name 'change'. (207) (SQLExecDirectW)")
+-----01/02/2016 22:51
+Problem updating SQL table
+Traceback (most recent call last):
+  File "C:\Users\cekin\Documents\GitHub\Global_Codes_App\Global Codes App\Global_Codes_App\views.py", line 753, in spreadsheet_pro_change
+    spreadsheet_queries.update_odbc_table(submission,user.email)
+  File "C:\Users\cekin\Documents\GitHub\Global_Codes_App\Global Codes App\Global_Codes_App\spreadsheet_queries.py", line 71, in update_odbc_table
+    cursor.execute(sql_update.replace('\n',' '))
+ProgrammingError: ('42S22', "[42S22] [Microsoft][ODBC SQL Server Driver][SQL Server]Invalid column name 'change'. (207) (SQLExecDirectW)")
+-----01/02/2016 22:55
+Problem updating SQL table
+Traceback (most recent call last):
+  File "C:\Users\cekin\Documents\GitHub\Global_Codes_App\Global Codes App\Global_Codes_App\views.py", line 753, in spreadsheet_pro_change
+    spreadsheet_queries.update_odbc_table(submission,user.email)
+  File "C:\Users\cekin\Documents\GitHub\Global_Codes_App\Global Codes App\Global_Codes_App\spreadsheet_queries.py", line 79, in update_odbc_table
+    cursor.execute(sql_audit.replace('\n',' '))
+ProgrammingError: ('42000', "[42000] [Microsoft][ODBC SQL Server Driver][SQL Server]Incorrect syntax near ','. (102) (SQLExecDirectW)")
+-----01/02/2016 23:28
+Error executing spGlobalsApp_GlobalEditor:
+Traceback (most recent call last):
+  File "C:\Users\cekin\Documents\GitHub\Global_Codes_App\Global Codes App\Global_Codes_App\views.py", line 386, in globalseditordata
+    result = sql.exec_stored_procedure_list('spGlobalsApp_GlobalEditor',[department])
+  File "C:\Users\cekin\Documents\GitHub\Global_Codes_App\Global Codes App\Global_Codes_App\sql.py", line 90, in exec_stored_procedure_list
+    cursor.execute(sql)
+ProgrammingError: ('42S02', "[42S02] [Microsoft][ODBC SQL Server Driver][SQL Server]Invalid object name 'SNOMED.dbo.LOINC'. (208) (SQLExecDirectW)")
+
+-----01/02/2016 23:28
+Error executing code detail lookup:
+Traceback (most recent call last):
+  File "C:\Users\cekin\Documents\GitHub\Global_Codes_App\Global Codes App\Global_Codes_App\views.py", line 404, in globalcodedetail
+    result['info'] = sql.exec_stored_procedure('spGlobalsApp_GlobalCodeDetail_Info',[code])['result']
+  File "C:\Users\cekin\Documents\GitHub\Global_Codes_App\Global Codes App\Global_Codes_App\sql.py", line 42, in exec_stored_procedure
+    cursor.execute(sql)
+ProgrammingError: ('42S02', "[42S02] [Microsoft][ODBC SQL Server Driver][SQL Server]Invalid object name 'SNOMED.dbo.LOINC'. (208) (SQLExecDirectW)")
+
+-----01/02/2016 23:47
+Spreadsheet query not in scripts
+-----01/02/2016 23:48
+Spreadsheet query not in scripts
+-----01/02/2016 23:49
+Spreadsheet query not in scripts
+-----01/02/2016 23:51
+Spreadsheet query not in scripts
+-----01/02/2016 23:51
+Spreadsheet query not in scripts
+-----01/02/2016 23:52
+Spreadsheet query not in scripts
+-----01/02/2016 23:52
+Spreadsheet query not in scripts
+-----01/02/2016 23:52
+Spreadsheet query not in scripts
+-----02/02/2016 00:02
+Problem running spreadsheet query
+Traceback (most recent call last):
+  File "C:\Users\cekin\Documents\GitHub\Global_Codes_App\Global Codes App\Global_Codes_App\views.py", line 725, in get_spreadsheet_data
+    result = methodToCall()
+  File "C:\Users\cekin\Documents\GitHub\Global_Codes_App\Global Codes App\Global_Codes_App\spreadsheet_queries.py", line 127, in Location_Table
+    result = run_odbc_query(sql)
+  File "C:\Users\cekin\Documents\GitHub\Global_Codes_App\Global Codes App\Global_Codes_App\spreadsheet_queries.py", line 21, in run_odbc_query
+    cursor.execute(sql.replace('\n',' '))
+ProgrammingError: ('42000', "[42000] [Microsoft][ODBC SQL Server Driver][SQL Server]The identifier that starts with '[SubSectionCode],[[SubSection],[[Department],[[Location],[[Address],[[PostCode],[[Telephone],[[Contact],[[HALO],[[WSL],[[Referra' is too long. Maximum length is 128. (103) (SQLExecDirectW); [42000] [Microsoft][ODBC SQL Server Driver][SQL Server]Unclosed quotation mark after the character string '[SubSectionCode],[[SubSection],[[Department],[[Location],[[Address],[[PostCode],[[Telephone],[[Contact],[[HALO],[[WSL],[[Referral'. (105); [42000] [Microsoft][ODBC SQL Server Driver][SQL Server]Incorrect syntax near '[SubSectionCode],[[SubSection],[[Department],[[Location],[[Address],[[PostCode],[[Telephone],[[Contact],[[HALO],[[WSL],[[Referra'. (102)")
+-----02/02/2016 00:03
+Problem running spreadsheet query
+Traceback (most recent call last):
+  File "C:\Users\cekin\Documents\GitHub\Global_Codes_App\Global Codes App\Global_Codes_App\views.py", line 725, in get_spreadsheet_data
+    result = methodToCall()
+  File "C:\Users\cekin\Documents\GitHub\Global_Codes_App\Global Codes App\Global_Codes_App\spreadsheet_queries.py", line 128, in Location_Table
+    result = run_odbc_query(sql)
+  File "C:\Users\cekin\Documents\GitHub\Global_Codes_App\Global Codes App\Global_Codes_App\spreadsheet_queries.py", line 21, in run_odbc_query
+    cursor.execute(sql.replace('\n',' '))
+ProgrammingError: ('42000', "[42000] [Microsoft][ODBC SQL Server Driver][SQL Server]The identifier that starts with '[SubSectionCode],[[SubSection],[[Department],[[Location],[[Address],[[PostCode],[[Telephone],[[Contact],[[HALO],[[WSL],[[Referra' is too long. Maximum length is 128. (103) (SQLExecDirectW); [42000] [Microsoft][ODBC SQL Server Driver][SQL Server]Unclosed quotation mark after the character string '[SubSectionCode],[[SubSection],[[Department],[[Location],[[Address],[[PostCode],[[Telephone],[[Contact],[[HALO],[[WSL],[[Referral'. (105); [42000] [Microsoft][ODBC SQL Server Driver][SQL Server]Incorrect syntax near '[SubSectionCode],[[SubSection],[[Department],[[Location],[[Address],[[PostCode],[[Telephone],[[Contact],[[HALO],[[WSL],[[Referra'. (102)")
+-----02/02/2016 20:48
+Error getting dashboard data:
+Traceback (most recent call last):
+  File "C:\Users\cekin\Documents\GitHub\Global_Codes_App\Global Codes App\Global_Codes_App\views.py", line 298, in dashboard_getdata
+    data = sql.exec_stored_procedure_list('spGlobalsApp_AllSystemStats')
+  File "C:\Users\cekin\Documents\GitHub\Global_Codes_App\Global Codes App\Global_Codes_App\sql.py", line 90, in exec_stored_procedure_list
+    cursor.execute(sql)
+ProgrammingError: ('42S02', "[42S02] [Microsoft][ODBC SQL Server Driver][SQL Server]Invalid object name 'RFH_BIO_DW.dbo.FORM'. (208) (SQLExecDirectW)")
+
+-----02/02/2016 21:44
+Error getting dashboard data:
+Traceback (most recent call last):
+  File "C:\Users\cekin\Documents\GitHub\Global_Codes_App\Global Codes App\Global_Codes_App\views.py", line 298, in dashboard_getdata
+    data = sql.exec_stored_procedure_list('spGlobalsApp_AllSystemStats')
+  File "C:\Users\cekin\Documents\GitHub\Global_Codes_App\Global Codes App\Global_Codes_App\sql.py", line 90, in exec_stored_procedure_list
+    cursor.execute(sql)
+ProgrammingError: ('42S02', "[42S02] [Microsoft][ODBC SQL Server Driver][SQL Server]Invalid object name 'RFH_BIO_DW.dbo.FORM'. (208) (SQLExecDirectW)")
+
+-----02/02/2016 23:03
+Problem running spreadsheet query
+Traceback (most recent call last):
+  File "C:\Users\cekin\Documents\GitHub\Global_Codes_App\Global Codes App\Global_Codes_App\views.py", line 725, in get_spreadsheet_data
+    result = methodToCall()
+  File "C:\Users\cekin\Documents\GitHub\Global_Codes_App\Global Codes App\Global_Codes_App\spreadsheet_queries.py", line 113, in Lexical_Table
+    """.format(fields = '[' + '],['.join(columns)  + '] ',
+TypeError: sequence item 0: expected string, dict found
+-----02/02/2016 23:03
+Problem running spreadsheet query
+Traceback (most recent call last):
+  File "C:\Users\cekin\Documents\GitHub\Global_Codes_App\Global Codes App\Global_Codes_App\views.py", line 725, in get_spreadsheet_data
+    result = methodToCall()
+  File "C:\Users\cekin\Documents\GitHub\Global_Codes_App\Global Codes App\Global_Codes_App\spreadsheet_queries.py", line 113, in Lexical_Table
+    """.format(fields = '[' + '],['.join(columns)  + '] ',
+TypeError: sequence item 0: expected string, dict found

@@ -1,10 +1,12 @@
 # Imports
+from Global_Codes_App import app
 import config
+import sql
+import spreadsheet_queries
+
 import pyodbc
 from datetime import date, datetime, timedelta
 from flask import render_template, jsonify, Response, request, json
-from Global_Codes_App import app
-import sql
 import traceback
 import sys
 import time
@@ -16,11 +18,16 @@ last_database_update = None
 
 
 
-def error_log(error):
+def error_log(error, traceback = '', print_to_screen = False):
+    
     with open(config.error_log_file,'a') as F:
         current_time = time.strftime("%d/%m/%Y %H:%M")
-        F.write('-----' + current_time + '\n' + error)
-        print error
+        F.write('-----' + current_time + '\n' + error + '\n' + traceback)
+    
+    if print_to_screen == True:
+        print (error + '\n' + traceback)
+        result = dict(data = 'ERROR', error_detail=error)
+        return result
 
 
 @app.route('/logout')
@@ -684,10 +691,66 @@ def location_edit_new_code():
 
 
 
-
-
-
+#
+# Spreadsheet pro
+#
     
+@app.route('/spreadsheet_pro')
+@login_required
+def spreadsheet_pro():
+    return render_template(
+        'spreadsheet_pro.html',
+        title='Spreadsheet Pro Editor',
+        year=datetime.now().year
+    )
+
+
+@app.route('/get_spreadsheet_lists')
+def get_spreadsheet_lists():
+    try:
+        result = dict(data=config.spreadsheet_queries)
+    except Exception, err:
+        result = error_log('Problem getting list of spreadsheets', str(traceback.format_exc()), True)
+    json_data = jsonify(result)
+    return json_data
+
+
+@app.route('/get_spreadsheet_data')
+@login_required
+def get_spreadsheet_data():
+    query = request.args.get('query')
+
+    try:
+        methodToCall = getattr(spreadsheet_queries, query)
+        result = methodToCall()
+    except AttributeError:
+        result = error_log('Spreadsheet query not in scripts', '', True)
+    except Exception, err:
+        result = error_log('Problem running spreadsheet query', str(traceback.format_exc()), True)
+
+    json_data = jsonify(result)
+    return json_data
+
+
+
+@app.route('/spreadsheet_pro_change', methods=['POST'])
+@login_required
+def spreadsheet_pro_change():
+    print 'Submitting change to field from spreadsheet'
+
+    try:
+        submission = {r:request.form[r] for r in request.form}
+        spreadsheet_queries.update_odbc_table(submission,user.email)
+        result = dict(data = 'OK')
+
+    except Exception, err:
+        result = error_log('Problem updating SQL table', str(traceback.format_exc()), True)
+
+    json_data = jsonify(result)
+    return json_data
+
+
+
     
 
 
