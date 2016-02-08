@@ -179,3 +179,159 @@ def Global_Table():
 
     print sql
     return result
+
+
+
+def Worksection_Data(params):
+    columns = ['section_letter','section_name']
+
+    sql = """
+    select {fields} from {sections_table} where Origin = '{system}'
+    """.format(fields = '[' + '],['.join(columns)  + '] ', 
+               sections_table = config.global_sections,
+               system = params['system'])
+
+    result = run_odbc_query(sql)
+
+    print sql
+    return result
+
+
+def TLC_List_For_Mapper(params): #db_name, section, primary, unmapped):
+
+    section_sql = ''
+    other_sql = []
+    other_sql_string = ''
+
+    if params['section'] <> '0':
+        section_sql = " and f.WrkSection = '" + params['section'][:1] + "' "
+    if params['primary'] == '1':
+        other_sql.append(' tlc_primary = 1 ')
+    if params['unmapped'] == '1':
+        other_sql.append(' tlc_mapped = 0') 
+    if len(other_sql) > 0:
+        other_sql_string = ' where ' + ' and '.join(other_sql)
+
+    sql = """
+    select tlc_mapped, tlc, tlc_name, tlc_type, num_codes from (
+    select min(tfc_mapped) as tlc_mapped, tlc, tlc_name, tlc_type, tlc_primary, count(tfc) as num_codes
+    from (
+	    select tlc.[Test Code] as tlc, tlc.[Description] as tlc_name, tlc.[TLC type] as tlc_type,
+	    case when tlc.[Test Code] in (select distinct TLC from {FORM_INFO}) then 1 else 0 end as tlc_primary, tc.TFC as tfc
+	    ,case when isnull(map.loinc,'') <> '' or isnull(map.excluded,'') <> '' then 1 else 0 end as tfc_mapped
+	    from {TEST_STAGING} tlc 
+	    inner join {FLAT} tc on tlc.[Test Code] = tc.TLC and tlc.[Origin] = tc.[Origin]
+	    inner join {FORM_STAGING} f on tc.TFC = f.TFC and tc.[Origin] = f.[Origin]
+	    left join {GlobalCodes_Map} map on f.TFC = map.tfc and map.origin = f.[Origin]
+	    where tlc.Origin = '{DB_NAME}'
+	    {SECTION}
+    ) q1
+    group by tlc, tlc_name, tlc_type, tlc_primary
+    ) q2
+    {OTHER_SQL}
+    
+    """.format(DB_NAME = params['system'], 
+               SECTION = section_sql, 
+               OTHER_SQL = other_sql_string,
+               TEST_STAGING = config.global_test_staging,
+               FLAT = config.global_flatten,
+               FORM_STAGING = config.global_form_staging,
+               FORM_INFO = config.global_form_info,
+               GlobalCodes_Map = config.global_map_table)
+
+    print 'Running\n\n\n', sql, '\n\n\n'
+
+    result = run_odbc_query(sql)
+
+    result['columns'] = ['tlc_mapped','tlc','tlc_name','tlc_type','num_codes']
+    result['columns_desc'] = ['Mapped','TLC','TLC Description','Type','Num Codes']
+    result['id_field'] = 'tlc'
+    result['table'] = config.global_main_table
+
+    return result
+
+
+
+
+def TLC_Detail_For_Mapper(params): 
+
+    sql = """
+    select f.TFC as tfc, f.WrkSection as sec, f.TestName as tfc_name, 
+    isnull(f.Units,'') as tfc_units, isnull(f.Reflab,'') as tfc_reflab
+    ,fi.MostCommon
+
+    ,map.result_type 
+    ,map.loinc, isnull(loinc.LONG_COMMON_NAME,'') as loinc_name
+    ,map.container 
+
+    ,map.loc1, l1.SubSection as loc1_subsection, l1.Department as loc1_department, l1.Location as loc1_location
+    ,map.loc2, l2.SubSection as loc2_subsection, l2.Department as loc2_department, l2.Location as loc2_location
+    ,map.map_id
+
+    from {TEST} tlc
+    inner join {FLAT} flat on tlc.[Test Code] = flat.[TLC] and tlc.Origin = flat.Origin
+    inner join {FORM} f on flat.TFC = f.TFC and flat.Origin = f.Origin
+    left join {FORM_INFO} fi on f.TFC = fi.TFC and f.Origin = fi.Origin
+    left join {MAP} map on f.TFC = map.tfc and f.Origin = map.origin
+    left join {LOINC} loinc on map.loinc = loinc.LOINC_NUM
+    left join {LOCATIONS} l1 on map.loc1 = l1.SubSectionCode
+    left join {LOCATIONS} l2 on map.loc2 = l2.SubSectionCode
+    where tlc.[Test Code] = '{TLC}'
+    and tlc.[Origin] = '{ORIGIN}'
+    """.format(TEST = config.global_test_staging,
+               FLAT = config.global_flatten,
+               FORM = config.global_form_staging,
+               FORM_INFO = config.global_form_info,
+               MAP = config.global_map_table,
+               LOINC = config.loinc_db,
+               LOCATIONS = config.location_table,
+               TLC = params['TLC'],
+               ORIGIN = params['Origin'])
+
+    print 'Running\n\n\n', sql, '\n\n\n'
+
+    result = run_odbc_query(sql)
+
+    result['columns_desc'] = ['TFC','Sec','TFC Name','Units','Reflab','Most Common Result',
+                              'Type','LOINC','Container','Loc1','Current Location','Department',
+                              'Location','Loc2','Future Location','Future Dept','Future Loc','map_id']
+    result['id_field'] = 'map_id'
+    result['table'] = config.global_map_table
+
+    return result
+
+
+
+def Mapped_LOINC_List(params): 
+
+    #select loinc, result_type, container, loc1, loc1_subsection, loc1_department, 
+    #loc2, loc2_subsection, loc2_department, excluded, [text], loinc_alias
+
+    sql = """
+    
+    select loinc as id, [text]
+    from (
+    select distinct loinc,
+    l.LONG_COMMON_NAME as [text], l.LONG_COMMON_NAME + ';' + l.RELATEDNAMES2 as alias
+
+    from {MAP} map
+    inner join {LOINC} l on map.loinc = l.LOINC_NUM
+    where charindex('{search_term}',l.COMPONENT + ';' + l.RELATEDNAMES2) > 0
+    ) q
+    order by [text]
+    """.format(MAP = config.global_map_table, 
+               LOINC = config.loinc_db, 
+               #LOCATIONS = config.location_table,
+               search_term = params['search_term'])
+               
+
+    print 'Running\n\n\n', sql, '\n\n\n'
+
+    result = run_odbc_query(sql)
+
+    result['columns_desc'] = ['LOINC','Result Type','Container','Location Code','SubSection','Department',
+                              'New Location Code','New SubSection','New Department','Excluded','LOINC Name','Alias']
+    result['id_field'] = 'loinc'
+    result['table'] = config.loinc_db
+
+    return result

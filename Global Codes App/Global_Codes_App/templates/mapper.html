@@ -1,0 +1,321 @@
+{% extends "layout.html" %}
+
+
+{% block customstyle %}
+<style>
+
+    .tfc result-type {
+        width: 5%;
+    }
+    .container {
+        width: 10%;
+    }
+    .tfc-name {
+        width: 26%;
+    }
+    loinc loc1 loc2 {
+        width: 18%;
+    }
+
+</style>
+
+<link href="static/bower_components/select2/dist/css/select2.min.css" rel="stylesheet" />
+
+{% endblock %}
+
+    tfc tfc-name result-type loinc container loc1 loc2
+
+
+{% block content %}
+
+
+<div class="normalheader transition animated fadeIn">
+    <div class="hpanel">
+        <div class="panel-body">
+            <i class="pe-7s-global fa-4x pull-right"></i>
+            <a class="small-header-action" href="">
+                <div class="clip-header">
+                    <i class="fa fa-arrow-up"></i>
+                </div>
+            </a>
+
+            <h2 class="font-light m-b-xs">
+                Global Codes <span class="text-success">New Mapper</span>
+            </h2>
+            <small>Client editor for global codes for all systems. Select your system below and click a library code to begin.</small>
+        </div>
+    </div>
+</div>
+
+
+
+<!--<div id="global_code_editor_main" class="content animate-panel" data-effect="fadeIn">-->
+<div id="global_code_editor_main" class="content animate-panel">
+
+
+<!--Library Code Search-->
+<div class="row">
+    <!-- Library Search Panel -->
+    <div class="col-lg-3 col-md-3">
+        <div class="hpanel">
+            <div class="panel-body">
+                <div class="form">
+                    System: 
+                    <select id="tlc_search_system" class="form-control input-sm m-b">
+                        <option>CROM_ALL_DW</option>
+                        <option>WSL_ALL_DW</option>
+                        <option>EAL_BHI_DW</option>
+                    </select>
+                    Section: 
+                    <select id="tlc_search_section" class="form-control input-sm m-b">
+                        <option>0 - ALL</option>
+                        <option>A - HAEMATOLOGY</option>
+                        <option>B - BIOCHEMISTRY</option>
+                        <option>C - COAGULATION</option>
+                    </select>
+
+                    <div class="checkbox checkbox-primary m-b">
+                        <label><input id="tlc_search_primary" type="checkbox" value="">Primary Codes</label>
+                    </div>
+                    <div class="checkbox checkbox-primary m-b">
+                        <label><input id="tlc_search_unmapped" type="checkbox" value="">Unmapped</label>
+                    </div>
+                    <button id="tlc_search_submit" type="submit" class="btn btn-success m-b">Refresh</button>
+                </div>
+            </div>
+        </div>
+
+        
+        <!--Widget showing mapping stats-->
+        <div class="hpanel stats">
+            <div class="panel-body h-200">
+                <div class="stats-title pull-left">
+                    <h4>SYSTEM OVERVIEW</h4>
+                </div>
+                <div class="m-t-xl">
+                    <h3 id="system-overview-total" class="m-b-xs">2313 total</h3>
+                    <span id="system-overview-total-percent" class="font-bold no-margins">
+                        Percent mapped (83%)
+                    </span>
+
+                    <div class="progress m-t-xs full progress-small">
+                        <div id="system-overview-total-progress" style="width: 90%" aria-valuemax="100" aria-valuemin="0" aria-valuenow="55"
+                                role="progressbar" class="progress-bar progress-bar-success">
+                            <span class="sr-only">90% Complete (success)</span>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-xs-6">
+                            <small class="stats-label">Codes in section</small>
+                            <h4><span id="system-overview-codesinsection">735</span></h4>
+                        </div>
+
+                        <div class="col-xs-6">
+                            <small class="stats-label">Codes mapped</small>
+                            <h4 id="system-overview-codesmapped">  634  </h4>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="panel-footer">
+                Listing is for TFCs. Rest of mapping is in TLCs.
+            </div>
+        </div>
+    </div> <!-- End of col -->
+
+
+    <!-- Library codes detail panel -->
+    <div class="col-lg-9 col-md-9">
+        <div class="hpanel">
+            <div class="panel-heading hbuilt">
+                <b>Library Codes</b> | <span id="library-code-header">Loading...</span>
+                <div class="panel-tools pull-right">
+                    <a class="showhide"><i class="fa fa-chevron-up"></i></a>
+                    <a class="closebox"><i class="fa fa-times"></i></a>
+                </div>
+            </div>
+            <div class="panel-body">
+                <table id="library_code_datatable" class="table table-striped table-bordered table-hover">
+                    
+                </table>
+            </div>
+        </div>
+    </div>
+</div> <!--Close library code row-->
+
+
+<!-- Format code detail -->
+<div class="hpanel">
+    <div class="panel-heading">
+        <div id="tlc-detail-header" class="h3">
+            TLC - NAME OF THE TLC - TYPE
+        </div>
+    </div>
+    <div class="panel-body">
+
+
+        <p>
+            <strong>Tab or click the LOINC code</strong> This will open the search boxes. Press + to add new LOINC codes.
+        </p>
+
+        <div class="table-responsive">
+            <table id="library_code_detail_table" class="table table-hover table-bordered table-striped">
+                <tbody>
+                    <tr>
+                        <td>
+                            K
+                        </td>
+                        <td class="issue-infox">
+                            <span class="font-bold">Potassium</span> <small class="font-trans pull-right"> umol/l</small>
+                            <br />
+                            <small class="font-trans">This is issue with the coresponding note
+                            </small>
+                        </td>
+                        <td>
+                            <button class="btn btn-success btn-xs">R</button>
+                        </td>
+                        <td>
+                            <span class="loinc tabitem">Potassium level</span>
+                            <br />
+                            <small class="font-trans">Potassium level [moles/volume] in serum or plasma</small>
+                        </td>
+                        <td>
+                            Serum Gel
+                        </td>
+                        
+                        <td>
+                            <span class="loc1 tabitem">Great Ormond Street</span>
+                            <br />
+                            <small class="font-trans">Great Ormond Street, Clinical Chemistry</small>
+                        </td>
+                        <td>
+                            Great Ormond Street
+                            <br />
+                            <small class="font-trans">Great Ormond Street, Clinical Chemistry</small>
+                        </td>
+                    <tr>
+                        <td>
+                            K
+                        </td>
+                        <td class="issue-infox">
+                            <span class="font-bold">Potassium</span> <small class="font-trans pull-right"> umol/l</small>
+                            <br />
+                            <small class="font-trans">This is issue with the coresponding note
+                            </small>
+                        </td>
+                        <td>
+                            <button class="btn btn-success btn-xs">R</button>
+                        </td>
+                        <td>
+                            <span class="loinc tabitem">Potassium level</span>
+                            <br />
+                            <small class="font-trans">Potassium level [moles/volume] in serum or plasma</small>
+                        </td>
+                        <td>
+                            Serum Gel
+                        </td>
+                        
+                        <td>
+                            <span class="loc1 tabitem">Great Ormond Street</span>
+                            <br />
+                            <small class="font-trans">Great Ormond Street, Clinical Chemistry</small>
+                        </td>
+                        <td>
+                            Great Ormond Street
+                            <br />
+                            <small class="font-trans">Great Ormond Street, Clinical Chemistry</small>
+                        </td>
+             
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+
+    </div>
+</div>
+
+
+</div><!-- Main Panel Closing tag -->
+
+{% endblock %}
+
+
+{% block scripts %}
+
+<script src="static/bower_components/handlebars/handlebars.min.js"></script>
+<script src="static/bower_components/select2/dist/js/select2.full.min.js"></script>
+
+<!--Handlebars template: Library code mapper detail-->
+{% raw %}
+<script id="mapper-handlebars-template" type="text/x-handlebars-template">
+
+    <thead>
+        <th>TFC</th>
+        <th>TFC Description</th>
+        <th></th>
+        <th>LOINC</th>
+        <th>Container</th>
+        <th>Current Location</th>
+        <th>HALO Location</th>
+    </thead>
+    <tbody>
+
+    {{#each data}}
+
+    <tr id="{{map_id}}">
+
+        <td class="tfc"> 
+            {{tfc}} 
+        </td>
+
+        <td class="tfc-name">
+            <span class="font-bold">{{tfc_name}}</span> 
+            <small class="font-trans pull-right">{{tfc_units}}</small>
+            <br />
+            <small class="font-trans">{{MostCommon}}</small>
+        </td>
+
+        <td data-field="result_type" data-val="{{result_type}}" class="result-type tabitem">
+            <button tabindex="-1" class="btn btn-{{result_type_class result_type}} btn-xs result-type">{{result_type_firstchar result_type}}</button>
+        </td>
+
+        <td data-field="loinc" data-val="{{loinc}}" class="loinc tabitem">
+            <span>{{loinc_description_main loinc_name}}</span>
+            <br />
+            <small class="font-light">{{{loinc_description_full loinc_name}}}</small>
+        </td>
+
+        <td data-field="container" data-val="{{container}}" class="container tabitem">
+            {{container}}
+        </td>
+
+        <td data-field="loc1" data-val="{{loc1}}" class="loc1 tabitem">
+            <span>{{loc1_subsection}}</span>
+            <br />
+            <small class="font-trans">{{loc1_department}}</small>
+        </td>
+
+        <td data-field="loc2" data-val="{{loc2}}" class="loc2 tabitem">
+            <span>{{loc2_subsection}}</span>
+            <br />
+            <small class="font-trans">{{loc2_department}}</small>
+        </td>
+    </tr>
+    
+    {{/each}}
+
+    </tbody>
+
+            
+
+</script>
+{% endraw %}
+
+
+
+<script src="static/scripts/mapper.js"></script>
+
+
+{% endblock %}

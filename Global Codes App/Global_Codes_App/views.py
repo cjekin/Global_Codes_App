@@ -2,7 +2,7 @@
 from Global_Codes_App import app
 import config
 import sql
-import spreadsheet_queries
+import sql_queries
 
 import pyodbc
 from datetime import date, datetime, timedelta
@@ -76,6 +76,8 @@ def home():
 @app.route('/get_new_tfc')
 @login_required
 def get_new_tfc():
+    # This function gets new TFCs to the mapping table.
+    # It also build the FORM, TEST and TEST_CODES staging tables used in the app
     print 'Getting new TFCs'
     global last_database_update
 
@@ -705,42 +707,50 @@ def spreadsheet_pro():
     )
 
 
-@app.route('/get_spreadsheet_lists')
-def get_spreadsheet_lists():
+@app.route('/get_variable_from_config')
+def get_variable_from_config():
     try:
-        result = dict(data=config.spreadsheet_queries)
+        variable = request.args.get('variable')
+        result = dict(data=getattr(config, variable))
+    except AttributeError:
+        result = error_log('Variable does not exist', '', True)
     except Exception, err:
         result = error_log('Problem getting list of spreadsheets', str(traceback.format_exc()), True)
     json_data = jsonify(result)
     return json_data
 
 
-@app.route('/get_spreadsheet_data')
+@app.route('/get_sql_data')
 @login_required
-def get_spreadsheet_data():
+def get_sql_data():
     query = request.args.get('query')
-
+    params = {p[0]:p[1] for p in request.args.items() if p[0] != 'query'}
+    
     try:
-        methodToCall = getattr(spreadsheet_queries, query)
-        result = methodToCall()
+        methodToCall = getattr(sql_queries, query)
+        if params:
+            print '\n\nCalling ', query, ' with ', params
+            result = methodToCall(params)
+        else:
+            result = methodToCall()
     except AttributeError:
-        result = error_log('Spreadsheet query not in scripts', '', True)
+        result = error_log('Query does not exist: ' + query, str(traceback.format_exc()), True)
     except Exception, err:
-        result = error_log('Problem running spreadsheet query', str(traceback.format_exc()), True)
+        result = error_log('Problem running query', str(traceback.format_exc()), True)
 
     json_data = jsonify(result)
     return json_data
 
 
-
-@app.route('/spreadsheet_pro_change', methods=['POST'])
+#spreadsheet_pro_change
+@app.route('/submit_table_update', methods=['POST'])
 @login_required
-def spreadsheet_pro_change():
+def submit_table_update():
     print 'Submitting change to field from spreadsheet'
 
     try:
         submission = {r:request.form[r] for r in request.form}
-        spreadsheet_queries.update_odbc_table(submission,user.email)
+        sql_queries.update_odbc_table(submission,user.email)
         result = dict(data = 'OK')
 
     except Exception, err:
@@ -749,6 +759,40 @@ def spreadsheet_pro_change():
     json_data = jsonify(result)
     return json_data
 
+
+#
+# New Mapper
+#
+
+@app.route('/mapper')
+@login_required
+def mapper():
+    return render_template(
+        'mapper.html',
+        title='Mapper (New)',
+        year=datetime.now().year
+    )
+
+@app.route('/mapped_loinc_search')
+@login_required
+def mapped_loinc_search():
+    query = request.args.get('query')
+    params = {p[0]:p[1] for p in request.args.items() if p[0] != 'query'}
+    
+    try:
+        methodToCall = getattr(sql_queries, query)
+        if params:
+            print '\n\nCalling ', query, ' with ', params
+            result = methodToCall(params)
+        else:
+            result = methodToCall()
+    except AttributeError:
+        result = error_log('Query does not exist: ' + query, str(traceback.format_exc()), True)
+    except Exception, err:
+        result = error_log('Problem running query', str(traceback.format_exc()), True)
+
+    json_data = jsonify(result)
+    return json_data
 
 
     

@@ -1237,3 +1237,2268 @@ Traceback (most recent call last):
   File "C:\Users\cekin\Documents\GitHub\Global_Codes_App\Global Codes App\Global_Codes_App\spreadsheet_queries.py", line 113, in Lexical_Table
     """.format(fields = '[' + '],['.join(columns)  + '] ',
 TypeError: sequence item 0: expected string, dict found
+-----03/02/2016 22:04
+Error getting dashboard data:
+Traceback (most recent call last):
+  File "C:\Users\cekin\Documents\GitHub\Global_Codes_App\Global Codes App\Global_Codes_App\views.py", line 298, in dashboard_getdata
+    data = sql.exec_stored_procedure_list('spGlobalsApp_AllSystemStats')
+  File "C:\Users\cekin\Documents\GitHub\Global_Codes_App\Global Codes App\Global_Codes_App\sql.py", line 90, in exec_stored_procedure_list
+    cursor.execute(sql)
+ProgrammingError: ('42S02', "[42S02] [Microsoft][ODBC SQL Server Driver][SQL Server]Invalid object name 'RFH_BIO_DW.dbo.FORM'. (208) (SQLExecDirectW)")
+
+-----03/02/2016 22:04
+Error getting TLC list:
+Traceback (most recent call last):
+  File "C:\Users\cekin\Documents\GitHub\Global_Codes_App\Global Codes App\Global_Codes_App\views.py", line 112, in tlc_data
+    result = sql.exec_stored_procedure_list('spGlobalsApp_GetTLCList',args)
+  File "C:\Users\cekin\Documents\GitHub\Global_Codes_App\Global Codes App\Global_Codes_App\sql.py", line 90, in exec_stored_procedure_list
+    cursor.execute(sql)
+ProgrammingError: ('42S02', "[42S02] [Microsoft][ODBC SQL Server Driver][SQL Server]Invalid object name 'GlobalCodes_TEST_STAGING'. (208) (SQLExecDirectW)")
+
+-----03/02/2016 22:04
+Error getting TLC list:
+Traceback (most recent call last):
+  File "C:\Users\cekin\Documents\GitHub\Global_Codes_App\Global Codes App\Global_Codes_App\views.py", line 112, in tlc_data
+    result = sql.exec_stored_procedure_list('spGlobalsApp_GetTLCList',args)
+  File "C:\Users\cekin\Documents\GitHub\Global_Codes_App\Global Codes App\Global_Codes_App\sql.py", line 90, in exec_stored_procedure_list
+    cursor.execute(sql)
+ProgrammingError: ('42S02', "[42S02] [Microsoft][ODBC SQL Server Driver][SQL Server]Invalid object name 'GlobalCodes_TEST_STAGING'. (208) (SQLExecDirectW)")
+
+-----03/02/2016 22:04
+Error getting global codes together:
+Traceback (most recent call last):
+  File "C:\Users\cekin\Documents\GitHub\Global_Codes_App\Global Codes App\Global_Codes_App\views.py", line 191, in global_table
+    L['result'].append([r['GlobalCode'], r['Description'], r['Sample'], r['Type'], r['Analyte'], r['PrimaryLibrary'], r['SubSection'], r['Department'], r['Alias']])
+TypeError: string indices must be integers, not str
+
+-----03/02/2016 22:15
+Problem getting list of spreadsheets
+Traceback (most recent call last):
+  File "C:\Users\cekin\Documents\GitHub\Global_Codes_App\Global Codes App\Global_Codes_App\views.py", line 712, in get_variable_from_config
+    result = dict(data=getattr(mymodule, variablename))
+NameError: global name 'mymodule' is not defined
+-----03/02/2016 22:16
+Problem getting list of spreadsheets
+Traceback (most recent call last):
+  File "C:\Users\cekin\Documents\GitHub\Global_Codes_App\Global Codes App\Global_Codes_App\views.py", line 712, in get_variable_from_config
+    result = dict(data=getattr(config, variablename))
+NameError: global name 'variablename' is not defined
+-----03/02/2016 22:17
+Problem getting list of spreadsheets
+Traceback (most recent call last):
+  File "C:\Users\cekin\Documents\GitHub\Global_Codes_App\Global Codes App\Global_Codes_App\views.py", line 712, in get_variable_from_config
+    result = dict(data=getattr(config, variable))
+TypeError: getattr(): attribute name must be string
+-----03/02/2016 22:17
+Problem getting list of spreadsheets
+Traceback (most recent call last):
+  File "C:\Users\cekin\Documents\GitHub\Global_Codes_App\Global Codes App\Global_Codes_App\views.py", line 712, in get_variable_from_config
+    result = dict(data=getattr('config', variable))
+TypeError: getattr(): attribute name must be string
+-----03/02/2016 22:19
+Problem getting list of spreadsheets
+Traceback (most recent call last):
+  File "C:\Users\cekin\Documents\GitHub\Global_Codes_App\Global Codes App\Global_Codes_App\views.py", line 713, in get_variable_from_config
+    result = dict(data=getattr('config', variable))
+TypeError: getattr(): attribute name must be string
+-----03/02/2016 22:20
+Variable does not exist
+-----03/02/2016 22:20
+Variable does not exist
+-----03/02/2016 22:25
+Error getting TLC list:
+Traceback (most recent call last):
+  File "C:\Users\cekin\Documents\GitHub\Global_Codes_App\Global Codes App\Global_Codes_App\views.py", line 112, in tlc_data
+    result = sql.exec_stored_procedure_list('spGlobalsApp_GetTLCList',args)
+  File "C:\Users\cekin\Documents\GitHub\Global_Codes_App\Global Codes App\Global_Codes_App\sql.py", line 90, in exec_stored_procedure_list
+    cursor.execute(sql)
+ProgrammingError: ('42S02', "[42S02] [Microsoft][ODBC SQL Server Driver][SQL Server]Invalid object name 'GlobalCodes_TEST_STAGING'. (208) (SQLExecDirectW)")
+
+-----03/02/2016 22:25
+Error getting global codes together:
+Traceback (most recent call last):
+  File "C:\Users\cekin\Documents\GitHub\Global_Codes_App\Global Codes App\Global_Codes_App\views.py", line 191, in global_table
+    L['result'].append([r['GlobalCode'], r['Description'], r['Sample'], r['Type'], r['Analyte'], r['PrimaryLibrary'], r['SubSection'], r['Department'], r['Alias']])
+TypeError: string indices must be integers, not str
+
+-----03/02/2016 22:25
+Error getting TLC list:
+Traceback (most recent call last):
+  File "C:\Users\cekin\Documents\GitHub\Global_Codes_App\Global Codes App\Global_Codes_App\views.py", line 112, in tlc_data
+    result = sql.exec_stored_procedure_list('spGlobalsApp_GetTLCList',args)
+  File "C:\Users\cekin\Documents\GitHub\Global_Codes_App\Global Codes App\Global_Codes_App\sql.py", line 90, in exec_stored_procedure_list
+    cursor.execute(sql)
+ProgrammingError: ('42S02', "[42S02] [Microsoft][ODBC SQL Server Driver][SQL Server]Invalid object name 'GlobalCodes_TEST_STAGING'. (208) (SQLExecDirectW)")
+
+-----03/02/2016 22:32
+Error getting TLC list:
+Traceback (most recent call last):
+  File "C:\Users\cekin\Documents\GitHub\Global_Codes_App\Global Codes App\Global_Codes_App\views.py", line 112, in tlc_data
+    result = sql.exec_stored_procedure_list('spGlobalsApp_GetTLCList',args)
+  File "C:\Users\cekin\Documents\GitHub\Global_Codes_App\Global Codes App\Global_Codes_App\sql.py", line 90, in exec_stored_procedure_list
+    cursor.execute(sql)
+ProgrammingError: ('42S02', "[42S02] [Microsoft][ODBC SQL Server Driver][SQL Server]Invalid object name 'GlobalCodes_TEST_STAGING'. (208) (SQLExecDirectW)")
+
+-----03/02/2016 22:32
+Error getting TLC list:
+Traceback (most recent call last):
+  File "C:\Users\cekin\Documents\GitHub\Global_Codes_App\Global Codes App\Global_Codes_App\views.py", line 112, in tlc_data
+    result = sql.exec_stored_procedure_list('spGlobalsApp_GetTLCList',args)
+  File "C:\Users\cekin\Documents\GitHub\Global_Codes_App\Global Codes App\Global_Codes_App\sql.py", line 90, in exec_stored_procedure_list
+    cursor.execute(sql)
+ProgrammingError: ('42S02', "[42S02] [Microsoft][ODBC SQL Server Driver][SQL Server]Invalid object name 'GlobalCodes_TEST_STAGING'. (208) (SQLExecDirectW)")
+
+-----03/02/2016 22:32
+Error getting global codes together:
+Traceback (most recent call last):
+  File "C:\Users\cekin\Documents\GitHub\Global_Codes_App\Global Codes App\Global_Codes_App\views.py", line 191, in global_table
+    L['result'].append([r['GlobalCode'], r['Description'], r['Sample'], r['Type'], r['Analyte'], r['PrimaryLibrary'], r['SubSection'], r['Department'], r['Alias']])
+TypeError: string indices must be integers, not str
+
+-----03/02/2016 22:32
+Error getting TLC list:
+Traceback (most recent call last):
+  File "C:\Users\cekin\Documents\GitHub\Global_Codes_App\Global Codes App\Global_Codes_App\views.py", line 112, in tlc_data
+    result = sql.exec_stored_procedure_list('spGlobalsApp_GetTLCList',args)
+  File "C:\Users\cekin\Documents\GitHub\Global_Codes_App\Global Codes App\Global_Codes_App\sql.py", line 90, in exec_stored_procedure_list
+    cursor.execute(sql)
+ProgrammingError: ('42S02', "[42S02] [Microsoft][ODBC SQL Server Driver][SQL Server]Invalid object name 'GlobalCodes_TEST_STAGING'. (208) (SQLExecDirectW)")
+
+-----03/02/2016 22:32
+Error getting global codes together:
+Traceback (most recent call last):
+  File "C:\Users\cekin\Documents\GitHub\Global_Codes_App\Global Codes App\Global_Codes_App\views.py", line 191, in global_table
+    L['result'].append([r['GlobalCode'], r['Description'], r['Sample'], r['Type'], r['Analyte'], r['PrimaryLibrary'], r['SubSection'], r['Department'], r['Alias']])
+TypeError: string indices must be integers, not str
+
+-----03/02/2016 22:32
+Error getting TLC list:
+Traceback (most recent call last):
+  File "C:\Users\cekin\Documents\GitHub\Global_Codes_App\Global Codes App\Global_Codes_App\views.py", line 112, in tlc_data
+    result = sql.exec_stored_procedure_list('spGlobalsApp_GetTLCList',args)
+  File "C:\Users\cekin\Documents\GitHub\Global_Codes_App\Global Codes App\Global_Codes_App\sql.py", line 90, in exec_stored_procedure_list
+    cursor.execute(sql)
+ProgrammingError: ('42S02', "[42S02] [Microsoft][ODBC SQL Server Driver][SQL Server]Invalid object name 'GlobalCodes_TEST_STAGING'. (208) (SQLExecDirectW)")
+
+-----03/02/2016 22:35
+Error getting TLC list:
+Traceback (most recent call last):
+  File "C:\Users\cekin\Documents\GitHub\Global_Codes_App\Global Codes App\Global_Codes_App\views.py", line 112, in tlc_data
+    result = sql.exec_stored_procedure_list('spGlobalsApp_GetTLCList',args)
+  File "C:\Users\cekin\Documents\GitHub\Global_Codes_App\Global Codes App\Global_Codes_App\sql.py", line 90, in exec_stored_procedure_list
+    cursor.execute(sql)
+ProgrammingError: ('42S02', "[42S02] [Microsoft][ODBC SQL Server Driver][SQL Server]Invalid object name 'GlobalCodes_TEST_STAGING'. (208) (SQLExecDirectW)")
+
+-----03/02/2016 22:35
+Error getting global codes together:
+Traceback (most recent call last):
+  File "C:\Users\cekin\Documents\GitHub\Global_Codes_App\Global Codes App\Global_Codes_App\views.py", line 191, in global_table
+    L['result'].append([r['GlobalCode'], r['Description'], r['Sample'], r['Type'], r['Analyte'], r['PrimaryLibrary'], r['SubSection'], r['Department'], r['Alias']])
+TypeError: string indices must be integers, not str
+
+-----03/02/2016 22:35
+Error getting TLC list:
+Traceback (most recent call last):
+  File "C:\Users\cekin\Documents\GitHub\Global_Codes_App\Global Codes App\Global_Codes_App\views.py", line 112, in tlc_data
+    result = sql.exec_stored_procedure_list('spGlobalsApp_GetTLCList',args)
+  File "C:\Users\cekin\Documents\GitHub\Global_Codes_App\Global Codes App\Global_Codes_App\sql.py", line 90, in exec_stored_procedure_list
+    cursor.execute(sql)
+ProgrammingError: ('42S02', "[42S02] [Microsoft][ODBC SQL Server Driver][SQL Server]Invalid object name 'GlobalCodes_TEST_STAGING'. (208) (SQLExecDirectW)")
+
+-----03/02/2016 22:35
+Error getting TLC list:
+Traceback (most recent call last):
+  File "C:\Users\cekin\Documents\GitHub\Global_Codes_App\Global Codes App\Global_Codes_App\views.py", line 112, in tlc_data
+    result = sql.exec_stored_procedure_list('spGlobalsApp_GetTLCList',args)
+  File "C:\Users\cekin\Documents\GitHub\Global_Codes_App\Global Codes App\Global_Codes_App\sql.py", line 90, in exec_stored_procedure_list
+    cursor.execute(sql)
+ProgrammingError: ('42S02', "[42S02] [Microsoft][ODBC SQL Server Driver][SQL Server]Invalid object name 'GlobalCodes_TEST_STAGING'. (208) (SQLExecDirectW)")
+
+-----03/02/2016 22:35
+Error getting global codes together:
+Traceback (most recent call last):
+  File "C:\Users\cekin\Documents\GitHub\Global_Codes_App\Global Codes App\Global_Codes_App\views.py", line 191, in global_table
+    L['result'].append([r['GlobalCode'], r['Description'], r['Sample'], r['Type'], r['Analyte'], r['PrimaryLibrary'], r['SubSection'], r['Department'], r['Alias']])
+TypeError: string indices must be integers, not str
+
+-----03/02/2016 22:35
+Error getting TLC list:
+Traceback (most recent call last):
+  File "C:\Users\cekin\Documents\GitHub\Global_Codes_App\Global Codes App\Global_Codes_App\views.py", line 112, in tlc_data
+    result = sql.exec_stored_procedure_list('spGlobalsApp_GetTLCList',args)
+  File "C:\Users\cekin\Documents\GitHub\Global_Codes_App\Global Codes App\Global_Codes_App\sql.py", line 90, in exec_stored_procedure_list
+    cursor.execute(sql)
+ProgrammingError: ('42S02', "[42S02] [Microsoft][ODBC SQL Server Driver][SQL Server]Invalid object name 'GlobalCodes_TEST_STAGING'. (208) (SQLExecDirectW)")
+
+-----03/02/2016 22:36
+Error getting TLC list:
+Traceback (most recent call last):
+  File "C:\Users\cekin\Documents\GitHub\Global_Codes_App\Global Codes App\Global_Codes_App\views.py", line 112, in tlc_data
+    result = sql.exec_stored_procedure_list('spGlobalsApp_GetTLCList',args)
+  File "C:\Users\cekin\Documents\GitHub\Global_Codes_App\Global Codes App\Global_Codes_App\sql.py", line 90, in exec_stored_procedure_list
+    cursor.execute(sql)
+ProgrammingError: ('42S02', "[42S02] [Microsoft][ODBC SQL Server Driver][SQL Server]Invalid object name 'GlobalCodes_TEST_STAGING'. (208) (SQLExecDirectW)")
+
+-----03/02/2016 22:36
+Error getting global codes together:
+Traceback (most recent call last):
+  File "C:\Users\cekin\Documents\GitHub\Global_Codes_App\Global Codes App\Global_Codes_App\views.py", line 191, in global_table
+    L['result'].append([r['GlobalCode'], r['Description'], r['Sample'], r['Type'], r['Analyte'], r['PrimaryLibrary'], r['SubSection'], r['Department'], r['Alias']])
+TypeError: string indices must be integers, not str
+
+-----03/02/2016 22:36
+Error getting TLC list:
+Traceback (most recent call last):
+  File "C:\Users\cekin\Documents\GitHub\Global_Codes_App\Global Codes App\Global_Codes_App\views.py", line 112, in tlc_data
+    result = sql.exec_stored_procedure_list('spGlobalsApp_GetTLCList',args)
+  File "C:\Users\cekin\Documents\GitHub\Global_Codes_App\Global Codes App\Global_Codes_App\sql.py", line 90, in exec_stored_procedure_list
+    cursor.execute(sql)
+ProgrammingError: ('42S02', "[42S02] [Microsoft][ODBC SQL Server Driver][SQL Server]Invalid object name 'GlobalCodes_TEST_STAGING'. (208) (SQLExecDirectW)")
+
+-----03/02/2016 22:41
+Error getting TLC list:
+Traceback (most recent call last):
+  File "C:\Users\cekin\Documents\GitHub\Global_Codes_App\Global Codes App\Global_Codes_App\views.py", line 112, in tlc_data
+    result = sql.exec_stored_procedure_list('spGlobalsApp_GetTLCList',args)
+  File "C:\Users\cekin\Documents\GitHub\Global_Codes_App\Global Codes App\Global_Codes_App\sql.py", line 90, in exec_stored_procedure_list
+    cursor.execute(sql)
+ProgrammingError: ('42S02', "[42S02] [Microsoft][ODBC SQL Server Driver][SQL Server]Invalid object name 'GlobalCodes_TEST_STAGING'. (208) (SQLExecDirectW)")
+
+-----03/02/2016 22:41
+Error getting global codes together:
+Traceback (most recent call last):
+  File "C:\Users\cekin\Documents\GitHub\Global_Codes_App\Global Codes App\Global_Codes_App\views.py", line 191, in global_table
+    L['result'].append([r['GlobalCode'], r['Description'], r['Sample'], r['Type'], r['Analyte'], r['PrimaryLibrary'], r['SubSection'], r['Department'], r['Alias']])
+TypeError: string indices must be integers, not str
+
+-----03/02/2016 22:41
+Error getting TLC list:
+Traceback (most recent call last):
+  File "C:\Users\cekin\Documents\GitHub\Global_Codes_App\Global Codes App\Global_Codes_App\views.py", line 112, in tlc_data
+    result = sql.exec_stored_procedure_list('spGlobalsApp_GetTLCList',args)
+  File "C:\Users\cekin\Documents\GitHub\Global_Codes_App\Global Codes App\Global_Codes_App\sql.py", line 90, in exec_stored_procedure_list
+    cursor.execute(sql)
+ProgrammingError: ('42S02', "[42S02] [Microsoft][ODBC SQL Server Driver][SQL Server]Invalid object name 'GlobalCodes_TEST_STAGING'. (208) (SQLExecDirectW)")
+
+-----03/02/2016 22:42
+Error getting TLC list:
+Traceback (most recent call last):
+  File "C:\Users\cekin\Documents\GitHub\Global_Codes_App\Global Codes App\Global_Codes_App\views.py", line 112, in tlc_data
+    result = sql.exec_stored_procedure_list('spGlobalsApp_GetTLCList',args)
+  File "C:\Users\cekin\Documents\GitHub\Global_Codes_App\Global Codes App\Global_Codes_App\sql.py", line 90, in exec_stored_procedure_list
+    cursor.execute(sql)
+ProgrammingError: ('42S02', "[42S02] [Microsoft][ODBC SQL Server Driver][SQL Server]Invalid object name 'GlobalCodes_TEST_STAGING'. (208) (SQLExecDirectW)")
+
+-----03/02/2016 22:42
+Error getting global codes together:
+Traceback (most recent call last):
+  File "C:\Users\cekin\Documents\GitHub\Global_Codes_App\Global Codes App\Global_Codes_App\views.py", line 191, in global_table
+    L['result'].append([r['GlobalCode'], r['Description'], r['Sample'], r['Type'], r['Analyte'], r['PrimaryLibrary'], r['SubSection'], r['Department'], r['Alias']])
+TypeError: string indices must be integers, not str
+
+-----03/02/2016 22:42
+Error getting TLC list:
+Traceback (most recent call last):
+  File "C:\Users\cekin\Documents\GitHub\Global_Codes_App\Global Codes App\Global_Codes_App\views.py", line 112, in tlc_data
+    result = sql.exec_stored_procedure_list('spGlobalsApp_GetTLCList',args)
+  File "C:\Users\cekin\Documents\GitHub\Global_Codes_App\Global Codes App\Global_Codes_App\sql.py", line 90, in exec_stored_procedure_list
+    cursor.execute(sql)
+ProgrammingError: ('42S02', "[42S02] [Microsoft][ODBC SQL Server Driver][SQL Server]Invalid object name 'GlobalCodes_TEST_STAGING'. (208) (SQLExecDirectW)")
+
+-----03/02/2016 22:42
+Error getting TLC list:
+Traceback (most recent call last):
+  File "C:\Users\cekin\Documents\GitHub\Global_Codes_App\Global Codes App\Global_Codes_App\views.py", line 112, in tlc_data
+    result = sql.exec_stored_procedure_list('spGlobalsApp_GetTLCList',args)
+  File "C:\Users\cekin\Documents\GitHub\Global_Codes_App\Global Codes App\Global_Codes_App\sql.py", line 90, in exec_stored_procedure_list
+    cursor.execute(sql)
+ProgrammingError: ('42S02', "[42S02] [Microsoft][ODBC SQL Server Driver][SQL Server]Invalid object name 'GlobalCodes_TEST_STAGING'. (208) (SQLExecDirectW)")
+
+-----03/02/2016 22:42
+Error getting global codes together:
+Traceback (most recent call last):
+  File "C:\Users\cekin\Documents\GitHub\Global_Codes_App\Global Codes App\Global_Codes_App\views.py", line 191, in global_table
+    L['result'].append([r['GlobalCode'], r['Description'], r['Sample'], r['Type'], r['Analyte'], r['PrimaryLibrary'], r['SubSection'], r['Department'], r['Alias']])
+TypeError: string indices must be integers, not str
+
+-----03/02/2016 22:42
+Error getting TLC list:
+Traceback (most recent call last):
+  File "C:\Users\cekin\Documents\GitHub\Global_Codes_App\Global Codes App\Global_Codes_App\views.py", line 112, in tlc_data
+    result = sql.exec_stored_procedure_list('spGlobalsApp_GetTLCList',args)
+  File "C:\Users\cekin\Documents\GitHub\Global_Codes_App\Global Codes App\Global_Codes_App\sql.py", line 90, in exec_stored_procedure_list
+    cursor.execute(sql)
+ProgrammingError: ('42S02', "[42S02] [Microsoft][ODBC SQL Server Driver][SQL Server]Invalid object name 'GlobalCodes_TEST_STAGING'. (208) (SQLExecDirectW)")
+
+-----03/02/2016 22:45
+Error getting TLC list:
+Traceback (most recent call last):
+  File "C:\Users\cekin\Documents\GitHub\Global_Codes_App\Global Codes App\Global_Codes_App\views.py", line 112, in tlc_data
+    result = sql.exec_stored_procedure_list('spGlobalsApp_GetTLCList',args)
+  File "C:\Users\cekin\Documents\GitHub\Global_Codes_App\Global Codes App\Global_Codes_App\sql.py", line 90, in exec_stored_procedure_list
+    cursor.execute(sql)
+ProgrammingError: ('42S02', "[42S02] [Microsoft][ODBC SQL Server Driver][SQL Server]Invalid object name 'GlobalCodes_TEST_STAGING'. (208) (SQLExecDirectW)")
+
+-----03/02/2016 22:45
+Error getting global codes together:
+Traceback (most recent call last):
+  File "C:\Users\cekin\Documents\GitHub\Global_Codes_App\Global Codes App\Global_Codes_App\views.py", line 191, in global_table
+    L['result'].append([r['GlobalCode'], r['Description'], r['Sample'], r['Type'], r['Analyte'], r['PrimaryLibrary'], r['SubSection'], r['Department'], r['Alias']])
+TypeError: string indices must be integers, not str
+
+-----03/02/2016 22:45
+Error getting TLC list:
+Traceback (most recent call last):
+  File "C:\Users\cekin\Documents\GitHub\Global_Codes_App\Global Codes App\Global_Codes_App\views.py", line 112, in tlc_data
+    result = sql.exec_stored_procedure_list('spGlobalsApp_GetTLCList',args)
+  File "C:\Users\cekin\Documents\GitHub\Global_Codes_App\Global Codes App\Global_Codes_App\sql.py", line 90, in exec_stored_procedure_list
+    cursor.execute(sql)
+ProgrammingError: ('42S02', "[42S02] [Microsoft][ODBC SQL Server Driver][SQL Server]Invalid object name 'GlobalCodes_TEST_STAGING'. (208) (SQLExecDirectW)")
+
+-----03/02/2016 23:24
+Error getting TLC list:
+Traceback (most recent call last):
+  File "C:\Users\cekin\Documents\GitHub\Global_Codes_App\Global Codes App\Global_Codes_App\views.py", line 112, in tlc_data
+    result = sql.exec_stored_procedure_list('spGlobalsApp_GetTLCList',args)
+  File "C:\Users\cekin\Documents\GitHub\Global_Codes_App\Global Codes App\Global_Codes_App\sql.py", line 90, in exec_stored_procedure_list
+    cursor.execute(sql)
+ProgrammingError: ('42S02', "[42S02] [Microsoft][ODBC SQL Server Driver][SQL Server]Invalid object name 'GlobalCodes_TEST_STAGING'. (208) (SQLExecDirectW)")
+
+-----03/02/2016 23:24
+Error getting global codes together:
+Traceback (most recent call last):
+  File "C:\Users\cekin\Documents\GitHub\Global_Codes_App\Global Codes App\Global_Codes_App\views.py", line 191, in global_table
+    L['result'].append([r['GlobalCode'], r['Description'], r['Sample'], r['Type'], r['Analyte'], r['PrimaryLibrary'], r['SubSection'], r['Department'], r['Alias']])
+TypeError: string indices must be integers, not str
+
+-----03/02/2016 23:24
+Error getting TLC list:
+Traceback (most recent call last):
+  File "C:\Users\cekin\Documents\GitHub\Global_Codes_App\Global Codes App\Global_Codes_App\views.py", line 112, in tlc_data
+    result = sql.exec_stored_procedure_list('spGlobalsApp_GetTLCList',args)
+  File "C:\Users\cekin\Documents\GitHub\Global_Codes_App\Global Codes App\Global_Codes_App\sql.py", line 90, in exec_stored_procedure_list
+    cursor.execute(sql)
+ProgrammingError: ('42S02', "[42S02] [Microsoft][ODBC SQL Server Driver][SQL Server]Invalid object name 'GlobalCodes_TEST_STAGING'. (208) (SQLExecDirectW)")
+
+-----03/02/2016 23:28
+Error getting TLC list:
+Traceback (most recent call last):
+  File "C:\Users\cekin\Documents\GitHub\Global_Codes_App\Global Codes App\Global_Codes_App\views.py", line 112, in tlc_data
+    result = sql.exec_stored_procedure_list('spGlobalsApp_GetTLCList',args)
+  File "C:\Users\cekin\Documents\GitHub\Global_Codes_App\Global Codes App\Global_Codes_App\sql.py", line 90, in exec_stored_procedure_list
+    cursor.execute(sql)
+ProgrammingError: ('42S02', "[42S02] [Microsoft][ODBC SQL Server Driver][SQL Server]Invalid object name 'GlobalCodes_TEST_STAGING'. (208) (SQLExecDirectW)")
+
+-----03/02/2016 23:28
+Error getting global codes together:
+Traceback (most recent call last):
+  File "C:\Users\cekin\Documents\GitHub\Global_Codes_App\Global Codes App\Global_Codes_App\views.py", line 191, in global_table
+    L['result'].append([r['GlobalCode'], r['Description'], r['Sample'], r['Type'], r['Analyte'], r['PrimaryLibrary'], r['SubSection'], r['Department'], r['Alias']])
+TypeError: string indices must be integers, not str
+
+-----03/02/2016 23:28
+Error getting TLC list:
+Traceback (most recent call last):
+  File "C:\Users\cekin\Documents\GitHub\Global_Codes_App\Global Codes App\Global_Codes_App\views.py", line 112, in tlc_data
+    result = sql.exec_stored_procedure_list('spGlobalsApp_GetTLCList',args)
+  File "C:\Users\cekin\Documents\GitHub\Global_Codes_App\Global Codes App\Global_Codes_App\sql.py", line 90, in exec_stored_procedure_list
+    cursor.execute(sql)
+ProgrammingError: ('42S02', "[42S02] [Microsoft][ODBC SQL Server Driver][SQL Server]Invalid object name 'GlobalCodes_TEST_STAGING'. (208) (SQLExecDirectW)")
+
+-----04/02/2016 00:04
+Error getting TLC list:
+Traceback (most recent call last):
+  File "C:\Users\cekin\Documents\GitHub\Global_Codes_App\Global Codes App\Global_Codes_App\views.py", line 112, in tlc_data
+    result = sql.exec_stored_procedure_list('spGlobalsApp_GetTLCList',args)
+  File "C:\Users\cekin\Documents\GitHub\Global_Codes_App\Global Codes App\Global_Codes_App\sql.py", line 90, in exec_stored_procedure_list
+    cursor.execute(sql)
+ProgrammingError: ('42S02', "[42S02] [Microsoft][ODBC SQL Server Driver][SQL Server]Invalid object name 'GlobalCodes_TEST_STAGING'. (208) (SQLExecDirectW)")
+
+-----04/02/2016 00:04
+Error getting global codes together:
+Traceback (most recent call last):
+  File "C:\Users\cekin\Documents\GitHub\Global_Codes_App\Global Codes App\Global_Codes_App\views.py", line 191, in global_table
+    L['result'].append([r['GlobalCode'], r['Description'], r['Sample'], r['Type'], r['Analyte'], r['PrimaryLibrary'], r['SubSection'], r['Department'], r['Alias']])
+TypeError: string indices must be integers, not str
+
+-----04/02/2016 00:04
+Error getting global codes together:
+Traceback (most recent call last):
+  File "C:\Users\cekin\Documents\GitHub\Global_Codes_App\Global Codes App\Global_Codes_App\views.py", line 191, in global_table
+    L['result'].append([r['GlobalCode'], r['Description'], r['Sample'], r['Type'], r['Analyte'], r['PrimaryLibrary'], r['SubSection'], r['Department'], r['Alias']])
+TypeError: string indices must be integers, not str
+
+-----04/02/2016 00:05
+Error getting global codes together:
+Traceback (most recent call last):
+  File "C:\Users\cekin\Documents\GitHub\Global_Codes_App\Global Codes App\Global_Codes_App\views.py", line 191, in global_table
+    L['result'].append([r['GlobalCode'], r['Description'], r['Sample'], r['Type'], r['Analyte'], r['PrimaryLibrary'], r['SubSection'], r['Department'], r['Alias']])
+TypeError: string indices must be integers, not str
+
+-----04/02/2016 00:05
+Error getting TLC list:
+Traceback (most recent call last):
+  File "C:\Users\cekin\Documents\GitHub\Global_Codes_App\Global Codes App\Global_Codes_App\views.py", line 112, in tlc_data
+    result = sql.exec_stored_procedure_list('spGlobalsApp_GetTLCList',args)
+  File "C:\Users\cekin\Documents\GitHub\Global_Codes_App\Global Codes App\Global_Codes_App\sql.py", line 90, in exec_stored_procedure_list
+    cursor.execute(sql)
+ProgrammingError: ('42S02', "[42S02] [Microsoft][ODBC SQL Server Driver][SQL Server]Invalid object name 'GlobalCodes_TEST_STAGING'. (208) (SQLExecDirectW)")
+
+-----04/02/2016 00:05
+Error getting global codes together:
+Traceback (most recent call last):
+  File "C:\Users\cekin\Documents\GitHub\Global_Codes_App\Global Codes App\Global_Codes_App\views.py", line 191, in global_table
+    L['result'].append([r['GlobalCode'], r['Description'], r['Sample'], r['Type'], r['Analyte'], r['PrimaryLibrary'], r['SubSection'], r['Department'], r['Alias']])
+TypeError: string indices must be integers, not str
+
+-----04/02/2016 00:09
+Error getting global codes together:
+Traceback (most recent call last):
+  File "C:\Users\cekin\Documents\GitHub\Global_Codes_App\Global Codes App\Global_Codes_App\views.py", line 191, in global_table
+    L['result'].append([r['GlobalCode'], r['Description'], r['Sample'], r['Type'], r['Analyte'], r['PrimaryLibrary'], r['SubSection'], r['Department'], r['Alias']])
+TypeError: string indices must be integers, not str
+
+-----04/02/2016 00:09
+Error getting TLC list:
+Traceback (most recent call last):
+  File "C:\Users\cekin\Documents\GitHub\Global_Codes_App\Global Codes App\Global_Codes_App\views.py", line 112, in tlc_data
+    result = sql.exec_stored_procedure_list('spGlobalsApp_GetTLCList',args)
+  File "C:\Users\cekin\Documents\GitHub\Global_Codes_App\Global Codes App\Global_Codes_App\sql.py", line 90, in exec_stored_procedure_list
+    cursor.execute(sql)
+ProgrammingError: ('42S02', "[42S02] [Microsoft][ODBC SQL Server Driver][SQL Server]Invalid object name 'GlobalCodes_TEST_STAGING'. (208) (SQLExecDirectW)")
+
+-----04/02/2016 00:09
+Error getting global codes together:
+Traceback (most recent call last):
+  File "C:\Users\cekin\Documents\GitHub\Global_Codes_App\Global Codes App\Global_Codes_App\views.py", line 191, in global_table
+    L['result'].append([r['GlobalCode'], r['Description'], r['Sample'], r['Type'], r['Analyte'], r['PrimaryLibrary'], r['SubSection'], r['Department'], r['Alias']])
+TypeError: string indices must be integers, not str
+
+-----04/02/2016 00:12
+Error getting global codes together:
+Traceback (most recent call last):
+  File "C:\Users\cekin\Documents\GitHub\Global_Codes_App\Global Codes App\Global_Codes_App\views.py", line 191, in global_table
+    L['result'].append([r['GlobalCode'], r['Description'], r['Sample'], r['Type'], r['Analyte'], r['PrimaryLibrary'], r['SubSection'], r['Department'], r['Alias']])
+TypeError: string indices must be integers, not str
+
+-----04/02/2016 00:12
+Error getting TLC list:
+Traceback (most recent call last):
+  File "C:\Users\cekin\Documents\GitHub\Global_Codes_App\Global Codes App\Global_Codes_App\views.py", line 112, in tlc_data
+    result = sql.exec_stored_procedure_list('spGlobalsApp_GetTLCList',args)
+  File "C:\Users\cekin\Documents\GitHub\Global_Codes_App\Global Codes App\Global_Codes_App\sql.py", line 90, in exec_stored_procedure_list
+    cursor.execute(sql)
+ProgrammingError: ('42S02', "[42S02] [Microsoft][ODBC SQL Server Driver][SQL Server]Invalid object name 'GlobalCodes_TEST_STAGING'. (208) (SQLExecDirectW)")
+
+-----04/02/2016 00:12
+Error getting global codes together:
+Traceback (most recent call last):
+  File "C:\Users\cekin\Documents\GitHub\Global_Codes_App\Global Codes App\Global_Codes_App\views.py", line 191, in global_table
+    L['result'].append([r['GlobalCode'], r['Description'], r['Sample'], r['Type'], r['Analyte'], r['PrimaryLibrary'], r['SubSection'], r['Department'], r['Alias']])
+TypeError: string indices must be integers, not str
+
+-----04/02/2016 00:13
+Error getting global codes together:
+Traceback (most recent call last):
+  File "C:\Users\cekin\Documents\GitHub\Global_Codes_App\Global Codes App\Global_Codes_App\views.py", line 191, in global_table
+    L['result'].append([r['GlobalCode'], r['Description'], r['Sample'], r['Type'], r['Analyte'], r['PrimaryLibrary'], r['SubSection'], r['Department'], r['Alias']])
+TypeError: string indices must be integers, not str
+
+-----04/02/2016 00:13
+Error getting TLC list:
+Traceback (most recent call last):
+  File "C:\Users\cekin\Documents\GitHub\Global_Codes_App\Global Codes App\Global_Codes_App\views.py", line 112, in tlc_data
+    result = sql.exec_stored_procedure_list('spGlobalsApp_GetTLCList',args)
+  File "C:\Users\cekin\Documents\GitHub\Global_Codes_App\Global Codes App\Global_Codes_App\sql.py", line 90, in exec_stored_procedure_list
+    cursor.execute(sql)
+ProgrammingError: ('42S02', "[42S02] [Microsoft][ODBC SQL Server Driver][SQL Server]Invalid object name 'GlobalCodes_TEST_STAGING'. (208) (SQLExecDirectW)")
+
+-----04/02/2016 00:13
+Error getting global codes together:
+Traceback (most recent call last):
+  File "C:\Users\cekin\Documents\GitHub\Global_Codes_App\Global Codes App\Global_Codes_App\views.py", line 191, in global_table
+    L['result'].append([r['GlobalCode'], r['Description'], r['Sample'], r['Type'], r['Analyte'], r['PrimaryLibrary'], r['SubSection'], r['Department'], r['Alias']])
+TypeError: string indices must be integers, not str
+
+-----04/02/2016 00:14
+Error getting global codes together:
+Traceback (most recent call last):
+  File "C:\Users\cekin\Documents\GitHub\Global_Codes_App\Global Codes App\Global_Codes_App\views.py", line 191, in global_table
+    L['result'].append([r['GlobalCode'], r['Description'], r['Sample'], r['Type'], r['Analyte'], r['PrimaryLibrary'], r['SubSection'], r['Department'], r['Alias']])
+TypeError: string indices must be integers, not str
+
+-----04/02/2016 00:14
+Error getting TLC list:
+Traceback (most recent call last):
+  File "C:\Users\cekin\Documents\GitHub\Global_Codes_App\Global Codes App\Global_Codes_App\views.py", line 112, in tlc_data
+    result = sql.exec_stored_procedure_list('spGlobalsApp_GetTLCList',args)
+  File "C:\Users\cekin\Documents\GitHub\Global_Codes_App\Global Codes App\Global_Codes_App\sql.py", line 90, in exec_stored_procedure_list
+    cursor.execute(sql)
+ProgrammingError: ('42S02', "[42S02] [Microsoft][ODBC SQL Server Driver][SQL Server]Invalid object name 'GlobalCodes_TEST_STAGING'. (208) (SQLExecDirectW)")
+
+-----04/02/2016 00:14
+Error getting global codes together:
+Traceback (most recent call last):
+  File "C:\Users\cekin\Documents\GitHub\Global_Codes_App\Global Codes App\Global_Codes_App\views.py", line 191, in global_table
+    L['result'].append([r['GlobalCode'], r['Description'], r['Sample'], r['Type'], r['Analyte'], r['PrimaryLibrary'], r['SubSection'], r['Department'], r['Alias']])
+TypeError: string indices must be integers, not str
+
+-----04/02/2016 00:19
+Error getting TLC list:
+Traceback (most recent call last):
+  File "C:\Users\cekin\Documents\GitHub\Global_Codes_App\Global Codes App\Global_Codes_App\views.py", line 112, in tlc_data
+    result = sql.exec_stored_procedure_list('spGlobalsApp_GetTLCList',args)
+  File "C:\Users\cekin\Documents\GitHub\Global_Codes_App\Global Codes App\Global_Codes_App\sql.py", line 90, in exec_stored_procedure_list
+    cursor.execute(sql)
+ProgrammingError: ('42S02', "[42S02] [Microsoft][ODBC SQL Server Driver][SQL Server]Invalid object name 'GlobalCodes_TEST_STAGING'. (208) (SQLExecDirectW)")
+
+-----04/02/2016 00:19
+Error getting global codes together:
+Traceback (most recent call last):
+  File "C:\Users\cekin\Documents\GitHub\Global_Codes_App\Global Codes App\Global_Codes_App\views.py", line 191, in global_table
+    L['result'].append([r['GlobalCode'], r['Description'], r['Sample'], r['Type'], r['Analyte'], r['PrimaryLibrary'], r['SubSection'], r['Department'], r['Alias']])
+TypeError: string indices must be integers, not str
+
+-----04/02/2016 00:20
+Error getting global codes together:
+Traceback (most recent call last):
+  File "C:\Users\cekin\Documents\GitHub\Global_Codes_App\Global Codes App\Global_Codes_App\views.py", line 191, in global_table
+    L['result'].append([r['GlobalCode'], r['Description'], r['Sample'], r['Type'], r['Analyte'], r['PrimaryLibrary'], r['SubSection'], r['Department'], r['Alias']])
+TypeError: string indices must be integers, not str
+
+-----04/02/2016 00:20
+Error getting global codes together:
+Traceback (most recent call last):
+  File "C:\Users\cekin\Documents\GitHub\Global_Codes_App\Global Codes App\Global_Codes_App\views.py", line 191, in global_table
+    L['result'].append([r['GlobalCode'], r['Description'], r['Sample'], r['Type'], r['Analyte'], r['PrimaryLibrary'], r['SubSection'], r['Department'], r['Alias']])
+TypeError: string indices must be integers, not str
+
+-----04/02/2016 00:20
+Error getting global codes together:
+Traceback (most recent call last):
+  File "C:\Users\cekin\Documents\GitHub\Global_Codes_App\Global Codes App\Global_Codes_App\views.py", line 191, in global_table
+    L['result'].append([r['GlobalCode'], r['Description'], r['Sample'], r['Type'], r['Analyte'], r['PrimaryLibrary'], r['SubSection'], r['Department'], r['Alias']])
+TypeError: string indices must be integers, not str
+
+-----04/02/2016 00:20
+Error getting TLC list:
+Traceback (most recent call last):
+  File "C:\Users\cekin\Documents\GitHub\Global_Codes_App\Global Codes App\Global_Codes_App\views.py", line 112, in tlc_data
+    result = sql.exec_stored_procedure_list('spGlobalsApp_GetTLCList',args)
+  File "C:\Users\cekin\Documents\GitHub\Global_Codes_App\Global Codes App\Global_Codes_App\sql.py", line 90, in exec_stored_procedure_list
+    cursor.execute(sql)
+ProgrammingError: ('42S02', "[42S02] [Microsoft][ODBC SQL Server Driver][SQL Server]Invalid object name 'GlobalCodes_TEST_STAGING'. (208) (SQLExecDirectW)")
+
+-----04/02/2016 00:21
+Error getting global codes together:
+Traceback (most recent call last):
+  File "C:\Users\cekin\Documents\GitHub\Global_Codes_App\Global Codes App\Global_Codes_App\views.py", line 191, in global_table
+    L['result'].append([r['GlobalCode'], r['Description'], r['Sample'], r['Type'], r['Analyte'], r['PrimaryLibrary'], r['SubSection'], r['Department'], r['Alias']])
+TypeError: string indices must be integers, not str
+
+-----04/02/2016 00:21
+Error getting global codes together:
+Traceback (most recent call last):
+  File "C:\Users\cekin\Documents\GitHub\Global_Codes_App\Global Codes App\Global_Codes_App\views.py", line 191, in global_table
+    L['result'].append([r['GlobalCode'], r['Description'], r['Sample'], r['Type'], r['Analyte'], r['PrimaryLibrary'], r['SubSection'], r['Department'], r['Alias']])
+TypeError: string indices must be integers, not str
+
+-----04/02/2016 00:21
+Error getting TLC list:
+Traceback (most recent call last):
+  File "C:\Users\cekin\Documents\GitHub\Global_Codes_App\Global Codes App\Global_Codes_App\views.py", line 112, in tlc_data
+    result = sql.exec_stored_procedure_list('spGlobalsApp_GetTLCList',args)
+  File "C:\Users\cekin\Documents\GitHub\Global_Codes_App\Global Codes App\Global_Codes_App\sql.py", line 90, in exec_stored_procedure_list
+    cursor.execute(sql)
+ProgrammingError: ('42S02', "[42S02] [Microsoft][ODBC SQL Server Driver][SQL Server]Invalid object name 'GlobalCodes_TEST_STAGING'. (208) (SQLExecDirectW)")
+
+-----04/02/2016 00:21
+Error getting TLC list:
+Traceback (most recent call last):
+  File "C:\Users\cekin\Documents\GitHub\Global_Codes_App\Global Codes App\Global_Codes_App\views.py", line 112, in tlc_data
+    result = sql.exec_stored_procedure_list('spGlobalsApp_GetTLCList',args)
+  File "C:\Users\cekin\Documents\GitHub\Global_Codes_App\Global Codes App\Global_Codes_App\sql.py", line 90, in exec_stored_procedure_list
+    cursor.execute(sql)
+ProgrammingError: ('42S02', "[42S02] [Microsoft][ODBC SQL Server Driver][SQL Server]Invalid object name 'GlobalCodes_TEST_STAGING'. (208) (SQLExecDirectW)")
+
+-----04/02/2016 00:21
+Error getting global codes together:
+Traceback (most recent call last):
+  File "C:\Users\cekin\Documents\GitHub\Global_Codes_App\Global Codes App\Global_Codes_App\views.py", line 191, in global_table
+    L['result'].append([r['GlobalCode'], r['Description'], r['Sample'], r['Type'], r['Analyte'], r['PrimaryLibrary'], r['SubSection'], r['Department'], r['Alias']])
+TypeError: string indices must be integers, not str
+
+-----04/02/2016 00:21
+Error getting global codes together:
+Traceback (most recent call last):
+  File "C:\Users\cekin\Documents\GitHub\Global_Codes_App\Global Codes App\Global_Codes_App\views.py", line 191, in global_table
+    L['result'].append([r['GlobalCode'], r['Description'], r['Sample'], r['Type'], r['Analyte'], r['PrimaryLibrary'], r['SubSection'], r['Department'], r['Alias']])
+TypeError: string indices must be integers, not str
+
+-----04/02/2016 00:21
+Error getting global codes together:
+Traceback (most recent call last):
+  File "C:\Users\cekin\Documents\GitHub\Global_Codes_App\Global Codes App\Global_Codes_App\views.py", line 191, in global_table
+    L['result'].append([r['GlobalCode'], r['Description'], r['Sample'], r['Type'], r['Analyte'], r['PrimaryLibrary'], r['SubSection'], r['Department'], r['Alias']])
+TypeError: string indices must be integers, not str
+
+-----04/02/2016 00:21
+Error getting TLC list:
+Traceback (most recent call last):
+  File "C:\Users\cekin\Documents\GitHub\Global_Codes_App\Global Codes App\Global_Codes_App\views.py", line 112, in tlc_data
+    result = sql.exec_stored_procedure_list('spGlobalsApp_GetTLCList',args)
+  File "C:\Users\cekin\Documents\GitHub\Global_Codes_App\Global Codes App\Global_Codes_App\sql.py", line 90, in exec_stored_procedure_list
+    cursor.execute(sql)
+ProgrammingError: ('42S02', "[42S02] [Microsoft][ODBC SQL Server Driver][SQL Server]Invalid object name 'GlobalCodes_TEST_STAGING'. (208) (SQLExecDirectW)")
+
+-----04/02/2016 00:21
+Error getting global codes together:
+Traceback (most recent call last):
+  File "C:\Users\cekin\Documents\GitHub\Global_Codes_App\Global Codes App\Global_Codes_App\views.py", line 191, in global_table
+    L['result'].append([r['GlobalCode'], r['Description'], r['Sample'], r['Type'], r['Analyte'], r['PrimaryLibrary'], r['SubSection'], r['Department'], r['Alias']])
+TypeError: string indices must be integers, not str
+
+-----04/02/2016 00:23
+Error getting global codes together:
+Traceback (most recent call last):
+  File "C:\Users\cekin\Documents\GitHub\Global_Codes_App\Global Codes App\Global_Codes_App\views.py", line 191, in global_table
+    L['result'].append([r['GlobalCode'], r['Description'], r['Sample'], r['Type'], r['Analyte'], r['PrimaryLibrary'], r['SubSection'], r['Department'], r['Alias']])
+TypeError: string indices must be integers, not str
+
+-----04/02/2016 00:23
+Error getting TLC list:
+Traceback (most recent call last):
+  File "C:\Users\cekin\Documents\GitHub\Global_Codes_App\Global Codes App\Global_Codes_App\views.py", line 112, in tlc_data
+    result = sql.exec_stored_procedure_list('spGlobalsApp_GetTLCList',args)
+  File "C:\Users\cekin\Documents\GitHub\Global_Codes_App\Global Codes App\Global_Codes_App\sql.py", line 90, in exec_stored_procedure_list
+    cursor.execute(sql)
+ProgrammingError: ('42S02', "[42S02] [Microsoft][ODBC SQL Server Driver][SQL Server]Invalid object name 'GlobalCodes_TEST_STAGING'. (208) (SQLExecDirectW)")
+
+-----04/02/2016 00:23
+Error getting global codes together:
+Traceback (most recent call last):
+  File "C:\Users\cekin\Documents\GitHub\Global_Codes_App\Global Codes App\Global_Codes_App\views.py", line 191, in global_table
+    L['result'].append([r['GlobalCode'], r['Description'], r['Sample'], r['Type'], r['Analyte'], r['PrimaryLibrary'], r['SubSection'], r['Department'], r['Alias']])
+TypeError: string indices must be integers, not str
+
+-----04/02/2016 00:24
+Error getting global codes together:
+Traceback (most recent call last):
+  File "C:\Users\cekin\Documents\GitHub\Global_Codes_App\Global Codes App\Global_Codes_App\views.py", line 191, in global_table
+    L['result'].append([r['GlobalCode'], r['Description'], r['Sample'], r['Type'], r['Analyte'], r['PrimaryLibrary'], r['SubSection'], r['Department'], r['Alias']])
+TypeError: string indices must be integers, not str
+
+-----04/02/2016 00:24
+Error getting TLC list:
+Traceback (most recent call last):
+  File "C:\Users\cekin\Documents\GitHub\Global_Codes_App\Global Codes App\Global_Codes_App\views.py", line 112, in tlc_data
+    result = sql.exec_stored_procedure_list('spGlobalsApp_GetTLCList',args)
+  File "C:\Users\cekin\Documents\GitHub\Global_Codes_App\Global Codes App\Global_Codes_App\sql.py", line 90, in exec_stored_procedure_list
+    cursor.execute(sql)
+ProgrammingError: ('42S02', "[42S02] [Microsoft][ODBC SQL Server Driver][SQL Server]Invalid object name 'GlobalCodes_TEST_STAGING'. (208) (SQLExecDirectW)")
+
+-----04/02/2016 00:24
+Error getting global codes together:
+Traceback (most recent call last):
+  File "C:\Users\cekin\Documents\GitHub\Global_Codes_App\Global Codes App\Global_Codes_App\views.py", line 191, in global_table
+    L['result'].append([r['GlobalCode'], r['Description'], r['Sample'], r['Type'], r['Analyte'], r['PrimaryLibrary'], r['SubSection'], r['Department'], r['Alias']])
+TypeError: string indices must be integers, not str
+
+-----04/02/2016 00:25
+Error getting global codes together:
+Traceback (most recent call last):
+  File "C:\Users\cekin\Documents\GitHub\Global_Codes_App\Global Codes App\Global_Codes_App\views.py", line 191, in global_table
+    L['result'].append([r['GlobalCode'], r['Description'], r['Sample'], r['Type'], r['Analyte'], r['PrimaryLibrary'], r['SubSection'], r['Department'], r['Alias']])
+TypeError: string indices must be integers, not str
+
+-----04/02/2016 00:25
+Error getting TLC list:
+Traceback (most recent call last):
+  File "C:\Users\cekin\Documents\GitHub\Global_Codes_App\Global Codes App\Global_Codes_App\views.py", line 112, in tlc_data
+    result = sql.exec_stored_procedure_list('spGlobalsApp_GetTLCList',args)
+  File "C:\Users\cekin\Documents\GitHub\Global_Codes_App\Global Codes App\Global_Codes_App\sql.py", line 90, in exec_stored_procedure_list
+    cursor.execute(sql)
+ProgrammingError: ('42S02', "[42S02] [Microsoft][ODBC SQL Server Driver][SQL Server]Invalid object name 'GlobalCodes_TEST_STAGING'. (208) (SQLExecDirectW)")
+
+-----04/02/2016 00:25
+Error getting global codes together:
+Traceback (most recent call last):
+  File "C:\Users\cekin\Documents\GitHub\Global_Codes_App\Global Codes App\Global_Codes_App\views.py", line 191, in global_table
+    L['result'].append([r['GlobalCode'], r['Description'], r['Sample'], r['Type'], r['Analyte'], r['PrimaryLibrary'], r['SubSection'], r['Department'], r['Alias']])
+TypeError: string indices must be integers, not str
+
+-----04/02/2016 00:25
+Error getting global codes together:
+Traceback (most recent call last):
+  File "C:\Users\cekin\Documents\GitHub\Global_Codes_App\Global Codes App\Global_Codes_App\views.py", line 191, in global_table
+    L['result'].append([r['GlobalCode'], r['Description'], r['Sample'], r['Type'], r['Analyte'], r['PrimaryLibrary'], r['SubSection'], r['Department'], r['Alias']])
+TypeError: string indices must be integers, not str
+
+-----04/02/2016 00:25
+Error getting TLC list:
+Traceback (most recent call last):
+  File "C:\Users\cekin\Documents\GitHub\Global_Codes_App\Global Codes App\Global_Codes_App\views.py", line 112, in tlc_data
+    result = sql.exec_stored_procedure_list('spGlobalsApp_GetTLCList',args)
+  File "C:\Users\cekin\Documents\GitHub\Global_Codes_App\Global Codes App\Global_Codes_App\sql.py", line 90, in exec_stored_procedure_list
+    cursor.execute(sql)
+ProgrammingError: ('42S02', "[42S02] [Microsoft][ODBC SQL Server Driver][SQL Server]Invalid object name 'GlobalCodes_TEST_STAGING'. (208) (SQLExecDirectW)")
+
+-----04/02/2016 00:25
+Error getting global codes together:
+Traceback (most recent call last):
+  File "C:\Users\cekin\Documents\GitHub\Global_Codes_App\Global Codes App\Global_Codes_App\views.py", line 191, in global_table
+    L['result'].append([r['GlobalCode'], r['Description'], r['Sample'], r['Type'], r['Analyte'], r['PrimaryLibrary'], r['SubSection'], r['Department'], r['Alias']])
+TypeError: string indices must be integers, not str
+
+-----04/02/2016 00:26
+Error getting global codes together:
+Traceback (most recent call last):
+  File "C:\Users\cekin\Documents\GitHub\Global_Codes_App\Global Codes App\Global_Codes_App\views.py", line 191, in global_table
+    L['result'].append([r['GlobalCode'], r['Description'], r['Sample'], r['Type'], r['Analyte'], r['PrimaryLibrary'], r['SubSection'], r['Department'], r['Alias']])
+TypeError: string indices must be integers, not str
+
+-----04/02/2016 00:26
+Error getting TLC list:
+Traceback (most recent call last):
+  File "C:\Users\cekin\Documents\GitHub\Global_Codes_App\Global Codes App\Global_Codes_App\views.py", line 112, in tlc_data
+    result = sql.exec_stored_procedure_list('spGlobalsApp_GetTLCList',args)
+  File "C:\Users\cekin\Documents\GitHub\Global_Codes_App\Global Codes App\Global_Codes_App\sql.py", line 90, in exec_stored_procedure_list
+    cursor.execute(sql)
+ProgrammingError: ('42S02', "[42S02] [Microsoft][ODBC SQL Server Driver][SQL Server]Invalid object name 'GlobalCodes_TEST_STAGING'. (208) (SQLExecDirectW)")
+
+-----04/02/2016 00:26
+Error getting global codes together:
+Traceback (most recent call last):
+  File "C:\Users\cekin\Documents\GitHub\Global_Codes_App\Global Codes App\Global_Codes_App\views.py", line 191, in global_table
+    L['result'].append([r['GlobalCode'], r['Description'], r['Sample'], r['Type'], r['Analyte'], r['PrimaryLibrary'], r['SubSection'], r['Department'], r['Alias']])
+TypeError: string indices must be integers, not str
+
+-----04/02/2016 00:26
+Error getting global codes together:
+Traceback (most recent call last):
+  File "C:\Users\cekin\Documents\GitHub\Global_Codes_App\Global Codes App\Global_Codes_App\views.py", line 191, in global_table
+    L['result'].append([r['GlobalCode'], r['Description'], r['Sample'], r['Type'], r['Analyte'], r['PrimaryLibrary'], r['SubSection'], r['Department'], r['Alias']])
+TypeError: string indices must be integers, not str
+
+-----04/02/2016 00:26
+Error getting TLC list:
+Traceback (most recent call last):
+  File "C:\Users\cekin\Documents\GitHub\Global_Codes_App\Global Codes App\Global_Codes_App\views.py", line 112, in tlc_data
+    result = sql.exec_stored_procedure_list('spGlobalsApp_GetTLCList',args)
+  File "C:\Users\cekin\Documents\GitHub\Global_Codes_App\Global Codes App\Global_Codes_App\sql.py", line 90, in exec_stored_procedure_list
+    cursor.execute(sql)
+ProgrammingError: ('42S02', "[42S02] [Microsoft][ODBC SQL Server Driver][SQL Server]Invalid object name 'GlobalCodes_TEST_STAGING'. (208) (SQLExecDirectW)")
+
+-----04/02/2016 00:26
+Error getting global codes together:
+Traceback (most recent call last):
+  File "C:\Users\cekin\Documents\GitHub\Global_Codes_App\Global Codes App\Global_Codes_App\views.py", line 191, in global_table
+    L['result'].append([r['GlobalCode'], r['Description'], r['Sample'], r['Type'], r['Analyte'], r['PrimaryLibrary'], r['SubSection'], r['Department'], r['Alias']])
+TypeError: string indices must be integers, not str
+
+-----04/02/2016 00:27
+Error getting global codes together:
+Traceback (most recent call last):
+  File "C:\Users\cekin\Documents\GitHub\Global_Codes_App\Global Codes App\Global_Codes_App\views.py", line 191, in global_table
+    L['result'].append([r['GlobalCode'], r['Description'], r['Sample'], r['Type'], r['Analyte'], r['PrimaryLibrary'], r['SubSection'], r['Department'], r['Alias']])
+TypeError: string indices must be integers, not str
+
+-----04/02/2016 00:27
+Error getting TLC list:
+Traceback (most recent call last):
+  File "C:\Users\cekin\Documents\GitHub\Global_Codes_App\Global Codes App\Global_Codes_App\views.py", line 112, in tlc_data
+    result = sql.exec_stored_procedure_list('spGlobalsApp_GetTLCList',args)
+  File "C:\Users\cekin\Documents\GitHub\Global_Codes_App\Global Codes App\Global_Codes_App\sql.py", line 90, in exec_stored_procedure_list
+    cursor.execute(sql)
+ProgrammingError: ('42S02', "[42S02] [Microsoft][ODBC SQL Server Driver][SQL Server]Invalid object name 'GlobalCodes_TEST_STAGING'. (208) (SQLExecDirectW)")
+
+-----04/02/2016 00:27
+Error getting global codes together:
+Traceback (most recent call last):
+  File "C:\Users\cekin\Documents\GitHub\Global_Codes_App\Global Codes App\Global_Codes_App\views.py", line 191, in global_table
+    L['result'].append([r['GlobalCode'], r['Description'], r['Sample'], r['Type'], r['Analyte'], r['PrimaryLibrary'], r['SubSection'], r['Department'], r['Alias']])
+TypeError: string indices must be integers, not str
+
+-----04/02/2016 00:27
+Error getting global codes together:
+Traceback (most recent call last):
+  File "C:\Users\cekin\Documents\GitHub\Global_Codes_App\Global Codes App\Global_Codes_App\views.py", line 191, in global_table
+    L['result'].append([r['GlobalCode'], r['Description'], r['Sample'], r['Type'], r['Analyte'], r['PrimaryLibrary'], r['SubSection'], r['Department'], r['Alias']])
+TypeError: string indices must be integers, not str
+
+-----04/02/2016 00:27
+Error getting TLC list:
+Traceback (most recent call last):
+  File "C:\Users\cekin\Documents\GitHub\Global_Codes_App\Global Codes App\Global_Codes_App\views.py", line 112, in tlc_data
+    result = sql.exec_stored_procedure_list('spGlobalsApp_GetTLCList',args)
+  File "C:\Users\cekin\Documents\GitHub\Global_Codes_App\Global Codes App\Global_Codes_App\sql.py", line 90, in exec_stored_procedure_list
+    cursor.execute(sql)
+ProgrammingError: ('42S02', "[42S02] [Microsoft][ODBC SQL Server Driver][SQL Server]Invalid object name 'GlobalCodes_TEST_STAGING'. (208) (SQLExecDirectW)")
+
+-----04/02/2016 00:27
+Error getting global codes together:
+Traceback (most recent call last):
+  File "C:\Users\cekin\Documents\GitHub\Global_Codes_App\Global Codes App\Global_Codes_App\views.py", line 191, in global_table
+    L['result'].append([r['GlobalCode'], r['Description'], r['Sample'], r['Type'], r['Analyte'], r['PrimaryLibrary'], r['SubSection'], r['Department'], r['Alias']])
+TypeError: string indices must be integers, not str
+
+-----04/02/2016 00:28
+Error getting global codes together:
+Traceback (most recent call last):
+  File "C:\Users\cekin\Documents\GitHub\Global_Codes_App\Global Codes App\Global_Codes_App\views.py", line 191, in global_table
+    L['result'].append([r['GlobalCode'], r['Description'], r['Sample'], r['Type'], r['Analyte'], r['PrimaryLibrary'], r['SubSection'], r['Department'], r['Alias']])
+TypeError: string indices must be integers, not str
+
+-----04/02/2016 00:28
+Error getting TLC list:
+Traceback (most recent call last):
+  File "C:\Users\cekin\Documents\GitHub\Global_Codes_App\Global Codes App\Global_Codes_App\views.py", line 112, in tlc_data
+    result = sql.exec_stored_procedure_list('spGlobalsApp_GetTLCList',args)
+  File "C:\Users\cekin\Documents\GitHub\Global_Codes_App\Global Codes App\Global_Codes_App\sql.py", line 90, in exec_stored_procedure_list
+    cursor.execute(sql)
+ProgrammingError: ('42S02', "[42S02] [Microsoft][ODBC SQL Server Driver][SQL Server]Invalid object name 'GlobalCodes_TEST_STAGING'. (208) (SQLExecDirectW)")
+
+-----04/02/2016 00:28
+Error getting global codes together:
+Traceback (most recent call last):
+  File "C:\Users\cekin\Documents\GitHub\Global_Codes_App\Global Codes App\Global_Codes_App\views.py", line 191, in global_table
+    L['result'].append([r['GlobalCode'], r['Description'], r['Sample'], r['Type'], r['Analyte'], r['PrimaryLibrary'], r['SubSection'], r['Department'], r['Alias']])
+TypeError: string indices must be integers, not str
+
+-----04/02/2016 00:28
+Error getting global codes together:
+Traceback (most recent call last):
+  File "C:\Users\cekin\Documents\GitHub\Global_Codes_App\Global Codes App\Global_Codes_App\views.py", line 191, in global_table
+    L['result'].append([r['GlobalCode'], r['Description'], r['Sample'], r['Type'], r['Analyte'], r['PrimaryLibrary'], r['SubSection'], r['Department'], r['Alias']])
+TypeError: string indices must be integers, not str
+
+-----04/02/2016 00:28
+Error getting TLC list:
+Traceback (most recent call last):
+  File "C:\Users\cekin\Documents\GitHub\Global_Codes_App\Global Codes App\Global_Codes_App\views.py", line 112, in tlc_data
+    result = sql.exec_stored_procedure_list('spGlobalsApp_GetTLCList',args)
+  File "C:\Users\cekin\Documents\GitHub\Global_Codes_App\Global Codes App\Global_Codes_App\sql.py", line 90, in exec_stored_procedure_list
+    cursor.execute(sql)
+ProgrammingError: ('42S02', "[42S02] [Microsoft][ODBC SQL Server Driver][SQL Server]Invalid object name 'GlobalCodes_TEST_STAGING'. (208) (SQLExecDirectW)")
+
+-----04/02/2016 00:28
+Error getting global codes together:
+Traceback (most recent call last):
+  File "C:\Users\cekin\Documents\GitHub\Global_Codes_App\Global Codes App\Global_Codes_App\views.py", line 191, in global_table
+    L['result'].append([r['GlobalCode'], r['Description'], r['Sample'], r['Type'], r['Analyte'], r['PrimaryLibrary'], r['SubSection'], r['Department'], r['Alias']])
+TypeError: string indices must be integers, not str
+
+-----04/02/2016 00:28
+Error getting global codes together:
+Traceback (most recent call last):
+  File "C:\Users\cekin\Documents\GitHub\Global_Codes_App\Global Codes App\Global_Codes_App\views.py", line 191, in global_table
+    L['result'].append([r['GlobalCode'], r['Description'], r['Sample'], r['Type'], r['Analyte'], r['PrimaryLibrary'], r['SubSection'], r['Department'], r['Alias']])
+TypeError: string indices must be integers, not str
+
+-----04/02/2016 00:28
+Error getting TLC list:
+Traceback (most recent call last):
+  File "C:\Users\cekin\Documents\GitHub\Global_Codes_App\Global Codes App\Global_Codes_App\views.py", line 112, in tlc_data
+    result = sql.exec_stored_procedure_list('spGlobalsApp_GetTLCList',args)
+  File "C:\Users\cekin\Documents\GitHub\Global_Codes_App\Global Codes App\Global_Codes_App\sql.py", line 90, in exec_stored_procedure_list
+    cursor.execute(sql)
+ProgrammingError: ('42S02', "[42S02] [Microsoft][ODBC SQL Server Driver][SQL Server]Invalid object name 'GlobalCodes_TEST_STAGING'. (208) (SQLExecDirectW)")
+
+-----04/02/2016 00:28
+Error getting global codes together:
+Traceback (most recent call last):
+  File "C:\Users\cekin\Documents\GitHub\Global_Codes_App\Global Codes App\Global_Codes_App\views.py", line 191, in global_table
+    L['result'].append([r['GlobalCode'], r['Description'], r['Sample'], r['Type'], r['Analyte'], r['PrimaryLibrary'], r['SubSection'], r['Department'], r['Alias']])
+TypeError: string indices must be integers, not str
+
+-----04/02/2016 00:29
+Error getting global codes together:
+Traceback (most recent call last):
+  File "C:\Users\cekin\Documents\GitHub\Global_Codes_App\Global Codes App\Global_Codes_App\views.py", line 191, in global_table
+    L['result'].append([r['GlobalCode'], r['Description'], r['Sample'], r['Type'], r['Analyte'], r['PrimaryLibrary'], r['SubSection'], r['Department'], r['Alias']])
+TypeError: string indices must be integers, not str
+
+-----04/02/2016 00:29
+Error getting TLC list:
+Traceback (most recent call last):
+  File "C:\Users\cekin\Documents\GitHub\Global_Codes_App\Global Codes App\Global_Codes_App\views.py", line 112, in tlc_data
+    result = sql.exec_stored_procedure_list('spGlobalsApp_GetTLCList',args)
+  File "C:\Users\cekin\Documents\GitHub\Global_Codes_App\Global Codes App\Global_Codes_App\sql.py", line 90, in exec_stored_procedure_list
+    cursor.execute(sql)
+ProgrammingError: ('42S02', "[42S02] [Microsoft][ODBC SQL Server Driver][SQL Server]Invalid object name 'GlobalCodes_TEST_STAGING'. (208) (SQLExecDirectW)")
+
+-----04/02/2016 00:29
+Error getting global codes together:
+Traceback (most recent call last):
+  File "C:\Users\cekin\Documents\GitHub\Global_Codes_App\Global Codes App\Global_Codes_App\views.py", line 191, in global_table
+    L['result'].append([r['GlobalCode'], r['Description'], r['Sample'], r['Type'], r['Analyte'], r['PrimaryLibrary'], r['SubSection'], r['Department'], r['Alias']])
+TypeError: string indices must be integers, not str
+
+-----04/02/2016 00:29
+Error getting global codes together:
+Traceback (most recent call last):
+  File "C:\Users\cekin\Documents\GitHub\Global_Codes_App\Global Codes App\Global_Codes_App\views.py", line 191, in global_table
+    L['result'].append([r['GlobalCode'], r['Description'], r['Sample'], r['Type'], r['Analyte'], r['PrimaryLibrary'], r['SubSection'], r['Department'], r['Alias']])
+TypeError: string indices must be integers, not str
+
+-----04/02/2016 00:29
+Error getting TLC list:
+Traceback (most recent call last):
+  File "C:\Users\cekin\Documents\GitHub\Global_Codes_App\Global Codes App\Global_Codes_App\views.py", line 112, in tlc_data
+    result = sql.exec_stored_procedure_list('spGlobalsApp_GetTLCList',args)
+  File "C:\Users\cekin\Documents\GitHub\Global_Codes_App\Global Codes App\Global_Codes_App\sql.py", line 90, in exec_stored_procedure_list
+    cursor.execute(sql)
+ProgrammingError: ('42S02', "[42S02] [Microsoft][ODBC SQL Server Driver][SQL Server]Invalid object name 'GlobalCodes_TEST_STAGING'. (208) (SQLExecDirectW)")
+
+-----04/02/2016 00:29
+Error getting global codes together:
+Traceback (most recent call last):
+  File "C:\Users\cekin\Documents\GitHub\Global_Codes_App\Global Codes App\Global_Codes_App\views.py", line 191, in global_table
+    L['result'].append([r['GlobalCode'], r['Description'], r['Sample'], r['Type'], r['Analyte'], r['PrimaryLibrary'], r['SubSection'], r['Department'], r['Alias']])
+TypeError: string indices must be integers, not str
+
+-----04/02/2016 00:30
+Error getting global codes together:
+Traceback (most recent call last):
+  File "C:\Users\cekin\Documents\GitHub\Global_Codes_App\Global Codes App\Global_Codes_App\views.py", line 191, in global_table
+    L['result'].append([r['GlobalCode'], r['Description'], r['Sample'], r['Type'], r['Analyte'], r['PrimaryLibrary'], r['SubSection'], r['Department'], r['Alias']])
+TypeError: string indices must be integers, not str
+
+-----04/02/2016 00:30
+Error getting TLC list:
+Traceback (most recent call last):
+  File "C:\Users\cekin\Documents\GitHub\Global_Codes_App\Global Codes App\Global_Codes_App\views.py", line 112, in tlc_data
+    result = sql.exec_stored_procedure_list('spGlobalsApp_GetTLCList',args)
+  File "C:\Users\cekin\Documents\GitHub\Global_Codes_App\Global Codes App\Global_Codes_App\sql.py", line 90, in exec_stored_procedure_list
+    cursor.execute(sql)
+ProgrammingError: ('42S02', "[42S02] [Microsoft][ODBC SQL Server Driver][SQL Server]Invalid object name 'GlobalCodes_TEST_STAGING'. (208) (SQLExecDirectW)")
+
+-----04/02/2016 00:30
+Error getting global codes together:
+Traceback (most recent call last):
+  File "C:\Users\cekin\Documents\GitHub\Global_Codes_App\Global Codes App\Global_Codes_App\views.py", line 191, in global_table
+    L['result'].append([r['GlobalCode'], r['Description'], r['Sample'], r['Type'], r['Analyte'], r['PrimaryLibrary'], r['SubSection'], r['Department'], r['Alias']])
+TypeError: string indices must be integers, not str
+
+-----04/02/2016 00:31
+Error getting global codes together:
+Traceback (most recent call last):
+  File "C:\Users\cekin\Documents\GitHub\Global_Codes_App\Global Codes App\Global_Codes_App\views.py", line 191, in global_table
+    L['result'].append([r['GlobalCode'], r['Description'], r['Sample'], r['Type'], r['Analyte'], r['PrimaryLibrary'], r['SubSection'], r['Department'], r['Alias']])
+TypeError: string indices must be integers, not str
+
+-----04/02/2016 00:31
+Error getting TLC list:
+Traceback (most recent call last):
+  File "C:\Users\cekin\Documents\GitHub\Global_Codes_App\Global Codes App\Global_Codes_App\views.py", line 112, in tlc_data
+    result = sql.exec_stored_procedure_list('spGlobalsApp_GetTLCList',args)
+  File "C:\Users\cekin\Documents\GitHub\Global_Codes_App\Global Codes App\Global_Codes_App\sql.py", line 90, in exec_stored_procedure_list
+    cursor.execute(sql)
+ProgrammingError: ('42S02', "[42S02] [Microsoft][ODBC SQL Server Driver][SQL Server]Invalid object name 'GlobalCodes_TEST_STAGING'. (208) (SQLExecDirectW)")
+
+-----04/02/2016 00:31
+Error getting global codes together:
+Traceback (most recent call last):
+  File "C:\Users\cekin\Documents\GitHub\Global_Codes_App\Global Codes App\Global_Codes_App\views.py", line 191, in global_table
+    L['result'].append([r['GlobalCode'], r['Description'], r['Sample'], r['Type'], r['Analyte'], r['PrimaryLibrary'], r['SubSection'], r['Department'], r['Alias']])
+TypeError: string indices must be integers, not str
+
+-----04/02/2016 00:31
+Error getting global codes together:
+Traceback (most recent call last):
+  File "C:\Users\cekin\Documents\GitHub\Global_Codes_App\Global Codes App\Global_Codes_App\views.py", line 191, in global_table
+    L['result'].append([r['GlobalCode'], r['Description'], r['Sample'], r['Type'], r['Analyte'], r['PrimaryLibrary'], r['SubSection'], r['Department'], r['Alias']])
+TypeError: string indices must be integers, not str
+
+-----04/02/2016 00:31
+Error getting TLC list:
+Traceback (most recent call last):
+  File "C:\Users\cekin\Documents\GitHub\Global_Codes_App\Global Codes App\Global_Codes_App\views.py", line 112, in tlc_data
+    result = sql.exec_stored_procedure_list('spGlobalsApp_GetTLCList',args)
+  File "C:\Users\cekin\Documents\GitHub\Global_Codes_App\Global Codes App\Global_Codes_App\sql.py", line 90, in exec_stored_procedure_list
+    cursor.execute(sql)
+ProgrammingError: ('42S02', "[42S02] [Microsoft][ODBC SQL Server Driver][SQL Server]Invalid object name 'GlobalCodes_TEST_STAGING'. (208) (SQLExecDirectW)")
+
+-----04/02/2016 00:31
+Error getting global codes together:
+Traceback (most recent call last):
+  File "C:\Users\cekin\Documents\GitHub\Global_Codes_App\Global Codes App\Global_Codes_App\views.py", line 191, in global_table
+    L['result'].append([r['GlobalCode'], r['Description'], r['Sample'], r['Type'], r['Analyte'], r['PrimaryLibrary'], r['SubSection'], r['Department'], r['Alias']])
+TypeError: string indices must be integers, not str
+
+-----04/02/2016 00:33
+Error getting global codes together:
+Traceback (most recent call last):
+  File "C:\Users\cekin\Documents\GitHub\Global_Codes_App\Global Codes App\Global_Codes_App\views.py", line 191, in global_table
+    L['result'].append([r['GlobalCode'], r['Description'], r['Sample'], r['Type'], r['Analyte'], r['PrimaryLibrary'], r['SubSection'], r['Department'], r['Alias']])
+TypeError: string indices must be integers, not str
+
+-----04/02/2016 00:33
+Error getting TLC list:
+Traceback (most recent call last):
+  File "C:\Users\cekin\Documents\GitHub\Global_Codes_App\Global Codes App\Global_Codes_App\views.py", line 112, in tlc_data
+    result = sql.exec_stored_procedure_list('spGlobalsApp_GetTLCList',args)
+  File "C:\Users\cekin\Documents\GitHub\Global_Codes_App\Global Codes App\Global_Codes_App\sql.py", line 90, in exec_stored_procedure_list
+    cursor.execute(sql)
+ProgrammingError: ('42S02', "[42S02] [Microsoft][ODBC SQL Server Driver][SQL Server]Invalid object name 'GlobalCodes_TEST_STAGING'. (208) (SQLExecDirectW)")
+
+-----04/02/2016 00:33
+Error getting global codes together:
+Traceback (most recent call last):
+  File "C:\Users\cekin\Documents\GitHub\Global_Codes_App\Global Codes App\Global_Codes_App\views.py", line 191, in global_table
+    L['result'].append([r['GlobalCode'], r['Description'], r['Sample'], r['Type'], r['Analyte'], r['PrimaryLibrary'], r['SubSection'], r['Department'], r['Alias']])
+TypeError: string indices must be integers, not str
+
+-----04/02/2016 00:38
+Error getting TLC list:
+Traceback (most recent call last):
+  File "C:\Users\cekin\Documents\GitHub\Global_Codes_App\Global Codes App\Global_Codes_App\views.py", line 112, in tlc_data
+    result = sql.exec_stored_procedure_list('spGlobalsApp_GetTLCList',args)
+  File "C:\Users\cekin\Documents\GitHub\Global_Codes_App\Global Codes App\Global_Codes_App\sql.py", line 90, in exec_stored_procedure_list
+    cursor.execute(sql)
+ProgrammingError: ('42S02', "[42S02] [Microsoft][ODBC SQL Server Driver][SQL Server]Invalid object name 'GlobalCodes_TEST_STAGING'. (208) (SQLExecDirectW)")
+
+-----04/02/2016 00:38
+Error getting global codes together:
+Traceback (most recent call last):
+  File "C:\Users\cekin\Documents\GitHub\Global_Codes_App\Global Codes App\Global_Codes_App\views.py", line 191, in global_table
+    L['result'].append([r['GlobalCode'], r['Description'], r['Sample'], r['Type'], r['Analyte'], r['PrimaryLibrary'], r['SubSection'], r['Department'], r['Alias']])
+TypeError: string indices must be integers, not str
+
+-----04/02/2016 00:38
+Error getting global codes together:
+Traceback (most recent call last):
+  File "C:\Users\cekin\Documents\GitHub\Global_Codes_App\Global Codes App\Global_Codes_App\views.py", line 191, in global_table
+    L['result'].append([r['GlobalCode'], r['Description'], r['Sample'], r['Type'], r['Analyte'], r['PrimaryLibrary'], r['SubSection'], r['Department'], r['Alias']])
+TypeError: string indices must be integers, not str
+
+-----04/02/2016 00:41
+Error getting TLC list:
+Traceback (most recent call last):
+  File "C:\Users\cekin\Documents\GitHub\Global_Codes_App\Global Codes App\Global_Codes_App\views.py", line 112, in tlc_data
+    result = sql.exec_stored_procedure_list('spGlobalsApp_GetTLCList',args)
+  File "C:\Users\cekin\Documents\GitHub\Global_Codes_App\Global Codes App\Global_Codes_App\sql.py", line 90, in exec_stored_procedure_list
+    cursor.execute(sql)
+ProgrammingError: ('42S02', "[42S02] [Microsoft][ODBC SQL Server Driver][SQL Server]Invalid object name 'GlobalCodes_TEST_STAGING'. (208) (SQLExecDirectW)")
+
+-----04/02/2016 00:41
+Error getting global codes together:
+Traceback (most recent call last):
+  File "C:\Users\cekin\Documents\GitHub\Global_Codes_App\Global Codes App\Global_Codes_App\views.py", line 191, in global_table
+    L['result'].append([r['GlobalCode'], r['Description'], r['Sample'], r['Type'], r['Analyte'], r['PrimaryLibrary'], r['SubSection'], r['Department'], r['Alias']])
+TypeError: string indices must be integers, not str
+
+-----04/02/2016 00:41
+Error getting global codes together:
+Traceback (most recent call last):
+  File "C:\Users\cekin\Documents\GitHub\Global_Codes_App\Global Codes App\Global_Codes_App\views.py", line 191, in global_table
+    L['result'].append([r['GlobalCode'], r['Description'], r['Sample'], r['Type'], r['Analyte'], r['PrimaryLibrary'], r['SubSection'], r['Department'], r['Alias']])
+TypeError: string indices must be integers, not str
+
+-----04/02/2016 00:42
+Error getting TLC list:
+Traceback (most recent call last):
+  File "C:\Users\cekin\Documents\GitHub\Global_Codes_App\Global Codes App\Global_Codes_App\views.py", line 112, in tlc_data
+    result = sql.exec_stored_procedure_list('spGlobalsApp_GetTLCList',args)
+  File "C:\Users\cekin\Documents\GitHub\Global_Codes_App\Global Codes App\Global_Codes_App\sql.py", line 90, in exec_stored_procedure_list
+    cursor.execute(sql)
+ProgrammingError: ('42S02', "[42S02] [Microsoft][ODBC SQL Server Driver][SQL Server]Invalid object name 'GlobalCodes_TEST_STAGING'. (208) (SQLExecDirectW)")
+
+-----04/02/2016 00:42
+Error getting global codes together:
+Traceback (most recent call last):
+  File "C:\Users\cekin\Documents\GitHub\Global_Codes_App\Global Codes App\Global_Codes_App\views.py", line 191, in global_table
+    L['result'].append([r['GlobalCode'], r['Description'], r['Sample'], r['Type'], r['Analyte'], r['PrimaryLibrary'], r['SubSection'], r['Department'], r['Alias']])
+TypeError: string indices must be integers, not str
+
+-----04/02/2016 00:42
+Error getting global codes together:
+Traceback (most recent call last):
+  File "C:\Users\cekin\Documents\GitHub\Global_Codes_App\Global Codes App\Global_Codes_App\views.py", line 191, in global_table
+    L['result'].append([r['GlobalCode'], r['Description'], r['Sample'], r['Type'], r['Analyte'], r['PrimaryLibrary'], r['SubSection'], r['Department'], r['Alias']])
+TypeError: string indices must be integers, not str
+
+-----04/02/2016 00:42
+Error getting global codes together:
+Traceback (most recent call last):
+  File "C:\Users\cekin\Documents\GitHub\Global_Codes_App\Global Codes App\Global_Codes_App\views.py", line 191, in global_table
+    L['result'].append([r['GlobalCode'], r['Description'], r['Sample'], r['Type'], r['Analyte'], r['PrimaryLibrary'], r['SubSection'], r['Department'], r['Alias']])
+TypeError: string indices must be integers, not str
+
+-----04/02/2016 00:42
+Error getting TLC list:
+Traceback (most recent call last):
+  File "C:\Users\cekin\Documents\GitHub\Global_Codes_App\Global Codes App\Global_Codes_App\views.py", line 112, in tlc_data
+    result = sql.exec_stored_procedure_list('spGlobalsApp_GetTLCList',args)
+  File "C:\Users\cekin\Documents\GitHub\Global_Codes_App\Global Codes App\Global_Codes_App\sql.py", line 90, in exec_stored_procedure_list
+    cursor.execute(sql)
+ProgrammingError: ('42S02', "[42S02] [Microsoft][ODBC SQL Server Driver][SQL Server]Invalid object name 'GlobalCodes_TEST_STAGING'. (208) (SQLExecDirectW)")
+
+-----04/02/2016 00:42
+Error getting global codes together:
+Traceback (most recent call last):
+  File "C:\Users\cekin\Documents\GitHub\Global_Codes_App\Global Codes App\Global_Codes_App\views.py", line 191, in global_table
+    L['result'].append([r['GlobalCode'], r['Description'], r['Sample'], r['Type'], r['Analyte'], r['PrimaryLibrary'], r['SubSection'], r['Department'], r['Alias']])
+TypeError: string indices must be integers, not str
+
+-----04/02/2016 00:42
+Error getting global codes together:
+Traceback (most recent call last):
+  File "C:\Users\cekin\Documents\GitHub\Global_Codes_App\Global Codes App\Global_Codes_App\views.py", line 191, in global_table
+    L['result'].append([r['GlobalCode'], r['Description'], r['Sample'], r['Type'], r['Analyte'], r['PrimaryLibrary'], r['SubSection'], r['Department'], r['Alias']])
+TypeError: string indices must be integers, not str
+
+-----04/02/2016 00:42
+Error getting TLC list:
+Traceback (most recent call last):
+  File "C:\Users\cekin\Documents\GitHub\Global_Codes_App\Global Codes App\Global_Codes_App\views.py", line 112, in tlc_data
+    result = sql.exec_stored_procedure_list('spGlobalsApp_GetTLCList',args)
+  File "C:\Users\cekin\Documents\GitHub\Global_Codes_App\Global Codes App\Global_Codes_App\sql.py", line 90, in exec_stored_procedure_list
+    cursor.execute(sql)
+ProgrammingError: ('42S02', "[42S02] [Microsoft][ODBC SQL Server Driver][SQL Server]Invalid object name 'GlobalCodes_TEST_STAGING'. (208) (SQLExecDirectW)")
+
+-----04/02/2016 00:42
+Error getting global codes together:
+Traceback (most recent call last):
+  File "C:\Users\cekin\Documents\GitHub\Global_Codes_App\Global Codes App\Global_Codes_App\views.py", line 191, in global_table
+    L['result'].append([r['GlobalCode'], r['Description'], r['Sample'], r['Type'], r['Analyte'], r['PrimaryLibrary'], r['SubSection'], r['Department'], r['Alias']])
+TypeError: string indices must be integers, not str
+
+-----04/02/2016 00:42
+Error getting TLC list:
+Traceback (most recent call last):
+  File "C:\Users\cekin\Documents\GitHub\Global_Codes_App\Global Codes App\Global_Codes_App\views.py", line 112, in tlc_data
+    result = sql.exec_stored_procedure_list('spGlobalsApp_GetTLCList',args)
+  File "C:\Users\cekin\Documents\GitHub\Global_Codes_App\Global Codes App\Global_Codes_App\sql.py", line 90, in exec_stored_procedure_list
+    cursor.execute(sql)
+ProgrammingError: ('42S02', "[42S02] [Microsoft][ODBC SQL Server Driver][SQL Server]Invalid object name 'GlobalCodes_TEST_STAGING'. (208) (SQLExecDirectW)")
+
+-----04/02/2016 00:42
+Error getting global codes together:
+Traceback (most recent call last):
+  File "C:\Users\cekin\Documents\GitHub\Global_Codes_App\Global Codes App\Global_Codes_App\views.py", line 191, in global_table
+    L['result'].append([r['GlobalCode'], r['Description'], r['Sample'], r['Type'], r['Analyte'], r['PrimaryLibrary'], r['SubSection'], r['Department'], r['Alias']])
+TypeError: string indices must be integers, not str
+
+-----04/02/2016 00:42
+Error getting global codes together:
+Traceback (most recent call last):
+  File "C:\Users\cekin\Documents\GitHub\Global_Codes_App\Global Codes App\Global_Codes_App\views.py", line 191, in global_table
+    L['result'].append([r['GlobalCode'], r['Description'], r['Sample'], r['Type'], r['Analyte'], r['PrimaryLibrary'], r['SubSection'], r['Department'], r['Alias']])
+TypeError: string indices must be integers, not str
+
+-----04/02/2016 00:42
+Error getting global codes together:
+Traceback (most recent call last):
+  File "C:\Users\cekin\Documents\GitHub\Global_Codes_App\Global Codes App\Global_Codes_App\views.py", line 191, in global_table
+    L['result'].append([r['GlobalCode'], r['Description'], r['Sample'], r['Type'], r['Analyte'], r['PrimaryLibrary'], r['SubSection'], r['Department'], r['Alias']])
+TypeError: string indices must be integers, not str
+
+-----04/02/2016 00:42
+Error getting global codes together:
+Traceback (most recent call last):
+  File "C:\Users\cekin\Documents\GitHub\Global_Codes_App\Global Codes App\Global_Codes_App\views.py", line 191, in global_table
+    L['result'].append([r['GlobalCode'], r['Description'], r['Sample'], r['Type'], r['Analyte'], r['PrimaryLibrary'], r['SubSection'], r['Department'], r['Alias']])
+TypeError: string indices must be integers, not str
+
+-----04/02/2016 00:42
+Error getting TLC list:
+Traceback (most recent call last):
+  File "C:\Users\cekin\Documents\GitHub\Global_Codes_App\Global Codes App\Global_Codes_App\views.py", line 112, in tlc_data
+    result = sql.exec_stored_procedure_list('spGlobalsApp_GetTLCList',args)
+  File "C:\Users\cekin\Documents\GitHub\Global_Codes_App\Global Codes App\Global_Codes_App\sql.py", line 90, in exec_stored_procedure_list
+    cursor.execute(sql)
+ProgrammingError: ('42S02', "[42S02] [Microsoft][ODBC SQL Server Driver][SQL Server]Invalid object name 'GlobalCodes_TEST_STAGING'. (208) (SQLExecDirectW)")
+
+-----04/02/2016 00:43
+Error getting global codes together:
+Traceback (most recent call last):
+  File "C:\Users\cekin\Documents\GitHub\Global_Codes_App\Global Codes App\Global_Codes_App\views.py", line 191, in global_table
+    L['result'].append([r['GlobalCode'], r['Description'], r['Sample'], r['Type'], r['Analyte'], r['PrimaryLibrary'], r['SubSection'], r['Department'], r['Alias']])
+TypeError: string indices must be integers, not str
+
+-----04/02/2016 00:43
+Error getting TLC list:
+Traceback (most recent call last):
+  File "C:\Users\cekin\Documents\GitHub\Global_Codes_App\Global Codes App\Global_Codes_App\views.py", line 112, in tlc_data
+    result = sql.exec_stored_procedure_list('spGlobalsApp_GetTLCList',args)
+  File "C:\Users\cekin\Documents\GitHub\Global_Codes_App\Global Codes App\Global_Codes_App\sql.py", line 90, in exec_stored_procedure_list
+    cursor.execute(sql)
+ProgrammingError: ('42S02', "[42S02] [Microsoft][ODBC SQL Server Driver][SQL Server]Invalid object name 'GlobalCodes_TEST_STAGING'. (208) (SQLExecDirectW)")
+
+-----04/02/2016 00:43
+Error getting global codes together:
+Traceback (most recent call last):
+  File "C:\Users\cekin\Documents\GitHub\Global_Codes_App\Global Codes App\Global_Codes_App\views.py", line 191, in global_table
+    L['result'].append([r['GlobalCode'], r['Description'], r['Sample'], r['Type'], r['Analyte'], r['PrimaryLibrary'], r['SubSection'], r['Department'], r['Alias']])
+TypeError: string indices must be integers, not str
+
+-----04/02/2016 00:43
+Error getting global codes together:
+Traceback (most recent call last):
+  File "C:\Users\cekin\Documents\GitHub\Global_Codes_App\Global Codes App\Global_Codes_App\views.py", line 191, in global_table
+    L['result'].append([r['GlobalCode'], r['Description'], r['Sample'], r['Type'], r['Analyte'], r['PrimaryLibrary'], r['SubSection'], r['Department'], r['Alias']])
+TypeError: string indices must be integers, not str
+
+-----04/02/2016 00:43
+Error getting TLC list:
+Traceback (most recent call last):
+  File "C:\Users\cekin\Documents\GitHub\Global_Codes_App\Global Codes App\Global_Codes_App\views.py", line 112, in tlc_data
+    result = sql.exec_stored_procedure_list('spGlobalsApp_GetTLCList',args)
+  File "C:\Users\cekin\Documents\GitHub\Global_Codes_App\Global Codes App\Global_Codes_App\sql.py", line 90, in exec_stored_procedure_list
+    cursor.execute(sql)
+ProgrammingError: ('42S02', "[42S02] [Microsoft][ODBC SQL Server Driver][SQL Server]Invalid object name 'GlobalCodes_TEST_STAGING'. (208) (SQLExecDirectW)")
+
+-----04/02/2016 00:43
+Error getting global codes together:
+Traceback (most recent call last):
+  File "C:\Users\cekin\Documents\GitHub\Global_Codes_App\Global Codes App\Global_Codes_App\views.py", line 191, in global_table
+    L['result'].append([r['GlobalCode'], r['Description'], r['Sample'], r['Type'], r['Analyte'], r['PrimaryLibrary'], r['SubSection'], r['Department'], r['Alias']])
+TypeError: string indices must be integers, not str
+
+-----04/02/2016 00:44
+Error getting global codes together:
+Traceback (most recent call last):
+  File "C:\Users\cekin\Documents\GitHub\Global_Codes_App\Global Codes App\Global_Codes_App\views.py", line 191, in global_table
+    L['result'].append([r['GlobalCode'], r['Description'], r['Sample'], r['Type'], r['Analyte'], r['PrimaryLibrary'], r['SubSection'], r['Department'], r['Alias']])
+TypeError: string indices must be integers, not str
+
+-----04/02/2016 00:44
+Error getting TLC list:
+Traceback (most recent call last):
+  File "C:\Users\cekin\Documents\GitHub\Global_Codes_App\Global Codes App\Global_Codes_App\views.py", line 112, in tlc_data
+    result = sql.exec_stored_procedure_list('spGlobalsApp_GetTLCList',args)
+  File "C:\Users\cekin\Documents\GitHub\Global_Codes_App\Global Codes App\Global_Codes_App\sql.py", line 90, in exec_stored_procedure_list
+    cursor.execute(sql)
+ProgrammingError: ('42S02', "[42S02] [Microsoft][ODBC SQL Server Driver][SQL Server]Invalid object name 'GlobalCodes_TEST_STAGING'. (208) (SQLExecDirectW)")
+
+-----04/02/2016 00:44
+Error getting global codes together:
+Traceback (most recent call last):
+  File "C:\Users\cekin\Documents\GitHub\Global_Codes_App\Global Codes App\Global_Codes_App\views.py", line 191, in global_table
+    L['result'].append([r['GlobalCode'], r['Description'], r['Sample'], r['Type'], r['Analyte'], r['PrimaryLibrary'], r['SubSection'], r['Department'], r['Alias']])
+TypeError: string indices must be integers, not str
+
+-----04/02/2016 00:44
+Error getting global codes together:
+Traceback (most recent call last):
+  File "C:\Users\cekin\Documents\GitHub\Global_Codes_App\Global Codes App\Global_Codes_App\views.py", line 191, in global_table
+    L['result'].append([r['GlobalCode'], r['Description'], r['Sample'], r['Type'], r['Analyte'], r['PrimaryLibrary'], r['SubSection'], r['Department'], r['Alias']])
+TypeError: string indices must be integers, not str
+
+-----04/02/2016 00:44
+Error getting TLC list:
+Traceback (most recent call last):
+  File "C:\Users\cekin\Documents\GitHub\Global_Codes_App\Global Codes App\Global_Codes_App\views.py", line 112, in tlc_data
+    result = sql.exec_stored_procedure_list('spGlobalsApp_GetTLCList',args)
+  File "C:\Users\cekin\Documents\GitHub\Global_Codes_App\Global Codes App\Global_Codes_App\sql.py", line 90, in exec_stored_procedure_list
+    cursor.execute(sql)
+ProgrammingError: ('42S02', "[42S02] [Microsoft][ODBC SQL Server Driver][SQL Server]Invalid object name 'GlobalCodes_TEST_STAGING'. (208) (SQLExecDirectW)")
+
+-----04/02/2016 00:44
+Error getting global codes together:
+Traceback (most recent call last):
+  File "C:\Users\cekin\Documents\GitHub\Global_Codes_App\Global Codes App\Global_Codes_App\views.py", line 191, in global_table
+    L['result'].append([r['GlobalCode'], r['Description'], r['Sample'], r['Type'], r['Analyte'], r['PrimaryLibrary'], r['SubSection'], r['Department'], r['Alias']])
+TypeError: string indices must be integers, not str
+
+-----04/02/2016 00:45
+Error getting global codes together:
+Traceback (most recent call last):
+  File "C:\Users\cekin\Documents\GitHub\Global_Codes_App\Global Codes App\Global_Codes_App\views.py", line 191, in global_table
+    L['result'].append([r['GlobalCode'], r['Description'], r['Sample'], r['Type'], r['Analyte'], r['PrimaryLibrary'], r['SubSection'], r['Department'], r['Alias']])
+TypeError: string indices must be integers, not str
+
+-----04/02/2016 00:45
+Error getting TLC list:
+Traceback (most recent call last):
+  File "C:\Users\cekin\Documents\GitHub\Global_Codes_App\Global Codes App\Global_Codes_App\views.py", line 112, in tlc_data
+    result = sql.exec_stored_procedure_list('spGlobalsApp_GetTLCList',args)
+  File "C:\Users\cekin\Documents\GitHub\Global_Codes_App\Global Codes App\Global_Codes_App\sql.py", line 90, in exec_stored_procedure_list
+    cursor.execute(sql)
+ProgrammingError: ('42S02', "[42S02] [Microsoft][ODBC SQL Server Driver][SQL Server]Invalid object name 'GlobalCodes_TEST_STAGING'. (208) (SQLExecDirectW)")
+
+-----04/02/2016 00:45
+Error getting global codes together:
+Traceback (most recent call last):
+  File "C:\Users\cekin\Documents\GitHub\Global_Codes_App\Global Codes App\Global_Codes_App\views.py", line 191, in global_table
+    L['result'].append([r['GlobalCode'], r['Description'], r['Sample'], r['Type'], r['Analyte'], r['PrimaryLibrary'], r['SubSection'], r['Department'], r['Alias']])
+TypeError: string indices must be integers, not str
+
+-----04/02/2016 00:46
+Error getting global codes together:
+Traceback (most recent call last):
+  File "C:\Users\cekin\Documents\GitHub\Global_Codes_App\Global Codes App\Global_Codes_App\views.py", line 191, in global_table
+    L['result'].append([r['GlobalCode'], r['Description'], r['Sample'], r['Type'], r['Analyte'], r['PrimaryLibrary'], r['SubSection'], r['Department'], r['Alias']])
+TypeError: string indices must be integers, not str
+
+-----04/02/2016 00:46
+Error getting TLC list:
+Traceback (most recent call last):
+  File "C:\Users\cekin\Documents\GitHub\Global_Codes_App\Global Codes App\Global_Codes_App\views.py", line 112, in tlc_data
+    result = sql.exec_stored_procedure_list('spGlobalsApp_GetTLCList',args)
+  File "C:\Users\cekin\Documents\GitHub\Global_Codes_App\Global Codes App\Global_Codes_App\sql.py", line 90, in exec_stored_procedure_list
+    cursor.execute(sql)
+ProgrammingError: ('42S02', "[42S02] [Microsoft][ODBC SQL Server Driver][SQL Server]Invalid object name 'GlobalCodes_TEST_STAGING'. (208) (SQLExecDirectW)")
+
+-----04/02/2016 00:46
+Error getting global codes together:
+Traceback (most recent call last):
+  File "C:\Users\cekin\Documents\GitHub\Global_Codes_App\Global Codes App\Global_Codes_App\views.py", line 191, in global_table
+    L['result'].append([r['GlobalCode'], r['Description'], r['Sample'], r['Type'], r['Analyte'], r['PrimaryLibrary'], r['SubSection'], r['Department'], r['Alias']])
+TypeError: string indices must be integers, not str
+
+-----04/02/2016 00:47
+Error getting global codes together:
+Traceback (most recent call last):
+  File "C:\Users\cekin\Documents\GitHub\Global_Codes_App\Global Codes App\Global_Codes_App\views.py", line 191, in global_table
+    L['result'].append([r['GlobalCode'], r['Description'], r['Sample'], r['Type'], r['Analyte'], r['PrimaryLibrary'], r['SubSection'], r['Department'], r['Alias']])
+TypeError: string indices must be integers, not str
+
+-----04/02/2016 00:47
+Error getting TLC list:
+Traceback (most recent call last):
+  File "C:\Users\cekin\Documents\GitHub\Global_Codes_App\Global Codes App\Global_Codes_App\views.py", line 112, in tlc_data
+    result = sql.exec_stored_procedure_list('spGlobalsApp_GetTLCList',args)
+  File "C:\Users\cekin\Documents\GitHub\Global_Codes_App\Global Codes App\Global_Codes_App\sql.py", line 90, in exec_stored_procedure_list
+    cursor.execute(sql)
+ProgrammingError: ('42S02', "[42S02] [Microsoft][ODBC SQL Server Driver][SQL Server]Invalid object name 'GlobalCodes_TEST_STAGING'. (208) (SQLExecDirectW)")
+
+-----04/02/2016 00:47
+Error getting global codes together:
+Traceback (most recent call last):
+  File "C:\Users\cekin\Documents\GitHub\Global_Codes_App\Global Codes App\Global_Codes_App\views.py", line 191, in global_table
+    L['result'].append([r['GlobalCode'], r['Description'], r['Sample'], r['Type'], r['Analyte'], r['PrimaryLibrary'], r['SubSection'], r['Department'], r['Alias']])
+TypeError: string indices must be integers, not str
+
+-----04/02/2016 00:48
+Error getting global codes together:
+Traceback (most recent call last):
+  File "C:\Users\cekin\Documents\GitHub\Global_Codes_App\Global Codes App\Global_Codes_App\views.py", line 191, in global_table
+    L['result'].append([r['GlobalCode'], r['Description'], r['Sample'], r['Type'], r['Analyte'], r['PrimaryLibrary'], r['SubSection'], r['Department'], r['Alias']])
+TypeError: string indices must be integers, not str
+
+-----04/02/2016 00:48
+Error getting TLC list:
+Traceback (most recent call last):
+  File "C:\Users\cekin\Documents\GitHub\Global_Codes_App\Global Codes App\Global_Codes_App\views.py", line 112, in tlc_data
+    result = sql.exec_stored_procedure_list('spGlobalsApp_GetTLCList',args)
+  File "C:\Users\cekin\Documents\GitHub\Global_Codes_App\Global Codes App\Global_Codes_App\sql.py", line 90, in exec_stored_procedure_list
+    cursor.execute(sql)
+ProgrammingError: ('42S02', "[42S02] [Microsoft][ODBC SQL Server Driver][SQL Server]Invalid object name 'GlobalCodes_TEST_STAGING'. (208) (SQLExecDirectW)")
+
+-----04/02/2016 00:48
+Error getting global codes together:
+Traceback (most recent call last):
+  File "C:\Users\cekin\Documents\GitHub\Global_Codes_App\Global Codes App\Global_Codes_App\views.py", line 191, in global_table
+    L['result'].append([r['GlobalCode'], r['Description'], r['Sample'], r['Type'], r['Analyte'], r['PrimaryLibrary'], r['SubSection'], r['Department'], r['Alias']])
+TypeError: string indices must be integers, not str
+
+-----04/02/2016 00:48
+Error getting global codes together:
+Traceback (most recent call last):
+  File "C:\Users\cekin\Documents\GitHub\Global_Codes_App\Global Codes App\Global_Codes_App\views.py", line 191, in global_table
+    L['result'].append([r['GlobalCode'], r['Description'], r['Sample'], r['Type'], r['Analyte'], r['PrimaryLibrary'], r['SubSection'], r['Department'], r['Alias']])
+TypeError: string indices must be integers, not str
+
+-----04/02/2016 00:48
+Error getting TLC list:
+Traceback (most recent call last):
+  File "C:\Users\cekin\Documents\GitHub\Global_Codes_App\Global Codes App\Global_Codes_App\views.py", line 112, in tlc_data
+    result = sql.exec_stored_procedure_list('spGlobalsApp_GetTLCList',args)
+  File "C:\Users\cekin\Documents\GitHub\Global_Codes_App\Global Codes App\Global_Codes_App\sql.py", line 90, in exec_stored_procedure_list
+    cursor.execute(sql)
+ProgrammingError: ('42S02', "[42S02] [Microsoft][ODBC SQL Server Driver][SQL Server]Invalid object name 'GlobalCodes_TEST_STAGING'. (208) (SQLExecDirectW)")
+
+-----04/02/2016 00:48
+Error getting global codes together:
+Traceback (most recent call last):
+  File "C:\Users\cekin\Documents\GitHub\Global_Codes_App\Global Codes App\Global_Codes_App\views.py", line 191, in global_table
+    L['result'].append([r['GlobalCode'], r['Description'], r['Sample'], r['Type'], r['Analyte'], r['PrimaryLibrary'], r['SubSection'], r['Department'], r['Alias']])
+TypeError: string indices must be integers, not str
+
+-----04/02/2016 00:49
+Error getting global codes together:
+Traceback (most recent call last):
+  File "C:\Users\cekin\Documents\GitHub\Global_Codes_App\Global Codes App\Global_Codes_App\views.py", line 191, in global_table
+    L['result'].append([r['GlobalCode'], r['Description'], r['Sample'], r['Type'], r['Analyte'], r['PrimaryLibrary'], r['SubSection'], r['Department'], r['Alias']])
+TypeError: string indices must be integers, not str
+
+-----04/02/2016 00:49
+Error getting TLC list:
+Traceback (most recent call last):
+  File "C:\Users\cekin\Documents\GitHub\Global_Codes_App\Global Codes App\Global_Codes_App\views.py", line 112, in tlc_data
+    result = sql.exec_stored_procedure_list('spGlobalsApp_GetTLCList',args)
+  File "C:\Users\cekin\Documents\GitHub\Global_Codes_App\Global Codes App\Global_Codes_App\sql.py", line 90, in exec_stored_procedure_list
+    cursor.execute(sql)
+ProgrammingError: ('42S02', "[42S02] [Microsoft][ODBC SQL Server Driver][SQL Server]Invalid object name 'GlobalCodes_TEST_STAGING'. (208) (SQLExecDirectW)")
+
+-----04/02/2016 00:49
+Error getting global codes together:
+Traceback (most recent call last):
+  File "C:\Users\cekin\Documents\GitHub\Global_Codes_App\Global Codes App\Global_Codes_App\views.py", line 191, in global_table
+    L['result'].append([r['GlobalCode'], r['Description'], r['Sample'], r['Type'], r['Analyte'], r['PrimaryLibrary'], r['SubSection'], r['Department'], r['Alias']])
+TypeError: string indices must be integers, not str
+
+-----04/02/2016 00:49
+Error getting global codes together:
+Traceback (most recent call last):
+  File "C:\Users\cekin\Documents\GitHub\Global_Codes_App\Global Codes App\Global_Codes_App\views.py", line 191, in global_table
+    L['result'].append([r['GlobalCode'], r['Description'], r['Sample'], r['Type'], r['Analyte'], r['PrimaryLibrary'], r['SubSection'], r['Department'], r['Alias']])
+TypeError: string indices must be integers, not str
+
+-----04/02/2016 00:49
+Error getting TLC list:
+Traceback (most recent call last):
+  File "C:\Users\cekin\Documents\GitHub\Global_Codes_App\Global Codes App\Global_Codes_App\views.py", line 112, in tlc_data
+    result = sql.exec_stored_procedure_list('spGlobalsApp_GetTLCList',args)
+  File "C:\Users\cekin\Documents\GitHub\Global_Codes_App\Global Codes App\Global_Codes_App\sql.py", line 90, in exec_stored_procedure_list
+    cursor.execute(sql)
+ProgrammingError: ('42S02', "[42S02] [Microsoft][ODBC SQL Server Driver][SQL Server]Invalid object name 'GlobalCodes_TEST_STAGING'. (208) (SQLExecDirectW)")
+
+-----04/02/2016 00:49
+Error getting global codes together:
+Traceback (most recent call last):
+  File "C:\Users\cekin\Documents\GitHub\Global_Codes_App\Global Codes App\Global_Codes_App\views.py", line 191, in global_table
+    L['result'].append([r['GlobalCode'], r['Description'], r['Sample'], r['Type'], r['Analyte'], r['PrimaryLibrary'], r['SubSection'], r['Department'], r['Alias']])
+TypeError: string indices must be integers, not str
+
+-----04/02/2016 00:49
+Error getting global codes together:
+Traceback (most recent call last):
+  File "C:\Users\cekin\Documents\GitHub\Global_Codes_App\Global Codes App\Global_Codes_App\views.py", line 191, in global_table
+    L['result'].append([r['GlobalCode'], r['Description'], r['Sample'], r['Type'], r['Analyte'], r['PrimaryLibrary'], r['SubSection'], r['Department'], r['Alias']])
+TypeError: string indices must be integers, not str
+
+-----04/02/2016 00:49
+Error getting TLC list:
+Traceback (most recent call last):
+  File "C:\Users\cekin\Documents\GitHub\Global_Codes_App\Global Codes App\Global_Codes_App\views.py", line 112, in tlc_data
+    result = sql.exec_stored_procedure_list('spGlobalsApp_GetTLCList',args)
+  File "C:\Users\cekin\Documents\GitHub\Global_Codes_App\Global Codes App\Global_Codes_App\sql.py", line 90, in exec_stored_procedure_list
+    cursor.execute(sql)
+ProgrammingError: ('42S02', "[42S02] [Microsoft][ODBC SQL Server Driver][SQL Server]Invalid object name 'GlobalCodes_TEST_STAGING'. (208) (SQLExecDirectW)")
+
+-----04/02/2016 00:49
+Error getting global codes together:
+Traceback (most recent call last):
+  File "C:\Users\cekin\Documents\GitHub\Global_Codes_App\Global Codes App\Global_Codes_App\views.py", line 191, in global_table
+    L['result'].append([r['GlobalCode'], r['Description'], r['Sample'], r['Type'], r['Analyte'], r['PrimaryLibrary'], r['SubSection'], r['Department'], r['Alias']])
+TypeError: string indices must be integers, not str
+
+-----04/02/2016 00:52
+Error getting global codes together:
+Traceback (most recent call last):
+  File "C:\Users\cekin\Documents\GitHub\Global_Codes_App\Global Codes App\Global_Codes_App\views.py", line 191, in global_table
+    L['result'].append([r['GlobalCode'], r['Description'], r['Sample'], r['Type'], r['Analyte'], r['PrimaryLibrary'], r['SubSection'], r['Department'], r['Alias']])
+TypeError: string indices must be integers, not str
+
+-----04/02/2016 00:52
+Error getting TLC list:
+Traceback (most recent call last):
+  File "C:\Users\cekin\Documents\GitHub\Global_Codes_App\Global Codes App\Global_Codes_App\views.py", line 112, in tlc_data
+    result = sql.exec_stored_procedure_list('spGlobalsApp_GetTLCList',args)
+  File "C:\Users\cekin\Documents\GitHub\Global_Codes_App\Global Codes App\Global_Codes_App\sql.py", line 90, in exec_stored_procedure_list
+    cursor.execute(sql)
+ProgrammingError: ('42S02', "[42S02] [Microsoft][ODBC SQL Server Driver][SQL Server]Invalid object name 'GlobalCodes_TEST_STAGING'. (208) (SQLExecDirectW)")
+
+-----04/02/2016 00:52
+Error getting global codes together:
+Traceback (most recent call last):
+  File "C:\Users\cekin\Documents\GitHub\Global_Codes_App\Global Codes App\Global_Codes_App\views.py", line 191, in global_table
+    L['result'].append([r['GlobalCode'], r['Description'], r['Sample'], r['Type'], r['Analyte'], r['PrimaryLibrary'], r['SubSection'], r['Department'], r['Alias']])
+TypeError: string indices must be integers, not str
+
+-----04/02/2016 00:53
+Error getting global codes together:
+Traceback (most recent call last):
+  File "C:\Users\cekin\Documents\GitHub\Global_Codes_App\Global Codes App\Global_Codes_App\views.py", line 191, in global_table
+    L['result'].append([r['GlobalCode'], r['Description'], r['Sample'], r['Type'], r['Analyte'], r['PrimaryLibrary'], r['SubSection'], r['Department'], r['Alias']])
+TypeError: string indices must be integers, not str
+
+-----04/02/2016 00:53
+Error getting TLC list:
+Traceback (most recent call last):
+  File "C:\Users\cekin\Documents\GitHub\Global_Codes_App\Global Codes App\Global_Codes_App\views.py", line 112, in tlc_data
+    result = sql.exec_stored_procedure_list('spGlobalsApp_GetTLCList',args)
+  File "C:\Users\cekin\Documents\GitHub\Global_Codes_App\Global Codes App\Global_Codes_App\sql.py", line 90, in exec_stored_procedure_list
+    cursor.execute(sql)
+ProgrammingError: ('42S02', "[42S02] [Microsoft][ODBC SQL Server Driver][SQL Server]Invalid object name 'GlobalCodes_TEST_STAGING'. (208) (SQLExecDirectW)")
+
+-----04/02/2016 00:53
+Error getting global codes together:
+Traceback (most recent call last):
+  File "C:\Users\cekin\Documents\GitHub\Global_Codes_App\Global Codes App\Global_Codes_App\views.py", line 191, in global_table
+    L['result'].append([r['GlobalCode'], r['Description'], r['Sample'], r['Type'], r['Analyte'], r['PrimaryLibrary'], r['SubSection'], r['Department'], r['Alias']])
+TypeError: string indices must be integers, not str
+
+-----04/02/2016 00:53
+Error getting global codes together:
+Traceback (most recent call last):
+  File "C:\Users\cekin\Documents\GitHub\Global_Codes_App\Global Codes App\Global_Codes_App\views.py", line 191, in global_table
+    L['result'].append([r['GlobalCode'], r['Description'], r['Sample'], r['Type'], r['Analyte'], r['PrimaryLibrary'], r['SubSection'], r['Department'], r['Alias']])
+TypeError: string indices must be integers, not str
+
+-----04/02/2016 00:53
+Error getting TLC list:
+Traceback (most recent call last):
+  File "C:\Users\cekin\Documents\GitHub\Global_Codes_App\Global Codes App\Global_Codes_App\views.py", line 112, in tlc_data
+    result = sql.exec_stored_procedure_list('spGlobalsApp_GetTLCList',args)
+  File "C:\Users\cekin\Documents\GitHub\Global_Codes_App\Global Codes App\Global_Codes_App\sql.py", line 90, in exec_stored_procedure_list
+    cursor.execute(sql)
+ProgrammingError: ('42S02', "[42S02] [Microsoft][ODBC SQL Server Driver][SQL Server]Invalid object name 'GlobalCodes_TEST_STAGING'. (208) (SQLExecDirectW)")
+
+-----04/02/2016 00:53
+Error getting global codes together:
+Traceback (most recent call last):
+  File "C:\Users\cekin\Documents\GitHub\Global_Codes_App\Global Codes App\Global_Codes_App\views.py", line 191, in global_table
+    L['result'].append([r['GlobalCode'], r['Description'], r['Sample'], r['Type'], r['Analyte'], r['PrimaryLibrary'], r['SubSection'], r['Department'], r['Alias']])
+TypeError: string indices must be integers, not str
+
+-----04/02/2016 00:54
+Error getting global codes together:
+Traceback (most recent call last):
+  File "C:\Users\cekin\Documents\GitHub\Global_Codes_App\Global Codes App\Global_Codes_App\views.py", line 191, in global_table
+    L['result'].append([r['GlobalCode'], r['Description'], r['Sample'], r['Type'], r['Analyte'], r['PrimaryLibrary'], r['SubSection'], r['Department'], r['Alias']])
+TypeError: string indices must be integers, not str
+
+-----04/02/2016 00:54
+Error getting TLC list:
+Traceback (most recent call last):
+  File "C:\Users\cekin\Documents\GitHub\Global_Codes_App\Global Codes App\Global_Codes_App\views.py", line 112, in tlc_data
+    result = sql.exec_stored_procedure_list('spGlobalsApp_GetTLCList',args)
+  File "C:\Users\cekin\Documents\GitHub\Global_Codes_App\Global Codes App\Global_Codes_App\sql.py", line 90, in exec_stored_procedure_list
+    cursor.execute(sql)
+ProgrammingError: ('42S02', "[42S02] [Microsoft][ODBC SQL Server Driver][SQL Server]Invalid object name 'GlobalCodes_TEST_STAGING'. (208) (SQLExecDirectW)")
+
+-----04/02/2016 00:54
+Error getting global codes together:
+Traceback (most recent call last):
+  File "C:\Users\cekin\Documents\GitHub\Global_Codes_App\Global Codes App\Global_Codes_App\views.py", line 191, in global_table
+    L['result'].append([r['GlobalCode'], r['Description'], r['Sample'], r['Type'], r['Analyte'], r['PrimaryLibrary'], r['SubSection'], r['Department'], r['Alias']])
+TypeError: string indices must be integers, not str
+
+-----04/02/2016 00:55
+Error getting global codes together:
+Traceback (most recent call last):
+  File "C:\Users\cekin\Documents\GitHub\Global_Codes_App\Global Codes App\Global_Codes_App\views.py", line 191, in global_table
+    L['result'].append([r['GlobalCode'], r['Description'], r['Sample'], r['Type'], r['Analyte'], r['PrimaryLibrary'], r['SubSection'], r['Department'], r['Alias']])
+TypeError: string indices must be integers, not str
+
+-----04/02/2016 00:55
+Error getting TLC list:
+Traceback (most recent call last):
+  File "C:\Users\cekin\Documents\GitHub\Global_Codes_App\Global Codes App\Global_Codes_App\views.py", line 112, in tlc_data
+    result = sql.exec_stored_procedure_list('spGlobalsApp_GetTLCList',args)
+  File "C:\Users\cekin\Documents\GitHub\Global_Codes_App\Global Codes App\Global_Codes_App\sql.py", line 90, in exec_stored_procedure_list
+    cursor.execute(sql)
+ProgrammingError: ('42S02', "[42S02] [Microsoft][ODBC SQL Server Driver][SQL Server]Invalid object name 'GlobalCodes_TEST_STAGING'. (208) (SQLExecDirectW)")
+
+-----04/02/2016 00:55
+Error getting global codes together:
+Traceback (most recent call last):
+  File "C:\Users\cekin\Documents\GitHub\Global_Codes_App\Global Codes App\Global_Codes_App\views.py", line 191, in global_table
+    L['result'].append([r['GlobalCode'], r['Description'], r['Sample'], r['Type'], r['Analyte'], r['PrimaryLibrary'], r['SubSection'], r['Department'], r['Alias']])
+TypeError: string indices must be integers, not str
+
+-----04/02/2016 00:56
+Error getting global codes together:
+Traceback (most recent call last):
+  File "C:\Users\cekin\Documents\GitHub\Global_Codes_App\Global Codes App\Global_Codes_App\views.py", line 191, in global_table
+    L['result'].append([r['GlobalCode'], r['Description'], r['Sample'], r['Type'], r['Analyte'], r['PrimaryLibrary'], r['SubSection'], r['Department'], r['Alias']])
+TypeError: string indices must be integers, not str
+
+-----04/02/2016 00:56
+Error getting TLC list:
+Traceback (most recent call last):
+  File "C:\Users\cekin\Documents\GitHub\Global_Codes_App\Global Codes App\Global_Codes_App\views.py", line 112, in tlc_data
+    result = sql.exec_stored_procedure_list('spGlobalsApp_GetTLCList',args)
+  File "C:\Users\cekin\Documents\GitHub\Global_Codes_App\Global Codes App\Global_Codes_App\sql.py", line 90, in exec_stored_procedure_list
+    cursor.execute(sql)
+ProgrammingError: ('42S02', "[42S02] [Microsoft][ODBC SQL Server Driver][SQL Server]Invalid object name 'GlobalCodes_TEST_STAGING'. (208) (SQLExecDirectW)")
+
+-----04/02/2016 00:56
+Error getting global codes together:
+Traceback (most recent call last):
+  File "C:\Users\cekin\Documents\GitHub\Global_Codes_App\Global Codes App\Global_Codes_App\views.py", line 191, in global_table
+    L['result'].append([r['GlobalCode'], r['Description'], r['Sample'], r['Type'], r['Analyte'], r['PrimaryLibrary'], r['SubSection'], r['Department'], r['Alias']])
+TypeError: string indices must be integers, not str
+
+-----05/02/2016 19:21
+Error getting dashboard data:
+Traceback (most recent call last):
+  File "C:\Users\cekin\Documents\GitHub\Global_Codes_App\Global Codes App\Global_Codes_App\views.py", line 298, in dashboard_getdata
+    data = sql.exec_stored_procedure_list('spGlobalsApp_AllSystemStats')
+  File "C:\Users\cekin\Documents\GitHub\Global_Codes_App\Global Codes App\Global_Codes_App\sql.py", line 90, in exec_stored_procedure_list
+    cursor.execute(sql)
+ProgrammingError: ('42S02', "[42S02] [Microsoft][ODBC SQL Server Driver][SQL Server]Invalid object name 'RFH_BIO_DW.dbo.FORM'. (208) (SQLExecDirectW)")
+
+-----05/02/2016 19:22
+Error getting TLC list:
+Traceback (most recent call last):
+  File "C:\Users\cekin\Documents\GitHub\Global_Codes_App\Global Codes App\Global_Codes_App\views.py", line 112, in tlc_data
+    result = sql.exec_stored_procedure_list('spGlobalsApp_GetTLCList',args)
+  File "C:\Users\cekin\Documents\GitHub\Global_Codes_App\Global Codes App\Global_Codes_App\sql.py", line 90, in exec_stored_procedure_list
+    cursor.execute(sql)
+ProgrammingError: ('42S02', "[42S02] [Microsoft][ODBC SQL Server Driver][SQL Server]Invalid object name 'GlobalCodes_TEST_STAGING'. (208) (SQLExecDirectW)")
+
+-----05/02/2016 19:22
+Error getting global codes together:
+Traceback (most recent call last):
+  File "C:\Users\cekin\Documents\GitHub\Global_Codes_App\Global Codes App\Global_Codes_App\views.py", line 191, in global_table
+    L['result'].append([r['GlobalCode'], r['Description'], r['Sample'], r['Type'], r['Analyte'], r['PrimaryLibrary'], r['SubSection'], r['Department'], r['Alias']])
+TypeError: string indices must be integers, not str
+
+-----05/02/2016 19:22
+Error getting global codes together:
+Traceback (most recent call last):
+  File "C:\Users\cekin\Documents\GitHub\Global_Codes_App\Global Codes App\Global_Codes_App\views.py", line 191, in global_table
+    L['result'].append([r['GlobalCode'], r['Description'], r['Sample'], r['Type'], r['Analyte'], r['PrimaryLibrary'], r['SubSection'], r['Department'], r['Alias']])
+TypeError: string indices must be integers, not str
+
+-----05/02/2016 19:23
+Error getting global codes together:
+Traceback (most recent call last):
+  File "C:\Users\cekin\Documents\GitHub\Global_Codes_App\Global Codes App\Global_Codes_App\views.py", line 191, in global_table
+    L['result'].append([r['GlobalCode'], r['Description'], r['Sample'], r['Type'], r['Analyte'], r['PrimaryLibrary'], r['SubSection'], r['Department'], r['Alias']])
+TypeError: string indices must be integers, not str
+
+-----05/02/2016 19:23
+Error getting TLC list:
+Traceback (most recent call last):
+  File "C:\Users\cekin\Documents\GitHub\Global_Codes_App\Global Codes App\Global_Codes_App\views.py", line 112, in tlc_data
+    result = sql.exec_stored_procedure_list('spGlobalsApp_GetTLCList',args)
+  File "C:\Users\cekin\Documents\GitHub\Global_Codes_App\Global Codes App\Global_Codes_App\sql.py", line 90, in exec_stored_procedure_list
+    cursor.execute(sql)
+ProgrammingError: ('42S02', "[42S02] [Microsoft][ODBC SQL Server Driver][SQL Server]Invalid object name 'GlobalCodes_TEST_STAGING'. (208) (SQLExecDirectW)")
+
+-----05/02/2016 19:23
+Error getting global codes together:
+Traceback (most recent call last):
+  File "C:\Users\cekin\Documents\GitHub\Global_Codes_App\Global Codes App\Global_Codes_App\views.py", line 191, in global_table
+    L['result'].append([r['GlobalCode'], r['Description'], r['Sample'], r['Type'], r['Analyte'], r['PrimaryLibrary'], r['SubSection'], r['Department'], r['Alias']])
+TypeError: string indices must be integers, not str
+
+-----05/02/2016 19:26
+Error getting global codes together:
+Traceback (most recent call last):
+  File "C:\Users\cekin\Documents\GitHub\Global_Codes_App\Global Codes App\Global_Codes_App\views.py", line 191, in global_table
+    L['result'].append([r['GlobalCode'], r['Description'], r['Sample'], r['Type'], r['Analyte'], r['PrimaryLibrary'], r['SubSection'], r['Department'], r['Alias']])
+TypeError: string indices must be integers, not str
+
+-----05/02/2016 19:26
+Error getting TLC list:
+Traceback (most recent call last):
+  File "C:\Users\cekin\Documents\GitHub\Global_Codes_App\Global Codes App\Global_Codes_App\views.py", line 112, in tlc_data
+    result = sql.exec_stored_procedure_list('spGlobalsApp_GetTLCList',args)
+  File "C:\Users\cekin\Documents\GitHub\Global_Codes_App\Global Codes App\Global_Codes_App\sql.py", line 90, in exec_stored_procedure_list
+    cursor.execute(sql)
+ProgrammingError: ('42S02', "[42S02] [Microsoft][ODBC SQL Server Driver][SQL Server]Invalid object name 'GlobalCodes_TEST_STAGING'. (208) (SQLExecDirectW)")
+
+-----05/02/2016 19:26
+Error getting global codes together:
+Traceback (most recent call last):
+  File "C:\Users\cekin\Documents\GitHub\Global_Codes_App\Global Codes App\Global_Codes_App\views.py", line 191, in global_table
+    L['result'].append([r['GlobalCode'], r['Description'], r['Sample'], r['Type'], r['Analyte'], r['PrimaryLibrary'], r['SubSection'], r['Department'], r['Alias']])
+TypeError: string indices must be integers, not str
+
+-----05/02/2016 19:26
+Error getting global codes together:
+Traceback (most recent call last):
+  File "C:\Users\cekin\Documents\GitHub\Global_Codes_App\Global Codes App\Global_Codes_App\views.py", line 191, in global_table
+    L['result'].append([r['GlobalCode'], r['Description'], r['Sample'], r['Type'], r['Analyte'], r['PrimaryLibrary'], r['SubSection'], r['Department'], r['Alias']])
+TypeError: string indices must be integers, not str
+
+-----05/02/2016 19:26
+Error getting TLC list:
+Traceback (most recent call last):
+  File "C:\Users\cekin\Documents\GitHub\Global_Codes_App\Global Codes App\Global_Codes_App\views.py", line 112, in tlc_data
+    result = sql.exec_stored_procedure_list('spGlobalsApp_GetTLCList',args)
+  File "C:\Users\cekin\Documents\GitHub\Global_Codes_App\Global Codes App\Global_Codes_App\sql.py", line 90, in exec_stored_procedure_list
+    cursor.execute(sql)
+ProgrammingError: ('42S02', "[42S02] [Microsoft][ODBC SQL Server Driver][SQL Server]Invalid object name 'GlobalCodes_TEST_STAGING'. (208) (SQLExecDirectW)")
+
+-----05/02/2016 19:26
+Error getting global codes together:
+Traceback (most recent call last):
+  File "C:\Users\cekin\Documents\GitHub\Global_Codes_App\Global Codes App\Global_Codes_App\views.py", line 191, in global_table
+    L['result'].append([r['GlobalCode'], r['Description'], r['Sample'], r['Type'], r['Analyte'], r['PrimaryLibrary'], r['SubSection'], r['Department'], r['Alias']])
+TypeError: string indices must be integers, not str
+
+-----05/02/2016 19:28
+Error getting global codes together:
+Traceback (most recent call last):
+  File "C:\Users\cekin\Documents\GitHub\Global_Codes_App\Global Codes App\Global_Codes_App\views.py", line 191, in global_table
+    L['result'].append([r['GlobalCode'], r['Description'], r['Sample'], r['Type'], r['Analyte'], r['PrimaryLibrary'], r['SubSection'], r['Department'], r['Alias']])
+TypeError: string indices must be integers, not str
+
+-----05/02/2016 19:28
+Error getting TLC list:
+Traceback (most recent call last):
+  File "C:\Users\cekin\Documents\GitHub\Global_Codes_App\Global Codes App\Global_Codes_App\views.py", line 112, in tlc_data
+    result = sql.exec_stored_procedure_list('spGlobalsApp_GetTLCList',args)
+  File "C:\Users\cekin\Documents\GitHub\Global_Codes_App\Global Codes App\Global_Codes_App\sql.py", line 90, in exec_stored_procedure_list
+    cursor.execute(sql)
+ProgrammingError: ('42S02', "[42S02] [Microsoft][ODBC SQL Server Driver][SQL Server]Invalid object name 'GlobalCodes_TEST_STAGING'. (208) (SQLExecDirectW)")
+
+-----05/02/2016 19:28
+Error getting global codes together:
+Traceback (most recent call last):
+  File "C:\Users\cekin\Documents\GitHub\Global_Codes_App\Global Codes App\Global_Codes_App\views.py", line 191, in global_table
+    L['result'].append([r['GlobalCode'], r['Description'], r['Sample'], r['Type'], r['Analyte'], r['PrimaryLibrary'], r['SubSection'], r['Department'], r['Alias']])
+TypeError: string indices must be integers, not str
+
+-----05/02/2016 21:22
+Error getting dashboard data:
+Traceback (most recent call last):
+  File "C:\Users\cekin\Documents\GitHub\Global_Codes_App\Global Codes App\Global_Codes_App\views.py", line 298, in dashboard_getdata
+    data = sql.exec_stored_procedure_list('spGlobalsApp_AllSystemStats')
+  File "C:\Users\cekin\Documents\GitHub\Global_Codes_App\Global Codes App\Global_Codes_App\sql.py", line 90, in exec_stored_procedure_list
+    cursor.execute(sql)
+ProgrammingError: ('42S02', "[42S02] [Microsoft][ODBC SQL Server Driver][SQL Server]Invalid object name 'RFH_BIO_DW.dbo.FORM'. (208) (SQLExecDirectW)")
+
+-----05/02/2016 21:22
+Error getting global codes together:
+Traceback (most recent call last):
+  File "C:\Users\cekin\Documents\GitHub\Global_Codes_App\Global Codes App\Global_Codes_App\views.py", line 191, in global_table
+    L['result'].append([r['GlobalCode'], r['Description'], r['Sample'], r['Type'], r['Analyte'], r['PrimaryLibrary'], r['SubSection'], r['Department'], r['Alias']])
+TypeError: string indices must be integers, not str
+
+-----05/02/2016 21:22
+Error getting global codes together:
+Traceback (most recent call last):
+  File "C:\Users\cekin\Documents\GitHub\Global_Codes_App\Global Codes App\Global_Codes_App\views.py", line 191, in global_table
+    L['result'].append([r['GlobalCode'], r['Description'], r['Sample'], r['Type'], r['Analyte'], r['PrimaryLibrary'], r['SubSection'], r['Department'], r['Alias']])
+TypeError: string indices must be integers, not str
+
+-----05/02/2016 21:22
+Problem running query
+Traceback (most recent call last):
+  File "C:\Users\cekin\Documents\GitHub\Global_Codes_App\Global Codes App\Global_Codes_App\views.py", line 730, in get_sql_data
+    result = methodToCall(params)
+  File "C:\Users\cekin\Documents\GitHub\Global_Codes_App\Global Codes App\Global_Codes_App\sql_queries.py", line 193, in Worksection_Data
+    result = run_odbc_query(sql)
+  File "C:\Users\cekin\Documents\GitHub\Global_Codes_App\Global Codes App\Global_Codes_App\sql_queries.py", line 30, in run_odbc_query
+    cursor.execute(sql.replace('\n',' '))
+ProgrammingError: ('42S02', "[42S02] [Microsoft][ODBC SQL Server Driver][SQL Server]Invalid object name 'RFH_HPIL_DW.dbo.SECTIONS.TXT'. (208) (SQLExecDirectW)")
+-----05/02/2016 21:25
+Error getting global codes together:
+Traceback (most recent call last):
+  File "C:\Users\cekin\Documents\GitHub\Global_Codes_App\Global Codes App\Global_Codes_App\views.py", line 191, in global_table
+    L['result'].append([r['GlobalCode'], r['Description'], r['Sample'], r['Type'], r['Analyte'], r['PrimaryLibrary'], r['SubSection'], r['Department'], r['Alias']])
+TypeError: string indices must be integers, not str
+
+-----05/02/2016 21:25
+Problem running query
+Traceback (most recent call last):
+  File "C:\Users\cekin\Documents\GitHub\Global_Codes_App\Global Codes App\Global_Codes_App\views.py", line 730, in get_sql_data
+    result = methodToCall(params)
+  File "C:\Users\cekin\Documents\GitHub\Global_Codes_App\Global Codes App\Global_Codes_App\sql_queries.py", line 194, in Worksection_Data
+    result = run_odbc_query(sql)
+  File "C:\Users\cekin\Documents\GitHub\Global_Codes_App\Global Codes App\Global_Codes_App\sql_queries.py", line 30, in run_odbc_query
+    cursor.execute(sql.replace('\n',' '))
+ProgrammingError: ('42S22', "[42S22] [Microsoft][ODBC SQL Server Driver][SQL Server]Invalid column name 'CROM_ALL_DW'. (207) (SQLExecDirectW); [42S22] [Microsoft][ODBC SQL Server Driver][SQL Server]Invalid column name 'Code'. (207); [42S22] [Microsoft][ODBC SQL Server Driver][SQL Server]Invalid column name 'section'. (207)")
+-----05/02/2016 21:25
+Problem running query
+Traceback (most recent call last):
+  File "C:\Users\cekin\Documents\GitHub\Global_Codes_App\Global Codes App\Global_Codes_App\views.py", line 730, in get_sql_data
+    result = methodToCall(params)
+  File "C:\Users\cekin\Documents\GitHub\Global_Codes_App\Global Codes App\Global_Codes_App\sql_queries.py", line 194, in Worksection_Data
+    result = run_odbc_query(sql)
+  File "C:\Users\cekin\Documents\GitHub\Global_Codes_App\Global Codes App\Global_Codes_App\sql_queries.py", line 30, in run_odbc_query
+    cursor.execute(sql.replace('\n',' '))
+ProgrammingError: ('42S22', "[42S22] [Microsoft][ODBC SQL Server Driver][SQL Server]Invalid column name 'RFH_BIO_DW'. (207) (SQLExecDirectW); [42S22] [Microsoft][ODBC SQL Server Driver][SQL Server]Invalid column name 'Code'. (207); [42S22] [Microsoft][ODBC SQL Server Driver][SQL Server]Invalid column name 'section'. (207)")
+-----05/02/2016 21:25
+Error getting global codes together:
+Traceback (most recent call last):
+  File "C:\Users\cekin\Documents\GitHub\Global_Codes_App\Global Codes App\Global_Codes_App\views.py", line 191, in global_table
+    L['result'].append([r['GlobalCode'], r['Description'], r['Sample'], r['Type'], r['Analyte'], r['PrimaryLibrary'], r['SubSection'], r['Department'], r['Alias']])
+TypeError: string indices must be integers, not str
+
+-----05/02/2016 21:25
+Problem running query
+Traceback (most recent call last):
+  File "C:\Users\cekin\Documents\GitHub\Global_Codes_App\Global Codes App\Global_Codes_App\views.py", line 730, in get_sql_data
+    result = methodToCall(params)
+  File "C:\Users\cekin\Documents\GitHub\Global_Codes_App\Global Codes App\Global_Codes_App\sql_queries.py", line 194, in Worksection_Data
+    result = run_odbc_query(sql)
+  File "C:\Users\cekin\Documents\GitHub\Global_Codes_App\Global Codes App\Global_Codes_App\sql_queries.py", line 30, in run_odbc_query
+    cursor.execute(sql.replace('\n',' '))
+ProgrammingError: ('42S22', "[42S22] [Microsoft][ODBC SQL Server Driver][SQL Server]Invalid column name 'CROM_ALL_DW'. (207) (SQLExecDirectW); [42S22] [Microsoft][ODBC SQL Server Driver][SQL Server]Invalid column name 'Code'. (207); [42S22] [Microsoft][ODBC SQL Server Driver][SQL Server]Invalid column name 'section'. (207)")
+-----05/02/2016 21:27
+Error getting global codes together:
+Traceback (most recent call last):
+  File "C:\Users\cekin\Documents\GitHub\Global_Codes_App\Global Codes App\Global_Codes_App\views.py", line 193, in global_table
+    L['result'].append([r['GlobalCode'], r['Description'], r['Sample'], r['Type'], r['Analyte'], r['PrimaryLibrary'], r['SubSection'], r['Department'], r['Alias']])
+TypeError: string indices must be integers, not str
+
+-----05/02/2016 21:27
+Problem running query
+Traceback (most recent call last):
+  File "C:\Users\cekin\Documents\GitHub\Global_Codes_App\Global Codes App\Global_Codes_App\views.py", line 732, in get_sql_data
+    result = methodToCall(params)
+  File "C:\Users\cekin\Documents\GitHub\Global_Codes_App\Global Codes App\Global_Codes_App\sql_queries.py", line 194, in Worksection_Data
+    result = run_odbc_query(sql)
+  File "C:\Users\cekin\Documents\GitHub\Global_Codes_App\Global Codes App\Global_Codes_App\sql_queries.py", line 30, in run_odbc_query
+    cursor.execute(sql.replace('\n',' '))
+ProgrammingError: ('42S22', "[42S22] [Microsoft][ODBC SQL Server Driver][SQL Server]Invalid column name 'CROM_ALL_DW'. (207) (SQLExecDirectW); [42S22] [Microsoft][ODBC SQL Server Driver][SQL Server]Invalid column name 'Code'. (207); [42S22] [Microsoft][ODBC SQL Server Driver][SQL Server]Invalid column name 'section'. (207)")
+-----05/02/2016 21:28
+Problem running query
+Traceback (most recent call last):
+  File "C:\Users\cekin\Documents\GitHub\Global_Codes_App\Global Codes App\Global_Codes_App\views.py", line 732, in get_sql_data
+    result = methodToCall(params)
+  File "C:\Users\cekin\Documents\GitHub\Global_Codes_App\Global Codes App\Global_Codes_App\sql_queries.py", line 194, in Worksection_Data
+    result = run_odbc_query(sql)
+  File "C:\Users\cekin\Documents\GitHub\Global_Codes_App\Global Codes App\Global_Codes_App\sql_queries.py", line 30, in run_odbc_query
+    cursor.execute(sql.replace('\n',' '))
+ProgrammingError: ('42S22', "[42S22] [Microsoft][ODBC SQL Server Driver][SQL Server]Invalid column name 'CROM_ALL_DW'. (207) (SQLExecDirectW); [42S22] [Microsoft][ODBC SQL Server Driver][SQL Server]Invalid column name 'Code'. (207); [42S22] [Microsoft][ODBC SQL Server Driver][SQL Server]Invalid column name 'section'. (207)")
+-----05/02/2016 21:28
+Problem running query
+Traceback (most recent call last):
+  File "C:\Users\cekin\Documents\GitHub\Global_Codes_App\Global Codes App\Global_Codes_App\views.py", line 732, in get_sql_data
+    result = methodToCall(params)
+  File "C:\Users\cekin\Documents\GitHub\Global_Codes_App\Global Codes App\Global_Codes_App\sql_queries.py", line 194, in Worksection_Data
+    result = run_odbc_query(sql)
+  File "C:\Users\cekin\Documents\GitHub\Global_Codes_App\Global Codes App\Global_Codes_App\sql_queries.py", line 30, in run_odbc_query
+    cursor.execute(sql.replace('\n',' '))
+ProgrammingError: ('42S22', "[42S22] [Microsoft][ODBC SQL Server Driver][SQL Server]Invalid column name 'CROM_ALL_DW'. (207) (SQLExecDirectW); [42S22] [Microsoft][ODBC SQL Server Driver][SQL Server]Invalid column name 'Code'. (207); [42S22] [Microsoft][ODBC SQL Server Driver][SQL Server]Invalid column name 'section'. (207)")
+-----05/02/2016 21:31
+Problem running query
+Traceback (most recent call last):
+  File "C:\Users\cekin\Documents\GitHub\Global_Codes_App\Global Codes App\Global_Codes_App\views.py", line 732, in get_sql_data
+    result = methodToCall(params)
+  File "C:\Users\cekin\Documents\GitHub\Global_Codes_App\Global Codes App\Global_Codes_App\sql_queries.py", line 194, in Worksection_Data
+    result = run_odbc_query(sql)
+  File "C:\Users\cekin\Documents\GitHub\Global_Codes_App\Global Codes App\Global_Codes_App\sql_queries.py", line 30, in run_odbc_query
+    cursor.execute(sql.replace('\n',' '))
+ProgrammingError: ('42S22', "[42S22] [Microsoft][ODBC SQL Server Driver][SQL Server]Invalid column name 'EAL_BHI_DW'. (207) (SQLExecDirectW); [42S22] [Microsoft][ODBC SQL Server Driver][SQL Server]Invalid column name 'Code'. (207); [42S22] [Microsoft][ODBC SQL Server Driver][SQL Server]Invalid column name 'section'. (207)")
+-----05/02/2016 21:31
+Problem running query
+Traceback (most recent call last):
+  File "C:\Users\cekin\Documents\GitHub\Global_Codes_App\Global Codes App\Global_Codes_App\views.py", line 732, in get_sql_data
+    result = methodToCall(params)
+  File "C:\Users\cekin\Documents\GitHub\Global_Codes_App\Global Codes App\Global_Codes_App\sql_queries.py", line 194, in Worksection_Data
+    result = run_odbc_query(sql)
+  File "C:\Users\cekin\Documents\GitHub\Global_Codes_App\Global Codes App\Global_Codes_App\sql_queries.py", line 30, in run_odbc_query
+    cursor.execute(sql.replace('\n',' '))
+ProgrammingError: ('42S22', "[42S22] [Microsoft][ODBC SQL Server Driver][SQL Server]Invalid column name 'EAL_MIC_DW'. (207) (SQLExecDirectW); [42S22] [Microsoft][ODBC SQL Server Driver][SQL Server]Invalid column name 'Code'. (207); [42S22] [Microsoft][ODBC SQL Server Driver][SQL Server]Invalid column name 'section'. (207)")
+-----05/02/2016 21:34
+Problem running query
+Traceback (most recent call last):
+  File "C:\Users\cekin\Documents\GitHub\Global_Codes_App\Global Codes App\Global_Codes_App\views.py", line 732, in get_sql_data
+    result = methodToCall(params)
+  File "C:\Users\cekin\Documents\GitHub\Global_Codes_App\Global Codes App\Global_Codes_App\sql_queries.py", line 194, in Worksection_Data
+    result = run_odbc_query(sql)
+  File "C:\Users\cekin\Documents\GitHub\Global_Codes_App\Global Codes App\Global_Codes_App\sql_queries.py", line 30, in run_odbc_query
+    cursor.execute(sql.replace('\n',' '))
+ProgrammingError: ('42S22', "[42S22] [Microsoft][ODBC SQL Server Driver][SQL Server]Invalid column name 'CROM_ALL_DW'. (207) (SQLExecDirectW)")
+-----05/02/2016 21:34
+Problem running query
+Traceback (most recent call last):
+  File "C:\Users\cekin\Documents\GitHub\Global_Codes_App\Global Codes App\Global_Codes_App\views.py", line 732, in get_sql_data
+    result = methodToCall(params)
+  File "C:\Users\cekin\Documents\GitHub\Global_Codes_App\Global Codes App\Global_Codes_App\sql_queries.py", line 194, in Worksection_Data
+    result = run_odbc_query(sql)
+  File "C:\Users\cekin\Documents\GitHub\Global_Codes_App\Global Codes App\Global_Codes_App\sql_queries.py", line 30, in run_odbc_query
+    cursor.execute(sql.replace('\n',' '))
+ProgrammingError: ('42S22', "[42S22] [Microsoft][ODBC SQL Server Driver][SQL Server]Invalid column name 'CROM_ALL_DW'. (207) (SQLExecDirectW)")
+-----05/02/2016 21:36
+Problem running query
+Traceback (most recent call last):
+  File "C:\Users\cekin\Documents\GitHub\Global_Codes_App\Global Codes App\Global_Codes_App\views.py", line 732, in get_sql_data
+    result = methodToCall(params)
+TypeError: TLC_List_For_Mapper() takes exactly 4 arguments (1 given)
+-----05/02/2016 21:36
+Problem running query
+Traceback (most recent call last):
+  File "C:\Users\cekin\Documents\GitHub\Global_Codes_App\Global Codes App\Global_Codes_App\views.py", line 732, in get_sql_data
+    result = methodToCall(params)
+TypeError: TLC_List_For_Mapper() takes exactly 4 arguments (1 given)
+-----05/02/2016 21:38
+Problem running query
+Traceback (most recent call last):
+  File "C:\Users\cekin\Documents\GitHub\Global_Codes_App\Global Codes App\Global_Codes_App\views.py", line 733, in get_sql_data
+    result = methodToCall(params)
+TypeError: TLC_List_For_Mapper() takes exactly 4 arguments (1 given)
+-----05/02/2016 21:40
+Problem running query
+Traceback (most recent call last):
+  File "C:\Users\cekin\Documents\GitHub\Global_Codes_App\Global Codes App\Global_Codes_App\views.py", line 733, in get_sql_data
+    result = methodToCall(params)
+  File "C:\Users\cekin\Documents\GitHub\Global_Codes_App\Global Codes App\Global_Codes_App\sql_queries.py", line 206, in TLC_List_For_Mapper
+    if section <> 'ALL':
+NameError: global name 'section' is not defined
+-----05/02/2016 21:41
+Problem running query
+Traceback (most recent call last):
+  File "C:\Users\cekin\Documents\GitHub\Global_Codes_App\Global Codes App\Global_Codes_App\views.py", line 733, in get_sql_data
+    result = methodToCall(params)
+  File "C:\Users\cekin\Documents\GitHub\Global_Codes_App\Global Codes App\Global_Codes_App\sql_queries.py", line 247, in TLC_List_For_Mapper
+    """.format(DB_NAME = params['db_name'],
+KeyError: 'db_name'
+-----05/02/2016 21:43
+Problem running query
+Traceback (most recent call last):
+  File "C:\Users\cekin\Documents\GitHub\Global_Codes_App\Global Codes App\Global_Codes_App\views.py", line 733, in get_sql_data
+    result = methodToCall(params)
+  File "C:\Users\cekin\Documents\GitHub\Global_Codes_App\Global Codes App\Global_Codes_App\sql_queries.py", line 255, in TLC_List_For_Mapper
+    result = run_odbc_query(sql)
+  File "C:\Users\cekin\Documents\GitHub\Global_Codes_App\Global Codes App\Global_Codes_App\sql_queries.py", line 30, in run_odbc_query
+    cursor.execute(sql.replace('\n',' '))
+DataError: ('22018', "[22018] [Microsoft][ODBC SQL Server Driver][SQL Server]Conversion failed when converting the varchar value 'A' to data type int. (245) (SQLExecDirectW)")
+-----05/02/2016 22:50
+Error getting dashboard data:
+Traceback (most recent call last):
+  File "C:\Users\cekin\Documents\GitHub\Global_Codes_App\Global Codes App\Global_Codes_App\views.py", line 300, in dashboard_getdata
+    data = sql.exec_stored_procedure_list('spGlobalsApp_AllSystemStats')
+  File "C:\Users\cekin\Documents\GitHub\Global_Codes_App\Global Codes App\Global_Codes_App\sql.py", line 90, in exec_stored_procedure_list
+    cursor.execute(sql)
+ProgrammingError: ('42S02', "[42S02] [Microsoft][ODBC SQL Server Driver][SQL Server]Invalid object name 'RFH_BIO_DW.dbo.FORM'. (208) (SQLExecDirectW)")
+
+-----06/02/2016 14:37
+Error getting dashboard data:
+Traceback (most recent call last):
+  File "C:\Users\cekin\Documents\GitHub\Global_Codes_App\Global Codes App\Global_Codes_App\views.py", line 300, in dashboard_getdata
+    data = sql.exec_stored_procedure_list('spGlobalsApp_AllSystemStats')
+  File "C:\Users\cekin\Documents\GitHub\Global_Codes_App\Global Codes App\Global_Codes_App\sql.py", line 90, in exec_stored_procedure_list
+    cursor.execute(sql)
+ProgrammingError: ('42S02', "[42S02] [Microsoft][ODBC SQL Server Driver][SQL Server]Invalid object name 'RFH_BIO_DW.dbo.FORM'. (208) (SQLExecDirectW)")
+
+-----06/02/2016 14:38
+Problem running query
+Traceback (most recent call last):
+  File "C:\Users\cekin\Documents\GitHub\Global_Codes_App\Global Codes App\Global_Codes_App\views.py", line 733, in get_sql_data
+    result = methodToCall(params)
+  File "C:\Users\cekin\Documents\GitHub\Global_Codes_App\Global Codes App\Global_Codes_App\sql_queries.py", line 240, in TLC_List_For_Mapper
+    GlobalCodes_Map = config.global_map_table)
+KeyError: 'FLAT'
+-----06/02/2016 14:40
+Problem running query
+Traceback (most recent call last):
+  File "C:\Users\cekin\Documents\GitHub\Global_Codes_App\Global Codes App\Global_Codes_App\views.py", line 733, in get_sql_data
+    result = methodToCall(params)
+  File "C:\Users\cekin\Documents\GitHub\Global_Codes_App\Global Codes App\Global_Codes_App\sql_queries.py", line 244, in TLC_List_For_Mapper
+    result = run_odbc_query(sql)
+  File "C:\Users\cekin\Documents\GitHub\Global_Codes_App\Global Codes App\Global_Codes_App\sql_queries.py", line 30, in run_odbc_query
+    cursor.execute(sql.replace('\n',' '))
+ProgrammingError: ('42S22', "[42S22] [Microsoft][ODBC SQL Server Driver][SQL Server]Invalid column name 'TLC'. (207) (SQLExecDirectW); [42S22] [Microsoft][ODBC SQL Server Driver][SQL Server]Invalid column name 'TFC'. (207); [42S22] [Microsoft][ODBC SQL Server Driver][SQL Server]Invalid column name 'Code'. (207)")
+-----06/02/2016 14:43
+Problem running query
+Traceback (most recent call last):
+  File "C:\Users\cekin\Documents\GitHub\Global_Codes_App\Global Codes App\Global_Codes_App\views.py", line 733, in get_sql_data
+    result = methodToCall(params)
+  File "C:\Users\cekin\Documents\GitHub\Global_Codes_App\Global Codes App\Global_Codes_App\sql_queries.py", line 244, in TLC_List_For_Mapper
+    result = run_odbc_query(sql)
+  File "C:\Users\cekin\Documents\GitHub\Global_Codes_App\Global Codes App\Global_Codes_App\sql_queries.py", line 30, in run_odbc_query
+    cursor.execute(sql.replace('\n',' '))
+ProgrammingError: ('42S22', "[42S22] [Microsoft][ODBC SQL Server Driver][SQL Server]Invalid column name 'Code'. (207) (SQLExecDirectW)")
+-----06/02/2016 16:56
+Error getting dashboard data:
+Traceback (most recent call last):
+  File "C:\Users\cekin\Documents\GitHub\Global_Codes_App\Global Codes App\Global_Codes_App\views.py", line 300, in dashboard_getdata
+    data = sql.exec_stored_procedure_list('spGlobalsApp_AllSystemStats')
+  File "C:\Users\cekin\Documents\GitHub\Global_Codes_App\Global Codes App\Global_Codes_App\sql.py", line 90, in exec_stored_procedure_list
+    cursor.execute(sql)
+ProgrammingError: ('42S02', "[42S02] [Microsoft][ODBC SQL Server Driver][SQL Server]Invalid object name 'RFH_BIO_DW.dbo.FORM'. (208) (SQLExecDirectW)")
+
+-----06/02/2016 16:57
+Problem running query
+Traceback (most recent call last):
+  File "C:\Users\cekin\Documents\GitHub\Global_Codes_App\Global Codes App\Global_Codes_App\views.py", line 735, in get_sql_data
+    result = methodToCall()
+  File "C:\Users\cekin\Documents\GitHub\Global_Codes_App\Global Codes App\Global_Codes_App\sql_queries.py", line 138, in Location_Table
+    result = run_odbc_query(sql)
+  File "C:\Users\cekin\Documents\GitHub\Global_Codes_App\Global Codes App\Global_Codes_App\sql_queries.py", line 30, in run_odbc_query
+    cursor.execute(sql.replace('\n',' '))
+ProgrammingError: ('42S02', "[42S02] [Microsoft][ODBC SQL Server Driver][SQL Server]Invalid object name 'GlobalCodes.dbo.GlobalCodes_Departments'. (208) (SQLExecDirectW)")
+-----06/02/2016 17:44
+Problem running query
+Traceback (most recent call last):
+  File "C:\Users\cekin\Documents\GitHub\Global_Codes_App\Global Codes App\Global_Codes_App\views.py", line 733, in get_sql_data
+    result = methodToCall(params)
+  File "C:\Users\cekin\Documents\GitHub\Global_Codes_App\Global Codes App\Global_Codes_App\sql_queries.py", line 244, in TLC_List_For_Mapper
+    result = run_odbc_query(sql)
+  File "C:\Users\cekin\Documents\GitHub\Global_Codes_App\Global Codes App\Global_Codes_App\sql_queries.py", line 30, in run_odbc_query
+    cursor.execute(sql.replace('\n',' '))
+ProgrammingError: ('42S22', "[42S22] [Microsoft][ODBC SQL Server Driver][SQL Server]Invalid column name 'Code'. (207) (SQLExecDirectW); [42S22] [Microsoft][ODBC SQL Server Driver][SQL Server]Invalid column name 'GlobalCode'. (207); [42S22] [Microsoft][ODBC SQL Server Driver][SQL Server]Invalid column name 'GlobalCode'. (207)")
+-----06/02/2016 17:45
+Problem running query
+Traceback (most recent call last):
+  File "C:\Users\cekin\Documents\GitHub\Global_Codes_App\Global Codes App\Global_Codes_App\views.py", line 733, in get_sql_data
+    result = methodToCall(params)
+  File "C:\Users\cekin\Documents\GitHub\Global_Codes_App\Global Codes App\Global_Codes_App\sql_queries.py", line 244, in TLC_List_For_Mapper
+    result = run_odbc_query(sql)
+  File "C:\Users\cekin\Documents\GitHub\Global_Codes_App\Global Codes App\Global_Codes_App\sql_queries.py", line 30, in run_odbc_query
+    cursor.execute(sql.replace('\n',' '))
+ProgrammingError: ('42S22', "[42S22] [Microsoft][ODBC SQL Server Driver][SQL Server]Invalid column name 'Code'. (207) (SQLExecDirectW); [42S22] [Microsoft][ODBC SQL Server Driver][SQL Server]Invalid column name 'GlobalCode'. (207); [42S22] [Microsoft][ODBC SQL Server Driver][SQL Server]Invalid column name 'GlobalCode'. (207)")
+-----06/02/2016 18:00
+Query does not exist: TLC_Detail_For_Mapper
+-----06/02/2016 18:02
+Query does not exist: TLC_Detail_For_Mapper
+-----06/02/2016 18:02
+Query does not exist: TLC_Detail_For_Mapper
+-----06/02/2016 18:06
+Problem running query
+Traceback (most recent call last):
+  File "C:\Users\cekin\Documents\GitHub\Global_Codes_App\Global Codes App\Global_Codes_App\views.py", line 733, in get_sql_data
+    result = methodToCall(params)
+  File "C:\Users\cekin\Documents\GitHub\Global_Codes_App\Global Codes App\Global_Codes_App\sql_queries.py", line 279, in TLC_Detail_For_Mapper
+    MAP = config.global_map,
+AttributeError: 'module' object has no attribute 'global_map'
+-----06/02/2016 18:07
+Problem running query
+Traceback (most recent call last):
+  File "C:\Users\cekin\Documents\GitHub\Global_Codes_App\Global Codes App\Global_Codes_App\views.py", line 733, in get_sql_data
+    result = methodToCall(params)
+  File "C:\Users\cekin\Documents\GitHub\Global_Codes_App\Global Codes App\Global_Codes_App\sql_queries.py", line 286, in TLC_Detail_For_Mapper
+    result = run_odbc_query(sql)
+  File "C:\Users\cekin\Documents\GitHub\Global_Codes_App\Global Codes App\Global_Codes_App\sql_queries.py", line 30, in run_odbc_query
+    cursor.execute(sql.replace('\n',' '))
+ProgrammingError: ('42000', "[42000] [Microsoft][ODBC SQL Server Driver][SQL Server]Incorrect syntax near 'SD'. (102) (SQLExecDirectW)")
+-----06/02/2016 18:08
+Problem running query
+Traceback (most recent call last):
+  File "C:\Users\cekin\Documents\GitHub\Global_Codes_App\Global Codes App\Global_Codes_App\views.py", line 733, in get_sql_data
+    result = methodToCall(params)
+  File "C:\Users\cekin\Documents\GitHub\Global_Codes_App\Global Codes App\Global_Codes_App\sql_queries.py", line 286, in TLC_Detail_For_Mapper
+    result = run_odbc_query(sql)
+  File "C:\Users\cekin\Documents\GitHub\Global_Codes_App\Global Codes App\Global_Codes_App\sql_queries.py", line 30, in run_odbc_query
+    cursor.execute(sql.replace('\n',' '))
+ProgrammingError: ('42S22', "[42S22] [Microsoft][ODBC SQL Server Driver][SQL Server]Invalid column name 'Test Code'. (207) (SQLExecDirectW)")
+-----06/02/2016 18:08
+Problem running query
+Traceback (most recent call last):
+  File "C:\Users\cekin\Documents\GitHub\Global_Codes_App\Global Codes App\Global_Codes_App\views.py", line 733, in get_sql_data
+    result = methodToCall(params)
+  File "C:\Users\cekin\Documents\GitHub\Global_Codes_App\Global Codes App\Global_Codes_App\sql_queries.py", line 286, in TLC_Detail_For_Mapper
+    result = run_odbc_query(sql)
+  File "C:\Users\cekin\Documents\GitHub\Global_Codes_App\Global Codes App\Global_Codes_App\sql_queries.py", line 30, in run_odbc_query
+    cursor.execute(sql.replace('\n',' '))
+ProgrammingError: ('42S22', "[42S22] [Microsoft][ODBC SQL Server Driver][SQL Server]Invalid column name 'Test Code'. (207) (SQLExecDirectW)")
+-----06/02/2016 18:09
+Problem running query
+Traceback (most recent call last):
+  File "C:\Users\cekin\Documents\GitHub\Global_Codes_App\Global Codes App\Global_Codes_App\views.py", line 733, in get_sql_data
+    result = methodToCall(params)
+  File "C:\Users\cekin\Documents\GitHub\Global_Codes_App\Global Codes App\Global_Codes_App\sql_queries.py", line 286, in TLC_Detail_For_Mapper
+    result = run_odbc_query(sql)
+  File "C:\Users\cekin\Documents\GitHub\Global_Codes_App\Global Codes App\Global_Codes_App\sql_queries.py", line 30, in run_odbc_query
+    cursor.execute(sql.replace('\n',' '))
+ProgrammingError: ('42S02', "[42S02] [Microsoft][ODBC SQL Server Driver][SQL Server]Invalid object name 'GlobalCodes.dbo.GlobalCodes_Departments'. (208) (SQLExecDirectW)")
+-----06/02/2016 18:10
+Query does not exist: TLC_Detail_For_Mapper
+Traceback (most recent call last):
+  File "C:\Users\cekin\Documents\GitHub\Global_Codes_App\Global Codes App\Global_Codes_App\views.py", line 733, in get_sql_data
+    result = methodToCall(params)
+  File "C:\Users\cekin\Documents\GitHub\Global_Codes_App\Global Codes App\Global_Codes_App\sql_queries.py", line 292, in TLC_Detail_For_Mapper
+    result['table'] = config.global_map
+AttributeError: 'module' object has no attribute 'global_map'
+-----07/02/2016 11:22
+Error getting dashboard data:
+Traceback (most recent call last):
+  File "C:\Users\cekin\Documents\GitHub\Global_Codes_App\Global Codes App\Global_Codes_App\views.py", line 300, in dashboard_getdata
+    data = sql.exec_stored_procedure_list('spGlobalsApp_AllSystemStats')
+  File "C:\Users\cekin\Documents\GitHub\Global_Codes_App\Global Codes App\Global_Codes_App\sql.py", line 90, in exec_stored_procedure_list
+    cursor.execute(sql)
+ProgrammingError: ('42S02', "[42S02] [Microsoft][ODBC SQL Server Driver][SQL Server]Invalid object name 'RFH_BIO_DW.dbo.FORM'. (208) (SQLExecDirectW)")
+
+-----07/02/2016 20:48
+Problem running query
+Traceback (most recent call last):
+  File "C:\Users\cekin\Documents\GitHub\Global_Codes_App\Global Codes App\Global_Codes_App\views.py", line 735, in get_sql_data
+    result = methodToCall()
+  File "C:\Users\cekin\Documents\GitHub\Global_Codes_App\Global Codes App\Global_Codes_App\sql_queries.py", line 337, in Mapped_LOINC_List
+    result = run_odbc_query(sql)
+  File "C:\Users\cekin\Documents\GitHub\Global_Codes_App\Global Codes App\Global_Codes_App\sql_queries.py", line 30, in run_odbc_query
+    cursor.execute(sql.replace('\n',' '))
+ProgrammingError: ('42000', "[42000] [Microsoft][ODBC SQL Server Driver][SQL Server]Incorrect syntax near the keyword 'from'. (156) (SQLExecDirectW); [42000] [Microsoft][ODBC SQL Server Driver][SQL Server]Incorrect syntax near the keyword 'order'. (156)")
+-----07/02/2016 20:49
+Problem running query
+Traceback (most recent call last):
+  File "C:\Users\cekin\Documents\GitHub\Global_Codes_App\Global Codes App\Global_Codes_App\views.py", line 735, in get_sql_data
+    result = methodToCall()
+  File "C:\Users\cekin\Documents\GitHub\Global_Codes_App\Global Codes App\Global_Codes_App\sql_queries.py", line 337, in Mapped_LOINC_List
+    result = run_odbc_query(sql)
+  File "C:\Users\cekin\Documents\GitHub\Global_Codes_App\Global Codes App\Global_Codes_App\sql_queries.py", line 30, in run_odbc_query
+    cursor.execute(sql.replace('\n',' '))
+ProgrammingError: ('42000', "[42000] [Microsoft][ODBC SQL Server Driver][SQL Server]Incorrect syntax near the keyword 'from'. (156) (SQLExecDirectW); [42000] [Microsoft][ODBC SQL Server Driver][SQL Server]Incorrect syntax near the keyword 'order'. (156)")
+-----07/02/2016 20:51
+Problem running query
+Traceback (most recent call last):
+  File "C:\Users\cekin\Documents\GitHub\Global_Codes_App\Global Codes App\Global_Codes_App\views.py", line 735, in get_sql_data
+    result = methodToCall()
+  File "C:\Users\cekin\Documents\GitHub\Global_Codes_App\Global Codes App\Global_Codes_App\sql_queries.py", line 336, in Mapped_LOINC_List
+    result = run_odbc_query(sql)
+  File "C:\Users\cekin\Documents\GitHub\Global_Codes_App\Global Codes App\Global_Codes_App\sql_queries.py", line 30, in run_odbc_query
+    cursor.execute(sql.replace('\n',' '))
+ProgrammingError: ('42S22', "[42S22] [Microsoft][ODBC SQL Server Driver][SQL Server]Invalid column name 'alias'. (207) (SQLExecDirectW)")
+-----07/02/2016 21:08
+Problem running query
+Traceback (most recent call last):
+  File "C:\Users\cekin\Documents\GitHub\Global_Codes_App\Global Codes App\Global_Codes_App\views.py", line 735, in get_sql_data
+    result = methodToCall()
+TypeError: Mapped_LOINC_List() takes exactly 1 argument (0 given)
+-----07/02/2016 21:18
+Problem running query
+Traceback (most recent call last):
+  File "C:\Users\cekin\Documents\GitHub\Global_Codes_App\Global Codes App\Global_Codes_App\views.py", line 733, in get_sql_data
+    result = methodToCall(params)
+  File "C:\Users\cekin\Documents\GitHub\Global_Codes_App\Global Codes App\Global_Codes_App\sql_queries.py", line 333, in Mapped_LOINC_List
+    search_term = params['search_term'])
+KeyError: 'search_term'
+-----07/02/2016 21:19
+Problem running query
+Traceback (most recent call last):
+  File "C:\Users\cekin\Documents\GitHub\Global_Codes_App\Global Codes App\Global_Codes_App\views.py", line 733, in get_sql_data
+    result = methodToCall(params)
+  File "C:\Users\cekin\Documents\GitHub\Global_Codes_App\Global Codes App\Global_Codes_App\sql_queries.py", line 333, in Mapped_LOINC_List
+    LOCATIONS = config.location_table)
+KeyError: 'search_term'
+-----07/02/2016 21:33
+Problem running query
+Traceback (most recent call last):
+  File "C:\Users\cekin\Documents\GitHub\Global_Codes_App\Global Codes App\Global_Codes_App\views.py", line 733, in get_sql_data
+    result = methodToCall(params)
+  File "C:\Users\cekin\Documents\GitHub\Global_Codes_App\Global Codes App\Global_Codes_App\sql_queries.py", line 334, in Mapped_LOINC_List
+    search_term = params['search_term'])
+KeyError: 'search_term'
+-----07/02/2016 21:33
+Problem running query
+Traceback (most recent call last):
+  File "C:\Users\cekin\Documents\GitHub\Global_Codes_App\Global Codes App\Global_Codes_App\views.py", line 733, in get_sql_data
+    result = methodToCall(params)
+  File "C:\Users\cekin\Documents\GitHub\Global_Codes_App\Global Codes App\Global_Codes_App\sql_queries.py", line 334, in Mapped_LOINC_List
+    search_term = params['search_term'])
+KeyError: 'search_term'
+-----07/02/2016 21:34
+Problem running query
+Traceback (most recent call last):
+  File "C:\Users\cekin\Documents\GitHub\Global_Codes_App\Global Codes App\Global_Codes_App\views.py", line 733, in get_sql_data
+    result = methodToCall(params)
+  File "C:\Users\cekin\Documents\GitHub\Global_Codes_App\Global Codes App\Global_Codes_App\sql_queries.py", line 339, in Mapped_LOINC_List
+    result = run_odbc_query(sql)
+  File "C:\Users\cekin\Documents\GitHub\Global_Codes_App\Global Codes App\Global_Codes_App\sql_queries.py", line 30, in run_odbc_query
+    cursor.execute(sql.replace('\n',' '))
+ProgrammingError: ('42S22', "[42S22] [Microsoft][ODBC SQL Server Driver][SQL Server]Invalid column name 'crea'. (207) (SQLExecDirectW)")
+-----07/02/2016 21:34
+Problem running query
+Traceback (most recent call last):
+  File "C:\Users\cekin\Documents\GitHub\Global_Codes_App\Global Codes App\Global_Codes_App\views.py", line 733, in get_sql_data
+    result = methodToCall(params)
+  File "C:\Users\cekin\Documents\GitHub\Global_Codes_App\Global Codes App\Global_Codes_App\sql_queries.py", line 339, in Mapped_LOINC_List
+    result = run_odbc_query(sql)
+  File "C:\Users\cekin\Documents\GitHub\Global_Codes_App\Global Codes App\Global_Codes_App\sql_queries.py", line 30, in run_odbc_query
+    cursor.execute(sql.replace('\n',' '))
+ProgrammingError: ('42S22', "[42S22] [Microsoft][ODBC SQL Server Driver][SQL Server]Invalid column name 'crea'. (207) (SQLExecDirectW)")
+-----07/02/2016 21:34
+Problem running query
+Traceback (most recent call last):
+  File "C:\Users\cekin\Documents\GitHub\Global_Codes_App\Global Codes App\Global_Codes_App\views.py", line 733, in get_sql_data
+    result = methodToCall(params)
+  File "C:\Users\cekin\Documents\GitHub\Global_Codes_App\Global Codes App\Global_Codes_App\sql_queries.py", line 334, in Mapped_LOINC_List
+    search_term = params['search_term'])
+KeyError: 'search_term'
+-----07/02/2016 21:36
+Problem running query
+Traceback (most recent call last):
+  File "C:\Users\cekin\Documents\GitHub\Global_Codes_App\Global Codes App\Global_Codes_App\views.py", line 733, in get_sql_data
+    result = methodToCall(params)
+  File "C:\Users\cekin\Documents\GitHub\Global_Codes_App\Global Codes App\Global_Codes_App\sql_queries.py", line 327, in Mapped_LOINC_List
+    search_term = params['search_term'])
+KeyError: 'search_term'
+-----07/02/2016 21:38
+Problem running query
+Traceback (most recent call last):
+  File "C:\Users\cekin\Documents\GitHub\Global_Codes_App\Global Codes App\Global_Codes_App\views.py", line 733, in get_sql_data
+    result = methodToCall(params)
+  File "C:\Users\cekin\Documents\GitHub\Global_Codes_App\Global Codes App\Global_Codes_App\sql_queries.py", line 327, in Mapped_LOINC_List
+    search_term = params['search_term'])
+KeyError: 'search_term'
+-----07/02/2016 21:38
+Problem running query
+Traceback (most recent call last):
+  File "C:\Users\cekin\Documents\GitHub\Global_Codes_App\Global Codes App\Global_Codes_App\views.py", line 733, in get_sql_data
+    result = methodToCall(params)
+  File "C:\Users\cekin\Documents\GitHub\Global_Codes_App\Global Codes App\Global_Codes_App\sql_queries.py", line 332, in Mapped_LOINC_List
+    result = run_odbc_query(sql)
+  File "C:\Users\cekin\Documents\GitHub\Global_Codes_App\Global Codes App\Global_Codes_App\sql_queries.py", line 30, in run_odbc_query
+    cursor.execute(sql.replace('\n',' '))
+ProgrammingError: ('42S22', "[42S22] [Microsoft][ODBC SQL Server Driver][SQL Server]Invalid column name 'rank'. (207) (SQLExecDirectW)")
+-----07/02/2016 21:38
+Problem running query
+Traceback (most recent call last):
+  File "C:\Users\cekin\Documents\GitHub\Global_Codes_App\Global Codes App\Global_Codes_App\views.py", line 733, in get_sql_data
+    result = methodToCall(params)
+  File "C:\Users\cekin\Documents\GitHub\Global_Codes_App\Global Codes App\Global_Codes_App\sql_queries.py", line 326, in Mapped_LOINC_List
+    search_term = params['search_term'])
+KeyError: 'search_term'
+-----07/02/2016 21:40
+Problem running query
+Traceback (most recent call last):
+  File "C:\Users\cekin\Documents\GitHub\Global_Codes_App\Global Codes App\Global_Codes_App\views.py", line 733, in get_sql_data
+    result = methodToCall(params)
+  File "C:\Users\cekin\Documents\GitHub\Global_Codes_App\Global Codes App\Global_Codes_App\sql_queries.py", line 326, in Mapped_LOINC_List
+    search_term = params['search_term'])
+KeyError: 'search_term'
+-----07/02/2016 21:43
+Problem running query
+Traceback (most recent call last):
+  File "C:\Users\cekin\Documents\GitHub\Global_Codes_App\Global Codes App\Global_Codes_App\views.py", line 733, in get_sql_data
+    result = methodToCall(params)
+  File "C:\Users\cekin\Documents\GitHub\Global_Codes_App\Global Codes App\Global_Codes_App\sql_queries.py", line 325, in Mapped_LOINC_List
+    search_term = params['search_term'])
+KeyError: 'search_term'
+-----07/02/2016 22:00
+Problem running query
+Traceback (most recent call last):
+  File "C:\Users\cekin\Documents\GitHub\Global_Codes_App\Global Codes App\Global_Codes_App\views.py", line 786, in mapped_loinc_search
+    result = methodToCall(params)
+  File "C:\Users\cekin\Documents\GitHub\Global_Codes_App\Global Codes App\Global_Codes_App\sql_queries.py", line 330, in Mapped_LOINC_List
+    result = run_odbc_query(sql)
+  File "C:\Users\cekin\Documents\GitHub\Global_Codes_App\Global Codes App\Global_Codes_App\sql_queries.py", line 30, in run_odbc_query
+    cursor.execute(sql.replace('\n',' '))
+ProgrammingError: ('42S22', "[42S22] [Microsoft][ODBC SQL Server Driver][SQL Server]Invalid column name 'loincf'. (207) (SQLExecDirectW)")
+-----07/02/2016 22:00
+Problem running query
+Traceback (most recent call last):
+  File "C:\Users\cekin\Documents\GitHub\Global_Codes_App\Global Codes App\Global_Codes_App\views.py", line 786, in mapped_loinc_search
+    result = methodToCall(params)
+  File "C:\Users\cekin\Documents\GitHub\Global_Codes_App\Global Codes App\Global_Codes_App\sql_queries.py", line 330, in Mapped_LOINC_List
+    result = run_odbc_query(sql)
+  File "C:\Users\cekin\Documents\GitHub\Global_Codes_App\Global Codes App\Global_Codes_App\sql_queries.py", line 30, in run_odbc_query
+    cursor.execute(sql.replace('\n',' '))
+ProgrammingError: ('42S22', "[42S22] [Microsoft][ODBC SQL Server Driver][SQL Server]Invalid column name 'loincf'. (207) (SQLExecDirectW)")
+-----07/02/2016 22:00
+Problem running query
+Traceback (most recent call last):
+  File "C:\Users\cekin\Documents\GitHub\Global_Codes_App\Global Codes App\Global_Codes_App\views.py", line 786, in mapped_loinc_search
+    result = methodToCall(params)
+  File "C:\Users\cekin\Documents\GitHub\Global_Codes_App\Global Codes App\Global_Codes_App\sql_queries.py", line 330, in Mapped_LOINC_List
+    result = run_odbc_query(sql)
+  File "C:\Users\cekin\Documents\GitHub\Global_Codes_App\Global Codes App\Global_Codes_App\sql_queries.py", line 30, in run_odbc_query
+    cursor.execute(sql.replace('\n',' '))
+ProgrammingError: ('42S22', "[42S22] [Microsoft][ODBC SQL Server Driver][SQL Server]Invalid column name 'loincf'. (207) (SQLExecDirectW)")
+-----07/02/2016 22:01
+Problem running query
+Traceback (most recent call last):
+  File "C:\Users\cekin\Documents\GitHub\Global_Codes_App\Global Codes App\Global_Codes_App\views.py", line 786, in mapped_loinc_search
+    result = methodToCall(params)
+  File "C:\Users\cekin\Documents\GitHub\Global_Codes_App\Global Codes App\Global_Codes_App\sql_queries.py", line 330, in Mapped_LOINC_List
+    result = run_odbc_query(sql)
+  File "C:\Users\cekin\Documents\GitHub\Global_Codes_App\Global Codes App\Global_Codes_App\sql_queries.py", line 30, in run_odbc_query
+    cursor.execute(sql.replace('\n',' '))
+ProgrammingError: ('42S22', "[42S22] [Microsoft][ODBC SQL Server Driver][SQL Server]Invalid column name 'loincf'. (207) (SQLExecDirectW)")
+-----07/02/2016 22:27
+Problem updating SQL table
+Traceback (most recent call last):
+  File "C:\Users\cekin\Documents\GitHub\Global_Codes_App\Global Codes App\Global_Codes_App\views.py", line 753, in submit_table_update
+    spreadsheet_queries.update_odbc_table(submission,user.email)
+NameError: global name 'spreadsheet_queries' is not defined
+-----07/02/2016 22:54
+Problem updating SQL table
+Traceback (most recent call last):
+  File "C:\Users\cekin\Documents\GitHub\Global_Codes_App\Global Codes App\Global_Codes_App\views.py", line 753, in submit_table_update
+    sql_queries.update_odbc_table(submission,user.email)
+  File "C:\Users\cekin\Documents\GitHub\Global_Codes_App\Global Codes App\Global_Codes_App\sql_queries.py", line 85, in update_odbc_table
+    cursor.execute(sql_update.replace('\n',' '))
+ProgrammingError: ('42S22', "[42S22] [Microsoft][ODBC SQL Server Driver][SQL Server]Invalid column name 'id'. (207) (SQLExecDirectW)")

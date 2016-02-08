@@ -1,5 +1,13 @@
 ﻿// Load the dashboard
-$(document).ready( function () {
+$(document).ready(function () {
+
+    // Load any new TFCs in to the mapping table
+    $.getJSON('/get_new_tfc', function (data) {
+        if (data['result'] == 'ERROR') {
+            swal('Error getting new TFCs');
+        };
+    });
+
     // Get the work section data
     $.getJSON('/dashboard_getdata', function (data) {
 

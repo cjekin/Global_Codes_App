@@ -22,7 +22,7 @@ $('#spreadsheet_refresh').click(function () {
 
 
 function get_spreadsheet_list() {
-    $.getJSON('get_spreadsheet_lists', function (returned_data) {
+    $.getJSON('get_variable_from_config?variable=' + 'spreadsheet_queries', function (returned_data) {
         if (returned_data['data'] == 'ERROR') {
             swal({
                 title: returned_data['data'],
@@ -41,7 +41,7 @@ function get_spreadsheet_list() {
 
 
 function get_spreadsheet(sheet) {
-    var url = '/get_spreadsheet_data?query=' + sheet;
+    var url = '/get_sql_data?query=' + sheet;
     $.getJSON(url, function (returned_data) {
         if (returned_data['data'] == 'ERROR') {
             swal({
@@ -165,7 +165,7 @@ function cell_changed(changes, source) {
             newval: newval
         };
 
-        $.post('\spreadsheet_pro_change', submission)
+        $.post('/submit_table_update', submission)
         .done(function (data) {
             if (data['data'] == 'ERROR') {
                 swal({
