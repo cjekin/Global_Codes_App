@@ -4,18 +4,25 @@
 {% block customstyle %}
 <style>
 
+    /*#library_code_datatable {
+        table-layout: fixed;
+        width: 90%;
+    }*/
+
     .tfc result-type {
         width: 5%;
     }
     .container {
-        width: 10%;
+        width: 15%;
     }
-    .tfc-name {
-        width: 26%;
+    .loc1 .loc2 {
+        width: 15%;
     }
-    loinc loc1 loc2 {
-        width: 18%;
+    .tfc-name .loinc {
+        width: 25%;
     }
+
+    
 
 </style>
 
@@ -281,7 +288,7 @@
             <button tabindex="-1" class="btn btn-{{result_type_class result_type}} btn-xs result-type">{{result_type_firstchar result_type}}</button>
         </td>
 
-        <td data-field="loinc" data-val="{{loinc}}" class="loinc tabitem">
+        <td data-field="loinc" data-val="{{loinc}}" data-loinc-desc="{{loinc_name}}" class="loinc tabitem">
             <span>{{loinc_description_main loinc_name}}</span>
             <br />
             <small class="font-light">{{{loinc_description_full loinc_name}}}</small>

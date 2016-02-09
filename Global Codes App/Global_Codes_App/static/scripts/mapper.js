@@ -12,6 +12,10 @@ var global_map_table = ''; // Used to update mapping
 
 var loinc_list = [];
 
+var error_colour = '#F5A9BC';
+var success_colour = '#A9F5A9';
+var processing_colour = '#FAAC58';
+
 
 
 // Load the basic data
@@ -19,6 +23,7 @@ $(function () {
     get_winpath_systems_select();
     get_worksections_select();
     get_tlc_list_data();
+
     
     //$(":tabbable").attr('tabindex', -1);
 });
@@ -85,6 +90,15 @@ function get_tlc_list_data() {
                 draw_library_table(result);
                 $('#library-code-header').text(current_system);
             };
+
+
+            // Select the first library code and load the detail
+            current_tlc = library_code_datatable.row(1).data()['tlc'];
+            current_tlc_name = library_code_datatable.row(1).data()['tlc_name'];
+            current_tlc_type = library_code_datatable.row(1).data()['tlc_type'];
+            params = { query: 'TLC_Detail_For_Mapper', Origin: current_system, TLC: current_tlc };
+            $('#library_code_detail_table').html('<div class="text-center"><i class="fa fa-spinner fa-2x fa-pulse m-b-lg m-t-lg"></i></div>');
+            run_sql_query(params, fill_library_code_detail);
         };
     });
 };
@@ -128,10 +142,10 @@ function draw_library_table(result) {
 
         params = { query: 'TLC_Detail_For_Mapper', Origin: current_system, TLC: current_tlc };
         $('#library_code_detail_table').html('<div class="text-center"><i class="fa fa-spinner fa-2x fa-pulse m-b-lg m-t-lg"></i></div>');
+
         run_sql_query(params, fill_library_code_detail);
     });
 };
-
 
 
 
@@ -187,8 +201,15 @@ $('#tlc_search_submit').click(function () {
 //    });
 //};
 
-function run_sql_query(params,method_to_run_on_completion) {
-    
+
+
+
+
+//
+//  General functions
+//
+
+function run_sql_query(params,method_to_run,other_params) {
     $.ajax({
         url: '/get_sql_data',
         dataType: 'json',
@@ -201,14 +222,61 @@ function run_sql_query(params,method_to_run_on_completion) {
                     type: "warning"
                 });
             } else {
-                method_to_run_on_completion(result);
+                if (!other_params) {
+                    method_to_run(result);
+                } else {
+                    method_to_run(result, other_params);
+                };
             };
         }
     });
 };
 
 
+function run_sql_update(this_cell, params) {
+
+    var submission = {
+        table: global_map_table,
+        field: params['field'],
+        id_name: 'map_id',
+        id: params['id'],
+        oldval: params['oldval'],
+        newval: params['newval']
+    };
+
+
+    console.log('Submitting: ',submission);
+
+    $(this_cell).css('background', processing_colour);
+
+    $.post('/submit_table_update', submission)
+        .done(function (data) {
+            if (data['data'] == 'ERROR') {
+                swal({
+                    title: "Problem submitting changes",
+                    text: "There was an issue submitting your change.",
+                    type: "warning"
+                });
+                $(this_cell).css('background', error_colour);
+            } else {
+                console.log('POST UPDATE: Changed ' + submission['table'] + ' field ' + submission['field'] + ' to ' + submission['newval']);
+                $(this_cell).html(params['formatted_newval']);
+                $(this_cell).focus();
+                $(this_cell).css('background', success_colour);
+            };
+        });
+};
+
+
+
+
+
 function fill_library_code_detail(result) {
+
+    if (result == null) {
+        $('#library_code_detail_table').html('<div class="text-center">Error running query</div>');
+        return;
+    };
 
     $('#tlc-detail-header').text(current_tlc + ' - ' + current_tlc_name + ' - ' + current_tlc_type);
     global_map_table = result['table'];
@@ -220,7 +288,7 @@ function fill_library_code_detail(result) {
     Handlebars.registerHelper('result_type_class', function (str) {
         if (str == 'Result') {
             return 'success';
-        } else if (str == 'SubResult') {
+        } else if (str == 'Sub-Result') {
             return 'info';
         } else {
             return 'default';
@@ -265,8 +333,34 @@ function tlc_detail_event_handlers() {
         $(this).css("background", "white");
     });
 
-    $(".loinc").keydown(function (event) { loinc_keydown(event, this); });
 
+    // LOINC cell events
+    $(".loinc").keydown(function (event) {
+        var select = $(this).find('select').data('select2');
+
+        if (event.key == 'Enter' && !select) {
+            console.log('Loinc ENTER key');
+            event.preventDefault();
+            open_select2_ajax($(this), 'Mapped_LOINC_List', 2);
+        };
+        if (event.key == 'Escape' && select) {
+            if (!select.isOpen()) {
+                event.preventDefault();
+                var loinc_name = $(this).data('loinc-desc');
+                var old_html = '<span>' + loinc_name.split('[')[0] + '</span><br/>'
+                    + '<small class="font-light">' + loinc_name.split(']')[0] + ']<br/>'
+                    + loinc_name.split(']')[1] + '</small>'
+                $(this).html(old_html).focus();
+            };
+        };
+    });
+
+    $('.loinc').on("select2:select", function (e) {
+        loinc_change_select2(e, this);
+    });
+
+
+    // Result type events
     $(".result-type").keydown(function (event) {
         if (event.key == 'c' || event.key == 'C') {
             event.preventDefault();
@@ -274,38 +368,106 @@ function tlc_detail_event_handlers() {
         }
     });
 
-    $(".container").keydown(function (event) { container_keydown(event, this); });
 
+    // Container events
+    $(".container").keydown(function (event) {
+        var select = $(this).find('select').data('select2');
+        console.log('Pressed ENTER on container', select);
 
-    $('.loinc').on("select2:select", function (e) {
-        loinc_change_select2(e, this);
+        if (event.key == 'Enter' && !select) {
+            console.log('Container ENTER key');
+            event.preventDefault();
+            params = { query: 'Container_List_For_Mapper' };
+            run_sql_query(params, open_select2, $(this));
+        };
+        if (event.key == 'Escape' && select) {
+            console.log('Container ESC key');
+            if (!select.isOpen()) {
+                event.preventDefault();
+                $(this).html('<span>' + $(this).data('val') + '</span>').focus();
+            };
+        };
+    });
+    $('.container').on("select2:select", function (e) {
+        run_sql_update(
+            $(this),
+            {
+                id: $(this).closest('tr').attr('id'),
+                field: $(this).data('field'),
+                oldval: $(this).data('val'),
+                newval: e.params.data.text,
+                formatted_newval: e.params.data.text
+            });
+        $(this).data('val', e.params.data.text);
     });
 
+
+    // Location events
+    $(".loc1,.loc2").keydown(function (event) {
+        var select = $(this).find('select').data('select2');
+        console.log('Pressed ENTER on loc1 or loc2', select);
+
+        if (event.key == 'Enter' && !select) {
+            console.log('Location ENTER key');
+            event.preventDefault();
+            params = { query: 'Location_List_For_Mapper' };
+
+            var test_data = {
+                data: [{
+                    id: 1, text: 'optgroup', children: [
+                        { id: 2, text: 'child1' }, { id: 3, text: 'child2' }]
+                }]
+            };
+            console.log(test_data);
+            open_select2(test_data, $(this));
+
+            //run_sql_query(params, open_select2, $(this));
+        };
+        if (event.key == 'Escape' && select) {
+            console.log('Container ESC key');
+            if (!select.isOpen()) {
+                event.preventDefault();
+                $(this).html('<span>' + $(this).data('val') + '</span>').focus();
+            };
+        };
+    });
+    //$('.container').on("select2:select", function (e) {
+    //    run_sql_update(
+    //        $(this),
+    //        {
+    //            id: $(this).closest('tr').attr('id'),
+    //            field: $(this).data('field'),
+    //            oldval: $(this).data('val'),
+    //            newval: e.params.data.text,
+    //            formatted_newval: e.params.data.text
+    //        });
+    //    $(this).data('val', e.params.data.text);
+    //});
+
 };
 
-function loinc_keydown(event, this_loinc) {
-    if (event.key == 'Enter') {
-        event.preventDefault();
-        loinc_open_select2(this_loinc);
-    }
+
+
+function open_select2(this_data, this_cell) {
+    console.log('Running', this_data);
+
+    var select = $('<select></select>');
+    $(this_cell).html('').append(select);
+
+    select.select2({
+        data: this_data['data'],
+        width: '95%',
+        placeholder: 'Press Enter',
+    });
+
+    select.select2('open');
 };
-function container_keydown(event, this_container) {
-    if (event.key == 'Enter') {
-        event.preventDefault();
-        container_open_select2(this_loinc);
-    }
-};
 
 
 
+function open_select2_ajax(this_cell, this_query, min_input) {
 
-//
-// LOINC field
-//
-
-function loinc_open_select2(this_cell) {
-
-    var select = $('<select class="loinc_select2"></select>');
+    var select = $('<select></select>');
     $(this_cell).html('').append(select);
 
 
@@ -319,7 +481,7 @@ function loinc_open_select2(this_cell) {
 
     select.select2({
         width: '95%',
-        placeholder: 'Search mapped LOINC',
+        placeholder: 'Press Enter',
         ajax: {
             url: '/get_sql_data',
             dataType: 'json',
@@ -327,7 +489,7 @@ function loinc_open_select2(this_cell) {
             data: function (params) {
                 return {
                     search_term: params.term, // search term
-                    query: 'Mapped_LOINC_List'
+                    query: this_query
                 };
             },
             processResults: function (data, params) {
@@ -341,15 +503,12 @@ function loinc_open_select2(this_cell) {
             cache: true
         },
         escapeMarkup: function (markup) { return markup; }, // let our custom formatter work
-        minimumInputLength: 2,
+        minimumInputLength: min_input,
         templateResult: formatState, // omitted for brevity, see the source of this page
     });
 
-    // Event handlers for the select2
-    $(this_cell).off('keydown');
-    $(this_cell).keydown(function (event) {
-        select.select2('open')
-    });
+    select.select2('open');
+    
 };
 
 function loinc_change_select2(e, this_loinc) {
@@ -393,6 +552,5 @@ function loinc_change_select2(e, this_loinc) {
             };
         });
 };
-
 
 

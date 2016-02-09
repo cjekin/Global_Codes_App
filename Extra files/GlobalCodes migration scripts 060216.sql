@@ -114,5 +114,20 @@ from [Warehouse].dbo.GlobalCodes_Map m
 left join [Warehouse].dbo.GlobalCodes_Main g on m.GlobalCode = g.GlobalCode
 
 
+
+
+-- Create a container table
+create table [GlobalCodes].dbo.[GlobalCodes_Container] (
+	cont_id int IDENTITY(1,1) PRIMARY KEY,
+	container varchar(50),
+	cont_type varchar(50)
+);
+
+insert into [GlobalCodes].dbo.[GlobalCodes_Container] (container) 
+select distinct container from [GlobalCodes].dbo.GlobalCodes_Map
+where container <> ''
+order by container
+
+
    
 

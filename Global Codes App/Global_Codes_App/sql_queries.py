@@ -133,7 +133,7 @@ def Location_Table():
     SELECT {fields}
     from {location_table}
     """.format(fields = '[' + '],['.join(columns)  + '] ', 
-               location_table = config.location_table)
+               location_table = config.global_location)
 
     result = run_odbc_query(sql)
 
@@ -142,7 +142,7 @@ def Location_Table():
     result['hidden'] = []
     result['locked'] = ['SubSectionCode']
     result['id_field'] = 'SubSectionCode'
-    result['table'] = config.location_table
+    result['table'] = config.global_location
 
     print sql
     return result
@@ -165,7 +165,7 @@ def Global_Table():
     left join {loinc} l on g.LOINC = l.LOINC_NUM 
     left join {global_dept} d1 on g.SubSectionCode = d1.SubSectionCode and isnull(g.SubSectionCode,'') <> ''
     left join {global_dept} d2 on g.HALO_SubSectionCode = d2.SubSectionCode and isnull(g.HALO_SubSectionCode,'') <> ''
-    """.format(global_main = config.global_main_table, loinc = config.loinc_db, global_dept = config.location_table)
+    """.format(global_main = config.global_main_table, loinc = config.loinc_db, global_dept = config.global_location)
 
 
     result = run_odbc_query(sql)
@@ -258,14 +258,14 @@ def TLC_Detail_For_Mapper(params):
     sql = """
     select f.TFC as tfc, f.WrkSection as sec, f.TestName as tfc_name, 
     isnull(f.Units,'') as tfc_units, isnull(f.Reflab,'') as tfc_reflab
-    ,fi.MostCommon
+    ,isnull(fi.MostCommon,'') as MostCommon
 
-    ,map.result_type 
-    ,map.loinc, isnull(loinc.LONG_COMMON_NAME,'') as loinc_name
-    ,map.container 
+    ,isnull(map.result_type,'') result_type 
+    ,isnull(map.loinc,'') as loinc, isnull(loinc.LONG_COMMON_NAME,'') as loinc_name
+    ,isnull(map.container,'') as container 
 
-    ,map.loc1, l1.SubSection as loc1_subsection, l1.Department as loc1_department, l1.Location as loc1_location
-    ,map.loc2, l2.SubSection as loc2_subsection, l2.Department as loc2_department, l2.Location as loc2_location
+    ,isnull(map.loc1,'') as loc1, isnull(l1.SubSection,'') as loc1_subsection, isnull(l1.Department,'') as loc1_department, isnull(l1.Location,'') as loc1_location
+    ,isnull(map.loc2,'') as loc2, isnull(l2.SubSection,'') as loc2_subsection, isnull(l2.Department,'') as loc2_department, isnull(l2.Location,'') as loc2_location
     ,map.map_id
 
     from {TEST} tlc
@@ -284,7 +284,7 @@ def TLC_Detail_For_Mapper(params):
                FORM_INFO = config.global_form_info,
                MAP = config.global_map_table,
                LOINC = config.loinc_db,
-               LOCATIONS = config.location_table,
+               LOCATIONS = config.global_location,
                TLC = params['TLC'],
                ORIGIN = params['Origin'])
 
@@ -321,7 +321,7 @@ def Mapped_LOINC_List(params):
     order by [text]
     """.format(MAP = config.global_map_table, 
                LOINC = config.loinc_db, 
-               #LOCATIONS = config.location_table,
+               #LOCATIONS = config.global_location,
                search_term = params['search_term'])
                
 
@@ -333,5 +333,47 @@ def Mapped_LOINC_List(params):
                               'New Location Code','New SubSection','New Department','Excluded','LOINC Name','Alias']
     result['id_field'] = 'loinc'
     result['table'] = config.loinc_db
+
+    return result
+
+
+
+
+def Container_List_For_Mapper(): 
+
+    sql = """
+    select cont_id as id, container as [text], cont_type
+    from {CONTAINER}
+    """.format(CONTAINER = config.global_container)
+               
+
+    print 'Running\n\n\n', sql, '\n\n\n'
+
+    result = run_odbc_query(sql)
+
+    result['columns_desc'] = ['Container ID','Container','Container Type']
+    result['id_field'] = 'cont_id'
+    result['table'] = config.global_container
+
+    return result
+
+
+
+def Location_List_For_Mapper(): 
+
+    sql = """
+    select SubSectionCode as id, SubSection as [text], 
+    SubSection + ';' + Location + ';' + [Address] as search_fields
+    from {LOCATIONS}
+    """.format(LOCATIONS = config.global_location)
+               
+
+    print 'Running\n\n\n', sql, '\n\n\n'
+
+    result = run_odbc_query(sql)
+
+    result['columns_desc'] = ['SubSection Code','SubSection','Search Text']
+    result['id_field'] = 'id'
+    result['table'] = config.global_location
 
     return result

@@ -332,7 +332,7 @@ def update_location_fields(code, updates, user):
         #print 'Update audit trail:\n', sql, '\n'
         #cursor.execute(sql)
 
-        sql = "update %s set [%s] = '%s' where SubSectionCode = '%s'" % (config.location_table,k,new,code)
+        sql = "update %s set [%s] = '%s' where SubSectionCode = '%s'" % (config.global_location,k,new,code)
         print 'Update Departments table:\n', sql, '\n'   
         cursor.execute(sql)
 
@@ -349,7 +349,7 @@ def insert_new_location_code(code, submission, user):
     fields = [f for f in submission]
     values = [strip_non_ascii(submission[f]) for f in fields]
 
-    sql = "insert into %s ([%s]) values ('%s')" % (config.location_table,"], [".join(fields), "', '".join(values))
+    sql = "insert into %s ([%s]) values ('%s')" % (config.global_location,"], [".join(fields), "', '".join(values))
                
     cursor.execute(sql)
 
