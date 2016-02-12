@@ -26,7 +26,7 @@ map_tbl = 'g_map'
 lexical_tbl = 'g_lexical'
 global_map_tbl = '[GlobalCodes].[dbo].[global_map]'
 global_lexical_tbl = '[GlobalCodes].[dbo].[global_lexical]'
-loinc_db = '[GlobalCodes].[dbo].[LOINC]'
+loinc_db = '[GlobalCodes].[dbo].[LOINC_Main]'
 
 global_audit_table_fields = { 'date': '[Date]', 'user': '[UserName]', 'origin': '[Origin]',
                              'code': '[Code]', 'field': '[Field]', 'oldval': '[OldValue]', 

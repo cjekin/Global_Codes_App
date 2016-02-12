@@ -3610,3 +3610,272 @@ Traceback (most recent call last):
     cursor.execute(sql)
 ProgrammingError: ('42S02', "[42S02] [Microsoft][ODBC SQL Server Driver][SQL Server]Invalid object name 'RFH_BIO_DW.dbo.FORM'. (208) (SQLExecDirectW)")
 
+-----09/02/2016 17:58
+Problem running query
+Traceback (most recent call last):
+  File "H:\Global_Codes_App\Global Codes App\Global_Codes_App\views.py", line 733, in get_sql_data
+    result = methodToCall(params)
+  File "H:\Global_Codes_App\Global Codes App\Global_Codes_App\sql_queries.py", line 194, in Worksection_Data
+    result = run_odbc_query(sql)
+  File "H:\Global_Codes_App\Global Codes App\Global_Codes_App\sql_queries.py", line 30, in run_odbc_query
+    cursor.execute(sql.replace('\n',' '))
+ProgrammingError: ('42S02', "[42S02] [Microsoft][ODBC SQL Server Driver][SQL Server]Invalid object name 'GlobalCodes.dbo.GlobalCodes_SECTIONS'. (208) (SQLExecDirectW)")
+-----09/02/2016 17:58
+Problem running query
+Traceback (most recent call last):
+  File "H:\Global_Codes_App\Global Codes App\Global_Codes_App\views.py", line 733, in get_sql_data
+    result = methodToCall(params)
+  File "H:\Global_Codes_App\Global Codes App\Global_Codes_App\sql_queries.py", line 244, in TLC_List_For_Mapper
+    result = run_odbc_query(sql)
+  File "H:\Global_Codes_App\Global Codes App\Global_Codes_App\sql_queries.py", line 30, in run_odbc_query
+    cursor.execute(sql.replace('\n',' '))
+ProgrammingError: ('42S02', "[42S02] [Microsoft][ODBC SQL Server Driver][SQL Server]Invalid object name 'GlobalCodes.dbo.GlobalCodes_TEST_STAGING'. (208) (SQLExecDirectW)")
+-----09/02/2016 19:31
+Problem running query
+Traceback (most recent call last):
+  File "H:\Global_Codes_App\Global Codes App\Global_Codes_App\views.py", line 733, in get_sql_data
+    result = methodToCall(params)
+  File "H:\Global_Codes_App\Global Codes App\Global_Codes_App\sql_queries.py", line 293, in TLC_Detail_For_Mapper
+    result = run_odbc_query(sql)
+  File "H:\Global_Codes_App\Global Codes App\Global_Codes_App\sql_queries.py", line 30, in run_odbc_query
+    cursor.execute(sql.replace('\n',' '))
+ProgrammingError: ('42S02', "[42S02] [Microsoft][ODBC SQL Server Driver][SQL Server]Invalid object name 'GlobalCodes.dbo.LOINC'. (208) (SQLExecDirectW)")
+-----09/02/2016 19:31
+Problem running query
+Traceback (most recent call last):
+  File "H:\Global_Codes_App\Global Codes App\Global_Codes_App\views.py", line 733, in get_sql_data
+    result = methodToCall(params)
+  File "H:\Global_Codes_App\Global Codes App\Global_Codes_App\sql_queries.py", line 293, in TLC_Detail_For_Mapper
+    result = run_odbc_query(sql)
+  File "H:\Global_Codes_App\Global Codes App\Global_Codes_App\sql_queries.py", line 30, in run_odbc_query
+    cursor.execute(sql.replace('\n',' '))
+ProgrammingError: ('42S02', "[42S02] [Microsoft][ODBC SQL Server Driver][SQL Server]Invalid object name 'GlobalCodes.dbo.LOINC'. (208) (SQLExecDirectW)")
+-----09/02/2016 19:42
+Problem running query
+Traceback (most recent call last):
+  File "H:\Global_Codes_App\Global Codes App\Global_Codes_App\views.py", line 733, in get_sql_data
+    result = methodToCall(params)
+  File "H:\Global_Codes_App\Global Codes App\Global_Codes_App\sql_queries.py", line 293, in TLC_Detail_For_Mapper
+    result = run_odbc_query(sql)
+  File "H:\Global_Codes_App\Global Codes App\Global_Codes_App\sql_queries.py", line 30, in run_odbc_query
+    cursor.execute(sql.replace('\n',' '))
+ProgrammingError: ('42S02', "[42S02] [Microsoft][ODBC SQL Server Driver][SQL Server]Invalid object name 'GlobalCodes.dbo.LOINC'. (208) (SQLExecDirectW)")
+-----09/02/2016 19:44
+Unable to add code to mapping:
+Traceback (most recent call last):
+  File "H:\Global_Codes_App\Global Codes App\Global_Codes_App\views.py", line 214, in add_mapping
+    result = sql.add_mapping(system,tfc,new_global_code,user.email)
+  File "H:\Global_Codes_App\Global Codes App\Global_Codes_App\sql.py", line 183, in add_mapping
+    cursor.execute(sql.replace('\n',' '))
+ProgrammingError: ('42S22', "[42S22] [Microsoft][ODBC SQL Server Driver][SQL Server]Invalid column name 'Code'. (207) (SQLExecDirectW)")
+
+-----09/02/2016 19:44
+Unable to add code to mapping:
+Traceback (most recent call last):
+  File "H:\Global_Codes_App\Global Codes App\Global_Codes_App\views.py", line 214, in add_mapping
+    result = sql.add_mapping(system,tfc,new_global_code,user.email)
+  File "H:\Global_Codes_App\Global Codes App\Global_Codes_App\sql.py", line 183, in add_mapping
+    cursor.execute(sql.replace('\n',' '))
+ProgrammingError: ('42S22', "[42S22] [Microsoft][ODBC SQL Server Driver][SQL Server]Invalid column name 'Code'. (207) (SQLExecDirectW)")
+
+-----09/02/2016 19:44
+Unable to add code to mapping:
+Traceback (most recent call last):
+  File "H:\Global_Codes_App\Global Codes App\Global_Codes_App\views.py", line 214, in add_mapping
+    result = sql.add_mapping(system,tfc,new_global_code,user.email)
+  File "H:\Global_Codes_App\Global Codes App\Global_Codes_App\sql.py", line 183, in add_mapping
+    cursor.execute(sql.replace('\n',' '))
+ProgrammingError: ('42S22', "[42S22] [Microsoft][ODBC SQL Server Driver][SQL Server]Invalid column name 'Code'. (207) (SQLExecDirectW)")
+
+-----09/02/2016 19:45
+Problem running query
+Traceback (most recent call last):
+  File "H:\Global_Codes_App\Global Codes App\Global_Codes_App\views.py", line 735, in get_sql_data
+    result = methodToCall()
+  File "H:\Global_Codes_App\Global Codes App\Global_Codes_App\sql_queries.py", line 115, in Lexical_Table
+    result = run_odbc_query(sql)
+  File "H:\Global_Codes_App\Global Codes App\Global_Codes_App\sql_queries.py", line 30, in run_odbc_query
+    cursor.execute(sql.replace('\n',' '))
+ProgrammingError: ('42S02', "[42S02] [Microsoft][ODBC SQL Server Driver][SQL Server]Invalid object name 'GlobalCodes.dbo.global_lexical'. (208) (SQLExecDirectW)")
+-----09/02/2016 19:48
+Problem running query
+Traceback (most recent call last):
+  File "H:\Global_Codes_App\Global Codes App\Global_Codes_App\views.py", line 735, in get_sql_data
+    result = methodToCall()
+  File "H:\Global_Codes_App\Global Codes App\Global_Codes_App\sql_queries.py", line 115, in Lexical_Table
+    result = run_odbc_query(sql)
+  File "H:\Global_Codes_App\Global Codes App\Global_Codes_App\sql_queries.py", line 30, in run_odbc_query
+    cursor.execute(sql.replace('\n',' '))
+ProgrammingError: ('42S02', "[42S02] [Microsoft][ODBC SQL Server Driver][SQL Server]Invalid object name 'GlobalCodes.dbo.global_lexical'. (208) (SQLExecDirectW)")
+-----09/02/2016 19:48
+Problem running query
+Traceback (most recent call last):
+  File "H:\Global_Codes_App\Global Codes App\Global_Codes_App\views.py", line 735, in get_sql_data
+    result = methodToCall()
+  File "H:\Global_Codes_App\Global Codes App\Global_Codes_App\sql_queries.py", line 115, in Lexical_Table
+    result = run_odbc_query(sql)
+  File "H:\Global_Codes_App\Global Codes App\Global_Codes_App\sql_queries.py", line 30, in run_odbc_query
+    cursor.execute(sql.replace('\n',' '))
+ProgrammingError: ('42S02', "[42S02] [Microsoft][ODBC SQL Server Driver][SQL Server]Invalid object name 'GlobalCodes.dbo.global_lexical'. (208) (SQLExecDirectW)")
+-----09/02/2016 19:51
+Problem running query
+Traceback (most recent call last):
+  File "H:\Global_Codes_App\Global Codes App\Global_Codes_App\views.py", line 733, in get_sql_data
+    result = methodToCall(params)
+  File "H:\Global_Codes_App\Global Codes App\Global_Codes_App\sql_queries.py", line 294, in TLC_Detail_For_Mapper
+    result = run_odbc_query(sql)
+  File "H:\Global_Codes_App\Global Codes App\Global_Codes_App\sql_queries.py", line 30, in run_odbc_query
+    cursor.execute(sql.replace('\n',' '))
+ProgrammingError: ('42000', "[42000] [Microsoft][ODBC SQL Server Driver][SQL Server]Unclosed quotation mark after the character string '     '. (105) (SQLExecDirectW)")
+-----09/02/2016 19:51
+Problem running query
+Traceback (most recent call last):
+  File "H:\Global_Codes_App\Global Codes App\Global_Codes_App\views.py", line 733, in get_sql_data
+    result = methodToCall(params)
+  File "H:\Global_Codes_App\Global Codes App\Global_Codes_App\sql_queries.py", line 294, in TLC_Detail_For_Mapper
+    result = run_odbc_query(sql)
+  File "H:\Global_Codes_App\Global Codes App\Global_Codes_App\sql_queries.py", line 30, in run_odbc_query
+    cursor.execute(sql.replace('\n',' '))
+ProgrammingError: ('42000', "[42000] [Microsoft][ODBC SQL Server Driver][SQL Server]Unclosed quotation mark after the character string '     '. (105) (SQLExecDirectW)")
+-----11/02/2016 12:38
+Problem running query
+Traceback (most recent call last):
+  File "H:\Global_Codes_App\Global Codes App\Global_Codes_App\views.py", line 735, in get_sql_data
+    result = methodToCall()
+  File "H:\Global_Codes_App\Global Codes App\Global_Codes_App\sql_queries.py", line 115, in Lexical_Table
+    result = run_odbc_query(sql)
+  File "H:\Global_Codes_App\Global Codes App\Global_Codes_App\sql_queries.py", line 30, in run_odbc_query
+    cursor.execute(sql.replace('\n',' '))
+ProgrammingError: ('42S02', "[42S02] [Microsoft][ODBC SQL Server Driver][SQL Server]Invalid object name 'GlobalCodes.dbo.global_lexical'. (208) (SQLExecDirectW)")
+-----11/02/2016 18:52
+Problem running query
+Traceback (most recent call last):
+  File "H:\Global_Codes_App\Global Codes App\Global_Codes_App\views.py", line 735, in get_sql_data
+    result = methodToCall()
+  File "H:\Global_Codes_App\Global Codes App\Global_Codes_App\sql_queries.py", line 397, in Container_List_For_Mapper
+    for r in result['data']:
+UnboundLocalError: local variable 'result' referenced before assignment
+-----11/02/2016 18:52
+Problem running query
+Traceback (most recent call last):
+  File "H:\Global_Codes_App\Global Codes App\Global_Codes_App\views.py", line 735, in get_sql_data
+    result = methodToCall()
+  File "H:\Global_Codes_App\Global Codes App\Global_Codes_App\sql_queries.py", line 397, in Container_List_For_Mapper
+    for r in result['data']:
+UnboundLocalError: local variable 'result' referenced before assignment
+-----11/02/2016 18:53
+Problem running query
+Traceback (most recent call last):
+  File "H:\Global_Codes_App\Global Codes App\Global_Codes_App\views.py", line 735, in get_sql_data
+    result = methodToCall()
+  File "H:\Global_Codes_App\Global Codes App\Global_Codes_App\sql_queries.py", line 405, in Container_List_For_Mapper
+    L = [dict(id=i, text=cont[i], children=D[cont[i]]) for i in range(len(depts))]
+NameError: global name 'depts' is not defined
+-----11/02/2016 19:58
+Problem updating SQL table
+Traceback (most recent call last):
+  File "H:\Global_Codes_App\Global Codes App\Global_Codes_App\views.py", line 753, in submit_table_update
+    sql_queries.update_odbc_table(submission,user.email)
+  File "H:\Global_Codes_App\Global Codes App\Global_Codes_App\sql_queries.py", line 55, in update_odbc_table
+    """.format(table = submission['table'],
+KeyError: 'table'
+-----11/02/2016 20:02
+Problem updating SQL table
+Traceback (most recent call last):
+  File "H:\Global_Codes_App\Global Codes App\Global_Codes_App\views.py", line 753, in submit_table_update
+    sql_queries.update_odbc_table(submission,user.email)
+  File "H:\Global_Codes_App\Global Codes App\Global_Codes_App\sql_queries.py", line 55, in update_odbc_table
+    """.format(table = submission['table'],
+KeyError: 'table'
+-----11/02/2016 20:03
+Problem updating SQL table
+Traceback (most recent call last):
+  File "H:\Global_Codes_App\Global Codes App\Global_Codes_App\views.py", line 753, in submit_table_update
+    sql_queries.update_odbc_table(submission,user.email)
+  File "H:\Global_Codes_App\Global Codes App\Global_Codes_App\sql_queries.py", line 55, in update_odbc_table
+    """.format(table = submission['table'],
+KeyError: 'table'
+-----11/02/2016 20:05
+Problem updating SQL table
+Traceback (most recent call last):
+  File "H:\Global_Codes_App\Global Codes App\Global_Codes_App\views.py", line 753, in submit_table_update
+    sql_queries.update_odbc_table(submission,user.email)
+  File "H:\Global_Codes_App\Global Codes App\Global_Codes_App\sql_queries.py", line 55, in update_odbc_table
+    """.format(table = submission['table'],
+KeyError: 'table'
+-----11/02/2016 20:05
+Problem updating SQL table
+Traceback (most recent call last):
+  File "H:\Global_Codes_App\Global Codes App\Global_Codes_App\views.py", line 753, in submit_table_update
+    sql_queries.update_odbc_table(submission,user.email)
+  File "H:\Global_Codes_App\Global Codes App\Global_Codes_App\sql_queries.py", line 55, in update_odbc_table
+    """.format(table = submission['table'],
+KeyError: 'table'
+-----11/02/2016 20:06
+Problem updating SQL table
+Traceback (most recent call last):
+  File "H:\Global_Codes_App\Global Codes App\Global_Codes_App\views.py", line 753, in submit_table_update
+    sql_queries.update_odbc_table(submission,user.email)
+  File "H:\Global_Codes_App\Global Codes App\Global_Codes_App\sql_queries.py", line 55, in update_odbc_table
+    """.format(table = submission['table'],
+KeyError: 'table'
+-----11/02/2016 20:07
+Problem updating SQL table
+Traceback (most recent call last):
+  File "H:\Global_Codes_App\Global Codes App\Global_Codes_App\views.py", line 753, in submit_table_update
+    sql_queries.update_odbc_table(submission,user.email)
+  File "H:\Global_Codes_App\Global Codes App\Global_Codes_App\sql_queries.py", line 58, in update_odbc_table
+    id_name = submission['id_name'],
+KeyError: 'id_name'
+-----11/02/2016 20:43
+Query does not exist: Mapped_Loinc_List
+Traceback (most recent call last):
+  File "H:\Global_Codes_App\Global Codes App\Global_Codes_App\views.py", line 730, in get_sql_data
+    methodToCall = getattr(sql_queries, query)
+AttributeError: 'module' object has no attribute 'Mapped_Loinc_List'
+-----11/02/2016 21:07
+Query does not exist: Find_Similar_LOINC
+Traceback (most recent call last):
+  File "H:\Global_Codes_App\Global Codes App\Global_Codes_App\views.py", line 730, in get_sql_data
+    methodToCall = getattr(sql_queries, query)
+AttributeError: 'module' object has no attribute 'Find_Similar_LOINC'
+-----11/02/2016 21:09
+Query does not exist: Find_Similar_LOINC
+Traceback (most recent call last):
+  File "H:\Global_Codes_App\Global Codes App\Global_Codes_App\views.py", line 730, in get_sql_data
+    methodToCall = getattr(sql_queries, query)
+AttributeError: 'module' object has no attribute 'Find_Similar_LOINC'
+-----11/02/2016 21:11
+Query does not exist: Find_Similar_LOINC
+Traceback (most recent call last):
+  File "H:\Global_Codes_App\Global Codes App\Global_Codes_App\views.py", line 730, in get_sql_data
+    methodToCall = getattr(sql_queries, query)
+AttributeError: 'module' object has no attribute 'Find_Similar_LOINC'
+-----11/02/2016 21:20
+Problem running query
+Traceback (most recent call last):
+  File "H:\Global_Codes_App\Global Codes App\Global_Codes_App\views.py", line 735, in get_sql_data
+    result = methodToCall()
+TypeError: Find_Similar_LOINC() takes exactly 1 argument (0 given)
+-----11/02/2016 21:21
+Problem running query
+Traceback (most recent call last):
+  File "H:\Global_Codes_App\Global Codes App\Global_Codes_App\views.py", line 735, in get_sql_data
+    result = methodToCall()
+TypeError: Find_Similar_LOINC() takes exactly 1 argument (0 given)
+-----11/02/2016 21:22
+Problem running query
+Traceback (most recent call last):
+  File "H:\Global_Codes_App\Global Codes App\Global_Codes_App\views.py", line 735, in get_sql_data
+    result = methodToCall()
+TypeError: Find_Similar_LOINC() takes exactly 1 argument (0 given)
+-----11/02/2016 21:59
+Problem running query
+Traceback (most recent call last):
+  File "H:\Global_Codes_App\Global Codes App\Global_Codes_App\views.py", line 735, in get_sql_data
+    result = methodToCall()
+  File "H:\Global_Codes_App\Global Codes App\Global_Codes_App\sql_queries.py", line 115, in Lexical_Table
+    result = run_odbc_query(sql)
+  File "H:\Global_Codes_App\Global Codes App\Global_Codes_App\sql_queries.py", line 30, in run_odbc_query
+    cursor.execute(sql.replace('\n',' '))
+ProgrammingError: ('42S02', "[42S02] [Microsoft][ODBC SQL Server Driver][SQL Server]Invalid object name 'GlobalCodes.dbo.global_lexical'. (208) (SQLExecDirectW)")

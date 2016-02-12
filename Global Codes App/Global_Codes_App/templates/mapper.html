@@ -21,6 +21,15 @@
     .tfc-name .loinc {
         width: 25%;
     }
+    .bigdrop {
+        width: 250px !important;
+    }
+    .bg-processing-color {
+        background: #FAAC58;
+    }
+    .focusin-cell {
+        background: #F5F6CE;
+    }
 
     
 
@@ -241,6 +250,11 @@
 
 
     </div>
+
+    <button id="next-tlc" class="btn btn-success btn-xs result-type pull-right tabitem">Next</button>
+    <button id="prev-tlc" class="btn btn-success btn-xs result-type pull-left tabitem">Prev</button>
+    
+
 </div>
 
 
@@ -285,7 +299,7 @@
         </td>
 
         <td data-field="result_type" data-val="{{result_type}}" class="result-type tabitem">
-            <button tabindex="-1" class="btn btn-{{result_type_class result_type}} btn-xs result-type">{{result_type_firstchar result_type}}</button>
+            <button tabindex="-1" class="btn btn-{{result_type_class result_type}} btn-xs result-type result-type-button">{{result_type_firstchar result_type}}</button>
         </td>
 
         <td data-field="loinc" data-val="{{loinc}}" data-loinc-desc="{{loinc_name}}" class="loinc tabitem">
@@ -298,13 +312,13 @@
             {{container}}
         </td>
 
-        <td data-field="loc1" data-val="{{loc1}}" class="loc1 tabitem">
+        <td data-field="loc1" data-val="{{loc1}}" data-subsection="{{loc1_subsection}}" data-department="{{loc1_department}}" class="loc1 tabitem">
             <span>{{loc1_subsection}}</span>
             <br />
             <small class="font-trans">{{loc1_department}}</small>
         </td>
 
-        <td data-field="loc2" data-val="{{loc2}}" class="loc2 tabitem">
+        <td data-field="loc2" data-val="{{loc2}}" data-subsection="{{loc2_subsection}}" data-department="{{loc2_department}}" class="loc2 tabitem">
             <span>{{loc2_subsection}}</span>
             <br />
             <small class="font-trans">{{loc2_department}}</small>

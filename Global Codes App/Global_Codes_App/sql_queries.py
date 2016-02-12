@@ -203,7 +203,7 @@ def TLC_List_For_Mapper(params): #db_name, section, primary, unmapped):
     other_sql = []
     other_sql_string = ''
 
-    if params['section'] <> '0':
+    if params['section'][:1] <> '0':
         section_sql = " and f.WrkSection = '" + params['section'][:1] + "' "
     if params['primary'] == '1':
         other_sql.append(' tlc_primary = 1 ')
@@ -278,6 +278,7 @@ def TLC_Detail_For_Mapper(params):
     left join {LOCATIONS} l2 on map.loc2 = l2.SubSectionCode
     where tlc.[Test Code] = '{TLC}'
     and tlc.[Origin] = '{ORIGIN}'
+    order by f.[Row]
     """.format(TEST = config.global_test_staging,
                FLAT = config.global_flatten,
                FORM = config.global_form_staging,
@@ -323,9 +324,6 @@ def Mapped_LOINC_List(params):
                LOINC = config.loinc_db, 
                #LOCATIONS = config.global_location,
                search_term = params['search_term'])
-               
-
-    print 'Running\n\n\n', sql, '\n\n\n'
 
     result = run_odbc_query(sql)
 
@@ -339,41 +337,101 @@ def Mapped_LOINC_List(params):
 
 
 
-def Container_List_For_Mapper(): 
+#def Container_List_For_Mapper(): 
 
-    sql = """
-    select cont_id as id, container as [text], cont_type
-    from {CONTAINER}
-    """.format(CONTAINER = config.global_container)
-               
+#    sql = """
+#    select cont_id as id, container as [text], cont_type
+#    from {CONTAINER}
+#    """.format(CONTAINER = config.global_container)
+          
 
-    print 'Running\n\n\n', sql, '\n\n\n'
+#    result = run_odbc_query(sql)
 
-    result = run_odbc_query(sql)
+#    result['columns_desc'] = ['Container ID','Container','Container Type']
+#    result['id_field'] = 'cont_id'
+#    result['table'] = config.global_container
 
-    result['columns_desc'] = ['Container ID','Container','Container Type']
-    result['id_field'] = 'cont_id'
-    result['table'] = config.global_container
-
-    return result
+#    return result
 
 
 
 def Location_List_For_Mapper(): 
 
     sql = """
-    select SubSectionCode as id, SubSection as [text], 
+    select SubSectionCode as id, SubSection as [text], Department, 
     SubSection + ';' + Location + ';' + [Address] as search_fields
     from {LOCATIONS}
     """.format(LOCATIONS = config.global_location)
                
 
-    print 'Running\n\n\n', sql, '\n\n\n'
-
     result = run_odbc_query(sql)
 
+    D = {}
+    i = 1
+    for r in result['data']:
+        if r['Department'] not in D:
+            D[r['Department']] = [r]
+        else:
+            D[r['Department']].append(r)
+    depts = sorted([k for k in D])
+    L = [dict(id=i, text=depts[i], children=D[depts[i]]) for i in range(len(depts))]
+
+
+    result['nested_select'] = L
     result['columns_desc'] = ['SubSection Code','SubSection','Search Text']
     result['id_field'] = 'id'
     result['table'] = config.global_location
+
+    return result
+
+
+def Container_List_For_Mapper(): 
+
+    sql = """
+    select [container] as [id],[container] as [text],[cont_type]
+    from {CONTAINERS}
+    """.format(CONTAINERS = config.global_container)
+           
+    result = run_odbc_query(sql) 
+       
+    D = {}
+    i = 1
+    for r in result['data']:
+        if r['cont_type'] not in D:
+            D[r['cont_type']] = [r]
+        else:
+            D[r['cont_type']].append(r)
+    cont = sorted([k for k in D])
+    L = [dict(id=i, text=cont[i], children=D[cont[i]]) for i in range(len(cont))]
+
+    result['nested_select'] = L
+    result['columns_desc'] = ['ID','Container','Container Type']
+    result['id_field'] = 'id'
+    result['table'] = config.global_container
+
+    return result
+
+
+
+def Find_Similar_LOINC(params): 
+
+    sql = """
+    select top 1 m.[map_id],m.[origin],m.[tfc],m.[loinc],m.[container],m.[loc1],m.[loc2],m.[result_type],m.[excluded],
+    l1.SubSection as loc1_subsection, l1.Department as loc1_department, l2.SubSection as loc2_subsection, l2.Department as loc2_department
+    from {MAP} m
+    inner join {LOCATIONS} l1 on m.loc1 = l1.SubSectionCode
+    inner join {LOCATIONS} l2 on m.loc2 = l2.SubSectionCode
+    left join {FORM_INFO} fi on m.tfc = fi.TFC and m.origin = fi.Origin
+    where loinc = '{loinc_code}'
+    order by isnull(NumLastYear,0)
+    """.format(MAP = config.global_map_table, 
+               FORM_INFO = config.global_form_info, 
+               LOCATIONS = config.global_location,
+               loinc_code = params['loinc'])
+           
+    result = run_odbc_query(sql) 
+       
+    result['id_field'] = 'map_id'
+    result['table'] = config.global_map_table
 
     return result

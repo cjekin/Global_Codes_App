@@ -1,5 +1,10 @@
 
 -- Scripts to move from Warehouse to GlobalCodes database
+-- Notes:
+--Move Add GlobalCodes_FLAT to spGetNewTFC procedure
+--Rename spGetNewTFC to spCreateStagingTables and move to GlobalCodes table
+--create a GlobalCodes_FORM_INFO table
+
 
 -- Move existing tables
 select *
@@ -19,11 +24,37 @@ into [GlobalCodes].dbo.GlobalCodes_SECTIONS
 from [Warehouse].dbo.GlobalCodes_SECTIONS
 
 
--- Notes:
-Move Add GlobalCodes_FLAT to spGetNewTFC procedure
-Rename spGetNewTFC to spCreateStagingTables and move to GlobalCodes table
-create a GlobalCodes_FORM_INFO table
 
+
+
+
+
+-- Create Map table
+create table [GlobalCodes].dbo.GlobalCodes_Map (
+	map_id int IDENTITY(1,1) PRIMARY KEY,
+	origin varchar(20),
+	tfc varchar(5),
+	loinc varchar(20),
+	container varchar(50),
+	loc1 varchar(20),
+	loc2 varchar(20),
+	result_type varchar(20),
+	excluded varchar(50)
+)
+
+insert into [GlobalCodes].dbo.GlobalCodes_Map (origin,tfc,loinc,container,loc1,loc2,result_type,excluded)
+select Origin, Code, isnull(LOINC,'') as loinc, isnull(Sample,'') as container, 
+isnull(SubSectionCode,'') as loc1, isnull(HALO_SubSectionCode,'') as loc2, isnull(Type,'') as result_type, 
+isnull(Excluded,'') as excluded
+from [Warehouse].dbo.GlobalCodes_Map map
+left join [Warehouse].dbo.GlobalCodes_Main g on map.GlobalCode = g.GlobalCode
+
+
+
+-- Create FLAT table (TLC to TFC map)
+create table [GlobalCodes].dbo.GlobalCodes_FLAT (
+	origin varchar(20), TLC varchar(10), TFC varchar(10)
+)
 
 
 
@@ -66,8 +97,10 @@ select * from [Warehouse].[dbo].[GlobalCodes_Departments]
 -- Create flattened map of TLC to TFC
 use GlobalCodes
 
+delete from [GlobalCodes].dbo.GlobalCodes_FLAT
+
+insert into [GlobalCodes].dbo.GlobalCodes_FLAT(origin,TLC,TFC)
 select Origin, TLC, TFC
-into [GlobalCodes].dbo.GlobalCodes_FLAT
 from (
 	select tlc.Origin, [Test Code] as TLC, TFC, ID
 	from GlobalCodes_TEST_STAGING tlc
@@ -88,32 +121,6 @@ order by Origin, TLC, ID
 
 
 
--- Move the mapping table to loinc based
-create table [GlobalCodes].dbo.GlobalCodes_Map (
-	map_id int IDENTITY(1,1) PRIMARY KEY
-	,[origin] varchar(20)
-    ,[tfc] varchar(5)
-    ,[loinc] varchar(20)
-    ,[container] varchar(50)
-    ,[loc1] varchar(20)
-    ,[loc2] varchar(20)
-    ,[result_type] varchar(20)
-	,[excluded] varchar(50)
-)
-
-insert into [GlobalCodes].dbo.GlobalCodes_Map ([origin],[tfc],[loinc],[container],[loc1],[loc2],[result_type],[excluded])
-select Origin as origin, 
-Code as tfc,
-isnull(g.LOINC,'') as loinc, 
-isnull(g.[Sample],'') as container, 
-isnull(g.SubSectionCode,'') as loc1,
-isnull(g.HALO_SubSectionCode,'') as loc2, 
-isnull(g.Type,'') as result_type,
-isnull(Excluded,'') as excluded
-from [Warehouse].dbo.GlobalCodes_Map m
-left join [Warehouse].dbo.GlobalCodes_Main g on m.GlobalCode = g.GlobalCode
-
-
 
 
 -- Create a container table
@@ -123,10 +130,37 @@ create table [GlobalCodes].dbo.[GlobalCodes_Container] (
 	cont_type varchar(50)
 );
 
-insert into [GlobalCodes].dbo.[GlobalCodes_Container] (container) 
-select distinct container from [GlobalCodes].dbo.GlobalCodes_Map
+insert into [GlobalCodes].dbo.[GlobalCodes_Container] (container, cont_type) 
+select distinct container, '' as cont_type
+from [GlobalCodes].dbo.GlobalCodes_Map
 where container <> ''
 order by container
+
+
+-- Create the FORM_INFO table
+create table [GlobalCodes].dbo.[GlobalCodes_FORM_INFO] (
+	Origin varchar(11),
+	TFC varchar(10),
+	Active varchar(5),
+	NumLastYear int,
+	MostCommon varchar(70),
+	MostCommonPct int,
+	SecondMostCommon varchar(70),
+	SecondMostCommonPct int,
+	Average float,
+	SD float,
+	Low float,
+	High float,
+	TLC varchar(10),
+	TLCDescription varchar(10),
+	SectionName varchar(50),
+	RefLabName varchar(70)
+)
+
+
+
+
+-- Create lexical table
 
 
    

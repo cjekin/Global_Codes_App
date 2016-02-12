@@ -9,6 +9,8 @@ var current_system = 'BMI_ALL_DW';
 var current_section = '0';
 var library_search_datatable = '';
 var global_map_table = ''; // Used to update mapping
+var location_list = '';
+var container_list = '';
 
 var loinc_list = [];
 
@@ -17,13 +19,16 @@ var success_colour = '#A9F5A9';
 var processing_colour = '#FAAC58';
 
 
+var map_result_type = {'Result': 'success', 'Sub-Result': 'info'};
+
 
 // Load the basic data
 $(function () {
     get_winpath_systems_select();
     get_worksections_select();
     get_tlc_list_data();
-
+    get_location_list();
+    get_container_list();
     
     //$(":tabbable").attr('tabindex', -1);
 });
@@ -47,7 +52,7 @@ function get_worksections_select() {
     $.getJSON('/get_sql_data?query=Worksection_Data&system=' + current_system, function (data) {
 
         var options = data['data'];
-        $('#tlc_search_section').html('');
+        $('#tlc_search_section').html('<option>0 - ALL SECTIONS</option>');
 
         for (i = 0; i < options.length; i++) {
             if(options[i]['section_name'] == 'None'){
@@ -104,6 +109,35 @@ function get_tlc_list_data() {
 };
 
 
+function get_location_list() {
+    params = { query: 'Location_List_For_Mapper' };
+    $.ajax({
+        url: '/get_sql_data', dataType: 'json',
+        data: params,
+        success: function (result) {
+            if (result['result'] == 'ERROR') { swal('Error getting location list'); }
+            else {
+                location_list = result;
+            };
+        }
+    });
+};
+
+function get_container_list() {
+    params = { query: 'Container_List_For_Mapper' };
+    $.ajax({
+        url: '/get_sql_data', dataType: 'json',
+        data: params,
+        success: function (result) {
+            if (result['result'] == 'ERROR') { swal('Error getting container list'); }
+            else {
+                container_list = result;
+            };
+        }
+    });
+};
+
+
 function draw_library_table(result) {
 
     var column_headers = [];
@@ -150,9 +184,6 @@ function draw_library_table(result) {
 
 
 
-
-
-
 //
 // Event Handlers
 //
@@ -171,35 +202,6 @@ $('#tlc_search_submit').click(function () {
     get_tlc_list_data();
     //update_system_info();
 });
-
-
-
-
-
-
-//// Refresh the system info widget
-//function update_system_info() {
-//    current_system = $('#tlc_search_system').val();
-//    current_section = $('#tlc_search_section').val().substring(0, 1);
-//    var url_val = '/system_info?system=' + current_system + '&section=' + current_section;
-//    $('#system-overview-total').text('Loading...');
-//    $('#system-overview-total-percent').text('--');
-//    $('#system-overview-codesinsection').text('--');
-//    $('#system-overview-codesmapped').text('--');
-
-//    // Get the work section data
-//    $.getJSON(url_val, function (data) {
-//        if (data['result'] == 'ERROR') {
-//            $('#system-overview-total').text('ERROR');
-//        } else {
-//            $('#system-overview-total').text(data['result'][0]['Total'] + ' total');
-//            $('#system-overview-total-percent').text('Percent mapped (' + data['result'][0]['PctMapped'] + '%)');
-//            $("#system-overview-total-progress").css("width", data['result'][0]['PctMapped'] + '%');
-//            $('#system-overview-codesinsection').text(data['result'][0]['NumSection']);
-//            $('#system-overview-codesmapped').text(data['result'][0]['NumSectionMapped']);
-//        };
-//    });
-//};
 
 
 
@@ -233,7 +235,7 @@ function run_sql_query(params,method_to_run,other_params) {
 };
 
 
-function run_sql_update(this_cell, params) {
+function run_sql_update(this_cell, params, callback) {
 
     var submission = {
         table: global_map_table,
@@ -247,8 +249,6 @@ function run_sql_update(this_cell, params) {
 
     console.log('Submitting: ',submission);
 
-    $(this_cell).css('background', processing_colour);
-
     $.post('/submit_table_update', submission)
         .done(function (data) {
             if (data['data'] == 'ERROR') {
@@ -257,18 +257,15 @@ function run_sql_update(this_cell, params) {
                     text: "There was an issue submitting your change.",
                     type: "warning"
                 });
-                $(this_cell).css('background', error_colour);
+                $(this_cell).effect('highlight', { color: error_colour }, 1000);
             } else {
                 console.log('POST UPDATE: Changed ' + submission['table'] + ' field ' + submission['field'] + ' to ' + submission['newval']);
                 $(this_cell).html(params['formatted_newval']);
                 $(this_cell).focus();
-                $(this_cell).css('background', success_colour);
+                $(this_cell).effect('highlight', { color: success_colour }, 1000);
             };
         });
 };
-
-
-
 
 
 function fill_library_code_detail(result) {
@@ -327,11 +324,33 @@ function tlc_detail_event_handlers() {
 
     // Apply the event handlers
     $('.tabitem').focusin(function () {
-        $(this).css("background", "#F5F6CE");
+        $(this).addClass('focusin-cell');
     });
     $('.tabitem').focusout(function () {
-        $(this).css("background", "white");
+        $(this).removeClass('focusin-cell');
     });
+    $('.tabitem').keydown(function (e) {
+        if (e.key == 'ArrowDown') {
+            var col = $(this).parent().children().index($(this));
+            $(this).closest('tr').next().find('td:eq(' + col + ')').focus();
+            e.preventDefault();
+        };
+        if (e.key == 'ArrowUp') {
+            var col = $(this).parent().children().index($(this));
+            $(this).closest('tr').prev().find('td:eq(' + col + ')').focus();
+            e.preventDefault();
+        };
+        if (e.key == 'ArrowRight') {
+            $(this).next().focus();
+            e.preventDefault();
+        };
+        if (e.key == 'ArrowLeft') {
+            $(this).prev().focus();
+            e.preventDefault();
+        };
+    });
+
+
 
 
     // LOINC cell events
@@ -339,24 +358,26 @@ function tlc_detail_event_handlers() {
         var select = $(this).find('select').data('select2');
 
         if (event.key == 'Enter' && !select) {
-            console.log('Loinc ENTER key');
             event.preventDefault();
-            open_select2_ajax($(this), 'Mapped_LOINC_List', 2);
+            open_loinc_select2($(this));
         };
         if (event.key == 'Escape' && select) {
             if (!select.isOpen()) {
                 event.preventDefault();
                 var loinc_name = $(this).data('loinc-desc');
-                var old_html = '<span>' + loinc_name.split('[')[0] + '</span><br/>'
+                if (loinc_name == '') {
+                    $(this).html('').focus();
+                } else {
+                    var old_html = '<span>' + loinc_name.split('[')[0] + '</span><br/>'
                     + '<small class="font-light">' + loinc_name.split(']')[0] + ']<br/>'
                     + loinc_name.split(']')[1] + '</small>'
-                $(this).html(old_html).focus();
+                    $(this).html(old_html).focus();
+                };
             };
         };
     });
-
     $('.loinc').on("select2:select", function (e) {
-        loinc_change_select2(e, this);
+        loinc_change_select2(e, $(this));
     });
 
 
@@ -372,33 +393,39 @@ function tlc_detail_event_handlers() {
     // Container events
     $(".container").keydown(function (event) {
         var select = $(this).find('select').data('select2');
-        console.log('Pressed ENTER on container', select);
 
         if (event.key == 'Enter' && !select) {
-            console.log('Container ENTER key');
             event.preventDefault();
-            params = { query: 'Container_List_For_Mapper' };
-            run_sql_query(params, open_select2, $(this));
+            open_container_select2($(this));
         };
         if (event.key == 'Escape' && select) {
-            console.log('Container ESC key');
             if (!select.isOpen()) {
                 event.preventDefault();
                 $(this).html('<span>' + $(this).data('val') + '</span>').focus();
             };
         };
     });
-    $('.container').on("select2:select", function (e) {
-        run_sql_update(
-            $(this),
-            {
-                id: $(this).closest('tr').attr('id'),
-                field: $(this).data('field'),
-                oldval: $(this).data('val'),
-                newval: e.params.data.text,
-                formatted_newval: e.params.data.text
+    $('.container').on('select2:select', function (e) {
+        var cell = $(this);
+
+        console.log('Location change event: ', e.params.data);
+        if (e.params.data.text == $(this).data('val')) {
+            cell.html('<span>' + cell.data('val') + '</span>').focus();
+            return;
+        };
+        
+        $.post('/submit_table_update', { id: $(this).closest('tr').attr('id'), field: $(this).data('field'), oldval: $(this).data('val'), newval: e.params.data.id, table: global_map_table, id_name: 'map_id' })
+            .done(function (data) {
+                if (data['data'] == 'ERROR') {
+                    cell.html('<span>' + $(this).data('val') + '</span>').focus();
+                    cell.effect('highlight', { color: error_colour }, 1000);
+                } else {
+                    cell.data({ val: e.params.data.id });
+                    cell.html('<span>' + e.params.data.text + '</span>').focus();
+                    cell.removeClass('bigdrop');
+                    cell.effect('highlight', { color: success_colour }, 1000);
+                };
             });
-        $(this).data('val', e.params.data.text);
     });
 
 
@@ -410,66 +437,49 @@ function tlc_detail_event_handlers() {
         if (event.key == 'Enter' && !select) {
             console.log('Location ENTER key');
             event.preventDefault();
-            params = { query: 'Location_List_For_Mapper' };
-
-            var test_data = {
-                data: [{
-                    id: 1, text: 'optgroup', children: [
-                        { id: 2, text: 'child1' }, { id: 3, text: 'child2' }]
-                }]
-            };
-            console.log(test_data);
-            open_select2(test_data, $(this));
-
-            //run_sql_query(params, open_select2, $(this));
+            open_location_select2($(this));
         };
         if (event.key == 'Escape' && select) {
             console.log('Container ESC key');
             if (!select.isOpen()) {
                 event.preventDefault();
-                $(this).html('<span>' + $(this).data('val') + '</span>').focus();
+                $(this).removeClass('bigdrop');
+                $(this).html('<span>' + $(this).data('subsection') + '</span><br/><small class="font-trans">' + $(this).data('department') + '</small>').focus();
             };
         };
     });
-    //$('.container').on("select2:select", function (e) {
-    //    run_sql_update(
-    //        $(this),
-    //        {
-    //            id: $(this).closest('tr').attr('id'),
-    //            field: $(this).data('field'),
-    //            oldval: $(this).data('val'),
-    //            newval: e.params.data.text,
-    //            formatted_newval: e.params.data.text
-    //        });
-    //    $(this).data('val', e.params.data.text);
-    //});
+    $('.loc1,.loc2').on("select2:select", function (e) {
+        var cell = $(this);
 
-};
+        if (e.params.data.id == cell.data('val')) {
+            cell.html('<span>' + cell.data('subsection') + '</span><br/><small class="font-trans">' + cell.data('department') + '</small>').focus();
+            return;
+        };
 
-
-
-function open_select2(this_data, this_cell) {
-    console.log('Running', this_data);
-
-    var select = $('<select></select>');
-    $(this_cell).html('').append(select);
-
-    select.select2({
-        data: this_data['data'],
-        width: '95%',
-        placeholder: 'Press Enter',
+        $.post('/submit_table_update', { id: cell.closest('tr').attr('id'), field: cell.data('field'), oldval: cell.data('val'), newval: e.params.data.id, table: global_map_table, id_name: 'map_id' })
+            .done(function (data) {
+            if (data['data'] == 'ERROR') {
+                cell.html('<span>' + cell.data('subsection') + '</span><br/><small class="font-trans">' + cell.data('department') + '</small>').focus();
+                cell.effect('highlight', { color: error_colour }, 1000);
+            } else {
+                cell.data({ val: e.params.data.id, subsection: e.params.data.text, department: e.params.data.Department });
+                cell.html('<span>' + e.params.data.text + '</span><br/><small class="font-trans">' + e.params.data.Department + '</small>').focus();
+                cell.effect('highlight', { color: success_colour }, 6000);
+            };
+        });
     });
 
-    select.select2('open');
+
 };
 
 
 
-function open_select2_ajax(this_cell, this_query, min_input) {
+
+function open_loinc_select2(this_cell) {
 
     var select = $('<select></select>');
     $(this_cell).html('').append(select);
-
+    $(this_cell).addClass('bigdrop');
 
     function formatState(state) {
         if (!state.id) { return state.text; }
@@ -489,7 +499,7 @@ function open_select2_ajax(this_cell, this_query, min_input) {
             data: function (params) {
                 return {
                     search_term: params.term, // search term
-                    query: this_query
+                    query: 'Mapped_LOINC_List'
                 };
             },
             processResults: function (data, params) {
@@ -503,7 +513,7 @@ function open_select2_ajax(this_cell, this_query, min_input) {
             cache: true
         },
         escapeMarkup: function (markup) { return markup; }, // let our custom formatter work
-        minimumInputLength: min_input,
+        minimumInputLength: 2,
         templateResult: formatState, // omitted for brevity, see the source of this page
     });
 
@@ -511,46 +521,156 @@ function open_select2_ajax(this_cell, this_query, min_input) {
     
 };
 
-function loinc_change_select2(e, this_loinc) {
+
+function loinc_change_select2(e, cell) {
     
-    $(this_loinc).off('keydown');
-
-    $(this_loinc).keydown(function (event) {
-        console.log('New post-select keydown');
-        loinc_keydown(event, this_loinc);
-    });
-
     var submission = {
         table: global_map_table,
-        field: $(this_loinc).attr('data-field'),
+        field: cell.attr('data-field'),
         id_name: 'map_id',
-        id: $(this_loinc).closest('tr').attr('id'),
-        oldval: $(this_loinc).attr('data-val'),
+        id: cell.closest('tr').attr('id'),
+        oldval: cell.attr('data-val'),
         newval: e.params.data.id
     };
 
     console.log(submission);
 
-    $(this_loinc).css('background', '#FAAC58');
 
     $.post('/submit_table_update', submission)
         .done(function (data) {
             if (data['data'] == 'ERROR') {
-                swal({
-                    title: "Problem submitting changes",
-                    text: "There was an issue submitting your change.",
-                    type: "warning"
-                });
-                $(this_loinc).css('background', '#F5A9BC');
+                cell.html('<span>' + (cell.data('loinc-desc') || '').split('[')[0] + '</span><br /><small class="font-light">' + (cell.data('loinc-desc') || '') + '</small>').focus();
+                cell.effect('highlight', { color: error_colour }, 1000);
             } else {
-                console.log('POST UPDATE: Changed ' + submission['table'] + ' field ' + submission['field'] + ' to ' + submission['newval']);
                 var newtext = e.params.data.text;
                 var newval = '<span>' + newtext.split(']')[0] + ']</span><br/><small class="font-light">' + newtext.split(']')[1] + '</small>';
-                $(this_loinc).html(newval);
-                $(this_loinc).focus();
-                $(this_loinc).css('background', '#A9F5A9');
+                cell.html(newval).focus();
+                cell.data({ 'loinc-desc': newtext, 'val': e.params.data.id });
+                cell.effect('highlight', { color: success_colour }, 1000);
+                get_other_data(e.params.data.id);
             };
         });
+
+    function get_other_data(loinc_code) {
+
+        console.log('Searching for other values for: ', loinc_code);
+
+        var type = cell.closest('tr').find('.result-type'); //.data('val');
+        var cont = cell.closest('tr').find('.container'); //.data('val');
+        var loc1 = cell.closest('tr').find('.loc1'); //.data('val');
+        var loc2 = cell.closest('tr').find('.loc2'); //.data('val'));
+
+        $.ajax({
+            url: '/get_sql_data', dataType: 'json',
+            data: { query: 'Find_Similar_LOINC', loinc: loinc_code },
+            success: function (result) {
+                if (result['result'] == 'ERROR') { swal('Error getting similar LOINC codes'); }
+                else {
+                    var res = result['data'][0];
+                    console.log('Checking type: ', type.data('val'), ' and ', res['result_type']);
+                    if (type.data('val') == '' && res['result_type'] != '') {
+                        console.log('Updating type');
+                        var formatted_text = '<button tabindex="-1" class="btn btn-' + ( map_result_type[res['result_type']] || 'default' ) + ' btn-xs result-type result-type-button">' + res['result_type'].slice(0, 1).toUpperCase() + '</button>';
+                        update_other_fields(type, res['result_type'], formatted_text, { val: res['result_type'] });
+                    };
+
+                    if (cont.data('val') == '' && res['container'] != '') {
+                        update_other_fields(cont, res['container'], res['container'], { val: res['container'] });
+                    };
+
+                    if (loc1.data('val') == '' && res['loc1'] != '') {
+                        console.log('Updating location');
+                        var formatted_text = '<span>' + res['loc1_subsection'] + '</span><br /><small class="font-trans">' + res['loc1_department'] + '</small>';
+                        update_other_fields(loc1, res['loc1'], formatted_text, { val: res['loc1'], subsection: res['loc1_subsection'], department: res['loc1_department'] });
+                    };
+
+                    if (loc2.data('val') == '' && res['loc2'] != '') {
+                        console.log('Updating location');
+                        var formatted_text = '<span>' + res['loc2_subsection'] + '</span><br /><small class="font-trans">' + res['loc2_department'] + '</small>';
+                        update_other_fields(loc2, res['loc2'], formatted_text, { val: res['loc2'], subsection: res['loc2_subsection'], department: res['loc2_department'] });
+                    };
+                    
+                };
+            }
+        });
+    };
+
+    function update_other_fields(cell, newval, formatted_text, html_vals) {
+        var submission = {
+            field: cell.attr('data-field'), id: cell.closest('tr').attr('id'), oldval: cell.attr('data-val'), newval: newval, table: global_map_table, id_name: 'map_id',
+        };
+        $.post('/submit_table_update', submission)
+            .done(function (data) {
+                if (data['data'] == 'ERROR') {
+                    cell.effect('highlight', { color: error_colour }, 1000);
+                } else {
+                    cell.html(formatted_text).focus();
+                    cell.data(html_vals);
+                    cell.effect('highlight', { color: success_colour }, 1000);
+                };
+            });
+    };
+
+    
 };
+
+
+
+
+function open_container_select2(this_cell) {
+
+    var select = $('<select></select>');
+    $(this_cell).html('').append(select);
+    $(this_cell).addClass('bigdrop');
+
+    var current_container = this_cell.data('val');
+
+    select.select2({
+        data: container_list['nested_select'],
+        width: '100%',
+        initSelection: function (element, callback) {
+            callback({ id: current_container, text: current_container });
+        },
+        escapeMarkup: function (markup) { return markup; },
+        minimumInputLength: 0
+        //,templateResult: formatState,
+    });
+
+    select.val(current_container).trigger('change');
+    select.select2('open');
+};
+
+function open_location_select2(this_cell) {
+
+    var select = $('<select></select>');
+    $(this_cell).html('').append(select);
+    $(this_cell).addClass('bigdrop');
+
+
+    function formatState(state) {
+        if (!state.id) { return state.text; }
+        var $state = $(
+          '<small>' + state.text.replace(',', ',<br/>') + '</small>'
+        );
+        return $state;
+    };
+
+    select.select2({
+        data: location_list['nested_select'],
+        width: '100%',
+        placeholder: 'Press Enter',
+        escapeMarkup: function (markup) { return markup; },
+        minimumInputLength: 0,
+        templateResult: formatState,
+        initSelection: function (element, callback) {
+            callback({ id: this_cell.data('val'), text: this_cell.data('subsection') });
+        },
+    });
+
+    select.val(this_cell.data('val')).trigger('change');
+    select.select2('open');
+};
+
+
 
 
