@@ -24,11 +24,15 @@
     .bigdrop {
         width: 250px !important;
     }
+    
     .bg-processing-color {
         background: #FAAC58;
     }
     .focusin-cell {
         background: #F5F6CE;
+    }
+    .excluded {
+        background: #D8D8D8;
     }
 
     
@@ -251,8 +255,8 @@
 
     </div>
 
-    <button id="next-tlc" class="btn btn-success btn-xs result-type pull-right tabitem">Next</button>
-    <button id="prev-tlc" class="btn btn-success btn-xs result-type pull-left tabitem">Prev</button>
+    <button id="next-tlc" class="btn btn-success btn-xs pull-right tabitem">Next</button>
+    <button id="prev-tlc" class="btn btn-success btn-xs ull-left tabitem">Prev</button>
     
 
 </div>
@@ -275,7 +279,7 @@
     <thead>
         <th>TFC</th>
         <th>TFC Description</th>
-        <th></th>
+        <th>Type</th>
         <th>LOINC</th>
         <th>Container</th>
         <th>Current Location</th>
@@ -287,15 +291,16 @@
 
     <tr id="{{map_id}}">
 
-        <td class="tfc"> 
+        <td class="tfc" data-val="{{tfc}}"> 
             {{tfc}} 
         </td>
 
-        <td class="tfc-name">
+        <td class="tfc-name" data-val="{{tfc_name}}" data-units="{{tfc_units}}" data-common="{{MostCommon}}" data-num="{{NumLastYear}}">
             <span class="font-bold">{{tfc_name}}</span> 
             <small class="font-trans pull-right">{{tfc_units}}</small>
             <br />
             <small class="font-trans">{{MostCommon}}</small>
+            <small class="font-trans pull-right">[ {{NumLastYear}} ]</small>
         </td>
 
         <td data-field="result_type" data-val="{{result_type}}" class="result-type tabitem">

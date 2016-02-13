@@ -3,6 +3,7 @@ var preload_status = 'empty';
 var current_tlc = 'U/E';
 var current_tlc_name = 'UREA AND ELECTROLYTES';
 var current_tlc_type = 'G';
+var current_row = '';
 var library_code_datatable = '';
 
 var current_system = 'BMI_ALL_DW';
@@ -19,7 +20,12 @@ var success_colour = '#A9F5A9';
 var processing_colour = '#FAAC58';
 
 
-var map_result_type = {'Result': 'success', 'Sub-Result': 'info'};
+var map_result_type = {
+    'Result': 'warning', 'SubResult': 'success', 'Qualifier': 'info', 'Calculation': 'info', 'Internal': 'info disabled', 'NotRequested': 'info disabled', 'Inactive': 'info disabled', 'Calculation': 'info'
+};
+var map_result_type_key_pressed = {
+    R: 'Result', S: 'SubResult', Q: 'Qualifier', I: 'Internal', N: 'NotRequested', D: 'Disabled', C: 'Calculation'
+};
 
 
 // Load the basic data
@@ -98,6 +104,7 @@ function get_tlc_list_data() {
 
 
             // Select the first library code and load the detail
+            current_row = library_code_datatable.row(1);
             current_tlc = library_code_datatable.row(1).data()['tlc'];
             current_tlc_name = library_code_datatable.row(1).data()['tlc_name'];
             current_tlc_type = library_code_datatable.row(1).data()['tlc_type'];
@@ -169,6 +176,8 @@ function draw_library_table(result) {
 
     $('#library_code_datatable tbody').on('click', 'tr', function () {
         var data = library_code_datatable.row(this).data();
+
+        current_row = library_code_datatable.row(this);
         current_tlc = data['tlc'];
         current_tlc_name = data['tlc_name'];
         current_tlc_type = data['tlc_type'];
@@ -235,15 +244,15 @@ function run_sql_query(params,method_to_run,other_params) {
 };
 
 
-function run_sql_update(this_cell, params, callback) {
+function run_sql_update(this_cell, params) {
 
     var submission = {
         table: global_map_table,
-        field: params['field'],
+        field: this_cell.data('field'),
         id_name: 'map_id',
-        id: params['id'],
-        oldval: params['oldval'],
-        newval: params['newval']
+        id: this_cell.closest('tr').attr('id'),
+        oldval: this_cell.data('val'),
+        newval: (params['newval'] || '' )
     };
 
 
@@ -252,15 +261,44 @@ function run_sql_update(this_cell, params, callback) {
     $.post('/submit_table_update', submission)
         .done(function (data) {
             if (data['data'] == 'ERROR') {
-                swal({
-                    title: "Problem submitting changes",
-                    text: "There was an issue submitting your change.",
-                    type: "warning"
-                });
-                $(this_cell).effect('highlight', { color: error_colour }, 1000);
+
+                if (this_cell.data('field') == 'loinc') {
+                    var loinc_name = this_cell.data('loinc-desc');
+                    if (loinc_name == '') {
+                        $(this).html('').focus();
+                    } else {
+                        var old_html = '<span>' + loinc_name.split('[')[0] + '</span><br/>' + '<small class="font-light">' + loinc_name.split(']')[0] + ']<br/>' + loinc_name.split(']')[1] + '</small>';
+                        this_cell.html(old_html);
+                    };
+                };
+
+                if (this_cell.data('field') == 'result_type') {
+                    var res_type = this_cell.data('val');
+                    if (res_type == '') {
+                        $(this).html('').focus();
+                    } else {
+                        var old_html = '<button tabindex="-1" class="btn btn-' + ( map_result_type[res_type] || 'default' ) + ' btn-xs result-type result-type-button">' + res_type.slice(0, 1) + '</button>'
+                        this_cell.html(old_html);
+                    };
+                };
+
+                this_cell.focus();
+                this_cell.effect('highlight', { color: error_colour }, 1000);
+
             } else {
                 console.log('POST UPDATE: Changed ' + submission['table'] + ' field ' + submission['field'] + ' to ' + submission['newval']);
-                $(this_cell).html(params['formatted_newval']);
+
+                // 
+                if (this_cell.data('field') == 'loinc') {
+                    
+                };
+
+                if (this_cell.data('field') == 'result_type') {
+                    var res_type = params['newval'];
+                    var new_html = '<button tabindex="-1" class="btn btn-' + (map_result_type[res_type] || 'default') + ' btn-xs result-type result-type-button">' + res_type.slice(0, 1) + '</button>'
+                    this_cell.html(new_html);
+                };
+
                 $(this_cell).focus();
                 $(this_cell).effect('highlight', { color: success_colour }, 1000);
             };
@@ -279,19 +317,15 @@ function fill_library_code_detail(result) {
     global_map_table = result['table'];
     
     Handlebars.registerHelper('result_type_firstchar', function (str) {
-        return str.slice(0, 1).toUpperCase();
+        return ( str.slice(0, 1).toUpperCase() || '?' );
     });
     
     Handlebars.registerHelper('result_type_class', function (str) {
-        if (str == 'Result') {
-            return 'success';
-        } else if (str == 'Sub-Result') {
-            return 'info';
-        } else {
-            return 'default';
-        };
+        return (map_result_type[str] || 'default' );
     });
 
+
+   
     Handlebars.registerHelper('loinc_description_main', function (str) {
         return (str || '').split('[')[0];
     });
@@ -349,8 +383,38 @@ function tlc_detail_event_handlers() {
             e.preventDefault();
         };
     });
+    $('.tabitem').first().focus();
 
 
+    // TFC cell events
+    $('.tfc-name').click(function () {
+        console.log('Clicked TFC name');
+        if ($(this).hasClass('full')) {
+            var min_html = '<span class="font-bold">' + $(this).data('val') + '</span><small class="font-trans pull-right">' + $(this).data('units') + '</small><br /><small class="font-trans">' + $(this).data('common') + '</small><small class="font-trans pull-right">[ ' + $(this).data('num') + ' ]</small>';
+            $(this).html(min_html);
+            $(this).removeClass('full');
+        } else {
+            var cell = $(this);
+            var tfc = $(this).closest('tr').find('.tfc').data('val');
+            $.ajax({
+                url: '/get_sql_data', dataType: 'json',
+                data: { query: 'More_TFC_Info', tfc: tfc, origin: current_system },
+                success: function (result) {
+                    if (result['result'] == 'ERROR') { swal('Error getting TFC data'); }
+                    else {
+                        var d = result['data'][0];
+                        var c = result['columns'];
+                        var h = result['columns_desc'];
+                        var list = cell.html('').append('<dl></dl>').addClass('dl-horizontal');
+                        for (i = 0; i < c.length; i++) {
+                            list.append('<dt>' + h[i] + '</dt><dd>' + d[c[i]] + '</dd>');
+                        };                       
+                        cell.addClass('full');
+                    };
+                }
+            });
+        };
+    });
 
 
     // LOINC cell events
@@ -366,11 +430,13 @@ function tlc_detail_event_handlers() {
                 event.preventDefault();
                 var loinc_name = $(this).data('loinc-desc');
                 if (loinc_name == '') {
+                    $(this).removeClass('bigdrop');
                     $(this).html('').focus();
                 } else {
                     var old_html = '<span>' + loinc_name.split('[')[0] + '</span><br/>'
                     + '<small class="font-light">' + loinc_name.split(']')[0] + ']<br/>'
                     + loinc_name.split(']')[1] + '</small>'
+                    $(this).removeClass('bigdrop');
                     $(this).html(old_html).focus();
                 };
             };
@@ -383,10 +449,12 @@ function tlc_detail_event_handlers() {
 
     // Result type events
     $(".result-type").keydown(function (event) {
-        if (event.key == 'c' || event.key == 'C') {
+        var key_pressed = event.key.toUpperCase();
+        if (map_result_type_key_pressed[key_pressed]) {
             event.preventDefault();
-            console.log('Pressed C');
-        }
+            console.log('Pressed ' + key_pressed);
+            run_sql_update($(this), { newval: map_result_type_key_pressed[key_pressed]  });
+        };
     });
 
 
@@ -432,7 +500,6 @@ function tlc_detail_event_handlers() {
     // Location events
     $(".loc1,.loc2").keydown(function (event) {
         var select = $(this).find('select').data('select2');
-        console.log('Pressed ENTER on loc1 or loc2', select);
 
         if (event.key == 'Enter' && !select) {
             console.log('Location ENTER key');
@@ -440,7 +507,7 @@ function tlc_detail_event_handlers() {
             open_location_select2($(this));
         };
         if (event.key == 'Escape' && select) {
-            console.log('Container ESC key');
+            console.log('Location ESC key');
             if (!select.isOpen()) {
                 event.preventDefault();
                 $(this).removeClass('bigdrop');
@@ -469,6 +536,40 @@ function tlc_detail_event_handlers() {
         });
     });
 
+
+
+    // Next TLC
+    $(".tabitem").keydown(function (e) {
+        if (e.key == 'ArrowRight' && e.ctrlKey) {
+            e.preventDefault();
+
+            current_row = current_row.next();
+            var data = current_row.data();
+            current_tlc = data['tlc'];
+            current_tlc_name = data['tlc_name'];
+            current_tlc_type = data['tlc_type'];
+            console.log('Moving to: ' + current_tlc + ' in system ' + current_system);
+
+            params = { query: 'TLC_Detail_For_Mapper', Origin: current_system, TLC: current_tlc };
+            $('#library_code_detail_table').html('<div class="text-center"><i class="fa fa-spinner fa-2x fa-pulse m-b-lg m-t-lg"></i></div>');
+            run_sql_query(params, fill_library_code_detail);
+
+        };
+        if (e.key == 'ArrowLeft' && e.ctrlKey) {
+            e.preventDefault();
+
+            current_row = current_row.prev();
+            var data = current_row.data();
+            current_tlc = data['tlc'];
+            current_tlc_name = data['tlc_name'];
+            current_tlc_type = data['tlc_type'];
+            console.log('Moving to: ' + current_tlc + ' in system ' + current_system);
+
+            params = { query: 'TLC_Detail_For_Mapper', Origin: current_system, TLC: current_tlc };
+            $('#library_code_detail_table').html('<div class="text-center"><i class="fa fa-spinner fa-2x fa-pulse m-b-lg m-t-lg"></i></div>');
+            run_sql_query(params, fill_library_code_detail);
+        }
+    });
 
 };
 
@@ -512,9 +613,9 @@ function open_loinc_select2(this_cell) {
             },
             cache: true
         },
-        escapeMarkup: function (markup) { return markup; }, // let our custom formatter work
+        escapeMarkup: function (markup) { return markup; },
         minimumInputLength: 2,
-        templateResult: formatState, // omitted for brevity, see the source of this page
+        templateResult: formatState,
     });
 
     select.select2('open');
@@ -532,9 +633,6 @@ function loinc_change_select2(e, cell) {
         oldval: cell.attr('data-val'),
         newval: e.params.data.id
     };
-
-    console.log(submission);
-
 
     $.post('/submit_table_update', submission)
         .done(function (data) {

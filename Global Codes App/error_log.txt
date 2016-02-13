@@ -3879,3 +3879,71 @@ Traceback (most recent call last):
   File "H:\Global_Codes_App\Global Codes App\Global_Codes_App\sql_queries.py", line 30, in run_odbc_query
     cursor.execute(sql.replace('\n',' '))
 ProgrammingError: ('42S02', "[42S02] [Microsoft][ODBC SQL Server Driver][SQL Server]Invalid object name 'GlobalCodes.dbo.global_lexical'. (208) (SQLExecDirectW)")
+-----13/02/2016 10:08
+Problem running query
+Traceback (most recent call last):
+  File "H:\Global_Codes_App\Global Codes App\Global_Codes_App\views.py", line 733, in get_sql_data
+    result = methodToCall(params)
+  File "H:\Global_Codes_App\Global Codes App\Global_Codes_App\sql_queries.py", line 294, in TLC_Detail_For_Mapper
+    result = run_odbc_query(sql)
+  File "H:\Global_Codes_App\Global Codes App\Global_Codes_App\sql_queries.py", line 30, in run_odbc_query
+    cursor.execute(sql.replace('\n',' '))
+ProgrammingError: ('42000', '[42000] [Microsoft][ODBC SQL Server Driver][SQL Server]The isnull function requires 2 argument(s). (174) (SQLExecDirectW)')
+-----13/02/2016 10:08
+Problem running query
+Traceback (most recent call last):
+  File "H:\Global_Codes_App\Global Codes App\Global_Codes_App\views.py", line 733, in get_sql_data
+    result = methodToCall(params)
+  File "H:\Global_Codes_App\Global Codes App\Global_Codes_App\sql_queries.py", line 294, in TLC_Detail_For_Mapper
+    result = run_odbc_query(sql)
+  File "H:\Global_Codes_App\Global Codes App\Global_Codes_App\sql_queries.py", line 30, in run_odbc_query
+    cursor.execute(sql.replace('\n',' '))
+ProgrammingError: ('42000', '[42000] [Microsoft][ODBC SQL Server Driver][SQL Server]The isnull function requires 2 argument(s). (174) (SQLExecDirectW)')
+-----13/02/2016 10:09
+Problem running query
+Traceback (most recent call last):
+  File "H:\Global_Codes_App\Global Codes App\Global_Codes_App\views.py", line 733, in get_sql_data
+    result = methodToCall(params)
+  File "H:\Global_Codes_App\Global Codes App\Global_Codes_App\sql_queries.py", line 294, in TLC_Detail_For_Mapper
+    result = run_odbc_query(sql)
+  File "H:\Global_Codes_App\Global Codes App\Global_Codes_App\sql_queries.py", line 30, in run_odbc_query
+    cursor.execute(sql.replace('\n',' '))
+DataError: ('22018', "[22018] [Microsoft][ODBC SQL Server Driver][SQL Server]Conversion failed when converting the varchar value 'Unknown' to data type int. (245) (SQLExecDirectW)")
+-----13/02/2016 10:09
+Problem running query
+Traceback (most recent call last):
+  File "H:\Global_Codes_App\Global Codes App\Global_Codes_App\views.py", line 733, in get_sql_data
+    result = methodToCall(params)
+  File "H:\Global_Codes_App\Global Codes App\Global_Codes_App\sql_queries.py", line 294, in TLC_Detail_For_Mapper
+    result = run_odbc_query(sql)
+  File "H:\Global_Codes_App\Global Codes App\Global_Codes_App\sql_queries.py", line 30, in run_odbc_query
+    cursor.execute(sql.replace('\n',' '))
+DataError: ('22018', "[22018] [Microsoft][ODBC SQL Server Driver][SQL Server]Conversion failed when converting the varchar value 'Unknown' to data type int. (245) (SQLExecDirectW)")
+-----13/02/2016 10:10
+Problem running query
+Traceback (most recent call last):
+  File "H:\Global_Codes_App\Global Codes App\Global_Codes_App\views.py", line 733, in get_sql_data
+    result = methodToCall(params)
+  File "H:\Global_Codes_App\Global Codes App\Global_Codes_App\sql_queries.py", line 456, in More_TFC_Info
+    result = run_odbc_query(sql)
+  File "H:\Global_Codes_App\Global Codes App\Global_Codes_App\sql_queries.py", line 30, in run_odbc_query
+    cursor.execute(sql.replace('\n',' '))
+ProgrammingError: ('42S22', "[42S22] [Microsoft][ODBC SQL Server Driver][SQL Server]Invalid column name 'A1GT'. (207) (SQLExecDirectW); [42S22] [Microsoft][ODBC SQL Server Driver][SQL Server]Invalid column name 'BMI_ALL_DW'. (207)")
+-----13/02/2016 11:40
+Problem updating SQL table
+Traceback (most recent call last):
+  File "H:\Global_Codes_App\Global Codes App\Global_Codes_App\views.py", line 753, in submit_table_update
+    sql_queries.update_odbc_table(submission,user.email)
+  File "H:\Global_Codes_App\Global Codes App\Global_Codes_App\sql_queries.py", line 57, in update_odbc_table
+    newval = submission['newval'],
+KeyError: 'newval'
+-----13/02/2016 12:38
+Problem running query
+Traceback (most recent call last):
+  File "H:\Global_Codes_App\Global Codes App\Global_Codes_App\views.py", line 733, in get_sql_data
+    result = methodToCall(params)
+  File "H:\Global_Codes_App\Global Codes App\Global_Codes_App\sql_queries.py", line 326, in Mapped_LOINC_List
+    result = run_odbc_query(sql)
+  File "H:\Global_Codes_App\Global Codes App\Global_Codes_App\sql_queries.py", line 30, in run_odbc_query
+    cursor.execute(sql.replace('\n',' '))
+ProgrammingError: ('42S22', "[42S22] [Microsoft][ODBC SQL Server Driver][SQL Server]Invalid column name 'COMMON_SI_TEST_RANK'. (207) (SQLExecDirectW); [42S22] [Microsoft][ODBC SQL Server Driver][SQL Server]Invalid column name 'COMMON_SI_TEST_RANK'. (207)")

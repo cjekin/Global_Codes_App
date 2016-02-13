@@ -218,7 +218,7 @@ def TLC_List_For_Mapper(params): #db_name, section, primary, unmapped):
     from (
 	    select tlc.[Test Code] as tlc, tlc.[Description] as tlc_name, tlc.[TLC type] as tlc_type,
 	    case when tlc.[Test Code] in (select distinct TLC from {FORM_INFO}) then 1 else 0 end as tlc_primary, tc.TFC as tfc
-	    ,case when isnull(map.loinc,'') <> '' or isnull(map.excluded,'') <> '' then 1 else 0 end as tfc_mapped
+	    ,case when isnull(map.loinc,'') <> '' or isnull(map.result_type,'') not in ('Result','SubResult','') then 1 else 0 end as tfc_mapped
 	    from {TEST_STAGING} tlc 
 	    inner join {FLAT} tc on tlc.[Test Code] = tc.TLC and tlc.[Origin] = tc.[Origin]
 	    inner join {FORM_STAGING} f on tc.TFC = f.TFC and tc.[Origin] = f.[Origin]
@@ -258,7 +258,7 @@ def TLC_Detail_For_Mapper(params):
     sql = """
     select f.TFC as tfc, f.WrkSection as sec, f.TestName as tfc_name, 
     isnull(f.Units,'') as tfc_units, isnull(f.Reflab,'') as tfc_reflab
-    ,isnull(fi.MostCommon,'') as MostCommon
+    ,isnull(fi.MostCommon,'') as MostCommon, isnull(fi.NumLastYear,0) as NumLastYear
 
     ,isnull(map.result_type,'') result_type 
     ,isnull(map.loinc,'') as loinc, isnull(loinc.LONG_COMMON_NAME,'') as loinc_name
@@ -304,22 +304,21 @@ def TLC_Detail_For_Mapper(params):
 
 
 def Mapped_LOINC_List(params): 
-
-    #select loinc, result_type, container, loc1, loc1_subsection, loc1_department, 
-    #loc2, loc2_subsection, loc2_department, excluded, [text], loinc_alias
-
+    
     sql = """
     
     select loinc as id, [text]
     from (
     select distinct loinc,
-    l.LONG_COMMON_NAME as [text], l.LONG_COMMON_NAME + ';' + l.RELATEDNAMES2 as alias
+    l.LONG_COMMON_NAME as [text], l.LONG_COMMON_NAME + ';' + l.RELATEDNAMES2 as alias, 
+    COMMON_SI_TEST_RANK
 
     from {MAP} map
     inner join {LOINC} l on map.loinc = l.LOINC_NUM
     where charindex('{search_term}',l.COMPONENT + ';' + l.RELATEDNAMES2) > 0
+    and CLASSTYPE = 1
     ) q
-    order by [text]
+    order by case when COMMON_SI_TEST_RANK = 0 then 9999 else COMMON_SI_TEST_RANK end asc
     """.format(MAP = config.global_map_table, 
                LOINC = config.loinc_db, 
                #LOCATIONS = config.global_location,
@@ -327,8 +326,7 @@ def Mapped_LOINC_List(params):
 
     result = run_odbc_query(sql)
 
-    result['columns_desc'] = ['LOINC','Result Type','Container','Location Code','SubSection','Department',
-                              'New Location Code','New SubSection','New Department','Excluded','LOINC Name','Alias']
+    result['columns_desc'] = ['LOINC','LOINC Name']
     result['id_field'] = 'loinc'
     result['table'] = config.loinc_db
 
@@ -416,7 +414,7 @@ def Container_List_For_Mapper():
 def Find_Similar_LOINC(params): 
 
     sql = """
-    select top 1 m.[map_id],m.[origin],m.[tfc],m.[loinc],m.[container],m.[loc1],m.[loc2],m.[result_type],m.[excluded],
+    select top 1 m.[map_id],m.[origin],m.[tfc],m.[loinc],m.[container],m.[loc1],m.[loc2],m.[result_type],
     l1.SubSection as loc1_subsection, l1.Department as loc1_department, l2.SubSection as loc2_subsection, l2.Department as loc2_department
     from {MAP} m
     inner join {LOCATIONS} l1 on m.loc1 = l1.SubSectionCode
@@ -433,5 +431,31 @@ def Find_Similar_LOINC(params):
        
     result['id_field'] = 'map_id'
     result['table'] = config.global_map_table
+
+    return result
+
+
+
+def More_TFC_Info(params): 
+
+    sql = """
+    select f.TestName, f.Units,  fi.MostCommon, fi.MostCommonPct, fi.SecondMostCommon, fi.SecondMostCommonPct
+    ,f.Functions, f.RepSection, fi.NumLastYear, fi.TLC, fi.TLCDescription, f.Reflab, isnull(fi.RefLabName,'') as RefLabName
+    ,f.WrkSection, fi.SectionName
+    from {FORM_STAGING} f
+    left join {FORM_INFO} fi on f.TFC = fi.TFC and f.Origin = fi.Origin
+    where f.TFC = '{TFC}'
+    and f.Origin = '{ORIGIN}'
+    """.format(FORM_STAGING = config.global_form_staging, 
+               FORM_INFO = config.global_form_info,
+               TFC = params['tfc'],
+               ORIGIN = params['origin'])
+           
+    result = run_odbc_query(sql) 
+       
+    result['columns_desc'] = ['Test Name','Units','Most Common Result','Most Common %','2nd Most Common','2nd Most Common %','Functions','Report Sec','Number Last Year','TLC','TLC Desc','RefLab','RefLab Name','Section','Section Name']
+    result['columns'] = ['TestName', 'Units',  'MostCommon', 'MostCommonPct', 'SecondMostCommon', 'SecondMostCommonPct', 'Functions', 'RepSection', 'NumLastYear', 'TLC', 'TLCDescription', 'Reflab', 'RefLabName', 'WrkSection', 'SectionName']   
+    result['id_field'] = 'ID'
+    result['table'] = config.global_form_staging
 
     return result
