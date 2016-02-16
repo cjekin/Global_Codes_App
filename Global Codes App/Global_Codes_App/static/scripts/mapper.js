@@ -283,20 +283,26 @@ function run_sql_update(this_cell, params) {
                 };
 
                 this_cell.focus();
-                this_cell.effect('highlight', { color: error_colour }, 1000);
+                this_cell.effect('highlight', { color: error_colour }, 4000);
 
             } else {
                 console.log('POST UPDATE: Changed ' + submission['table'] + ' field ' + submission['field'] + ' to ' + submission['newval']);
 
-                // 
-                if (this_cell.data('field') == 'loinc') {
-                    
-                };
 
                 if (this_cell.data('field') == 'result_type') {
                     var res_type = params['newval'];
                     var new_html = '<button tabindex="-1" class="btn btn-' + (map_result_type[res_type] || 'default') + ' btn-xs result-type result-type-button">' + res_type.slice(0, 1) + '</button>'
                     this_cell.html(new_html);
+                };
+
+
+                if (this_cell.data('field') == 'loinc') {
+                    var newtext = params['newtext'];
+                    var newloinc = params['newval'];
+                    var newval = '<span>' + newtext.split(']')[0] + ']</span><br/><small class="font-light">' + newtext.split(']')[1] + '</small>';
+                    this_cell.html(newval).focus();
+                    this_cell.data({ 'loinc-desc': newtext, 'val': newloinc });
+                    get_other_data(newloinc, this_cell);
                 };
 
                 $(this_cell).focus();
@@ -374,13 +380,17 @@ function tlc_detail_event_handlers() {
             $(this).closest('tr').prev().find('td:eq(' + col + ')').focus();
             e.preventDefault();
         };
-        if (e.key == 'ArrowRight') {
+        if (e.which == 39 ) { // ArrowRight
             $(this).next().focus();
             e.preventDefault();
         };
         if (e.key == 'ArrowLeft') {
             $(this).prev().focus();
             e.preventDefault();
+        };
+        if (e.key == 'Delete') {
+            e.preventDefault();
+            run_sql_update($(this),{newval: ''})
         };
     });
     $('.tabitem').first().focus();
@@ -440,6 +450,11 @@ function tlc_detail_event_handlers() {
                     $(this).html(old_html).focus();
                 };
             };
+        };
+        //if (event.key.toUpperCase() == 'N') {
+        if (event.which == 78) {
+            event.preventDefault();
+            create_loinc_popup($(this));
         };
     });
     $('.loinc').on("select2:select", function (e) {
@@ -553,7 +568,6 @@ function tlc_detail_event_handlers() {
             params = { query: 'TLC_Detail_For_Mapper', Origin: current_system, TLC: current_tlc };
             $('#library_code_detail_table').html('<div class="text-center"><i class="fa fa-spinner fa-2x fa-pulse m-b-lg m-t-lg"></i></div>');
             run_sql_query(params, fill_library_code_detail);
-
         };
         if (e.key == 'ArrowLeft' && e.ctrlKey) {
             e.preventDefault();
@@ -645,71 +659,70 @@ function loinc_change_select2(e, cell) {
                 cell.html(newval).focus();
                 cell.data({ 'loinc-desc': newtext, 'val': e.params.data.id });
                 cell.effect('highlight', { color: success_colour }, 1000);
-                get_other_data(e.params.data.id);
+                get_other_data(e.params.data.id, cell);
             };
         });
+};
 
-    function get_other_data(loinc_code) {
 
-        console.log('Searching for other values for: ', loinc_code);
+function get_other_data(loinc_code, cell) {
 
-        var type = cell.closest('tr').find('.result-type'); //.data('val');
-        var cont = cell.closest('tr').find('.container'); //.data('val');
-        var loc1 = cell.closest('tr').find('.loc1'); //.data('val');
-        var loc2 = cell.closest('tr').find('.loc2'); //.data('val'));
+    console.log('Searching for other values for: ', loinc_code);
 
-        $.ajax({
-            url: '/get_sql_data', dataType: 'json',
-            data: { query: 'Find_Similar_LOINC', loinc: loinc_code },
-            success: function (result) {
-                if (result['result'] == 'ERROR') { swal('Error getting similar LOINC codes'); }
-                else {
-                    var res = result['data'][0];
-                    console.log('Checking type: ', type.data('val'), ' and ', res['result_type']);
-                    if (type.data('val') == '' && res['result_type'] != '') {
-                        console.log('Updating type');
-                        var formatted_text = '<button tabindex="-1" class="btn btn-' + ( map_result_type[res['result_type']] || 'default' ) + ' btn-xs result-type result-type-button">' + res['result_type'].slice(0, 1).toUpperCase() + '</button>';
-                        update_other_fields(type, res['result_type'], formatted_text, { val: res['result_type'] });
-                    };
+    var type = cell.closest('tr').find('.result-type'); //.data('val');
+    var cont = cell.closest('tr').find('.container'); //.data('val');
+    var loc1 = cell.closest('tr').find('.loc1'); //.data('val');
+    var loc2 = cell.closest('tr').find('.loc2'); //.data('val'));
 
-                    if (cont.data('val') == '' && res['container'] != '') {
-                        update_other_fields(cont, res['container'], res['container'], { val: res['container'] });
-                    };
+    $.ajax({
+        url: '/get_sql_data', dataType: 'json',
+        data: { query: 'Find_Similar_LOINC', loinc: loinc_code },
+        success: function (result) {
+            if (result['result'] == 'ERROR') { swal('Error getting similar LOINC codes'); }
+            else {
+                var res = result['data'][0];
 
-                    if (loc1.data('val') == '' && res['loc1'] != '') {
-                        console.log('Updating location');
-                        var formatted_text = '<span>' + res['loc1_subsection'] + '</span><br /><small class="font-trans">' + res['loc1_department'] + '</small>';
-                        update_other_fields(loc1, res['loc1'], formatted_text, { val: res['loc1'], subsection: res['loc1_subsection'], department: res['loc1_department'] });
-                    };
-
-                    if (loc2.data('val') == '' && res['loc2'] != '') {
-                        console.log('Updating location');
-                        var formatted_text = '<span>' + res['loc2_subsection'] + '</span><br /><small class="font-trans">' + res['loc2_department'] + '</small>';
-                        update_other_fields(loc2, res['loc2'], formatted_text, { val: res['loc2'], subsection: res['loc2_subsection'], department: res['loc2_department'] });
-                    };
-                    
+                if (type.data('val') == '' && res['result_type'] != '') {
+                    console.log('Updating type');
+                    var formatted_text = '<button tabindex="-1" class="btn btn-' + (map_result_type[res['result_type']] || 'default') + ' btn-xs result-type result-type-button">' + res['result_type'].slice(0, 1).toUpperCase() + '</button>';
+                    update_other_fields(type, res['result_type'], formatted_text, { val: res['result_type'] });
                 };
-            }
+
+                if (cont.data('val') == '' && res['container'] != '') {
+                    update_other_fields(cont, res['container'], res['container'], { val: res['container'] });
+                };
+
+                if (loc1.data('val') == '' && res['loc1'] != '') {
+                    console.log('Updating location');
+                    var formatted_text = '<span>' + res['loc1_subsection'] + '</span><br /><small class="font-trans">' + res['loc1_department'] + '</small>';
+                    update_other_fields(loc1, res['loc1'], formatted_text, { val: res['loc1'], subsection: res['loc1_subsection'], department: res['loc1_department'] });
+                };
+
+                if (loc2.data('val') == '' && res['loc2'] != '') {
+                    console.log('Updating location');
+                    var formatted_text = '<span>' + res['loc2_subsection'] + '</span><br /><small class="font-trans">' + res['loc2_department'] + '</small>';
+                    update_other_fields(loc2, res['loc2'], formatted_text, { val: res['loc2'], subsection: res['loc2_subsection'], department: res['loc2_department'] });
+                };
+
+            };
+        }
+    });
+};
+
+function update_other_fields(cell, newval, formatted_text, html_vals) {
+    var submission = {
+        field: cell.attr('data-field'), id: cell.closest('tr').attr('id'), oldval: cell.attr('data-val'), newval: newval, table: global_map_table, id_name: 'map_id',
+    };
+    $.post('/submit_table_update', submission)
+        .done(function (data) {
+            if (data['data'] == 'ERROR') {
+                cell.effect('highlight', { color: error_colour }, 1000);
+            } else {
+                cell.html(formatted_text).focus();
+                cell.data(html_vals);
+                cell.effect('highlight', { color: success_colour }, 1000);
+            };
         });
-    };
-
-    function update_other_fields(cell, newval, formatted_text, html_vals) {
-        var submission = {
-            field: cell.attr('data-field'), id: cell.closest('tr').attr('id'), oldval: cell.attr('data-val'), newval: newval, table: global_map_table, id_name: 'map_id',
-        };
-        $.post('/submit_table_update', submission)
-            .done(function (data) {
-                if (data['data'] == 'ERROR') {
-                    cell.effect('highlight', { color: error_colour }, 1000);
-                } else {
-                    cell.html(formatted_text).focus();
-                    cell.data(html_vals);
-                    cell.effect('highlight', { color: success_colour }, 1000);
-                };
-            });
-    };
-
-    
 };
 
 
@@ -770,5 +783,148 @@ function open_location_select2(this_cell) {
 };
 
 
+
+
+function create_loinc_popup(this_cell) {
+
+    var current_id = this_cell.closest('tr').attr('id');
+    var current_id = this_cell.closest('tr').attr('id');
+
+    $('#loinc-search-spinner').hide();
+
+    Handlebars.registerHelper('loinc_description_full', function (str) {
+        return (str || '').replace(']', ']<br />');
+    });
+
+    // Build the html from the data and a handlebars.js template
+    var theTemplateScript = $('#loinc_popup_template').html();
+    var theTemplate = Handlebars.compile(theTemplateScript);
+    var theCompiledHtml = theTemplate(); 
+    
+    var this_panel = $.jsPanel({
+        title: "search for loinc",
+        content: theCompiledHtml,
+        
+        overflow: { horizontal: 'hidden', vertical: 'scroll' },
+        size: { width: 700, height: 570 },
+        position: 'center right',
+        theme: 'default'
+    });
+
+    this_panel.data('table_id', current_id); // Store the ID of the row it came from
+
+    $('#search_full_loinc_input').focus();
+    
+    $('#search_full_loinc_btn').click(run_search());
+    $('#search_full_loinc_input').keypress(function (e) {
+        if (e.which == 13) {
+            e.preventDefault();
+            run_search();
+        }
+    });
+
+    var loinc_search_datatable = '';
+    function run_search() {
+        $('#loinc-search-spinner').show();
+        $('#loinc-search-table').hide();
+        
+        var term = $('#search_full_loinc_input').val();
+        var top2 = $('#top2000-checkbox').prop('checked');
+        var params = { query: 'Full_Loinc_Search', search_term: term, top2000: top2 };
+        run_sql_query(params, function(result){
+            console.log(result);
+
+            var column_headers = [];
+            for (i = 0; i < result['columns'].length; i++) {
+                var col = { data: result['columns'][i], title: result['columns_desc'][i] };
+                column_headers.push(col);
+            };
+
+            if (loinc_search_datatable != '') {
+                $('#loinc-search-spinner').hide();
+                $('#loinc-search-table').show();
+
+                loinc_search_datatable.clear();
+                loinc_search_datatable.rows.add(result['data']);
+                loinc_search_datatable.draw();
+                
+            } else {
+                $('#loinc-search-spinner').hide();
+                $('#loinc-search-table').show();
+
+                loinc_search_datatable = $('#search_full_loinc_table').DataTable({
+                    data: result['data'],
+                    columns: column_headers,
+                    "autoWidth": true,
+                    "order": [[0, "asc"]],
+                    "sScrollY": "100%",
+                    "sScrollX": "100%",
+                    //"dom": '<"top"fi>rt<"bottom"p><"clear">',
+                    'dom': "<'row'<'col-sm-5 font-light'f><'col-sm-4 font-light'l><'col-sm-3 font-smaller font-trans'i>>" +
+                            "<'row'<'col-sm-12'tr>>" +
+                            "<'row'<'col-sm-12'p>>",
+                    "columnDefs": [
+                        {
+                            "targets": [0],
+                            "visible": false,
+                            "searchable": false
+                        },
+                        {
+                            "targets": [1],
+                            "searchable": false,
+                            "render": function (data) {
+                                return '<button data-current_id="' + current_id + '" data-panel_id="' + this_panel.attr('id') + '" type="button" class="btn btn-info btn-xs" onclick="click_loinc_button($(this))">' + data + '</button>';
+                            }
+                        },
+                        {
+                            "targets": [2],
+                            "searchable": true,
+                            "render": function (data, type, row) {
+                                return '<a onclick="loinc_iframe(&quot;' + row['LOINC_NUM'] + '&quot;)">' + data + '</a>';
+                            }
+                        }
+                        ]
+                });
+            };
+        });
+    };
+
+    this_panel.keypress(function (e) {
+        if (e.key == 'Escape') {
+            e.preventDefault();
+            this_panel.close();
+            $('#' + current_id).find('.loinc').focus();
+        }
+    });
+
+    
+};
+
+function click_loinc_button(btn) {
+    var id = btn.data('current_id');
+    var new_text = btn.closest('tr').find('td').eq(1).text();
+    var new_loinc = btn.text();
+    var loinc_cell = $('#' + id).find('.loinc');
+
+    $('#' + btn.data('panel_id')).remove();
+
+    var params = { newval: new_loinc, newtext: new_text };
+    run_sql_update(loinc_cell, params);
+    get_other_data(new_loinc, loinc_cell);
+};
+
+
+function loinc_iframe(loinc_code) {
+    var url = 'http://s.details.loinc.org/LOINC/' + loinc_code + '.html'
+    loinc_panel = $.jsPanel({
+        size: { width: 1000, height: 600 },
+        position: { left: "center left", top: 10 },
+        theme: 'light',
+        iframe: {
+            src: url
+        }
+    });
+    loinc_panel.front();
+};
 
 

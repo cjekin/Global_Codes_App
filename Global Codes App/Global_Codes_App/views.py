@@ -280,7 +280,7 @@ def get_more_tfc_info():
 # Dashboard
 #
 
-@app.route('/')
+#@app.route('/')
 @app.route('/home')
 @app.route('/dashboard')
 @login_required
@@ -764,6 +764,7 @@ def submit_table_update():
 # New Mapper
 #
 
+@app.route('/')
 @app.route('/mapper')
 @login_required
 def mapper():

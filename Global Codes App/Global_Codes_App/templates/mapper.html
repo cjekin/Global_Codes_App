@@ -34,11 +34,37 @@
     .excluded {
         background: #D8D8D8;
     }
+    .popup-div {
+        margin: 10px 30px;
+    }
+    .loinc-search-table {
+        overflow-y:hidden;
+        overflow-x:hidden;  
+    }
+    .loinc-search-table td {
+        /*height: 0px;*/
+        padding: 3px;
+    }
+    .loinc-search-table tbody {
+        margin-bottom: 0px;
+    }
+    #search_full_loinc_table_paginate {
+        margin-top: 0px;
+        border: 1px;
+        border-color: red;
+    }
+    div.dataTables_scrollHeadInner table { 
+        margin-bottom: 0px !important;
+    }
+    .font-small {
+        font-size: smaller;
+    }
 
     
 
 </style>
 
+<link href="static/bower_components/jspanel/source/jquery.jspanel.min.css" rel="stylesheet" />
 <link href="static/bower_components/select2/dist/css/select2.min.css" rel="stylesheet" />
 
 {% endblock %}
@@ -74,7 +100,7 @@
 
 
 <!--Library Code Search-->
-<div class="row">
+<div id="library-code-search-id" class="row">
     <!-- Library Search Panel -->
     <div class="col-lg-3 col-md-3">
         <div class="hpanel">
@@ -166,7 +192,8 @@
 
 
 <!-- Format code detail -->
-<div class="hpanel">
+<div id="format-code-detail-id-row" class="row">
+<div id="format-code-detail-id" class="hpanel">
     <div class="panel-heading">
         <div id="tlc-detail-header" class="h3">
             TLC - NAME OF THE TLC - TYPE
@@ -259,7 +286,8 @@
     <button id="prev-tlc" class="btn btn-success btn-xs ull-left tabitem">Prev</button>
     
 
-</div>
+</div> <!-- Format code hpanel closed-->
+</div> <!-- Format code row closed-->
 
 
 </div><!-- Main Panel Closing tag -->
@@ -337,10 +365,52 @@
             
 
 </script>
+
+<script id="loinc_popup_template" type="text/x-handlebars-template">
+
+    <div class="popup-div">
+
+    
+            <form class="form-horizontal">
+                <div class="form-group">  
+
+                    <div class="col-sm-6">
+                        <div class="input-group"><input id="search_full_loinc_input" type="text" class="form-control"> 
+                            <span class="input-group-btn"> 
+                                <button id="search_full_loinc_btn" type="button" class="btn btn-info">Search</button> 
+                            </span>
+                        </div>
+                    </div>
+
+                    <div class="col-sm-6">
+                        <label class="checkbox-inline"> <input id="top2000-checkbox" type="checkbox" class="i-checks" checked> Top 2000 LOINC </label>
+                        <label class="checkbox-inline"> <input type="checkbox" class="i-checks"> Already Mapped </label>
+                        
+                    </div>
+                </div>
+            </form>
+
+            <div class="hr-line-dashed"></div>  
+    
+            <div id="loinc-search-spinner" class="text-center"><i class="fa fa-spinner fa-2x fa-pulse m-b-lg m-t-lg"></i></div>      
+
+            <div id="loinc-search-table" class="table-responsive loinc-search-table">
+                <table id="search_full_loinc_table" class="table table-hover table-bordered table-striped"></table>
+            </div>
+
+            <div id="table_id"></div>
+
+    </div>
+
+
+
+</script>
+
+
 {% endraw %}
 
 
-
+<script src="static/bower_components/jspanel/source/jquery.jspanel.min.js"></script>
 <script src="static/scripts/mapper.js"></script>
 
 

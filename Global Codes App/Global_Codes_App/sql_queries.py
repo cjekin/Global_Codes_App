@@ -459,3 +459,37 @@ def More_TFC_Info(params):
     result['table'] = config.global_form_staging
 
     return result
+
+
+
+
+def Full_Loinc_Search(params): 
+    
+    if params['top2000'] == 'true':
+        top2000 = 'and COMMON_SI_TEST_RANK > 0'
+    else: 
+        top2000 = ''
+
+    sql = """
+    
+    select case when COMMON_SI_TEST_RANK = 0 then 9999 else COMMON_SI_TEST_RANK end as COMMON_SI_TEST_RANK
+    , LOINC_NUM, LONG_COMMON_NAME, isnull(METHOD_TYP,'') as METHOD_TYP
+    from {LOINC}
+    where CLASSTYPE = 1
+    {TOP}
+    and LONG_COMMON_NAME + ';' + RELATEDNAMES2 like '%{search_term}%'
+    order by case when COMMON_SI_TEST_RANK = 0 then 9999 else COMMON_SI_TEST_RANK end asc
+
+    """.format(LOINC = config.loinc_db, 
+               search_term = params['search_term'],
+               TOP = top2000)
+
+    result = run_odbc_query(sql)
+
+    result['columns_desc'] = ['Rank', 'LOINC','LOINC Name','Method']
+    result['columns'] = ['COMMON_SI_TEST_RANK', 'LOINC_NUM','LONG_COMMON_NAME','METHOD_TYP']
+    result['id_field'] = 'LOINC_NUM'
+    result['table'] = config.loinc_db
+
+    return result
+
