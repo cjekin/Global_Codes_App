@@ -5,13 +5,15 @@
 # Global variables
 global_tlcs = {}
 global_codes = {}
-systems = ['BMI_ALL_DW','CROM_ALL_DW','EAL_BHI_DW','EAL_MIC_DW','UCLH_BHI_DW','UCLH_MIC_DW','RFH_BIO_DW','RFH_VIR_DW','RFH_HPIL_DW','RFH_MIC_DW','WSL_ALL_DW']
+systems = ['BMI_ALL_DW','CROM_ALL_DW','EAL_BHI_DW','EAL_MIC_DW','UCLH_BHI_DW','UCLH_MIC_DW','RFH_BIO_DW','RFH_VIRO_DW','RFH_HPIL_DW','RFH_MICR_DW','WSL_ALL_DW']
 
 # SQL database config
 connection_string = 'DSN=Warehouse;CHARSET=UTF8'
 global_map_table = '[GlobalCodes].[dbo].[GlobalCodes_Map]'
 global_main_table = '[Warehouse].[dbo].[GlobalCodes_Main]'
-global_audit_table = '[Warehouse].[dbo].[GlobalCodes_Audit]'
+global_audit_table = '[GlobalCodes].[dbo].[GlobalCodes_Audit]'
+#global_audit_table = '[Warehouse].[dbo].[GlobalCodes_Audit]'
+
 global_location = '[GlobalCodes].[dbo].[GlobalCodes_Locations]'
 global_container = '[GlobalCodes].dbo.[GlobalCodes_Container]'
 
@@ -28,9 +30,6 @@ global_map_tbl = '[GlobalCodes].[dbo].[global_map]'
 global_lexical_tbl = '[GlobalCodes].[dbo].[global_lexical]'
 loinc_db = '[GlobalCodes].[dbo].[LOINC_Main]'
 
-global_audit_table_fields = { 'date': '[Date]', 'user': '[UserName]', 'origin': '[Origin]',
-                             'code': '[Code]', 'field': '[Field]', 'oldval': '[OldValue]', 
-                             'newval': '[NewValue]', 'change': '[ChangeType]'}
 
 # Other
 error_log_file = 'error_log.txt'
@@ -41,9 +40,10 @@ excluded_fields = ['HALO_SubSection','HALO_Department','SubSection','Department'
 
 
 
-spreadsheet_queries = [{'func': 'Lexical_Table', 'name': 'Lexical Table', 'desc': 'Global multi-lingual table'},
-                       {'func': 'Location_Table', 'name': 'Location Table', 'desc': 'Global location table'},
-                       {'func': 'Global_Table', 'name': 'Global Codes Table', 'desc': 'Global codes joined to locations for extra info'}
+spreadsheet_queries = [{'func': 'Global_Table', 'name': 'Global Codes Table', 'desc': 'Global codes joined to locations for extra info'},
+                       {'func': 'Global_Table_WithUnits', 'name': 'Global Codes Table (With Units)', 'desc': 'Global codes joined to locations for extra info'},
+                       {'func': 'Lexical_Table', 'name': 'Lexical Table', 'desc': 'Global multi-lingual table'},
+                       {'func': 'Location_Table', 'name': 'Location Table', 'desc': 'Global location table'}
                        ]
 
 column_display = {

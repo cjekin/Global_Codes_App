@@ -19,7 +19,7 @@
  */
 $.fn.dataTable.Api.register('row().next()', function () {
     // Current row position
-    var nrp = this.table().rows()[0].indexOf(this.index()) + 1;
+    var nrp = this.table().rows({ order: 'applied' })[0].indexOf(this.index()) + 1;
     // Exists ?
     if (nrp < 0) {
         return null;
@@ -51,7 +51,7 @@ $.fn.dataTable.Api.register('row().next()', function () {
  */
 $.fn.dataTable.Api.register('row().prev()', function () {
     // Next row position
-    var prp = this.table().rows()[0].indexOf(this.index()) - 1;
+    var prp = this.table().rows({ order: 'applied' })[0].indexOf(this.index()) - 1;
     // Exists ?
     if (prp < 0) {
         return null;

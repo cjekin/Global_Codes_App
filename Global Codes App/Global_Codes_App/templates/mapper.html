@@ -133,7 +133,7 @@
 
         
         <!--Widget showing mapping stats-->
-        <div class="hpanel stats">
+        <div id="mapping-status-widget" class="hpanel stats">
             <div class="panel-body h-200">
                 <div class="stats-title pull-left">
                     <h4>SYSTEM OVERVIEW</h4>
@@ -195,9 +195,12 @@
 <div id="format-code-detail-id-row" class="row">
 <div id="format-code-detail-id" class="hpanel">
     <div class="panel-heading">
-        <div id="tlc-detail-header" class="h3">
-            TLC - NAME OF THE TLC - TYPE
+        
+        <div class="h3">
+            <span id="tlc-detail-header">TLC - NAME OF THE TLC - TYPE</span> 
+            <h6 id="tlc-detail-rowposition" class="pull-right font-light">1 of 1</h6>
         </div>
+        
     </div>
     <div class="panel-body">
 
@@ -282,8 +285,8 @@
 
     </div>
 
-    <button id="next-tlc" class="btn btn-success btn-xs pull-right tabitem">Next</button>
-    <button id="prev-tlc" class="btn btn-success btn-xs ull-left tabitem">Prev</button>
+    <button id="next-tlc" class="btn btn-success btn-xs pull-right">Next</button>
+    <button id="prev-tlc" class="btn btn-success btn-xs ull-left">Prev</button>
     
 
 </div> <!-- Format code hpanel closed-->
@@ -375,16 +378,16 @@
                 <div class="form-group">  
 
                     <div class="col-sm-6">
-                        <div class="input-group"><input id="search_full_loinc_input" type="text" class="form-control"> 
+                        <div class="input-group"><input id="search_full_loinc_input" type="text" class="form-control search_full_loinc_form"> 
                             <span class="input-group-btn"> 
-                                <button id="search_full_loinc_btn" type="button" class="btn btn-info">Search</button> 
+                                <button id="search_full_loinc_btn" type="button" class="btn btn-info search_full_loinc_form">Search</button> 
                             </span>
                         </div>
                     </div>
 
                     <div class="col-sm-6">
-                        <label class="checkbox-inline"> <input id="top2000-checkbox" type="checkbox" class="i-checks" checked> Top 2000 LOINC </label>
-                        <label class="checkbox-inline"> <input type="checkbox" class="i-checks"> Already Mapped </label>
+                        <label class="checkbox-inline"> <input id="top2000-checkbox" type="checkbox" class="i-checks search_full_loinc_form" checked> Top 2000 LOINC </label>
+                        <label class="checkbox-inline"> <input type="checkbox" class="i-checks search_full_loinc_form"> Already Mapped </label>
                         
                     </div>
                 </div>

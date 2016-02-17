@@ -4,6 +4,7 @@
 --Move Add GlobalCodes_FLAT to spGetNewTFC procedure
 --Rename spGetNewTFC to spCreateStagingTables and move to GlobalCodes table
 --create a GlobalCodes_FORM_INFO table
+--Move the exclusion to result type
 
 
 -- Move existing tables

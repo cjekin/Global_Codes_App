@@ -60,22 +60,15 @@ def update_odbc_table(submission, user_name):
                )
 
     sql_audit = """
-    insert into {table} ({date_fld},{user_fld},{field_fld},{origin_fld},{code_fld},{oldval_fld},{newval_fld},{change_fld})
-    values ({date},{user},{field},{origin},{code},{oldval},{newval},{change})
-    """.format(table = config.global_audit_table, 
-               date_fld = config.global_audit_table_fields['date'],
-               user_fld = config.global_audit_table_fields['user'],
-               field_fld = config.global_audit_table_fields['field'],
-               origin_fld = config.global_audit_table_fields['origin'],
-               code_fld = config.global_audit_table_fields['code'],
-               oldval_fld = config.global_audit_table_fields['oldval'],
-               newval_fld = config.global_audit_table_fields['newval'],
-               change_fld = config.global_audit_table_fields['change'],
+    insert into {table} ([Date],UserName,Origin,Code,Field,Row_ID,OldValue,NewValue,ChangeType)
+    values ({date},{user},{origin},{code},{field},{row_id},{oldval},{newval},{change})
+    """.format(table = config.global_audit_table,
                date = 'getdate()',
                user = "'" + user_name + "'",
-               field = "'" + submission['field'] + "'",
                origin = "'" + submission['table'] + "'",
-               code = "'" + submission['id'] + "'",
+               code = "'" + submission['code'] + "'",
+               field = "'" + submission['field'] + "'",
+               row_id = submission['id'],
                oldval = "'" + submission['oldval'] + "'",
                newval = "'" + submission['newval'] + "'",
                change = "'Update'"
@@ -165,6 +158,7 @@ def Global_Table():
     left join {loinc} l on g.LOINC = l.LOINC_NUM 
     left join {global_dept} d1 on g.SubSectionCode = d1.SubSectionCode and isnull(g.SubSectionCode,'') <> ''
     left join {global_dept} d2 on g.HALO_SubSectionCode = d2.SubSectionCode and isnull(g.HALO_SubSectionCode,'') <> ''
+    
     """.format(global_main = config.global_main_table, loinc = config.loinc_db, global_dept = config.global_location)
 
 
@@ -174,6 +168,54 @@ def Global_Table():
     result['columns_desc'] = get_column_display_names(columns)
     result['hidden'] = [0]
     result['locked'] = ['Alias','GlobalCode','SubSection','Department','HALO_SubSection','HALO_Department']
+    result['id_field'] = 'GlobalCode'
+    result['table'] = config.global_main_table
+
+    print sql
+    return result
+
+# Temporary query with units
+def Global_Table_WithUnits():
+    columns = ['Alias','GlobalCode','Description','Sample','Type','Analyte','PrimaryLibrary','LOINC','Units','SubSectionCode',
+               'SubSection','Department','HALO_SubSectionCode','HALO_SubSection','HALO_Department','HSL_Code','NLMC',
+               'SNOMEDCT_UK','PBCL','Interface','MiddlewareCode']
+
+    sql = """
+    select l.RELATEDNAMES2 as Alias,
+    g.[GlobalCode], g.[Description], g.[Sample], g.[Type], g.[Analyte], g.[PrimaryLibrary], 
+    isnull(g.SubSectionCode,'') as SubSectionCode, isnull(d1.[SubSection],'') as SubSection, isnull(d1.[Department],'') as Department, 
+    isnull(g.HALO_SubSectionCode,'') as HALO_SubSectionCode, isnull(d2.[SubSection],'') as HALO_SubSection, isnull(d2.[Department],'') as HALO_Department,
+    isnull(g.HSL_Code,'') as HSL_Code,
+    g.[NLMC], g.[SNOMEDCT_UK], g.[PBCL], g.[LOINC], g.[Interface], g.[MiddlewareCode],
+
+    max(fs.Units) as Units
+
+    from {global_main} g 
+    left join {loinc} l on g.LOINC = l.LOINC_NUM 
+    left join {global_dept} d1 on g.SubSectionCode = d1.SubSectionCode and isnull(g.SubSectionCode,'') <> ''
+    left join {global_dept} d2 on g.HALO_SubSectionCode = d2.SubSectionCode and isnull(g.HALO_SubSectionCode,'') <> ''
+
+    left join [Warehouse].dbo.GlobalCodes_Map map on g.GlobalCode = map.GlobalCode
+	left join [GlobalCodes].dbo.GlobalCodes_FORM_STAGING fs on map.Code = fs.TFC and map.Origin = fs.Origin
+
+    where isnull(g.[LOINC],'') = ''
+    and g.[Type] in ('Result','SubResult','Calculation')
+
+	group by RELATEDNAMES2, g.[GlobalCode], g.[Description], g.[Sample], g.[Type], g.[Analyte], g.[PrimaryLibrary], 
+    g.SubSectionCode, d1.[SubSection], d1.[Department], 
+    g.HALO_SubSectionCode, d2.[SubSection], d2.[Department],
+    g.HSL_Code,
+    g.[NLMC], g.[SNOMEDCT_UK], g.[PBCL], g.[LOINC], g.[Interface], g.[MiddlewareCode]
+    
+    """.format(global_main = config.global_main_table, loinc = config.loinc_db, global_dept = config.global_location)
+
+
+    result = run_odbc_query(sql)
+
+    result['columns'] = columns
+    result['columns_desc'] = get_column_display_names(columns)
+    result['hidden'] = [0]
+    result['locked'] = ['Alias','GlobalCode','SubSection','Department','HALO_SubSection','HALO_Department','Units']
     result['id_field'] = 'GlobalCode'
     result['table'] = config.global_main_table
 

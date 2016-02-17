@@ -11,8 +11,8 @@ var current_spreadsheet_data = '';
 // On page load...
 $(function() {
     get_spreadsheet_list();
-    current_query = 'Lexical_Table';
-    get_spreadsheet('Lexical_Table');
+    current_query = config.spreadsheet_queries[0]['func'];
+    get_spreadsheet(current_query);
 });
 
 $('#spreadsheet_refresh').click(function () {
@@ -162,7 +162,8 @@ function cell_changed(changes, source) {
             id_name: id_field,
             id: edited_id,
             oldval: oldval,
-            newval: newval
+            newval: newval,
+            code: ''
         };
 
         $.post('/submit_table_update', submission)

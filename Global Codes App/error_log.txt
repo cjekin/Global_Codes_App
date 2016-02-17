@@ -4160,3 +4160,278 @@ Traceback (most recent call last):
   File "C:\Anaconda\lib\site-packages\werkzeug\local.py", line 343, in __getattr__
     return getattr(self._get_current_object(), name)
 AttributeError: 'AnonymousUserMixin' object has no attribute 'email'
+-----16/02/2016 12:57
+Problem running query
+Traceback (most recent call last):
+  File "H:\Global_Codes_App\Global Codes App\Global_Codes_App\views.py", line 735, in get_sql_data
+    result = methodToCall()
+  File "H:\Global_Codes_App\Global Codes App\Global_Codes_App\sql_queries.py", line 115, in Lexical_Table
+    result = run_odbc_query(sql)
+  File "H:\Global_Codes_App\Global Codes App\Global_Codes_App\sql_queries.py", line 30, in run_odbc_query
+    cursor.execute(sql.replace('\n',' '))
+ProgrammingError: ('42S02', "[42S02] [Microsoft][ODBC SQL Server Driver][SQL Server]Invalid object name 'GlobalCodes.dbo.global_lexical'. (208) (SQLExecDirectW)")
+-----16/02/2016 14:00
+Problem running query
+Traceback (most recent call last):
+  File "H:\Global_Codes_App\Global Codes App\Global_Codes_App\views.py", line 735, in get_sql_data
+    result = methodToCall()
+  File "H:\Global_Codes_App\Global Codes App\Global_Codes_App\sql_queries.py", line 115, in Lexical_Table
+    result = run_odbc_query(sql)
+  File "H:\Global_Codes_App\Global Codes App\Global_Codes_App\sql_queries.py", line 30, in run_odbc_query
+    cursor.execute(sql.replace('\n',' '))
+ProgrammingError: ('42S02', "[42S02] [Microsoft][ODBC SQL Server Driver][SQL Server]Invalid object name 'GlobalCodes.dbo.global_lexical'. (208) (SQLExecDirectW)")
+-----16/02/2016 14:56
+Problem running query
+Traceback (most recent call last):
+  File "H:\Global_Codes_App\Global Codes App\Global_Codes_App\views.py", line 735, in get_sql_data
+    result = methodToCall()
+  File "H:\Global_Codes_App\Global Codes App\Global_Codes_App\sql_queries.py", line 115, in Lexical_Table
+    result = run_odbc_query(sql)
+  File "H:\Global_Codes_App\Global Codes App\Global_Codes_App\sql_queries.py", line 30, in run_odbc_query
+    cursor.execute(sql.replace('\n',' '))
+ProgrammingError: ('42S02', "[42S02] [Microsoft][ODBC SQL Server Driver][SQL Server]Invalid object name 'GlobalCodes.dbo.global_lexical'. (208) (SQLExecDirectW)")
+-----16/02/2016 15:31
+Problem updating SQL table
+Traceback (most recent call last):
+  File "H:\Global_Codes_App\Global Codes App\Global_Codes_App\views.py", line 753, in submit_table_update
+    sql_queries.update_odbc_table(submission,user.email)
+  File "H:\Global_Codes_App\Global Codes App\Global_Codes_App\sql_queries.py", line 71, in update_odbc_table
+    row_id = audit_row_id,
+NameError: global name 'audit_row_id' is not defined
+-----16/02/2016 15:31
+Problem updating SQL table
+Traceback (most recent call last):
+  File "H:\Global_Codes_App\Global Codes App\Global_Codes_App\views.py", line 753, in submit_table_update
+    sql_queries.update_odbc_table(submission,user.email)
+  File "H:\Global_Codes_App\Global Codes App\Global_Codes_App\sql_queries.py", line 74, in update_odbc_table
+    change = "'Update'"
+KeyError: 'field_id'
+-----16/02/2016 15:34
+Problem updating SQL table
+Traceback (most recent call last):
+  File "H:\Global_Codes_App\Global Codes App\Global_Codes_App\views.py", line 753, in submit_table_update
+    sql_queries.update_odbc_table(submission,user.email)
+  File "H:\Global_Codes_App\Global Codes App\Global_Codes_App\sql_queries.py", line 69, in update_odbc_table
+    code = "'" + submission['code'] + "'",
+KeyError: 'code'
+-----16/02/2016 15:51
+Problem updating SQL table
+Traceback (most recent call last):
+  File "H:\Global_Codes_App\Global Codes App\Global_Codes_App\views.py", line 753, in submit_table_update
+    sql_queries.update_odbc_table(submission,user.email)
+  File "H:\Global_Codes_App\Global Codes App\Global_Codes_App\sql_queries.py", line 69, in update_odbc_table
+    code = "'" + submission['code'] + "'",
+KeyError: 'code'
+-----16/02/2016 15:51
+Problem updating SQL table
+Traceback (most recent call last):
+  File "H:\Global_Codes_App\Global Codes App\Global_Codes_App\views.py", line 753, in submit_table_update
+    sql_queries.update_odbc_table(submission,user.email)
+  File "H:\Global_Codes_App\Global Codes App\Global_Codes_App\sql_queries.py", line 69, in update_odbc_table
+    code = "'" + submission['code'] + "'",
+KeyError: 'code'
+-----16/02/2016 15:51
+Problem updating SQL table
+Traceback (most recent call last):
+  File "H:\Global_Codes_App\Global Codes App\Global_Codes_App\views.py", line 753, in submit_table_update
+    sql_queries.update_odbc_table(submission,user.email)
+  File "H:\Global_Codes_App\Global Codes App\Global_Codes_App\sql_queries.py", line 69, in update_odbc_table
+    code = "'" + submission['code'] + "'",
+KeyError: 'code'
+-----16/02/2016 17:26
+Problem updating SQL table
+Traceback (most recent call last):
+  File "H:\Global_Codes_App\Global Codes App\Global_Codes_App\views.py", line 753, in submit_table_update
+    sql_queries.update_odbc_table(submission,user.email)
+  File "H:\Global_Codes_App\Global Codes App\Global_Codes_App\sql_queries.py", line 69, in update_odbc_table
+    code = "'" + submission['code'] + "'",
+KeyError: 'code'
+-----16/02/2016 17:29
+Problem updating SQL table
+Traceback (most recent call last):
+  File "H:\Global_Codes_App\Global Codes App\Global_Codes_App\views.py", line 753, in submit_table_update
+    sql_queries.update_odbc_table(submission,user.email)
+  File "H:\Global_Codes_App\Global Codes App\Global_Codes_App\sql_queries.py", line 69, in update_odbc_table
+    code = "'" + submission['code'] + "'",
+KeyError: 'code'
+-----16/02/2016 17:39
+Problem updating SQL table
+Traceback (most recent call last):
+  File "H:\Global_Codes_App\Global Codes App\Global_Codes_App\views.py", line 753, in submit_table_update
+    sql_queries.update_odbc_table(submission,user.email)
+  File "H:\Global_Codes_App\Global Codes App\Global_Codes_App\sql_queries.py", line 57, in update_odbc_table
+    newval = submission['newval'],
+KeyError: 'newval'
+-----16/02/2016 17:40
+Problem updating SQL table
+Traceback (most recent call last):
+  File "H:\Global_Codes_App\Global Codes App\Global_Codes_App\views.py", line 753, in submit_table_update
+    sql_queries.update_odbc_table(submission,user.email)
+  File "H:\Global_Codes_App\Global Codes App\Global_Codes_App\sql_queries.py", line 57, in update_odbc_table
+    newval = submission['newval'],
+KeyError: 'newval'
+-----16/02/2016 17:41
+Problem updating SQL table
+Traceback (most recent call last):
+  File "H:\Global_Codes_App\Global Codes App\Global_Codes_App\views.py", line 753, in submit_table_update
+    sql_queries.update_odbc_table(submission,user.email)
+  File "H:\Global_Codes_App\Global Codes App\Global_Codes_App\sql_queries.py", line 57, in update_odbc_table
+    newval = submission['newval'],
+KeyError: 'newval'
+-----16/02/2016 17:43
+Problem updating SQL table
+Traceback (most recent call last):
+  File "H:\Global_Codes_App\Global Codes App\Global_Codes_App\views.py", line 753, in submit_table_update
+    sql_queries.update_odbc_table(submission,user.email)
+  File "H:\Global_Codes_App\Global Codes App\Global_Codes_App\sql_queries.py", line 69, in update_odbc_table
+    code = "'" + submission['code'] + "'",
+KeyError: 'code'
+-----16/02/2016 18:00
+Problem running query
+Traceback (most recent call last):
+  File "H:\Global_Codes_App\Global Codes App\Global_Codes_App\views.py", line 735, in get_sql_data
+    result = methodToCall()
+  File "H:\Global_Codes_App\Global Codes App\Global_Codes_App\sql_queries.py", line 108, in Lexical_Table
+    result = run_odbc_query(sql)
+  File "H:\Global_Codes_App\Global Codes App\Global_Codes_App\sql_queries.py", line 30, in run_odbc_query
+    cursor.execute(sql.replace('\n',' '))
+ProgrammingError: ('42S02', "[42S02] [Microsoft][ODBC SQL Server Driver][SQL Server]Invalid object name 'GlobalCodes.dbo.global_lexical'. (208) (SQLExecDirectW)")
+-----16/02/2016 19:52
+Problem updating SQL table
+Traceback (most recent call last):
+  File "H:\Global_Codes_App\Global Codes App\Global_Codes_App\views.py", line 753, in submit_table_update
+    sql_queries.update_odbc_table(submission,user.email)
+  File "H:\Global_Codes_App\Global Codes App\Global_Codes_App\sql_queries.py", line 56, in update_odbc_table
+    field = submission['field'],
+KeyError: 'field'
+-----16/02/2016 20:02
+Problem running query
+Traceback (most recent call last):
+  File "H:\Global_Codes_App\Global Codes App\Global_Codes_App\views.py", line 735, in get_sql_data
+    result = methodToCall()
+  File "H:\Global_Codes_App\Global Codes App\Global_Codes_App\sql_queries.py", line 108, in Lexical_Table
+    result = run_odbc_query(sql)
+  File "H:\Global_Codes_App\Global Codes App\Global_Codes_App\sql_queries.py", line 30, in run_odbc_query
+    cursor.execute(sql.replace('\n',' '))
+ProgrammingError: ('42S02', "[42S02] [Microsoft][ODBC SQL Server Driver][SQL Server]Invalid object name 'GlobalCodes.dbo.global_lexical'. (208) (SQLExecDirectW)")
+-----16/02/2016 20:09
+Error reciving global code edit submission:
+Traceback (most recent call last):
+  File "H:\Global_Codes_App\Global Codes App\Global_Codes_App\views.py", line 439, in global_edit_submit_changes
+    sql.update_global_code_fields(code, updates, user.email)
+  File "H:\Global_Codes_App\Global Codes App\Global_Codes_App\sql.py", line 282, in update_global_code_fields
+    cursor.execute(sql)
+Error: ('21S01', '[21S01] [Microsoft][ODBC SQL Server Driver][SQL Server]Column name or number of supplied values does not match table definition. (213) (SQLExecDirectW)')
+
+-----16/02/2016 20:11
+Problem running query
+Traceback (most recent call last):
+  File "H:\Global_Codes_App\Global Codes App\Global_Codes_App\views.py", line 735, in get_sql_data
+    result = methodToCall()
+  File "H:\Global_Codes_App\Global Codes App\Global_Codes_App\sql_queries.py", line 108, in Lexical_Table
+    result = run_odbc_query(sql)
+  File "H:\Global_Codes_App\Global Codes App\Global_Codes_App\sql_queries.py", line 30, in run_odbc_query
+    cursor.execute(sql.replace('\n',' '))
+ProgrammingError: ('42S02', "[42S02] [Microsoft][ODBC SQL Server Driver][SQL Server]Invalid object name 'GlobalCodes.dbo.global_lexical'. (208) (SQLExecDirectW)")
+-----16/02/2016 20:12
+Problem running query
+Traceback (most recent call last):
+  File "H:\Global_Codes_App\Global Codes App\Global_Codes_App\views.py", line 735, in get_sql_data
+    result = methodToCall()
+  File "H:\Global_Codes_App\Global Codes App\Global_Codes_App\sql_queries.py", line 108, in Lexical_Table
+    result = run_odbc_query(sql)
+  File "H:\Global_Codes_App\Global Codes App\Global_Codes_App\sql_queries.py", line 30, in run_odbc_query
+    cursor.execute(sql.replace('\n',' '))
+ProgrammingError: ('42S02', "[42S02] [Microsoft][ODBC SQL Server Driver][SQL Server]Invalid object name 'GlobalCodes.dbo.global_lexical'. (208) (SQLExecDirectW)")
+-----16/02/2016 20:22
+Problem running query
+Traceback (most recent call last):
+  File "H:\Global_Codes_App\Global Codes App\Global_Codes_App\views.py", line 735, in get_sql_data
+    result = methodToCall()
+  File "H:\Global_Codes_App\Global Codes App\Global_Codes_App\sql_queries.py", line 108, in Lexical_Table
+    result = run_odbc_query(sql)
+  File "H:\Global_Codes_App\Global Codes App\Global_Codes_App\sql_queries.py", line 30, in run_odbc_query
+    cursor.execute(sql.replace('\n',' '))
+ProgrammingError: ('42S02', "[42S02] [Microsoft][ODBC SQL Server Driver][SQL Server]Invalid object name 'GlobalCodes.dbo.global_lexical'. (208) (SQLExecDirectW)")
+-----16/02/2016 20:24
+Problem running query
+Traceback (most recent call last):
+  File "H:\Global_Codes_App\Global Codes App\Global_Codes_App\views.py", line 735, in get_sql_data
+    result = methodToCall()
+  File "H:\Global_Codes_App\Global Codes App\Global_Codes_App\sql_queries.py", line 108, in Lexical_Table
+    result = run_odbc_query(sql)
+  File "H:\Global_Codes_App\Global Codes App\Global_Codes_App\sql_queries.py", line 30, in run_odbc_query
+    cursor.execute(sql.replace('\n',' '))
+ProgrammingError: ('42S02', "[42S02] [Microsoft][ODBC SQL Server Driver][SQL Server]Invalid object name 'GlobalCodes.dbo.global_lexical'. (208) (SQLExecDirectW)")
+-----16/02/2016 20:25
+Problem running query
+Traceback (most recent call last):
+  File "H:\Global_Codes_App\Global Codes App\Global_Codes_App\views.py", line 735, in get_sql_data
+    result = methodToCall()
+  File "H:\Global_Codes_App\Global Codes App\Global_Codes_App\sql_queries.py", line 108, in Lexical_Table
+    result = run_odbc_query(sql)
+  File "H:\Global_Codes_App\Global Codes App\Global_Codes_App\sql_queries.py", line 30, in run_odbc_query
+    cursor.execute(sql.replace('\n',' '))
+ProgrammingError: ('42S02', "[42S02] [Microsoft][ODBC SQL Server Driver][SQL Server]Invalid object name 'GlobalCodes.dbo.global_lexical'. (208) (SQLExecDirectW)")
+-----16/02/2016 20:26
+Problem running query
+Traceback (most recent call last):
+  File "H:\Global_Codes_App\Global Codes App\Global_Codes_App\views.py", line 735, in get_sql_data
+    result = methodToCall()
+  File "H:\Global_Codes_App\Global Codes App\Global_Codes_App\sql_queries.py", line 108, in Lexical_Table
+    result = run_odbc_query(sql)
+  File "H:\Global_Codes_App\Global Codes App\Global_Codes_App\sql_queries.py", line 30, in run_odbc_query
+    cursor.execute(sql.replace('\n',' '))
+ProgrammingError: ('42S02', "[42S02] [Microsoft][ODBC SQL Server Driver][SQL Server]Invalid object name 'GlobalCodes.dbo.global_lexical'. (208) (SQLExecDirectW)")
+-----16/02/2016 20:28
+Problem updating SQL table
+Traceback (most recent call last):
+  File "H:\Global_Codes_App\Global Codes App\Global_Codes_App\views.py", line 753, in submit_table_update
+    sql_queries.update_odbc_table(submission,user.email)
+  File "H:\Global_Codes_App\Global Codes App\Global_Codes_App\sql_queries.py", line 69, in update_odbc_table
+    code = "'" + submission['code'] + "'",
+KeyError: 'code'
+-----16/02/2016 20:30
+Problem running query
+Traceback (most recent call last):
+  File "H:\Global_Codes_App\Global Codes App\Global_Codes_App\views.py", line 735, in get_sql_data
+    result = methodToCall()
+  File "H:\Global_Codes_App\Global Codes App\Global_Codes_App\sql_queries.py", line 108, in Lexical_Table
+    result = run_odbc_query(sql)
+  File "H:\Global_Codes_App\Global Codes App\Global_Codes_App\sql_queries.py", line 30, in run_odbc_query
+    cursor.execute(sql.replace('\n',' '))
+ProgrammingError: ('42S02', "[42S02] [Microsoft][ODBC SQL Server Driver][SQL Server]Invalid object name 'GlobalCodes.dbo.global_lexical'. (208) (SQLExecDirectW)")
+-----16/02/2016 20:31
+Problem running query
+Traceback (most recent call last):
+  File "H:\Global_Codes_App\Global Codes App\Global_Codes_App\views.py", line 735, in get_sql_data
+    result = methodToCall()
+  File "H:\Global_Codes_App\Global Codes App\Global_Codes_App\sql_queries.py", line 108, in Lexical_Table
+    result = run_odbc_query(sql)
+  File "H:\Global_Codes_App\Global Codes App\Global_Codes_App\sql_queries.py", line 30, in run_odbc_query
+    cursor.execute(sql.replace('\n',' '))
+ProgrammingError: ('42S02', "[42S02] [Microsoft][ODBC SQL Server Driver][SQL Server]Invalid object name 'GlobalCodes.dbo.global_lexical'. (208) (SQLExecDirectW)")
+-----16/02/2016 20:32
+Problem updating SQL table
+Traceback (most recent call last):
+  File "H:\Global_Codes_App\Global Codes App\Global_Codes_App\views.py", line 753, in submit_table_update
+    sql_queries.update_odbc_table(submission,user.email)
+  File "H:\Global_Codes_App\Global Codes App\Global_Codes_App\sql_queries.py", line 81, in update_odbc_table
+    cursor.execute(sql_audit.replace('\n',' '))
+ProgrammingError: ('42S22', "[42S22] [Microsoft][ODBC SQL Server Driver][SQL Server]Invalid column name 'BC_PVL_REP'. (207) (SQLExecDirectW); [42S22] [Microsoft][ODBC SQL Server Driver][SQL Server]Invalid column name 'Row_ID'. (207)")
+-----16/02/2016 20:36
+Problem updating SQL table
+Traceback (most recent call last):
+  File "H:\Global_Codes_App\Global Codes App\Global_Codes_App\views.py", line 753, in submit_table_update
+    sql_queries.update_odbc_table(submission,user.email)
+  File "H:\Global_Codes_App\Global Codes App\Global_Codes_App\sql_queries.py", line 81, in update_odbc_table
+    cursor.execute(sql_audit.replace('\n',' '))
+ProgrammingError: ('42S22', "[42S22] [Microsoft][ODBC SQL Server Driver][SQL Server]Invalid column name 'BC_PVL_REP'. (207) (SQLExecDirectW)")
+-----16/02/2016 21:39
+Problem updating SQL table
+Traceback (most recent call last):
+  File "H:\Global_Codes_App\Global Codes App\Global_Codes_App\views.py", line 753, in submit_table_update
+    sql_queries.update_odbc_table(submission,user.email)
+  File "H:\Global_Codes_App\Global Codes App\Global_Codes_App\sql_queries.py", line 56, in update_odbc_table
+    field = submission['field'],
+KeyError: 'field'
