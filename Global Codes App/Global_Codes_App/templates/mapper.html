@@ -326,12 +326,12 @@
             {{tfc}} 
         </td>
 
-        <td class="tfc-name" data-val="{{tfc_name}}" data-units="{{tfc_units}}" data-common="{{MostCommon}}" data-num="{{NumLastYear}}">
+        <td class="tfc-name" data-val="{{tfc_name}}" data-units="{{tfc_units}}" data-common="{{MostCommon}}" data-num="{{NumLastYear}}" data-tfc_reflab="{{tfc_reflab}}">
             <span class="font-bold">{{tfc_name}}</span> 
             <small class="font-trans pull-right">{{tfc_units}}</small>
             <br />
             <small class="font-trans">{{MostCommon}}</small>
-            <small class="font-trans pull-right">[ {{NumLastYear}} ]</small>
+            <small class="font-trans pull-right"> {{tfc_reflab}} [ {{NumLastYear}} ]</small>
         </td>
 
         <td data-field="result_type" data-val="{{result_type}}" class="result-type tabitem">
@@ -386,8 +386,8 @@
                     </div>
 
                     <div class="col-sm-6">
-                        <label class="checkbox-inline"> <input id="top2000-checkbox" type="checkbox" class="i-checks search_full_loinc_form" checked> Top 2000 LOINC </label>
-                        <label class="checkbox-inline"> <input type="checkbox" class="i-checks search_full_loinc_form"> Already Mapped </label>
+                        <label class="checkbox-inline"> <input id="top2000-checkbox" type="checkbox" class="i-checks search_full_loinc_form"> Top 2000 LOINC </label>
+                        <label class="checkbox-inline"> <input id="already-mapped-checkbox" type="checkbox" class="i-checks search_full_loinc_form" checked> Already Mapped </label>
                         
                     </div>
                 </div>

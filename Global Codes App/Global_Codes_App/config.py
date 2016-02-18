@@ -25,9 +25,8 @@ global_flatten = '[GlobalCodes].[dbo].[GlobalCodes_FLAT]'
 global_form_info = '[GlobalCodes].[dbo].[GlobalCodes_FORM_INFO]'
 
 map_tbl = 'g_map'
-lexical_tbl = 'g_lexical'
 global_map_tbl = '[GlobalCodes].[dbo].[global_map]'
-global_lexical_tbl = '[GlobalCodes].[dbo].[global_lexical]'
+global_lexical_tbl = '[GlobalCodes].[dbo].[GlobalCodes_Lexical]'
 loinc_db = '[GlobalCodes].[dbo].[LOINC_Main]'
 
 

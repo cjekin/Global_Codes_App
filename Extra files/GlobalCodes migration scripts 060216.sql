@@ -161,8 +161,151 @@ create table [GlobalCodes].dbo.[GlobalCodes_FORM_INFO] (
 
 
 
+
 -- Create lexical table
+create table GlobalCodes.dbo.GlobalCodes_Lexical (
+
+	-- Primary keys
+	 id int identity(1,1) primary key
+	,loinc varchar(20)
+	,container varchar(50)
+
+	-- LOINC to SNOMED translation
+	,SCTint_Component varchar(20)
+    ,SCTint_Sample varchar(20)
+    ,SCTint_Method varchar(20)
+    ,SCTint_Precondition varchar(20)
+    ,SCTint_Units varchar(20)
+
+	,SCTint_Component_Desc varchar(255)
+	,SCTint_Sample_Desc varchar(255)
+	,SCTint_Method_Desc varchar(255)
+	,SCTint_Precondition_desc varchar(255)
+	,SCTint_Units_desc varchar(255)
+
+	-- NLMC
+	,NLMC varchar(10)
+	,NLMC_REP varchar(20)
+	,NLMC_Desc varchar(255)
+	,NLMC_REP_Desc varchar(255)
+	,SCTUK_Component varchar(20)
+
+	-- Read
+	,Readv2 varchar(10)
+	,Readv2_Desc varchar(100)
+
+	-- Internal descriptions
+	,BC_Analyte varchar(255)
+	,BC_PrimaryLib varchar(255)
+	,BC_Desc varchar(255)
+
+	-- Finance
+	,HSL varchar(10)
+	,HSL_Desc varchar(255)
+	,HSL_Dept varchar(50)
+	,Dynamics varchar(50)
+
+)
+
+-- Create the initial table
+insert into GlobalCodes.dbo.GlobalCodes_Lexical(loinc,container)
+select distinct loinc, container
+from GlobalCodes_Map m
+where loinc <> ''
+order by loinc, container
 
 
-   
+-- Creation of the Lexical to SNOMED CT map
+select 
+       [correlationId]
+      ,[LOINC]
+	  ,case when isnull([Towards],'') = '' and isnull([Process output],'') = '' then [Property type]
+			when isnull([Towards],'') = '' and isnull([Process output],'') <> '' then [Process output]
+			else isnull([Towards],'') end as SCTint_Component
+      ,[Direct site] as SCTint_Sample
+      ,[Technique] as SCTint_Method
+      ,[Precondition] as SCTint_Precondition
+      ,[Units] as SCTint_Units
+      
+	  ,[LOINC_desc]
+	  ,case when isnull([Towards_desc],'') = '' and isnull([Process output_desc],'') = '' then [Property type_desc]
+			when isnull([Towards_desc],'') = '' and isnull([Process output_desc],'') <> '' then [Process output_desc]
+			else isnull([Towards_desc],'') end as SCTint_Component_Desc
+	  ,[Direct site_desc] as SCTint_Sample_Desc
+	  ,[Technique_desc] as SCTint_Method_Desc
+	  ,[Precondition_desc] as SCTint_Precondition_desc
+	  ,[Units_desc] as SCTint_Units_desc
 
+into #loinc_sct_map
+FROM [GlobalCodes].[dbo].[LOINC_SNOMEDCT_Map]
+
+
+-- Update LOINC with LOINC_SNOMEDCTInt map
+update l 
+set  l.SCTint_Component = m.SCTint_Component
+	,l.SCTint_Sample = m.SCTint_Sample
+	,l.SCTint_Method = m.SCTint_Method
+	,l.SCTint_Precondition = m.SCTint_Precondition
+	,l.SCTint_Units = m.SCTint_Units
+	,l.SCTint_Component_Desc = m.SCTint_Component_Desc
+	,l.SCTint_Sample_Desc = m.SCTint_Sample_Desc 
+	,l.SCTint_Method_Desc = m.SCTint_Method_Desc
+	,l.SCTint_Precondition_desc = m.SCTint_Precondition_desc
+	,l.SCTint_Units_desc = m.SCTint_Units_desc
+from 
+	GlobalCodes.dbo.GlobalCodes_Lexical l
+	inner join #loinc_sct_map m on l.loinc = m.loinc
+
+
+
+-- Update LOINC with HSL Codes
+update l 
+set  l.HSL = h.HSL_Code
+	,l.HSL_Desc = h.HSL_Desc
+	,l.HSL_Dept = h.HSL_Dept
+from 
+	GlobalCodes.dbo.GlobalCodes_Lexical l
+	inner join (
+		select distinct map.loinc, map.container, max(h.HSL_Code) as HSL_Code, max(h.HSL_Description) as HSL_Desc, max(h.HSL_Department) as HSL_Dept
+		from [Warehouse].[dbo].[GlobalCodes_HSLCodes] h 
+		inner join GlobalCodes.dbo.GlobalCodes_Map map on map.origin = h.[Database] and map.tfc = h.tfc
+		where map.loinc <> ''
+		and h.HSL_Code <> ''
+		group by map.loinc, map.container
+	) h on l.loinc = h.loinc and l.container = h.container
+
+
+-- Update Lexical with Warehouse mappings
+update l 
+set  l.NLMC = left(g.NLMC,10)
+	,l.Readv2 = left(g.Readv2,10)
+	,l.SCTUK_Component = left(g.SCTUK_Component,20)
+	,l.BC_Analyte = g.Analyte
+	,l.BC_PrimaryLib = g.PrimaryLibrary
+	,l.BC_Desc = g.Description
+from 
+	GlobalCodes.dbo.GlobalCodes_Lexical l
+	inner join (
+		select distinct g.loinc, g.[sample] as container
+		,max(g.NLMC) as NLMC, max(g.PBCL) as Readv2, max(SNOMEDCT_UK) as SCTUK_Component
+		,max(g.Analyte) as Analyte, max(g.PrimaryLibrary) as PrimaryLibrary
+		,max(g.Description) as Description
+		from [Warehouse].[dbo].[GlobalCodes_Main] g
+		where isnull(g.loinc,'') <> ''
+		group by g.loinc, g.[Sample]
+	) g on l.loinc = g.loinc and l.container = g.container
+
+
+
+-- Update Lexical with Readv2 (PBCL)
+update l 
+set  l.Readv2_Desc = r.V2_TERM
+from 
+	GlobalCodes.dbo.GlobalCodes_Lexical l
+	inner join GlobalCodes.dbo.Readv2_PBCL r on l.Readv2 = r.V2_READ_CODE
+
+
+
+select * from GlobalCodes.dbo.GlobalCodes_Lexical
+
+select * from Readv2_PBCL

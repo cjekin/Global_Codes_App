@@ -45,9 +45,11 @@ def update_odbc_table(submission, user_name):
 
     if type(submission['id']) == int:
         id_update = submission['id']
+        audit_id = submission['id']
     else:
         id_update = "'" + submission['id'] + "'"
-    
+        audit_id = "''"
+            
     sql_update = """
     update {table}
     set {field} = '{newval}'
@@ -68,7 +70,7 @@ def update_odbc_table(submission, user_name):
                origin = "'" + submission['table'] + "'",
                code = "'" + submission['code'] + "'",
                field = "'" + submission['field'] + "'",
-               row_id = submission['id'],
+               row_id = audit_id,
                oldval = "'" + submission['oldval'] + "'",
                newval = "'" + submission['newval'] + "'",
                change = "'Update'"
@@ -94,27 +96,35 @@ def get_column_display_names(columns):
 
 
 def Lexical_Table():
-    columns = ['LONG_COMMON_NAME','id','loinc','snomed_analyte','nlmc',
-               'readcode','cust_analyte','cust_description']
+    columns = ['id','LONG_COMMON_NAME','loinc','container','SCTint_Component','SCTint_Sample','SCTint_Method','SCTint_Precondition'
+              ,'SCTint_Units','SCTint_Component_Desc','SCTint_Sample_Desc','SCTint_Method_Desc','SCTint_Precondition_desc','SCTint_Units_desc'
+              ,'NLMC','NLMC_REP','NLMC_Desc','NLMC_REP_Desc','SCTUK_Component','Readv2','Readv2_Desc','BC_Analyte','BC_PrimaryLib'
+              ,'BC_Desc','HSL','HSL_Desc','HSL_Dept','Dynamics']
 
     sql = """
-    SELECT {fields}
-    from {global_lexical} l
-    inner join {loinc_db} ln on l.loinc = ln.LOINC_NUM
+    select {fields}
+    from {global_lexical} lex
+    inner join {loinc_db} ln on lex.loinc = ln.LOINC_NUM
     """.format(fields = '[' + '],['.join(columns)  + '] ', 
                global_lexical = config.global_lexical_tbl, 
                loinc_db = config.loinc_db)
 
+    print sql
     result = run_odbc_query(sql)
+
+    for r in range(len(result['data'])):
+        for k in result['data'][r]:
+            if result['data'][r][k] == 'None':
+                result['data'][r][k] = ''
+
     result['columns'] = columns
     result['columns_desc'] = get_column_display_names(columns)
-    result['hidden'] = [1]
-    result['locked'] = ['LONG_COMMON_NAME','id','loinc']
+    result['hidden'] = [0]
+    result['locked'] = ['id','LONG_COMMON_NAME','loinc','container']
     result['id_field'] = 'id'
     result['table'] = config.global_lexical_tbl
     result['type'] = {'snomed_analyte': 'dropdown'}
 
-    print sql
     return result
 
 
@@ -457,18 +467,22 @@ def Find_Similar_LOINC(params):
 
     sql = """
     select top 1 m.[map_id],m.[origin],m.[tfc],m.[loinc],m.[container],m.[loc1],m.[loc2],m.[result_type],
-    l1.SubSection as loc1_subsection, l1.Department as loc1_department, l2.SubSection as loc2_subsection, l2.Department as loc2_department
+    isnull(l1.SubSection,'') as loc1_subsection, isnull(l1.Department,'') as loc1_department, 
+    isnull(l2.SubSection,'') as loc2_subsection, isnull(l2.Department,'') as loc2_department
     from {MAP} m
-    inner join {LOCATIONS} l1 on m.loc1 = l1.SubSectionCode
-    inner join {LOCATIONS} l2 on m.loc2 = l2.SubSectionCode
+    left join {LOCATIONS} l1 on m.loc1 = l1.SubSectionCode
+    left join {LOCATIONS} l2 on m.loc2 = l2.SubSectionCode
     left join {FORM_INFO} fi on m.tfc = fi.TFC and m.origin = fi.Origin
     where loinc = '{loinc_code}'
+    and m.origin <> '{this_origin}'
     order by isnull(NumLastYear,0)
     """.format(MAP = config.global_map_table, 
                FORM_INFO = config.global_form_info, 
                LOCATIONS = config.global_location,
-               loinc_code = params['loinc'])
+               loinc_code = params['loinc'],
+               this_origin = params['this_origin'])
            
+    print sql
     result = run_odbc_query(sql) 
        
     result['id_field'] = 'map_id'
@@ -512,20 +526,27 @@ def Full_Loinc_Search(params):
     else: 
         top2000 = ''
 
+    if params['already_mapped'] == 'true':
+        already_mapped = ' and LOINC_NUM in (select loinc from {MAP}) '.format(MAP = config.global_map_table)
+    else: 
+        already_mapped = ''
+
     sql = """
     
     select case when COMMON_SI_TEST_RANK = 0 then 9999 else COMMON_SI_TEST_RANK end as COMMON_SI_TEST_RANK
     , LOINC_NUM, LONG_COMMON_NAME, isnull(METHOD_TYP,'') as METHOD_TYP
     from {LOINC}
     where CLASSTYPE = 1
-    {TOP}
+    {TOP} {MAPPED}
     and LONG_COMMON_NAME + ';' + RELATEDNAMES2 like '%{search_term}%'
     order by case when COMMON_SI_TEST_RANK = 0 then 9999 else COMMON_SI_TEST_RANK end asc
 
     """.format(LOINC = config.loinc_db, 
                search_term = params['search_term'],
-               TOP = top2000)
+               TOP = top2000,
+               MAPPED = already_mapped)
 
+    print sql
     result = run_odbc_query(sql)
 
     result['columns_desc'] = ['Rank', 'LOINC','LOINC Name','Method']

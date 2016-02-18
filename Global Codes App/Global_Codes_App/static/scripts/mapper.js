@@ -267,7 +267,7 @@ function tlc_detail_event_handlers() {
     $('.tfc-name').click(function () {
         //console.log('Clicked TFC name');
         if ($(this).hasClass('full')) {
-            var min_html = '<span class="font-bold">' + $(this).data('val') + '</span><small class="font-trans pull-right">' + $(this).data('units') + '</small><br /><small class="font-trans">' + $(this).data('common') + '</small><small class="font-trans pull-right">[ ' + $(this).data('num') + ' ]</small>';
+            var min_html = '<span class="font-bold">' + $(this).data('val') + '</span><small class="font-trans pull-right">' + $(this).data('units') + '</small><br /><small class="font-trans">' + $(this).data('common') + '</small><small class="font-trans pull-right"> ' + $(this).data('tfc_reflab') + ' [ ' + $(this).data('num') + ' ]</small>';
             $(this).html(min_html);
             $(this).removeClass('full');
         } else {
@@ -779,8 +779,9 @@ function create_loinc_popup(this_cell) {
         $('#loinc-search-table').hide();
 
         var term = $('#search_full_loinc_input').val();
-        var top2 = $('#top2000-checkbox').prop('checked');
-        var params = { query: 'Full_Loinc_Search', search_term: term, top2000: top2 };
+        var top2000_val = $('#top2000-checkbox').prop('checked');
+        var already_mapped_val = $('#already-mapped-checkbox').prop('checked');
+        var params = { query: 'Full_Loinc_Search', search_term: term, top2000: top2000_val, already_mapped: already_mapped_val };
         run_sql_query(params, function (result) {
             //console.log(result);
 
@@ -861,7 +862,6 @@ function click_loinc_button(btn) {
 
     var params = { newval: new_loinc, newtext: new_text };
     run_sql_update(loinc_cell, params);
-    get_other_data(new_loinc, loinc_cell);
 };
 
 function loinc_iframe(loinc_code) {
@@ -890,10 +890,12 @@ function get_other_data(loinc_code, cell) {
 
     $.ajax({
         url: '/get_sql_data', dataType: 'json',
-        data: { query: 'Find_Similar_LOINC', loinc: loinc_code },
+        data: { query: 'Find_Similar_LOINC', loinc: loinc_code, this_origin: current_system },
         success: function (result) {
-            if (result['result'] == 'ERROR') { swal('Error getting similar LOINC codes'); }
-            else {
+            console.log(result['data']);
+            if (result['result'] == 'ERROR') { 
+                swal('Error getting similar LOINC codes'); 
+            } else if (result['data'].length > 0) {
                 var res = result['data'][0];
 
                 if (type.data('val') == '' && res['result_type'] != '') {

@@ -4435,3 +4435,121 @@ Traceback (most recent call last):
   File "H:\Global_Codes_App\Global Codes App\Global_Codes_App\sql_queries.py", line 56, in update_odbc_table
     field = submission['field'],
 KeyError: 'field'
+-----17/02/2016 21:42
+Problem running query
+Traceback (most recent call last):
+  File "H:\Global_Codes_App\Global Codes App\Global_Codes_App\views.py", line 735, in get_sql_data
+    result = methodToCall()
+  File "H:\Global_Codes_App\Global Codes App\Global_Codes_App\sql_queries.py", line 108, in Lexical_Table
+    loinc_db = config.loinc_db)
+KeyError: 'loinc'
+-----17/02/2016 21:45
+Query does not exist: undefined
+Traceback (most recent call last):
+  File "H:\Global_Codes_App\Global Codes App\Global_Codes_App\views.py", line 730, in get_sql_data
+    methodToCall = getattr(sql_queries, query)
+AttributeError: 'module' object has no attribute 'undefined'
+-----17/02/2016 21:47
+Problem running query
+Traceback (most recent call last):
+  File "H:\Global_Codes_App\Global Codes App\Global_Codes_App\views.py", line 735, in get_sql_data
+    result = methodToCall()
+  File "H:\Global_Codes_App\Global Codes App\Global_Codes_App\sql_queries.py", line 110, in Lexical_Table
+    result = run_odbc_query(sql)
+  File "H:\Global_Codes_App\Global Codes App\Global_Codes_App\sql_queries.py", line 30, in run_odbc_query
+    cursor.execute(sql.replace('\n',' '))
+ProgrammingError: ('42S22', "[42S22] [Microsoft][ODBC SQL Server Driver][SQL Server]Invalid column name 'loinc'. (207) (SQLExecDirectW)")
+-----17/02/2016 21:47
+Problem running query
+Traceback (most recent call last):
+  File "H:\Global_Codes_App\Global Codes App\Global_Codes_App\views.py", line 735, in get_sql_data
+    result = methodToCall()
+  File "H:\Global_Codes_App\Global Codes App\Global_Codes_App\sql_queries.py", line 110, in Lexical_Table
+    result = run_odbc_query(sql)
+  File "H:\Global_Codes_App\Global Codes App\Global_Codes_App\sql_queries.py", line 30, in run_odbc_query
+    cursor.execute(sql.replace('\n',' '))
+ProgrammingError: ('42S22', "[42S22] [Microsoft][ODBC SQL Server Driver][SQL Server]Invalid column name 'loinc'. (207) (SQLExecDirectW)")
+-----17/02/2016 21:48
+Problem running query
+Traceback (most recent call last):
+  File "H:\Global_Codes_App\Global Codes App\Global_Codes_App\views.py", line 735, in get_sql_data
+    result = methodToCall()
+  File "H:\Global_Codes_App\Global Codes App\Global_Codes_App\sql_queries.py", line 111, in Lexical_Table
+    result = run_odbc_query(sql)
+  File "H:\Global_Codes_App\Global Codes App\Global_Codes_App\sql_queries.py", line 30, in run_odbc_query
+    cursor.execute(sql.replace('\n',' '))
+ProgrammingError: ('42S22', "[42S22] [Microsoft][ODBC SQL Server Driver][SQL Server]Invalid column name 'loinc'. (207) (SQLExecDirectW)")
+-----17/02/2016 21:49
+Problem running query
+Traceback (most recent call last):
+  File "H:\Global_Codes_App\Global Codes App\Global_Codes_App\views.py", line 735, in get_sql_data
+    result = methodToCall()
+  File "H:\Global_Codes_App\Global Codes App\Global_Codes_App\sql_queries.py", line 111, in Lexical_Table
+    result = run_odbc_query(sql)
+  File "H:\Global_Codes_App\Global Codes App\Global_Codes_App\sql_queries.py", line 30, in run_odbc_query
+    cursor.execute(sql.replace('\n',' '))
+ProgrammingError: ('42S22', "[42S22] [Microsoft][ODBC SQL Server Driver][SQL Server]Invalid column name 'loinc'. (207) (SQLExecDirectW)")
+-----17/02/2016 21:52
+Query does not exist: Lexical_Table
+Traceback (most recent call last):
+  File "H:\Global_Codes_App\Global Codes App\Global_Codes_App\views.py", line 735, in get_sql_data
+    result = methodToCall()
+  File "H:\Global_Codes_App\Global Codes App\Global_Codes_App\sql_queries.py", line 113, in Lexical_Table
+    for r in range(result['data'].length):
+AttributeError: 'list' object has no attribute 'length'
+-----17/02/2016 22:57
+Problem updating SQL table
+Traceback (most recent call last):
+  File "H:\Global_Codes_App\Global Codes App\Global_Codes_App\views.py", line 753, in submit_table_update
+    sql_queries.update_odbc_table(submission,user.email)
+  File "H:\Global_Codes_App\Global Codes App\Global_Codes_App\sql_queries.py", line 81, in update_odbc_table
+    cursor.execute(sql_audit.replace('\n',' '))
+ProgrammingError: ('42S22', "[42S22] [Microsoft][ODBC SQL Server Driver][SQL Server]Invalid column name 'CHEM_GOS'. (207) (SQLExecDirectW)")
+-----17/02/2016 23:01
+Problem updating SQL table
+Traceback (most recent call last):
+  File "H:\Global_Codes_App\Global Codes App\Global_Codes_App\views.py", line 753, in submit_table_update
+    sql_queries.update_odbc_table(submission,user.email)
+  File "H:\Global_Codes_App\Global Codes App\Global_Codes_App\sql_queries.py", line 83, in update_odbc_table
+    cursor.execute(sql_audit.replace('\n',' '))
+ProgrammingError: ('42S22', "[42S22] [Microsoft][ODBC SQL Server Driver][SQL Server]Invalid column name 'None'. (207) (SQLExecDirectW)")
+-----17/02/2016 23:02
+Problem updating SQL table
+Traceback (most recent call last):
+  File "H:\Global_Codes_App\Global Codes App\Global_Codes_App\views.py", line 753, in submit_table_update
+    sql_queries.update_odbc_table(submission,user.email)
+  File "H:\Global_Codes_App\Global Codes App\Global_Codes_App\sql_queries.py", line 83, in update_odbc_table
+    cursor.execute(sql_audit.replace('\n',' '))
+ProgrammingError: ('42000', "[42000] [Microsoft][ODBC SQL Server Driver][SQL Server]Incorrect syntax near ','. (102) (SQLExecDirectW)")
+-----18/02/2016 19:59
+Problem updating SQL table
+Traceback (most recent call last):
+  File "H:\Global_Codes_App\Global Codes App\Global_Codes_App\views.py", line 753, in submit_table_update
+    sql_queries.update_odbc_table(submission,user.email)
+  File "H:\Global_Codes_App\Global Codes App\Global_Codes_App\sql_queries.py", line 80, in update_odbc_table
+    cursor.execute(sql_update.replace('\n',' '))
+DataError: ('22018', "[22018] [Microsoft][ODBC SQL Server Driver][SQL Server]Conversion failed when converting the varchar value 'None' to data type int. (245) (SQLExecDirectW)")
+-----18/02/2016 19:59
+Problem updating SQL table
+Traceback (most recent call last):
+  File "H:\Global_Codes_App\Global Codes App\Global_Codes_App\views.py", line 753, in submit_table_update
+    sql_queries.update_odbc_table(submission,user.email)
+  File "H:\Global_Codes_App\Global Codes App\Global_Codes_App\sql_queries.py", line 80, in update_odbc_table
+    cursor.execute(sql_update.replace('\n',' '))
+DataError: ('22018', "[22018] [Microsoft][ODBC SQL Server Driver][SQL Server]Conversion failed when converting the varchar value 'None' to data type int. (245) (SQLExecDirectW)")
+-----18/02/2016 19:59
+Problem updating SQL table
+Traceback (most recent call last):
+  File "H:\Global_Codes_App\Global Codes App\Global_Codes_App\views.py", line 753, in submit_table_update
+    sql_queries.update_odbc_table(submission,user.email)
+  File "H:\Global_Codes_App\Global Codes App\Global_Codes_App\sql_queries.py", line 80, in update_odbc_table
+    cursor.execute(sql_update.replace('\n',' '))
+DataError: ('22018', "[22018] [Microsoft][ODBC SQL Server Driver][SQL Server]Conversion failed when converting the varchar value 'None' to data type int. (245) (SQLExecDirectW)")
+-----18/02/2016 19:59
+Problem updating SQL table
+Traceback (most recent call last):
+  File "H:\Global_Codes_App\Global Codes App\Global_Codes_App\views.py", line 753, in submit_table_update
+    sql_queries.update_odbc_table(submission,user.email)
+  File "H:\Global_Codes_App\Global Codes App\Global_Codes_App\sql_queries.py", line 80, in update_odbc_table
+    cursor.execute(sql_update.replace('\n',' '))
+DataError: ('22018', "[22018] [Microsoft][ODBC SQL Server Driver][SQL Server]Conversion failed when converting the varchar value 'None' to data type int. (245) (SQLExecDirectW)")
