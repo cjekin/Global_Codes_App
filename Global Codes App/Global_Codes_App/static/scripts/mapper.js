@@ -23,10 +23,10 @@ var processing_colour = '#FAAC58';
 
 
 var map_result_type = {
-    'Result': 'warning', 'SubResult': 'success', 'Qualifier': 'info', 'Calculation': 'info', 'Internal': 'info disabled', 'NotRequested': 'info disabled', 'Inactive': 'info disabled', 'Calculation': 'info'
+    'Result': 'warning', 'SubResult': 'success', 'Qualifier': 'info', 'Calculation': 'info', 'Internal': 'info disabled', 'NotRequested': 'info disabled', 'Inactive': 'info disabled', 'Calculation': 'info', 'Held': 'danger'
 };
 var map_result_type_key_pressed = {
-    R: 'Result', S: 'SubResult', Q: 'Qualifier', I: 'Internal', N: 'NotRequested', D: 'Disabled', C: 'Calculation'
+    R: 'Result', S: 'SubResult', Q: 'Qualifier', I: 'Internal', N: 'NotRequested', D: 'Disabled', C: 'Calculation', H: 'Held'
 };
 
 
@@ -387,6 +387,11 @@ function tlc_detail_event_handlers() {
                 $(this).html('<span>' + $(this).data('subsection') + '</span><br/><small class="font-trans">' + $(this).data('department') + '</small>').focus();
             };
         };
+        if (e.which == 73) { // If I is pressed
+            e.preventDefault();
+            create_location_popup($(this));
+        };
+        
     });
     $('.loc1,.loc2').on("select2:select", function (e) {
         var cell = $(this);
@@ -997,4 +1002,37 @@ function open_location_select2(this_cell) {
 };
 
 
+// Location functions
+
+
+function create_location_popup(this_cell) {
+
+    var current_id = this_cell.closest('tr').attr('id');
+    var current_id = this_cell.closest('tr').attr('id');
+
+    $('#loinc-search-spinner').hide();
+
+    Handlebars.registerHelper('loinc_description_full', function (str) {
+        return (str || '').replace(']', ']<br />');
+    });
+
+    // Build the html from the data and a handlebars.js template
+    var theTemplateScript = $('#location_popup_template').html();
+    var theTemplate = Handlebars.compile(theTemplateScript);
+    var theCompiledHtml = theTemplate();
+
+    var this_panel = $.jsPanel({
+        title: "search for location",
+        content: theCompiledHtml,
+
+        overflow: { horizontal: 'hidden', vertical: 'scroll' },
+        size: { width: 700, height: 570 },
+        position: 'center right',
+        theme: 'default'
+    });
+
+    this_panel.data('table_id', current_id); // Store the ID of the row it came from
+
+
+};
 

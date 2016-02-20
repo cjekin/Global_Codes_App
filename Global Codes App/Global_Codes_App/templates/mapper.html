@@ -126,6 +126,9 @@
                     <div class="checkbox checkbox-primary m-b">
                         <label><input id="tlc_search_unmapped" type="checkbox" value="">Unmapped</label>
                     </div>
+                    <div class="checkbox checkbox-primary m-b">
+                        <label><input id="tlc_search_showheld" type="checkbox" value="">Show Held</label>
+                    </div>
                     <button id="tlc_search_submit" type="submit" class="btn btn-success m-b">Refresh</button>
                 </div>
             </div>
@@ -406,6 +409,21 @@
     </div>
 
 
+
+</script>
+
+
+<script id="location_popup_template" type="text/x-handlebars-template">
+
+    <div class="popup-div">
+
+            <div id="loinc-search-table" class="table-responsive loinc-search-table">
+                <table id="search_full_loinc_table" class="table table-hover table-bordered table-striped"></table>
+            </div>
+
+            <div id="table_id"></div>
+
+    </div>
 
 </script>
 
