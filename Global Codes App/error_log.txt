@@ -4553,3 +4553,25 @@ Traceback (most recent call last):
   File "H:\Global_Codes_App\Global Codes App\Global_Codes_App\sql_queries.py", line 80, in update_odbc_table
     cursor.execute(sql_update.replace('\n',' '))
 DataError: ('22018', "[22018] [Microsoft][ODBC SQL Server Driver][SQL Server]Conversion failed when converting the varchar value 'None' to data type int. (245) (SQLExecDirectW)")
+-----20/02/2016 10:17
+Problem updating SQL table
+Traceback (most recent call last):
+  File "C:\Users\cekin\Documents\GitHub\Global_Codes_App\Global Codes App\Global_Codes_App\views.py", line 753, in submit_table_update
+    sql_queries.update_odbc_table(submission,user.email)
+  File "C:\Users\cekin\Documents\GitHub\Global_Codes_App\Global Codes App\Global_Codes_App\sql_queries.py", line 58, in update_odbc_table
+    field = submission['field'],
+KeyError: 'field'
+-----20/02/2016 10:28
+Problem running query
+Traceback (most recent call last):
+  File "C:\Users\cekin\Documents\GitHub\Global_Codes_App\Global Codes App\Global_Codes_App\views.py", line 730, in get_sql_data
+    methodToCall = getattr(sql_queries, query)
+TypeError: getattr(): attribute name must be string
+-----20/02/2016 12:55
+Problem updating SQL table
+Traceback (most recent call last):
+  File "C:\Users\cekin\Documents\GitHub\Global_Codes_App\Global Codes App\Global_Codes_App\views.py", line 753, in submit_table_update
+    sql_queries.update_odbc_table(submission,user.email)
+  File "C:\Users\cekin\Documents\GitHub\Global_Codes_App\Global Codes App\Global_Codes_App\sql_queries.py", line 46, in update_odbc_table
+    if type(submission['id']) == int:
+KeyError: 'id'

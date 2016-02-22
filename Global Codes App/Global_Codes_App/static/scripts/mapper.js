@@ -4,8 +4,6 @@ var current_tlc = 'U/E';
 var current_tlc_name = 'UREA AND ELECTROLYTES';
 var current_tlc_type = 'G';
 var current_row = '';
-//var current_row_ix = 0;
-//var current_row_ix_sorted = 0;
 var library_code_datatable = '';
 
 var current_system = 'BMI_ALL_DW';
@@ -81,42 +79,50 @@ function get_tlc_list_data() {
    
     $('#library-code-header').html('<i class="fa fa-spinner fa-pulse"></i> Loading...');
 
-    var primary = +$('#tlc_search_primary').prop('checked');
-    var unmapped = +$('#tlc_search_unmapped').prop('checked');
-    var params = '&system=' + current_system + '&section=' + current_section + '&primary=' + primary + '&unmapped=' + unmapped;
+    var params = {
+        query: 'TLC_List_For_Mapper',
+        system: current_system,
+        section: current_section,
+        primary: +$('#tlc_search_primary').prop('checked'),
+        unmapped: +$('#tlc_search_unmapped').prop('checked'),
+        showheld: +$('#tlc_search_showheld').prop('checked')
+    };
 
-    $.getJSON('/get_sql_data?query=TLC_List_For_Mapper' + params, function (result) {
-
-        if (result['result'] == 'ERROR') {
-            swal({
-                title: "Problem loading the library code list",
-                text: "An exception occurred when we loading the data. The details have been recorded in the error log.",
-                type: "warning"
-            });
-        } else {
-            if (library_code_datatable != '') {
-                library_code_datatable.clear();
-                library_code_datatable.rows.add(result['data']);
-                library_code_datatable.draw();
-                $('#library-code-header').text(current_system);
+    $.ajax({
+        url: '/get_sql_data', dataType: 'json',
+        data: params,
+        success: function (result) {
+            if (result['result'] == 'ERROR') {
+                swal({
+                    title: "Problem loading the library code list",
+                    text: "An exception occurred when we loading the data. The details have been recorded in the error log.",
+                    type: "warning"
+                });
             } else {
-                draw_library_table(result);
-                $('#library-code-header').text(current_system);
+                if (library_code_datatable != '') {
+                    library_code_datatable.clear();
+                    library_code_datatable.rows.add(result['data']);
+                    library_code_datatable.draw();
+                    $('#library-code-header').text(current_system);
+                } else {
+                    draw_library_table(result);
+                    $('#library-code-header').text(current_system);
+                };
+
+
+                // Select the first library code and load the detail
+                var fr = library_code_datatable.rows({ order: 'applied' })[0][0]; // First row with the sorting applied
+                current_row = library_code_datatable.row(fr);
+                current_tlc = library_code_datatable.row(fr).data()['tlc'];
+                current_tlc_name = library_code_datatable.row(fr).data()['tlc_name'];
+                current_tlc_type = library_code_datatable.row(fr).data()['tlc_type'];
+                params = { query: 'TLC_Detail_For_Mapper', Origin: current_system, TLC: current_tlc };
+                $('#library_code_detail_table').html('<div class="text-center"><i class="fa fa-spinner fa-2x fa-pulse m-b-lg m-t-lg"></i></div>');
+                run_sql_query(params, fill_library_code_detail);
+
+                $('#tlc-detail-rowposition').text('1 of ' + library_code_datatable.rows()[0].length);
             };
-
-          
-            // Select the first library code and load the detail
-            var fr = library_code_datatable.rows({ order: 'applied' })[0][0]; // First row with the sorting applied
-            current_row = library_code_datatable.row(fr);
-            current_tlc = library_code_datatable.row(fr).data()['tlc'];
-            current_tlc_name = library_code_datatable.row(fr).data()['tlc_name'];
-            current_tlc_type = library_code_datatable.row(fr).data()['tlc_type'];
-            params = { query: 'TLC_Detail_For_Mapper', Origin: current_system, TLC: current_tlc };
-            $('#library_code_detail_table').html('<div class="text-center"><i class="fa fa-spinner fa-2x fa-pulse m-b-lg m-t-lg"></i></div>');
-            run_sql_query(params, fill_library_code_detail);
-
-            $('#tlc-detail-rowposition').text('1 of ' + library_code_datatable.rows()[0].length);
-        };
+        }
     });
 };
 
@@ -300,7 +306,11 @@ function tlc_detail_event_handlers() {
 
         if (e.which == 13 && !select) { // Enter
             e.preventDefault();
-            open_loinc_select2($(this));
+            if (e.ctrlKey) {
+                create_loinc_popup($(this));
+            } else {
+                open_loinc_select2($(this));
+            };
         };
         if (e.which == 27 && select) { // Escape
             if (!select.isOpen()) {
@@ -318,10 +328,6 @@ function tlc_detail_event_handlers() {
                 };
             };
         };
-        if (e.which == 78) { // If N is pressed
-            e.preventDefault();
-            create_loinc_popup($(this));
-        };
         if (e.which == 73) { // If I is pressed
             e.preventDefault();
             loinc_iframe($(this).data('val'));
@@ -330,17 +336,19 @@ function tlc_detail_event_handlers() {
     $('.loinc').on("select2:select", function (e) {
         loinc_change_select2(e, $(this));
     });
+    context.attach('.loinc', loinc_menuobjects);
 
 
     // Result type events
-    $(".result-type").keydown(function (e) {
-        var key_pressed = e.key.toUpperCase();
+    $(".result-type").keypress(function (e) {
+        var key_pressed = String.fromCharCode(e.which).toUpperCase();
         if (map_result_type_key_pressed[key_pressed]) {
             e.preventDefault();
             //console.log('Pressed ' + key_pressed);
             run_sql_update($(this), { newval: map_result_type_key_pressed[key_pressed] });
         };
     });
+    context.attach('.result-type', result_type_menuobjects);
 
 
     // Container events
@@ -429,7 +437,15 @@ function page_load_event_handlers() {
     });
 };
 
-
+$(function init_context_menu () {
+    context.init({
+        fadeSpeed: 100,
+        filter: function ($obj) { },
+        above: 'auto',
+        preventDoubleContext: true,
+        compress: false
+    });
+});
 
 
 
@@ -642,6 +658,11 @@ function fill_library_code_detail(result) {
     $('#library_code_detail_table').html(theCompiledHtml);
 
     tlc_detail_event_handlers();
+
+    $('html, body').animate({
+        scrollTop: $('.tabitem').first().offset().top
+    }, 1000);
+    $('.tabitem').first().focus();
 };
 
 function move_next_prev(direction) {
@@ -663,10 +684,6 @@ function move_next_prev(direction) {
     params = { query: 'TLC_Detail_For_Mapper', Origin: current_system, TLC: current_tlc };
     $('#library_code_detail_table').html('<div class="text-center"><i class="fa fa-spinner fa-2x fa-pulse m-b-lg m-t-lg"></i></div>');
     run_sql_query(params, fill_library_code_detail);
-
-    $("body").scrollTop($("#format-code-detail-id-row").offset().top);
-
-    $('.tabitem').first().focus();
 
 };
 
@@ -762,8 +779,6 @@ function create_loinc_popup(this_cell) {
 
     this_panel.data('table_id', current_id); // Store the ID of the row it came from
 
-    $('#search_full_loinc_input').focus();
-
     $('#search_full_loinc_btn').click(run_search());
     $('#search_full_loinc_btn').keypress(function (e) {
         if (e.which == 13) {
@@ -803,6 +818,7 @@ function create_loinc_popup(this_cell) {
                 loinc_search_datatable.clear();
                 loinc_search_datatable.rows.add(result['data']);
                 loinc_search_datatable.draw();
+
 
             } else {
                 $('#loinc-search-spinner').hide();
@@ -846,7 +862,7 @@ function create_loinc_popup(this_cell) {
     };
 
     this_panel.keypress(function (e) {
-        if (e.which == 27) { // Escape
+        if (e.keyCode == 27) { // Escape
             console.log('Pressed ESC on panel');
             e.preventDefault();
             this_panel.close();
@@ -854,6 +870,7 @@ function create_loinc_popup(this_cell) {
         }
     });
 
+    $('#search_full_loinc_input').focus();
 
 };
 

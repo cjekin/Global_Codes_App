@@ -249,7 +249,7 @@ def Worksection_Data(params):
     return result
 
 
-def TLC_List_For_Mapper(params): #db_name, section, primary, unmapped):
+def TLC_List_For_Mapper(params):
 
     section_sql = ''
     other_sql = []
@@ -261,16 +261,19 @@ def TLC_List_For_Mapper(params): #db_name, section, primary, unmapped):
         other_sql.append(' tlc_primary = 1 ')
     if params['unmapped'] == '1':
         other_sql.append(' tlc_mapped = 0') 
+    if params['showheld'] == '1':
+        other_sql.append(' tfc_held = 1') 
     if len(other_sql) > 0:
         other_sql_string = ' where ' + ' and '.join(other_sql)
 
     sql = """
     select tlc_mapped, tlc, tlc_name, tlc_type, num_codes from (
-    select min(tfc_mapped) as tlc_mapped, tlc, tlc_name, tlc_type, tlc_primary, count(tfc) as num_codes
+    select min(tfc_mapped) as tlc_mapped, tlc, tlc_name, tlc_type, tlc_primary, count(tfc) as num_codes, max(tfc_held) as tfc_held
     from (
 	    select tlc.[Test Code] as tlc, tlc.[Description] as tlc_name, tlc.[TLC type] as tlc_type,
 	    case when tlc.[Test Code] in (select distinct TLC from {FORM_INFO}) then 1 else 0 end as tlc_primary, tc.TFC as tfc
 	    ,case when isnull(map.loinc,'') <> '' or isnull(map.result_type,'') not in ('Result','SubResult','') then 1 else 0 end as tfc_mapped
+        ,case when isnull(map.result_type,'') = 'Held' then 1 else 0 end as tfc_held
 	    from {TEST_STAGING} tlc 
 	    inner join {FLAT} tc on tlc.[Test Code] = tc.TLC and tlc.[Origin] = tc.[Origin]
 	    inner join {FORM_STAGING} f on tc.TFC = f.TFC and tc.[Origin] = f.[Origin]

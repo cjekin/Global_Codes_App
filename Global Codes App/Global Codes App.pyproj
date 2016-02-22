@@ -420,6 +420,8 @@
     <Content Include="Global_Codes_App\static\images\p1.jpg" />
     <Content Include="Global_Codes_App\static\images\p2.jpg" />
     <Content Include="Global_Codes_App\static\images\profile.jpg" />
+    <Content Include="Global_Codes_App\static\scripts\context.js" />
+    <Content Include="Global_Codes_App\static\scripts\context_menu_objects.js" />
     <Content Include="Global_Codes_App\static\scripts\dashboard.js" />
     <Content Include="Global_Codes_App\static\scripts\mapper.js" />
     <Content Include="Global_Codes_App\static\scripts\editor.js" />

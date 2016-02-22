@@ -66,6 +66,7 @@
 
 <link href="static/bower_components/jspanel/source/jquery.jspanel.min.css" rel="stylesheet" />
 <link href="static/bower_components/select2/dist/css/select2.min.css" rel="stylesheet" />
+<link href="static/bower_components/Context.js/context.standalone.css" rel="stylesheet" />
 
 {% endblock %}
 
@@ -295,7 +296,6 @@
 </div> <!-- Format code hpanel closed-->
 </div> <!-- Format code row closed-->
 
-
 </div><!-- Main Panel Closing tag -->
 
 {% endblock %}
@@ -381,7 +381,8 @@
                 <div class="form-group">  
 
                     <div class="col-sm-6">
-                        <div class="input-group"><input id="search_full_loinc_input" type="text" class="form-control search_full_loinc_form"> 
+                        <div class="input-group">
+                            <input id="search_full_loinc_input" type="text" class="form-control search_full_loinc_form"> 
                             <span class="input-group-btn"> 
                                 <button id="search_full_loinc_btn" type="button" class="btn btn-info search_full_loinc_form">Search</button> 
                             </span>
@@ -432,7 +433,9 @@
 
 
 <script src="static/bower_components/jspanel/source/jquery.jspanel.min.js"></script>
-<script src="static/scripts/mapper.js"></script>
+<script type="text/javascript" src="static/bower_components/Context.js/context.js"></script>
 
+<script type="text/javascript" src="static/scripts/context_menu_objects.js"></script>
+<script src="static/scripts/mapper.js"></script>
 
 {% endblock %}

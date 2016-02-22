@@ -1,0 +1,32 @@
+{
+  "name": "jquery-contextmenu",
+  "version": "0.5.2",
+  "authors": [
+    "Vivek Kumar Bansal <contact@vkbansal.me>"
+  ],
+  "description": "Context-Menu for jquery",
+  "main": "contextmenu.js, contextmenu.min.js",
+  "moduleType": [
+    "amd",
+    "globals",
+    "node"
+  ],
+  "keywords": [
+    "contextmenu",
+    "bootstrap",
+    "menu",
+    "right",
+    "click"
+  ],
+  "dependencies": {
+    "jquery": "~2.1.1"
+  },
+  "license": "MIT",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ]
+}
