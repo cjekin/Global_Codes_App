@@ -309,3 +309,40 @@ from
 select * from GlobalCodes.dbo.GlobalCodes_Lexical
 
 select * from Readv2_PBCL
+
+
+
+-------------------
+-- Preanalytics
+-------------------
+
+create table GlobalCodes.dbo.GlobalCodes_Preanalytics (
+	
+	-- Linking
+	id int identity(1,1) primary key,
+	loinc varchar(20),
+	container varchar(50),
+	loc varchar(20),
+
+	-- Preanalytics info
+	automated varchar(1),
+	aliquot varchar(1),
+	deadvol int,
+	vol int,
+	frozen varchar(1),
+
+	-- Manual info
+	handling varchar(max),
+	courier varchar(max),
+	tat int,
+	tat_workingdays int
+
+)
+
+delete from GlobalCodes.dbo.GlobalCodes_Preanalytics
+
+insert into GlobalCodes.dbo.GlobalCodes_Preanalytics (loinc, container, loc)
+select distinct loinc, container, loc1
+from GlobalCodes.dbo.GlobalCodes_Map
+where loinc <> '' and result_type in ('Result','SubResult')
+and loinc + container + loc1 not in (select loinc + container + loc1 from GlobalCodes.dbo.GlobalCodes_Preanalytics)

@@ -589,3 +589,30 @@ def Full_Loinc_Search(params):
 
     return result
 
+
+def Preanalytics_Table(): 
+
+    columns = ['id','loinc','container','LONG_COMMON_NAME','loc','SubSection','automated','aliquot','deadvol','vol','frozen','handling','courier','tat','tat_workingdays']
+    columns_desc = ['ID','LOINC','Container','Description','Location','SubSection','Automated (Y/N)','Aliquot (Y/N)','Dead Vol (ul)','Vol (ul)','Frozen (Y/N)','Sample Handling','Courier','TAT (days)','TAT (working days)']
+
+    sql = """
+    select {fields}
+    from {preanalytics_db} pre
+    inner join {loinc_db} ln on pre.loinc = ln.LOINC_NUM
+    inner join {location_db} loc on pre.loc = loc.SubSectionCode
+    """.format(fields = ",".join(columns), 
+               preanalytics_db = config.global_preanalytics,
+               loinc_db = config.loinc_db,
+               location_db = config.global_location)
+
+    result = run_odbc_query(sql)
+
+    result['columns_desc'] = columns_desc
+    result['columns'] = columns
+    result['id_field'] = 'id'
+    result['hidden'] = [0,1,4]
+    result['locked'] = ['id','loinc','container','loc','LONG_COMMON_NAME','SubSection']
+
+    result['table'] = config.global_preanalytics
+
+    return result

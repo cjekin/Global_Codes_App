@@ -4643,3 +4643,47 @@ Traceback (most recent call last):
   File "H:\Global_Codes_App\Global Codes App\Global_Codes_App\sql_queries.py", line 425, in Location_List_For_Mapper
     if r['Department'] not in D:
 KeyError: 'Department'
+-----22/02/2016 16:31
+Problem running query
+Traceback (most recent call last):
+  File "C:\Users\cekin\Documents\GitHub\Global_Codes_App\Global Codes App\Global_Codes_App\views.py", line 735, in get_sql_data
+    result = methodToCall()
+TypeError: Preanalytics_Table() takes exactly 1 argument (0 given)
+-----22/02/2016 16:31
+Query does not exist: Preanalytics_Table
+Traceback (most recent call last):
+  File "C:\Users\cekin\Documents\GitHub\Global_Codes_App\Global Codes App\Global_Codes_App\views.py", line 735, in get_sql_data
+    result = methodToCall()
+  File "C:\Users\cekin\Documents\GitHub\Global_Codes_App\Global Codes App\Global_Codes_App\sql_queries.py", line 601, in Preanalytics_Table
+    """.format(fields = '[' + '],['.joinc(columns),
+AttributeError: 'str' object has no attribute 'joinc'
+-----22/02/2016 16:32
+Problem running query
+Traceback (most recent call last):
+  File "C:\Users\cekin\Documents\GitHub\Global_Codes_App\Global Codes App\Global_Codes_App\views.py", line 735, in get_sql_data
+    result = methodToCall()
+  File "C:\Users\cekin\Documents\GitHub\Global_Codes_App\Global Codes App\Global_Codes_App\sql_queries.py", line 604, in Preanalytics_Table
+    result = run_odbc_query(sql)
+  File "C:\Users\cekin\Documents\GitHub\Global_Codes_App\Global Codes App\Global_Codes_App\sql_queries.py", line 36, in run_odbc_query
+    cursor.execute(sql.replace('\n',' '))
+ProgrammingError: ('42S22', '[42S22] [Microsoft][ODBC SQL Server Driver][SQL Server]Invalid column name \'id\'. (207) (SQLExecDirectW); [42S22] [Microsoft][ODBC SQL Server Driver][SQL Server]Invalid column name \'loinc\'. (207); [42S22] [Microsoft][ODBC SQL Server Driver][SQL Server]Invalid column name \'container\'. (207); [42S22] [Microsoft][ODBC SQL Server Driver][SQL Server]Invalid column name \'loc\'. (207); [42S22] [Microsoft][ODBC SQL Server Driver][SQL Server]Invalid column name \'automated\'. (207); [42S22] [Microsoft][ODBC SQL Server Driver][SQL Server]Invalid column name \'aliquot\'. (207); [42S22] [Microsoft][ODBC SQL Server Driver][SQL Server]Invalid column name \'deadvol\'. (207); [42S22] [Microsoft][ODBC SQL Server Driver][SQL Server]Invalid column name \'vol\'. (207); [42S22] [Microsoft][ODBC SQL Server Driver][SQL Server]Invalid column name \'frozen\'. (207); [42S22] [Microsoft][ODBC SQL Server Driver][SQL Server]Invalid column name \'handling\'. (207); [42S22] [Microsoft][ODBC SQL Server Driver][SQL Server]Invalid column name \'courier\'. (207); [42S22] [Microsoft][ODBC SQL Server Driver][SQL Server]Invalid column name \'tat\'. (207); [42000] [Microsoft][ODBC SQL Server Driver][SQL Server]The multi-part identifier "tat_workingdays     from [GlobalCodes.dbo.GlobalCodes_Preanalytics" could not be bound. (4104)')
+-----22/02/2016 16:33
+Problem running query
+Traceback (most recent call last):
+  File "C:\Users\cekin\Documents\GitHub\Global_Codes_App\Global Codes App\Global_Codes_App\views.py", line 735, in get_sql_data
+    result = methodToCall()
+  File "C:\Users\cekin\Documents\GitHub\Global_Codes_App\Global Codes App\Global_Codes_App\sql_queries.py", line 604, in Preanalytics_Table
+    result = run_odbc_query(sql)
+  File "C:\Users\cekin\Documents\GitHub\Global_Codes_App\Global Codes App\Global_Codes_App\sql_queries.py", line 36, in run_odbc_query
+    cursor.execute(sql.replace('\n',' '))
+ProgrammingError: ('42S22', "[42S22] [Microsoft][ODBC SQL Server Driver][SQL Server]Invalid column name ''id''. (207) (SQLExecDirectW); [42S22] [Microsoft][ODBC SQL Server Driver][SQL Server]Invalid column name ''loinc''. (207); [42S22] [Microsoft][ODBC SQL Server Driver][SQL Server]Invalid column name ''container''. (207); [42S22] [Microsoft][ODBC SQL Server Driver][SQL Server]Invalid column name ''loc''. (207); [42S22] [Microsoft][ODBC SQL Server Driver][SQL Server]Invalid column name ''automated''. (207); [42S22] [Microsoft][ODBC SQL Server Driver][SQL Server]Invalid column name ''aliquot''. (207); [42S22] [Microsoft][ODBC SQL Server Driver][SQL Server]Invalid column name ''deadvol''. (207); [42S22] [Microsoft][ODBC SQL Server Driver][SQL Server]Invalid column name ''vol''. (207); [42S22] [Microsoft][ODBC SQL Server Driver][SQL Server]Invalid column name ''frozen''. (207); [42S22] [Microsoft][ODBC SQL Server Driver][SQL Server]Invalid column name ''handling''. (207); [42S22] [Microsoft][ODBC SQL Server Driver][SQL Server]Invalid column name ''courier''. (207); [42S22] [Microsoft][ODBC SQL Server Driver][SQL Server]Invalid column name ''tat''. (207); [42S22] [Microsoft][ODBC SQL Server Driver][SQL Server]Invalid column name ''tat_workingdays''. (207)")
+-----22/02/2016 16:44
+Problem running query
+Traceback (most recent call last):
+  File "C:\Users\cekin\Documents\GitHub\Global_Codes_App\Global Codes App\Global_Codes_App\views.py", line 735, in get_sql_data
+    result = methodToCall()
+  File "C:\Users\cekin\Documents\GitHub\Global_Codes_App\Global Codes App\Global_Codes_App\sql_queries.py", line 608, in Preanalytics_Table
+    result = run_odbc_query(sql)
+  File "C:\Users\cekin\Documents\GitHub\Global_Codes_App\Global Codes App\Global_Codes_App\sql_queries.py", line 36, in run_odbc_query
+    cursor.execute(sql.replace('\n',' '))
+ProgrammingError: ('42S22', "[42S22] [Microsoft][ODBC SQL Server Driver][SQL Server]Invalid column name 'LONG_COMMMON_NAME'. (207) (SQLExecDirectW)")

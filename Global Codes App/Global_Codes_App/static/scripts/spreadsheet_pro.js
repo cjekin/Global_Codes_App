@@ -35,7 +35,7 @@ function get_spreadsheet_list() {
             for (i = 0; i < dt.length; i++) {
                 $('<option>').val(dt[i]['func']).text(dt[i]['name']).appendTo('#spreadsheet_query_list');
             };
-            //console.log($('#spreadsheet_query_list select').val());
+            ////console.log($('#spreadsheet_query_list select').val());
         };
     });
 };
@@ -54,7 +54,7 @@ function get_spreadsheet(sheet) {
             data = returned_data['data'];
             id_field = returned_data['id_field'];
             current_table = returned_data['table'];
-            if (typeof hot == 'undefined') {
+            if (typeof hot == 'object') {
                 hot.destroy();
             };
             current_spreadsheet_data = returned_data;
@@ -82,10 +82,10 @@ function build_spreadsheet(result) {
             properties.readOnly = true;
         };
         if (result['type'] != null) {
-            console.log(result['type'], item);
+            //console.log(result['type'], item);
             if ($.inArray(item, result['type']) > -1) {
                 properties.type = result['type'][item];
-                console.log(properties.type, result['type'][item]);
+                //console.log(properties.type, result['type'][item]);
             };
         };
         return properties;
@@ -123,7 +123,7 @@ function build_spreadsheet(result) {
         currentColClassName: 'currentCol',
 
         afterChange: function (changes, source) {
-            console.log('afterChange event: ' + (changes || 'nochange').toString() + ' from ' + source);
+            //console.log('afterChange event: ' + (changes || 'nochange').toString() + ' from ' + source);
             
             if (changes != null && source == 'edit') {
                 cell_changed(changes, source);
@@ -148,7 +148,7 @@ function build_spreadsheet(result) {
     Handsontable.Dom.addEvent(searchField, 'keyup', function (event) {
         var queryResult = hot.search.query(this.value);
 
-        //console.log(queryResult);
+        ////console.log(queryResult);
         
         hot.render();
     });
@@ -159,7 +159,7 @@ function build_spreadsheet(result) {
 
 function cell_changed(changes, source) {
 
-    //console.log('cell_changed value: ' + changes.toString());
+    ////console.log('cell_changed value: ' + changes.toString());
 
     var row = changes[0][0];
     var col = changes[0][1];
@@ -167,9 +167,9 @@ function cell_changed(changes, source) {
     var newval = changes[0][3];
     var edited_id = hot.getDataAtCell(row, id_field)
     
-    console.log('Editing id', hot.getDataAtCell(row, id_field), ' field: ', col, ' old: ', oldval, ' new: ', newval);
+    //console.log('Editing id', hot.getDataAtCell(row, id_field), ' field: ', col, ' old: ', oldval, ' new: ', newval);
 
-    console.log('Id field: ', id_field);
+    //console.log('Id field: ', id_field);
 
     // Check that there is an update and submit
     if (oldval != newval) {
@@ -193,7 +193,7 @@ function cell_changed(changes, source) {
                 });
                 hot.setDataAtCell(row, col, oldval, 'AUTO');
             } else {
-                console.log('POST UPDATE: Changed ' + edited_id + ' field ' + col + ' to ' + newval);
+                //console.log('POST UPDATE: Changed ' + edited_id + ' field ' + col + ' to ' + newval);
             };
         });
     };
@@ -203,7 +203,7 @@ function cell_changed(changes, source) {
 
 $('#panel_fullscreen_icon').click(function(){
 
-    console.log('Clicked full screen icon');
+    //console.log('Clicked full screen icon');
 
     if($('#header').is(":visible")){
         $('link[rel=stylesheet][href~="static/styles/style.css"]').prop( "disabled", true );

@@ -16,6 +16,7 @@ global_audit_table = '[GlobalCodes].[dbo].[GlobalCodes_Audit]'
 
 global_location = '[GlobalCodes].[dbo].[GlobalCodes_Locations]'
 global_container = '[GlobalCodes].dbo.[GlobalCodes_Container]'
+global_preanalytics = '[GlobalCodes].dbo.[GlobalCodes_Preanalytics]'
 
 global_test_codes_staging = '[GlobalCodes].[dbo].[GlobalCodes_TEST_CODES_STAGING]'
 global_test_staging =  '[GlobalCodes].[dbo].[GlobalCodes_TEST_STAGING]'
@@ -42,8 +43,11 @@ excluded_fields = ['HALO_SubSection','HALO_Department','SubSection','Department'
 spreadsheet_queries = [{'func': 'Global_Table', 'name': 'Global Codes Table', 'desc': 'Global codes joined to locations for extra info'},
                        {'func': 'Global_Table_WithUnits', 'name': 'Global Codes Table (With Units)', 'desc': 'Global codes joined to locations for extra info'},
                        {'func': 'Lexical_Table', 'name': 'Lexical Table', 'desc': 'Global multi-lingual table'},
-                       {'func': 'Location_Table', 'name': 'Location Table', 'desc': 'Global location table'}
+                       {'func': 'Location_Table', 'name': 'Location Table', 'desc': 'Global location table'},
+                       {'func': 'Preanalytics_Table', 'name': 'Preanalytics Table', 'desc': 'Shows preanalytics information for loinc, container and location'}
                        ]
+
+
 
 column_display = {
     'loinc':'LOINC',
