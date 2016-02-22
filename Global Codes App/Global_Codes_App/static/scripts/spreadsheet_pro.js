@@ -2,6 +2,7 @@
 var container = document.getElementById('spreadsheet');
 var hot = ''; //Placeholder for handsontable
 var data = [];
+var displayed_data = [];
 var id_field = '';
 var current_table = '';
 var current_query = '';
@@ -90,8 +91,10 @@ function build_spreadsheet(result) {
         return properties;
     });
 
+    filtered_data = result['data'];
+
     hot = new Handsontable(container, {
-        data: result['data'],
+        data: filtered_data,
         columns: column_data,
         colHeaders: result['columns_desc'],
         rowHeaders: true,
@@ -135,6 +138,19 @@ function build_spreadsheet(result) {
             };
         }
 
+    });
+
+    searchField = document.getElementById('search_field'),
+    function onlyExactMatch(queryStr, value) {
+        return queryStr.toString() === value.toString();
+    }
+
+    Handsontable.Dom.addEvent(searchField, 'keyup', function (event) {
+        var queryResult = hot.search.query(this.value);
+
+        //console.log(queryResult);
+        
+        hot.render();
     });
 
 };

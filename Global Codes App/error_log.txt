@@ -4575,3 +4575,71 @@ Traceback (most recent call last):
   File "C:\Users\cekin\Documents\GitHub\Global_Codes_App\Global Codes App\Global_Codes_App\sql_queries.py", line 46, in update_odbc_table
     if type(submission['id']) == int:
 KeyError: 'id'
+-----22/02/2016 12:21
+Query does not exist: 
+Traceback (most recent call last):
+  File "H:\Global_Codes_App\Global Codes App\Global_Codes_App\views.py", line 730, in get_sql_data
+    methodToCall = getattr(sql_queries, query)
+AttributeError: 'module' object has no attribute ''
+-----22/02/2016 12:26
+Problem running query
+Traceback (most recent call last):
+  File "H:\Global_Codes_App\Global Codes App\Global_Codes_App\views.py", line 733, in get_sql_data
+    result = methodToCall(params)
+  File "H:\Global_Codes_App\Global Codes App\Global_Codes_App\sql_queries.py", line 428, in Location_List_For_Mapper
+    result = run_odbc_query(sql)
+  File "H:\Global_Codes_App\Global Codes App\Global_Codes_App\sql_queries.py", line 30, in run_odbc_query
+    cursor.execute(sql.replace('\n',' '))
+ProgrammingError: ('42000', "[42000] [Microsoft][ODBC SQL Server Driver][SQL Server]Incorrect syntax near 'SubSection'. (102) (SQLExecDirectW)")
+-----22/02/2016 12:26
+Problem running query
+Traceback (most recent call last):
+  File "H:\Global_Codes_App\Global Codes App\Global_Codes_App\views.py", line 733, in get_sql_data
+    result = methodToCall(params)
+  File "H:\Global_Codes_App\Global Codes App\Global_Codes_App\sql_queries.py", line 428, in Location_List_For_Mapper
+    result = run_odbc_query(sql)
+  File "H:\Global_Codes_App\Global Codes App\Global_Codes_App\sql_queries.py", line 30, in run_odbc_query
+    cursor.execute(sql.replace('\n',' '))
+ProgrammingError: ('42000', "[42000] [Microsoft][ODBC SQL Server Driver][SQL Server]Incorrect syntax near 'SubSection'. (102) (SQLExecDirectW)")
+-----22/02/2016 12:38
+Problem running query
+Traceback (most recent call last):
+  File "H:\Global_Codes_App\Global Codes App\Global_Codes_App\views.py", line 733, in get_sql_data
+    result = methodToCall(params)
+TypeError: Location_List_For_Mapper() takes no arguments (1 given)
+-----22/02/2016 12:38
+Problem running query
+Traceback (most recent call last):
+  File "H:\Global_Codes_App\Global Codes App\Global_Codes_App\views.py", line 733, in get_sql_data
+    result = methodToCall(params)
+TypeError: Location_List_For_Mapper() takes no arguments (1 given)
+-----22/02/2016 12:38
+Problem running query
+Traceback (most recent call last):
+  File "H:\Global_Codes_App\Global Codes App\Global_Codes_App\views.py", line 733, in get_sql_data
+    result = methodToCall(params)
+TypeError: Location_List_For_Mapper() takes no arguments (1 given)
+-----22/02/2016 12:38
+Problem running query
+Traceback (most recent call last):
+  File "H:\Global_Codes_App\Global Codes App\Global_Codes_App\views.py", line 733, in get_sql_data
+    result = methodToCall(params)
+  File "H:\Global_Codes_App\Global Codes App\Global_Codes_App\sql_queries.py", line 425, in Location_List_For_Mapper
+    if r['Department'] not in D:
+KeyError: 'Department'
+-----22/02/2016 12:39
+Problem running query
+Traceback (most recent call last):
+  File "H:\Global_Codes_App\Global Codes App\Global_Codes_App\views.py", line 733, in get_sql_data
+    result = methodToCall(params)
+  File "H:\Global_Codes_App\Global Codes App\Global_Codes_App\sql_queries.py", line 425, in Location_List_For_Mapper
+    if r['Department'] not in D:
+KeyError: 'Department'
+-----22/02/2016 12:39
+Problem running query
+Traceback (most recent call last):
+  File "H:\Global_Codes_App\Global Codes App\Global_Codes_App\views.py", line 733, in get_sql_data
+    result = methodToCall(params)
+  File "H:\Global_Codes_App\Global Codes App\Global_Codes_App\sql_queries.py", line 425, in Location_List_For_Mapper
+    if r['Department'] not in D:
+KeyError: 'Department'

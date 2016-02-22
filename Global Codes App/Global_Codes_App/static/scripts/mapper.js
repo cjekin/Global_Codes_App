@@ -127,7 +127,7 @@ function get_tlc_list_data() {
 };
 
 function get_location_list() {
-    params = { query: 'Location_List_For_Mapper' };
+    params = { query: 'Location_List_For_Mapper', location: 'ALL' };
     $.ajax({
         url: '/get_sql_data', dataType: 'json',
         data: params,
@@ -386,7 +386,12 @@ function tlc_detail_event_handlers() {
 
         if (e.which == 13 && !select) {  // Enter
             e.preventDefault();
-            open_location_select2($(this));
+            if (e.ctrlKey) {
+                var params = { query: 'Location_List_For_Detail', location: $(this).data('val') }
+                run_sql_query(params, create_location_popup, $(this));
+            } else {
+                open_location_select2($(this));
+            };
         };
         if (e.which == 27 && select) { // Escape
             if (!select.isOpen()) {
@@ -397,7 +402,8 @@ function tlc_detail_event_handlers() {
         };
         if (e.which == 73) { // If I is pressed
             e.preventDefault();
-            create_location_popup($(this));
+            var params = { query: 'Location_List_For_Detail', location: $(this).data('val') }
+            run_sql_query(params, create_location_popup, $(this));
         };
         
     });
@@ -1022,34 +1028,32 @@ function open_location_select2(this_cell) {
 // Location functions
 
 
-function create_location_popup(this_cell) {
+function create_location_popup(result, this_cell) {
 
-    var current_id = this_cell.closest('tr').attr('id');
-    var current_id = this_cell.closest('tr').attr('id');
-
-    $('#loinc-search-spinner').hide();
-
-    Handlebars.registerHelper('loinc_description_full', function (str) {
-        return (str || '').replace(']', ']<br />');
-    });
-
-    // Build the html from the data and a handlebars.js template
-    var theTemplateScript = $('#location_popup_template').html();
-    var theTemplate = Handlebars.compile(theTemplateScript);
-    var theCompiledHtml = theTemplate();
+    console.log(result);
 
     var this_panel = $.jsPanel({
-        title: "search for location",
-        content: theCompiledHtml,
+        title: "Location Detail",
+        content: '<div class="popup-div"></div>',
 
         overflow: { horizontal: 'hidden', vertical: 'scroll' },
-        size: { width: 700, height: 570 },
+        size: { width: 600, height: 400 },
         position: 'center right',
         theme: 'default'
     });
 
-    this_panel.data('table_id', current_id); // Store the ID of the row it came from
+    var d = result['data'][0];
+    var c = result['columns'];
+    var h = result['columns_desc'];
+    var list = $('.popup-div').html('').append('<dl></dl>').addClass('dl-horizontal');
 
+    for (i = 0; i < c.length; i++) {
+        if (h[i] == 'URL') {
+            list.append('<dt>' + h[i] + '</dt><dd><a href="' + d[c[i]] + '" target="_">' + d[c[i]] + '</a></dd>');
+        } else {
+            list.append('<dt>' + h[i] + '</dt><dd>' + d[c[i]] + '</dd>');
+        };
+    };
 
 };
 

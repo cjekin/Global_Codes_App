@@ -6,6 +6,10 @@ import sys
 
 def safe_str(obj):
     """ return the byte string representation of obj """
+    if obj == None:
+        return u''
+    if obj == 'None':
+        return u''
     try:
         return str(obj)
     except UnicodeEncodeError:
@@ -14,6 +18,8 @@ def safe_str(obj):
 
 def safe_unicode(obj, *args):
     """ return the unicode representation of obj """
+    if obj == None:
+        return u''
     try:
         return unicode(obj, *args)
     except UnicodeDecodeError:
@@ -129,8 +135,8 @@ def Lexical_Table():
 
 
 def Location_Table():
-    columns = ['SubSectionCode','SubSection','Department','Location','Address','PostCode',
-               'Telephone','Contact','HALO','WSL','Referral']
+
+    columns = ['SubSectionCode','SubSection','Department','Location','Address','PostCode','Telephone','Contact','URL','Notes','HALO','WSL','Referral']
 
     sql = """
     SELECT {fields}
@@ -139,9 +145,10 @@ def Location_Table():
                location_table = config.global_location)
 
     result = run_odbc_query(sql)
+    #print(result['data'])
 
     result['columns'] = columns
-    result['columns_desc'] = get_column_display_names(columns)
+    result['columns_desc'] = columns
     result['hidden'] = []
     result['locked'] = ['SubSectionCode']
     result['id_field'] = 'SubSectionCode'
@@ -263,6 +270,8 @@ def TLC_List_For_Mapper(params):
         other_sql.append(' tlc_mapped = 0') 
     if params['showheld'] == '1':
         other_sql.append(' tfc_held = 1') 
+    else:
+        other_sql.append(' tfc_held = 0') 
     if len(other_sql) > 0:
         other_sql_string = ' where ' + ' and '.join(other_sql)
 
@@ -408,14 +417,13 @@ def Mapped_LOINC_List(params):
 
 
 
-def Location_List_For_Mapper(): 
+def Location_List_For_Mapper(params): 
 
     sql = """
     select SubSectionCode as id, SubSection as [text], Department, 
     SubSection + ';' + Location + ';' + [Address] as search_fields
-    from {LOCATIONS}
+    from {LOCATIONS} 
     """.format(LOCATIONS = config.global_location)
-               
 
     result = run_odbc_query(sql)
 
@@ -432,6 +440,28 @@ def Location_List_For_Mapper():
 
     result['nested_select'] = L
     result['columns_desc'] = ['SubSection Code','SubSection','Search Text']
+    result['id_field'] = 'id'
+    result['table'] = config.global_location
+
+    return result
+
+def Location_List_For_Detail(params): 
+
+    columns = ['SubSectionCode','SubSection','Department','Location','Address','PostCode','Telephone','Contact','URL','Notes','HALO','WSL','Referral']
+
+    sql = """
+    select {COLS}
+    from {LOCATIONS} 
+    where  SubSectionCode = '{specific_loc}'
+    """.format(COLS = ','.join(columns),
+               LOCATIONS = config.global_location, 
+               specific_loc = params['location']
+               )
+
+    result = run_odbc_query(sql)
+    
+    result['columns'] = columns
+    result['columns_desc'] = columns
     result['id_field'] = 'id'
     result['table'] = config.global_location
 
