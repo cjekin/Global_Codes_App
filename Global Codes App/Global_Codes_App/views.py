@@ -64,7 +64,7 @@ def login():
 # Editor page
 #
 
-@app.route('/editor')
+'''@app.route('/editor')
 @login_required
 def home():
     return render_template(
@@ -72,7 +72,8 @@ def home():
         title='Home Page',
         year=datetime.now().year,
     )
-
+'''
+'''
 @app.route('/get_new_tfc')
 @login_required
 def get_new_tfc():
@@ -273,7 +274,7 @@ def get_more_tfc_info():
     json_data = jsonify(result)
     return json_data
 
-
+'''
 
 
 #
