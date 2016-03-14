@@ -125,7 +125,7 @@
                         <label><input id="tlc_search_primary" type="checkbox" value="">Primary Codes</label>
                     </div>
                     <div class="checkbox checkbox-primary m-b">
-                        <label><input id="tlc_search_unmapped" type="checkbox" value="">Unmapped</label>
+                        <label><input id="tlc_search_unmapped" type="checkbox" value="" {{ unmapped }}>Unmapped</label>
                     </div>
                     <div class="checkbox checkbox-primary m-b">
                         <label><input id="tlc_search_showheld" type="checkbox" value="">Show Held</label>
@@ -433,6 +433,14 @@
 <script type="text/javascript" src="static/bower_components/Context.js/context.js"></script>
 
 <script type="text/javascript" src="static/scripts/context_menu_objects.js"></script>
+
+
+<script>
+    var current_system = '{{ current_system }}';
+    var current_section = '{{ current_section }}';
+
+</script>
+
 <script src="static/scripts/mapper.js"></script>
 
 {% endblock %}

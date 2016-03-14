@@ -4741,3 +4741,42 @@ Traceback (most recent call last):
     cursor.execute(sql)
 ProgrammingError: ('42S02', "[42S02] [Microsoft][ODBC SQL Server Driver][SQL Server]Invalid object name 'RFH_BIO_DW.dbo.FORM'. (208) (SQLExecDirectW)")
 
+-----14/03/2016 16:03
+Query does not exist: TLC_List_For_Mapper
+Traceback (most recent call last):
+  File "H:\Global_Codes_App\Global Codes App\Global_Codes_App\views.py", line 710, in get_sql_data
+    result = methodToCall(params)
+  File "H:\Global_Codes_App\Global Codes App\Global_Codes_App\sql_queries.py", line 314, in TLC_List_For_Mapper
+    result['table'] = config.global_main_table
+AttributeError: 'module' object has no attribute 'global_main_table'
+-----14/03/2016 16:04
+Query does not exist: TLC_List_For_Mapper
+Traceback (most recent call last):
+  File "H:\Global_Codes_App\Global Codes App\Global_Codes_App\views.py", line 710, in get_sql_data
+    result = methodToCall(params)
+  File "H:\Global_Codes_App\Global Codes App\Global_Codes_App\sql_queries.py", line 314, in TLC_List_For_Mapper
+    result['table'] = config.global_main_table
+AttributeError: 'module' object has no attribute 'global_main_table'
+-----14/03/2016 16:06
+Query does not exist: TLC_List_For_Mapper
+Traceback (most recent call last):
+  File "H:\Global_Codes_App\Global Codes App\Global_Codes_App\views.py", line 710, in get_sql_data
+    result = methodToCall(params)
+  File "H:\Global_Codes_App\Global Codes App\Global_Codes_App\sql_queries.py", line 314, in TLC_List_For_Mapper
+    result['table'] = config.global_main_table
+AttributeError: 'module' object has no attribute 'global_main_table'
+-----14/03/2016 16:08
+Query does not exist: TLC_List_For_Mapper
+Traceback (most recent call last):
+  File "H:\Global_Codes_App\Global Codes App\Global_Codes_App\views.py", line 710, in get_sql_data
+    result = methodToCall(params)
+  File "H:\Global_Codes_App\Global Codes App\Global_Codes_App\sql_queries.py", line 314, in TLC_List_For_Mapper
+AttributeError: 'module' object has no attribute 'global_main_table'
+-----14/03/2016 16:10
+Problem running query
+Traceback (most recent call last):
+  File "H:\Global_Codes_App\Global Codes App\Global_Codes_App\views.py", line 710, in get_sql_data
+    result = methodToCall(params)
+  File "H:\Global_Codes_App\Global Codes App\Global_Codes_App\sql_queries.py", line 266, in TLC_List_For_Mapper
+    if params['section'][:1] <> '0':
+KeyError: 'section'

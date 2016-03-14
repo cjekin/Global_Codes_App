@@ -3,6 +3,7 @@ import pyodbc
 import string
 import traceback
 import sys
+from datetime import datetime
 
 def safe_str(obj):
     """ return the byte string representation of obj """
@@ -82,10 +83,10 @@ def update_odbc_table(submission, user_name):
                change = "'Update'"
                )
 
-    print sql_update
+    #print sql_update
     cursor.execute(sql_update.replace('\n',' '))
 
-    print sql_audit
+    #print sql_audit
     cursor.execute(sql_audit.replace('\n',' '))
     cursor.commit()
 
@@ -115,7 +116,7 @@ def Lexical_Table():
                global_lexical = config.global_lexical_tbl, 
                loinc_db = config.loinc_db)
 
-    print sql
+    #print sql
     result = run_odbc_query(sql)
 
     for r in range(len(result['data'])):
@@ -154,7 +155,7 @@ def Location_Table():
     result['id_field'] = 'SubSectionCode'
     result['table'] = config.global_location
 
-    print sql
+    #print sql
     return result
 
 
@@ -188,7 +189,7 @@ def Global_Table():
     result['id_field'] = 'GlobalCode'
     result['table'] = config.global_main_table
 
-    print sql
+    #print sql
     return result
 
 # Temporary query with units
@@ -236,7 +237,7 @@ def Global_Table_WithUnits():
     result['id_field'] = 'GlobalCode'
     result['table'] = config.global_main_table
 
-    print sql
+    #print sql
     return result
 
 
@@ -252,7 +253,7 @@ def Worksection_Data(params):
 
     result = run_odbc_query(sql)
 
-    print sql
+    #print sql
     return result
 
 
@@ -310,7 +311,6 @@ def TLC_List_For_Mapper(params):
     result['columns'] = ['tlc_mapped','tlc','tlc_name','tlc_type','num_codes']
     result['columns_desc'] = ['Mapped','TLC','TLC Description','Type','Num Codes']
     result['id_field'] = 'tlc'
-    result['table'] = config.global_main_table
 
     return result
 
@@ -515,7 +515,7 @@ def Find_Similar_LOINC(params):
                loinc_code = params['loinc'],
                this_origin = params['this_origin'])
            
-    print sql
+    #print sql
     result = run_odbc_query(sql) 
        
     result['id_field'] = 'map_id'
@@ -579,7 +579,7 @@ def Full_Loinc_Search(params):
                TOP = top2000,
                MAPPED = already_mapped)
 
-    print sql
+    #print sql
     result = run_odbc_query(sql)
 
     result['columns_desc'] = ['Rank', 'LOINC','LOINC Name','Method']
@@ -616,3 +616,129 @@ def Preanalytics_Table():
     result['table'] = config.global_preanalytics
 
     return result
+    
+    
+#
+# Dashboard
+#
+
+def monthdelta(date, delta):
+    # Function to move date back x months
+    m, y = (date.month+delta) % 12, date.year + ((date.month)+delta-1) // 12
+    if not m: m = 12
+    d = min(date.day, [31,
+        29 if y%4==0 and not y%400==0 else 28,31,30,31,30,31,31,30,31,30,31][m-1])
+    return date.replace(day=d,month=m, year=y)
+
+def Dashboard_Graph(): 
+
+    sql = """
+    select CONVERT(char(7), ChangeDate, 121) as ChangeDate, sum(NumChanges) as NumChanges
+    from (
+
+        select ChangeDate, sum(trans_count) as NumChanges from (
+        select DATEADD(MONTH, DATEDIFF(MONTH, 0, [Date]), 0) as ChangeDate, 1 as trans_count FROM {global_audit}
+        ) q group by ChangeDate
+
+        union
+
+        select ChangeDate, sum(trans_count) as NumChanges from (
+        select DATEADD(MONTH, DATEDIFF(MONTH, 0, [Date]), 0) as ChangeDate, 1 as trans_count FROM {global_audit_archive}
+        ) q group by ChangeDate
+
+    ) q2
+    group by ChangeDate 
+    order by ChangeDate desc
+    """.format(global_audit = config.global_audit_table,
+               global_audit_archive = config.global_audit_table_archive)
+           
+    result = run_odbc_query(sql)
+    
+    # Format in to number series of changes
+    month_range = [monthdelta(datetime.now(), m).strftime("%Y-%m") for m in range(-24,1)]
+    D = {}
+    for r in result['data']:
+        D[r['ChangeDate']] = r['NumChanges']
+    final_data = []
+    for m in month_range:
+        if m not in D:
+            final_data.append(0)
+        else:
+            final_data.append(D[m])
+
+    return (month_range,final_data)
+    
+def Dashboard_Overview(): 
+
+    sql = """
+    select distinct map.origin,
+    count(*) as num_codes, 
+    sum(case when isnull(result_type,'') <> '' and isnull(result_type,'') not in ('Result', 'SubResult', 'Held') then 1 else 0 end) as num_excluded,
+    sum(case when isnull(result_type,'') in ('Result', 'SubResult', 'Held', '') then 1 else 0 end) as valid_codes, 
+    sum(case when loinc <> '' then 1 else 0 end) as num_mapped
+    from {global_map} map
+    inner join {form_staging} f on map.origin = f.Origin and map.tfc = f.TFC
+    inner join {sections} s on f.WrkSection = s.section_letter and f.Origin = s.Origin
+    group by map.origin
+    order by origin
+    """.format(global_map = config.global_map_table,
+               form_staging = config.global_form_staging,
+               sections = config.global_sections)
+           
+    result = run_odbc_query(sql)['data']
+    
+    # Get the full Winpath names and put some formatting in
+    for i in range(len(result)):
+        if result[i]['origin'] in config.system_translation:
+            result[i]['origin_full'] = config.system_translation[result[i]['origin']]
+        try:
+            result[i]['pct_mapped'] = int((float(result[i]['num_mapped']) / float(result[i]['valid_codes']))*100)
+        except:
+            result[i]['pct_mapped'] = 100
+        if result[i]['pct_mapped'] < 20:
+            result[i]['bootstrap'] = 'danger'
+        elif result[i]['pct_mapped'] >= 20 and result[i]['pct_mapped'] < 60:
+            result[i]['bootstrap'] = 'warning'
+        else:
+            result[i]['bootstrap'] = 'success'
+            
+    return result
+  
+def Dashboard_Detail(): 
+
+    sql = """
+    select distinct map.origin, f.WrkSection as sec, s.section_name,
+    count(*) as num_codes, 
+    sum(case when isnull(result_type,'') <> '' and isnull(result_type,'') not in ('Result', 'SubResult', 'Held') then 1 else 0 end) as num_excluded,
+    sum(case when isnull(result_type,'') in ('Result', 'SubResult', 'Held', '') then 1 else 0 end) as valid_codes, 
+    sum(case when isnull(result_type,'') in ('Result', 'SubResult', 'Held', '') and loinc <> '' then 1 else 0 end) as num_mapped
+    from {global_map} map
+    inner join {form_staging} f on map.origin = f.Origin and map.tfc = f.TFC
+    inner join {sections} s on f.WrkSection = s.section_letter and f.Origin = s.Origin
+    group by map.origin, f.WrkSection, s.section_name
+    order by origin, sec, section_name
+    """.format(global_map = config.global_map_table,
+               form_staging = config.global_form_staging,
+               sections = config.global_sections)
+               
+    result = run_odbc_query(sql)['data']
+    
+    D = {}
+    for r in result:
+        try:
+            r['pct_mapped'] = int((float(r['num_mapped']) / float(r['valid_codes']))*100)
+        except:
+            r['pct_mapped'] = 100
+        if r['pct_mapped'] < 20:
+            r['bootstrap'] = 'danger'
+        elif r['pct_mapped'] >= 20 and r['pct_mapped'] < 60:
+            r['bootstrap'] = 'warning'
+        else:
+            r['bootstrap'] = 'success'
+            
+        if r['origin'] not in D:
+            D[r['origin']] = [r]
+        else:
+            D[r['origin']].append(r)
+            
+    return D

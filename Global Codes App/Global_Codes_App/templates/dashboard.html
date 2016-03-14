@@ -1,4 +1,17 @@
-{% extends "layout.html" %} {% block customstyle %} {% endblock %} {% block content %}
+{% extends "layout.html" %} 
+{% block customstyle %} 
+
+<style>
+
+    .progress.darkbackground {
+        background-color: #E3DEDE;
+    }
+
+</style>
+
+{% endblock %} 
+
+{% block content %}
 
 <div class="normalheader transition animated fadeIn">
     <div class="hpanel">
@@ -18,32 +31,6 @@
     </div>
 </div>
 
-<div id="spreadsheet_title_warning" class="normalheader transition animated fadeIn">
-    <div class="hpanel">
-        <div class="panel-body">
-            
-            <a class="small-header-action" href="">
-                <div class="clip-header">
-                    <i class="fa fa-arrow-up"></i>
-                    <a class="closebox"><i class="fa fa-times"></i></a>
-                </div>
-            </a>
-
-            <div class="col-lg-1">
-                <i class="fa fa-exclamation-triangle fa-5x text-danger"></i>
-            </div>
-
-            <div class="col-lg-11">
-                <h2 class="font-light m-b-xs">
-                    Warning!
-                </h2>
-                <small>
-                    This module is under construction. Please don't use it until this message is removed.
-                </small>
-            </div>
-        </div>
-    </div>
-</div>
 
 <div id="global_code_dashboard_main" class="content animate-panel">
 
@@ -65,76 +52,26 @@
                                 <tr>
                                     <th colspan="2">Winpath</th>
                                     <th>Num Codes</th>
-                                    <th>% Mapped</th>
+                                    <th colspan="2">% Mapped</th>
                                 </tr>
                             </thead>
                             <tbody>
-                                <tr>
-                                    <td>WSL_ALL_DW</td>
-                                    <td>TDL WInpath</td>
-                                    <td>9,234</td>
-                                    <td>
+                                {% for system in dashboard_overview %}
+                                <tr class="system-row" data-system="{{ system.origin }}">
+                                    <td>{{ system.origin }}</td>
+                                    <td>{{ system.origin_full }}</td>
+                                    <td>{{ system.num_codes }}</td>
+                                    <td>{{ system.pct_mapped }} %</td>
+                                    <td style="min-width: 20%">
                                         <div class="progress m-t-xs full">
-                                            <div style="width: 33%" aria-valuemax="100" aria-valuemin="0" aria-valuenow="60" role="progressbar" class=" progress-bar progress-bar-warning">
-                                                33%
+                                            <div style="width: {{ system.pct_mapped }}%" aria-valuemax="100" aria-valuemin="0" aria-valuenow="60" role="progressbar"
+                                            class=" progress-bar progress-bar-{{ system.bootstrap }}">
+
                                             </div>
                                         </div>
                                     </td>
                                 </tr>
-                                <tr>
-                                    <td>WSL_ALL_DW</td>
-                                    <td>TDL WInpath</td>
-                                    <td>9,234</td>
-                                    <td><strong>20%</strong></td>
-                                </tr>
-                                <tr>
-                                    <td>WSL_ALL_DW</td>
-                                    <td>TDL WInpath</td>
-                                    <td>9,234</td>
-                                    <td><strong>20%</strong></td>
-                                </tr>
-                                <tr>
-                                    <td>WSL_ALL_DW</td>
-                                    <td>TDL WInpath</td>
-                                    <td>9,234</td>
-                                    <td><strong>20%</strong></td>
-                                </tr>
-                                <tr>
-                                    <td>WSL_ALL_DW</td>
-                                    <td>TDL WInpath</td>
-                                    <td>9,234</td>
-                                    <td><strong>20%</strong></td>
-                                </tr>
-                                <tr>
-                                    <td>WSL_ALL_DW</td>
-                                    <td>TDL WInpath</td>
-                                    <td>9,234</td>
-                                    <td><strong>20%</strong></td>
-                                </tr>
-                                <tr>
-                                    <td>WSL_ALL_DW</td>
-                                    <td>TDL WInpath</td>
-                                    <td>9,234</td>
-                                    <td><strong>20%</strong></td>
-                                </tr>
-                                <tr>
-                                    <td>WSL_ALL_DW</td>
-                                    <td>TDL WInpath</td>
-                                    <td>9,234</td>
-                                    <td><strong>20%</strong></td>
-                                </tr>
-                                <tr>
-                                    <td>WSL_ALL_DW</td>
-                                    <td>TDL WInpath</td>
-                                    <td>9,234</td>
-                                    <td><strong>20%</strong></td>
-                                </tr>
-                                <tr>
-                                    <td>WSL_ALL_DW</td>
-                                    <td>TDL WInpath</td>
-                                    <td>9,234</td>
-                                    <td><strong>20%</strong></td>
-                                </tr>
+                                {% endfor %}
 
                             </tbody>
                         </table>
@@ -152,11 +89,11 @@
                         <a class="showhide"><i class="fa fa-chevron-up"></i></a>
                         <a class="closebox"><i class="fa fa-times"></i></a>
                     </div>
-                    Line type chart
+                    Audited changes (all systems)
                 </div>
                 <div class="panel-body">
                     <div>
-                        <canvas id="lineOptions" height="140"></canvas>
+                        <canvas id="lineOptions" height="130px"></canvas>
                     </div>
                 </div>
             </div>
@@ -172,47 +109,48 @@
             <div class="hpanel stats">
                 <div class="panel-body h-200">
                     <div class="stats-title pull-left">
-                        <h4>CROM_ALL_DW</h4>
+                        <h4 id="sysdetail_name"></h4>
                     </div>
                     <div class="stats-icon pull-right">
                         <i class="pe-7s-share fa-4x"></i>
                     </div>
                     <div class="m-t-xl">
-                        <h3 class="m-b-xs">7,285 TFCs</h3>
+                        <h3 id="sysdetail_totaltfc" class="m-b-xs">7,285 TFCs</h3>
                         <span class="font-bold no-margins">
                         Total Progress
                     </span>
                         <div class="progress m-t-xs full">
-                            <div style="width: 55%" aria-valuemax="100" aria-valuemin="0" aria-valuenow="60" role="progressbar" class=" progress-bar progress-bar-success">
-                                55%
+                            <div id="sysdetail_progress" style="width: 0%" aria-valuemax="100" aria-valuemin="0" aria-valuenow="60" role="progressbar"
+                            class=" progress-bar progress-bar-success">
+
                             </div>
                         </div>
                         <div class="row">
                             <div class="col-xs-6">
                                 <small class="stats-label">Total codes</small>
-                                <h4>1,245</h4>
+                                <h4 id="sysdetail_numcodes">1,245</h4>
                             </div>
 
                             <div class="col-xs-6">
                                 <small class="stats-label">Codes exluded</small>
-                                <h4>762</h4>
+                                <h4 id="sysdetail_numexcluded">762</h4>
                             </div>
                         </div>
                         <div class="row">
                             <div class="col-xs-6">
-                                <small class="stats-label">Codes mapped</small>
-                                <h4>1,245</h4>
+                                <small class="stats-label">Valid codes</small>
+                                <h4 id="sysdetail_valid_codes">1,245</h4>
                             </div>
 
                             <div class="col-xs-6">
-                                <small class="stats-label">Codes not mapped</small>
-                                <h4>762</h4>
+                                <small class="stats-label">Codes Mapped</small>
+                                <h4 id="sysdetail_num_mapped">762</h4>
                             </div>
                         </div>
                     </div>
                 </div>
                 <div class="panel-footer">
-                    This is standard panel footer
+                    Total counts are in TFCs
                 </div>
             </div>
         </div>
@@ -229,209 +167,26 @@
                         <i class="pe-7s-display1 fa-4x"></i>
                     </div>
                     <div class="m-t-xl m-b-xl">
-                        <small>Format code mapping (excluded codes not counted)</small>
+                        <small>Overview of work sections. Excluded codes not displayed.</small>
                     </div>
 
-                    <div class="row">
+                    <div id="sysdetail_sectionprog" class="row">
                         <div class="col-lg-6">
-
                             <div class="row">
-                                <span class="col-lg-8">A - HAEMATOLOGY - 30%</span>
+                                <span class="col-lg-8">A - HAEMATOLOGY - (25 / 26 ) - 96%</span>
                                 <div class="col-lg-4">
-                                    <div class="progress m-t-xs full">
-                                        <div style="width: 20%" aria-valuemax="100" aria-valuemin="0" aria-valuenow="60" role="progressbar" class=" progress-bar progress-bar-warning">
-                                            A
-                                        </div>
-                                    </div>
+                                    <a href="/mapper?system=CROM_ALL_DW&section=C"><div class="progress m-t-xs full" style="width: 30%">
+                                        <div class=" progress-bar progress-bar-success" role="progressbar" aria-valuenow="60" aria-valuemin="0" aria-valuemax="100"
+                                        style="width: 50%"></div>
+                                    </div></a>
                                 </div>
                             </div>
-
-                            <div class="row">
-                                <span class="col-lg-8">A - ROUTINE CHEMISTY - 3%</span>
-                                <div class="col-lg-4">
-                                    <div class="progress m-t-xs full">
-                                        <div style="width: 3%" aria-valuemax="100" aria-valuemin="0" aria-valuenow="60" role="progressbar" class=" progress-bar progress-bar-danger">
-
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-
-                            <div class="row">
-                                <span class="col-lg-8">A - HAEMATOLOGY - 30%</span>
-                                <div class="col-lg-4">
-                                    <div class="progress m-t-xs full">
-                                        <div style="width: 20%" aria-valuemax="100" aria-valuemin="0" aria-valuenow="60" role="progressbar" class=" progress-bar progress-bar-warning">
-                                            A
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-
-                            <div class="row">
-                                <span class="col-lg-8">A - ROUTINE CHEMISTY - 3%</span>
-                                <div class="col-lg-4">
-                                    <div class="progress m-t-xs full">
-                                        <div style="width: 3%" aria-valuemax="100" aria-valuemin="0" aria-valuenow="60" role="progressbar" class=" progress-bar progress-bar-danger">
-
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-
-                            <div class="row">
-                                <span class="col-lg-8">A - HAEMATOLOGY - 30%</span>
-                                <div class="col-lg-4">
-                                    <div class="progress m-t-xs full">
-                                        <div style="width: 20%" aria-valuemax="100" aria-valuemin="0" aria-valuenow="60" role="progressbar" class=" progress-bar progress-bar-warning">
-                                            A
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-
-                            <div class="row">
-                                <span class="col-lg-8">A - ROUTINE CHEMISTY - 3%</span>
-                                <div class="col-lg-4">
-                                    <div class="progress m-t-xs full">
-                                        <div style="width: 3%" aria-valuemax="100" aria-valuemin="0" aria-valuenow="60" role="progressbar" class=" progress-bar progress-bar-danger">
-
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-
-                            <div class="row">
-                                <span class="col-lg-8">A - HAEMATOLOGY - 30%</span>
-                                <div class="col-lg-4">
-                                    <div class="progress m-t-xs full">
-                                        <div style="width: 20%" aria-valuemax="100" aria-valuemin="0" aria-valuenow="60" role="progressbar" class=" progress-bar progress-bar-warning">
-                                            A
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-
-                            <div class="row">
-                                <span class="col-lg-8">A - ROUTINE CHEMISTY - 3%</span>
-                                <div class="col-lg-4">
-                                    <div class="progress m-t-xs full">
-                                        <div style="width: 3%" aria-valuemax="100" aria-valuemin="0" aria-valuenow="60" role="progressbar" class=" progress-bar progress-bar-danger">
-
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-
-
-                        </div>
-                        <!-- Progress, end of first column -->
-
-                        <div class="col-lg-6">
-                            <!-- Progress, second column -->
-
-
-                            <div class="row">
-                                <span class="col-lg-8">A - FLOW CYOMETRY & CYTOGEN - 55%</span>
-                                <div class="col-lg-4">
-                                    <div class="progress m-t-xs full">
-                                        <div style="width: 55%" aria-valuemax="100" aria-valuemin="0" aria-valuenow="60" role="progressbar" class=" progress-bar progress-bar-success">
-                                            C
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-
-                            <div class="row">
-                                <span class="col-lg-8">A - FLOW CYOMETRY & CYTOGEN - 55%</span>
-                                <div class="col-lg-4">
-                                    <div class="progress m-t-xs full">
-                                        <div style="width: 55%" aria-valuemax="100" aria-valuemin="0" aria-valuenow="60" role="progressbar" class=" progress-bar progress-bar-success">
-                                            C
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-
-                            <div class="row">
-                                <span class="col-lg-8">A - FLOW CYOMETRY & CYTOGEN - 55%</span>
-                                <div class="col-lg-4">
-                                    <div class="progress m-t-xs full">
-                                        <div style="width: 55%" aria-valuemax="100" aria-valuemin="0" aria-valuenow="60" role="progressbar" class=" progress-bar progress-bar-success">
-                                            C
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-
-                            <div class="row">
-                                <span class="col-lg-8">A - FLOW CYOMETRY & CYTOGEN - 55%</span>
-                                <div class="col-lg-4">
-                                    <div class="progress m-t-xs full">
-                                        <div style="width: 55%" aria-valuemax="100" aria-valuemin="0" aria-valuenow="60" role="progressbar" class=" progress-bar progress-bar-success">
-                                            C
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-
-                            <div class="row">
-                                <span class="col-lg-8">A - FLOW CYOMETRY & CYTOGEN - 55%</span>
-                                <div class="col-lg-4">
-                                    <div class="progress m-t-xs full">
-                                        <div style="width: 55%" aria-valuemax="100" aria-valuemin="0" aria-valuenow="60" role="progressbar" class=" progress-bar progress-bar-success">
-                                            C
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-
-                            <div class="row">
-                                <span class="col-lg-8">A - FLOW CYOMETRY & CYTOGEN - 55%</span>
-                                <div class="col-lg-4">
-                                    <div class="progress m-t-xs full">
-                                        <div style="width: 55%" aria-valuemax="100" aria-valuemin="0" aria-valuenow="60" role="progressbar" class=" progress-bar progress-bar-success">
-                                            C
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-
-                            <div class="row">
-                                <span class="col-lg-8">A - FLOW CYOMETRY & CYTOGEN - 55%</span>
-                                <div class="col-lg-4">
-                                    <div class="progress m-t-xs full">
-                                        <div style="width: 55%" aria-valuemax="100" aria-valuemin="0" aria-valuenow="60" role="progressbar" class=" progress-bar progress-bar-success">
-                                            C
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-
-                            <div class="row">
-                                <span class="col-lg-8">A - FLOW CYOMETRY & CYTOGEN - 55%</span>
-                                <div class="col-lg-4">
-                                    <div class="progress m-t-xs full">
-                                        <div style="width: 55%" aria-valuemax="100" aria-valuemin="0" aria-valuenow="60" role="progressbar" class=" progress-bar progress-bar-success">
-                                            C
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-
-
                         </div>
 
                     </div>
                     <!--End of progress row-->
 
 
-
-
-
-                </div>
-                <div class="panel-footer">
-                    This is standard panel footer
                 </div>
             </div>
         </div>
@@ -450,26 +205,14 @@
 
 
 <script>
-
+    /**
+    * Audit chart
+    */
     $(function () {
-
-
-        /**
-         * Options for Line chart
-         */
         var lineData = {
-            labels: ["January", "February", "March", "April", "May", "June", "July"],
+            labels: {{ month_range|safe }},
             datasets: [
-                {
-                    label: "Example dataset",
-                    fillColor: "rgba(220,220,220,0.5)",
-                    strokeColor: "rgba(220,220,220,1)",
-                    pointColor: "rgba(220,220,220,1)",
-                    pointStrokeColor: "#fff",
-                    pointHighlightFill: "#fff",
-                    pointHighlightStroke: "rgba(220,220,220,1)",
-                    data: [22, 44, 67, 43, 76, 45, 12]
-                },
+                
                 {
                     label: "Example dataset",
                     fillColor: "rgba(98,203,49,0.5)",
@@ -478,7 +221,7 @@
                     pointStrokeColor: "#fff",
                     pointHighlightFill: "#fff",
                     pointHighlightStroke: "rgba(26,179,148,1)",
-                    data: [16, 32, 18, 26, 42, 33, 44]
+                    data: {{ num_changes|safe }}
                 }
             ]
         };
@@ -502,253 +245,87 @@
 
         var ctx = document.getElementById("lineOptions").getContext("2d");
         var myNewChart = new Chart(ctx).Line(lineData, lineOptions);
-
-        /**
-         * Options for Sharp Line chart
-         */
-        var sharpLineData = {
-            labels: ["January", "February", "March", "April", "May", "June", "July"],
-            datasets: [
-                {
-                    label: "Example dataset",
-                    fillColor: "rgba(98,203,49,0.5)",
-                    strokeColor: "rgba(98,203,49,0.7)",
-                    pointColor: "rgba(98,203,49,1)",
-                    pointStrokeColor: "#fff",
-                    pointHighlightFill: "#fff",
-                    pointHighlightStroke: "rgba(98,203,49,1)",
-                    data: [33, 48, 40, 19, 54, 27, 54]
-                }
-            ]
-        };
-
-        var sharpLineOptions = {
-            scaleShowGridLines : true,
-            scaleGridLineColor : "rgba(0,0,0,.05)",
-            scaleGridLineWidth : 1,
-            bezierCurve : false,
-            pointDot : true,
-            pointDotRadius : 4,
-            pointDotStrokeWidth : 1,
-            pointHitDetectionRadius : 20,
-            datasetStroke : true,
-            datasetStrokeWidth : 1,
-            datasetFill : true,
-            responsive: true
-        };
-
-        var ctx = document.getElementById("sharpLineOptions").getContext("2d");
-        var myNewChart = new Chart(ctx).Line(sharpLineData, sharpLineOptions);
-
-
-        /**
-         * Options for Bar chart
-         */
-        var barOptions = {
-            scaleBeginAtZero : true,
-            scaleShowGridLines : true,
-            scaleGridLineColor : "rgba(0,0,0,.05)",
-            scaleGridLineWidth : 1,
-            barShowStroke : true,
-            barStrokeWidth : 1,
-            barValueSpacing : 5,
-            barDatasetSpacing : 1,
-            responsive:true
-        };
-
-        /**
-         * Data for Bar chart
-         */
-        var barData = {
-            labels: ["January", "February", "March", "April", "May", "June", "July"],
-            datasets: [
-                {
-                    label: "My First dataset",
-                    fillColor: "rgba(220,220,220,0.5)",
-                    strokeColor: "rgba(220,220,220,0.8)",
-                    highlightFill: "rgba(220,220,220,0.75)",
-                    highlightStroke: "rgba(220,220,220,1)",
-                    data: [65, 59, 80, 81, 56, 55, 40]
-                },
-                {
-                    label: "My Second dataset",
-                    fillColor: "rgba(98,203,49,0.5)",
-                    strokeColor: "rgba(98,203,49,0.8)",
-                    highlightFill: "rgba(98,203,49,0.75)",
-                    highlightStroke: "rgba(98,203,49,1)",
-                    data: [28, 48, 40, 19, 86, 27, 90]
-                }
-            ]
-        };
-
-        var ctx = document.getElementById("barOptions").getContext("2d");
-        var myNewChart = new Chart(ctx).Bar(barData, barOptions);
-
-        /**
-         * Options for Bar chart
-         */
-        var singleBarOptions = {
-            scaleBeginAtZero : true,
-            scaleShowGridLines : true,
-            scaleGridLineColor : "rgba(0,0,0,.05)",
-            scaleGridLineWidth : 1,
-            barShowStroke : true,
-            barStrokeWidth : 1,
-            barValueSpacing : 5,
-            barDatasetSpacing : 1,
-            responsive:true
-        };
-
-        /**
-         * Data for Bar chart
-         */
-        var singleBarData = {
-            labels: ["January", "February", "March", "April", "May", "June", "July"],
-            datasets: [
-                {
-                    label: "My Second dataset",
-                    fillColor: "rgba(98,203,49,0.5)",
-                    strokeColor: "rgba(98,203,49,0.8)",
-                    highlightFill: "rgba(98,203,49,0.75)",
-                    highlightStroke: "rgba(98,203,49,1)",
-                    data: [10, 20, 30, 40, 30, 50, 60]
-                }
-            ]
-        };
-
-        var ctx = document.getElementById("singleBarOptions").getContext("2d");
-        var myNewChart = new Chart(ctx).Bar(singleBarData, singleBarOptions);
-
-
-        var polarData = [
-            {
-                value: 120,
-                color:"#62cb31",
-                highlight: "#57b32c",
-                label: "Homer"
-            },
-            {
-                value: 140,
-                color: "#80dd55",
-                highlight: "#57b32c",
-                label: "Inspinia"
-            },
-            {
-                value: 100,
-                color: "#a3e186",
-                highlight: "#57b32c",
-                label: "Luna"
-            }
-        ];
-
-        var polarOptions = {
-            scaleShowLabelBackdrop: true,
-            scaleBackdropColor: "rgba(255,255,255,0.75)",
-            scaleBeginAtZero: true,
-            scaleBackdropPaddingY: 1,
-            scaleBackdropPaddingX: 1,
-            scaleShowLine: true,
-            segmentShowStroke: true,
-            segmentStrokeColor: "#fff",
-            segmentStrokeWidth: 2,
-            animationSteps: 100,
-            animationEasing: "easeOutBounce",
-            animateRotate: true,
-            animateScale: false,
-            responsive: true,
-
-        };
-
-        var ctx = document.getElementById("polarOptions").getContext("2d");
-        var myNewChart = new Chart(ctx).PolarArea(polarData, polarOptions);
-
-
-        var doughnutData = [
-            {
-                value: 20,
-                color:"#62cb31",
-                highlight: "#57b32c",
-                label: "App"
-            },
-            {
-                value: 120,
-                color: "#91dc6e",
-                highlight: "#57b32c",
-                label: "Software"
-            },
-            {
-                value: 100,
-                color: "#a3e186",
-                highlight: "#57b32c",
-                label: "Laptop"
-            }
-        ];
-
-        var doughnutOptions = {
-            segmentShowStroke: true,
-            segmentStrokeColor: "#fff",
-            segmentStrokeWidth: 2,
-            percentageInnerCutout: 45, // This is 0 for Pie charts
-            animationSteps: 100,
-            animationEasing: "easeOutBounce",
-            animateRotate: true,
-            animateScale: false,
-            responsive: true,
-        };
-
-
-        var ctx = document.getElementById("doughnutChart").getContext("2d");
-        var myNewChart = new Chart(ctx).Doughnut(doughnutData, doughnutOptions);
-
-        var radarData = {
-            labels: ["Eating", "Drinking", "Sleeping", "Designing", "Coding", "Cycling", "Running"],
-            datasets: [
-                {
-                    label: "My First dataset",
-                    fillColor: "rgba(98,203,49,0.2)",
-                    strokeColor: "rgba(98,203,49,1)",
-                    pointColor: "rgba(98,203,49,1)",
-                    pointStrokeColor: "#fff",
-                    pointHighlightFill: "#fff",
-                    pointHighlightStroke: "#62cb31",
-                    data: [65, 59, 66, 45, 56, 55, 40]
-                },
-                {
-                    label: "My Second dataset",
-                    fillColor: "rgba(98,203,49,0.4)",
-                    strokeColor: "rgba(98,203,49,1)",
-                    pointColor: "rgba(98,203,49,1)",
-                    pointStrokeColor: "#fff",
-                    pointHighlightFill: "#fff",
-                    pointHighlightStroke: "#62cb31",
-                    data: [28, 12, 40, 19, 63, 27, 87]
-                }
-            ]
-        };
-
-        var radarOptions = {
-            scaleShowLine : true,
-            angleShowLineOut : true,
-            scaleShowLabels : false,
-            scaleBeginAtZero : true,
-            angleLineColor : "rgba(0,0,0,.1)",
-            angleLineWidth : 1,
-            pointLabelFontFamily : "'Arial'",
-            pointLabelFontStyle : "normal",
-            pointLabelFontSize : 10,
-            pointLabelFontColor : "#666",
-            pointDot : true,
-            pointDotRadius : 2,
-            pointDotStrokeWidth : 1,
-            pointHitDetectionRadius : 20,
-            datasetStroke : true,
-            datasetStrokeWidth : 1,
-            datasetFill : true,
-        };
-
-        var ctx = document.getElementById("radarChart").getContext("2d");
-        var myNewChart = new Chart(ctx).Radar(radarData, radarOptions);
     });
+    
+    var current_system = 'CROM_ALL_DW';
+    var dashboard_overview_var = {{ dashboard_overview_var|safe }};
+    var dashboard_detail = {{ dashboard_detail|safe }};
+    var root_url = "{{ url_for('mapper') }}";
+    
+    function fill_system_detail(current_system){
+        
+        $('#sysdetail_name').text(current_system);
+        
+        $('#sysdetail_totaltfc').text(dashboard_overview_var[current_system].num_codes + ' TFCs');
+        
+        $('#sysdetail_progress').text(dashboard_overview_var[current_system].pct_mapped);
+        $('#sysdetail_progress').css('width', dashboard_overview_var[current_system].pct_mapped + '%');
+        $('#sysdetail_progress').attr('class', 'progress-bar progress-bar-' + dashboard_overview_var[current_system].bootstrap);
+        
+        $('#sysdetail_numcodes').text(dashboard_overview_var[current_system].num_codes);
+        $('#sysdetail_numexcluded').text(dashboard_overview_var[current_system].num_excluded);
+        $('#sysdetail_valid_codes').text(dashboard_overview_var[current_system].valid_codes);
+        $('#sysdetail_num_mapped').text(dashboard_overview_var[current_system].num_mapped);
+        
+        function calc_bar_width(num_codes){
+            
+            var max_len = 0;
+            for(j=0; j<dashboard_detail[current_system].length; j++){
+                if(parseInt(dashboard_detail[current_system][j]['num_codes']) > max_len){ 
+                    max_len = dashboard_detail[current_system][j]['num_codes']
+                };
+            };
+         
+            var pct = ( num_codes / max_len ) * 100;
+            if( pct < 20 ){
+                return 20;
+            } else {
+                return pct;
+            };
+            
+        };
+        
+        var det = dashboard_detail[current_system];
+        var panel = $('#sysdetail_sectionprog');
+        panel.html('');
+        
+        var this_html = '<div class="col-lg-6">';
+        for( i=0; i<=8; i++ ) {
+            var bar_width = calc_bar_width(det[i]['num_codes']); 
+            this_html += '<div class="row">';
+            this_html += '<span class="col-lg-8 test">' + det[i]['sec'] + ' - ' + det[i]['section_name'] + ' - (' + det[i]['num_mapped'] + ' / ' + det[i]['valid_codes'] + ' ) - ' + det[i]['pct_mapped'] + '%</span>';
+            this_html += '<div class="col-lg-4">';
+            this_html += '<a href="/mapper?system=' + current_system + '&section=' + det[i]['sec'] + '">';
+            this_html += '<div class="progress m-t-xs full darkbackground" style="width: ' + bar_width + '%"><div style="width: ' + det[i]['pct_mapped'];
+            this_html += '%" aria-valuemax="100" aria-valuemin="0" aria-valuenow="60" role="progressbar" class=" progress-bar progress-bar-' + det[i]['bootstrap'] + '">';
+            this_html += '</div></div></a></div></div>';
+        };
+        this_html += '</div>'
+        
+        this_html += '<div class="col-lg-6">';
+        for( i=9; i<det.length; i++ ) {
+            var bar_width = calc_bar_width(det[i]['num_codes']);  
+            this_html += '<div class="row">';
+            this_html += '<span class="col-lg-8 test">' + det[i]['sec'] + ' - ' + det[i]['section_name'] + ' - (' + det[i]['num_mapped'] + ' / ' + det[i]['valid_codes'] + ' ) - ' + det[i]['pct_mapped'] + '%</span>';
+            this_html += '<div class="col-lg-4">';
+            this_html += '<a href="/mapper?system=' + current_system + '&section=' + det[i]['sec'] + '">';
+            this_html += '<div class="progress m-t-xs full darkbackground" style="width: ' + bar_width + '%"><div style="width: ' + det[i]['pct_mapped'];
+            this_html += '%" aria-valuemax="100" aria-valuemin="0" aria-valuenow="60" role="progressbar" class=" progress-bar progress-bar-' + det[i]['bootstrap'] + '">';
+            this_html += '</div></div></a></div></div>';
+        };
+        this_html += '</div>'
+        
+        panel.html(this_html);
+    };
+    
+    $(function () {
+        fill_system_detail(current_system);
+    });
+    
+    $('.system-row').click(function(){
+        current_system = $(this).data('system');
+        fill_system_detail(current_system);
+    })
 
 </script>
 

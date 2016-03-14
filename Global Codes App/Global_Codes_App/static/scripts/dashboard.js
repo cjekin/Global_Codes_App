@@ -1,95 +1,109 @@
-﻿// Load the dashboard
-$(document).ready(function () {
-
-    //// Load any new TFCs in to the mapping table
-    //$.getJSON('/get_new_tfc', function (data) {
-    //    if (data['result'] == 'ERROR') {
-    //        swal('Error getting new TFCs');
-    //    };
-    //});
-
-    // Get the work section data
-    $.getJSON('/dashboard_getdata', function (data) {
-
-        var dashboard = ''
-
-        if (data['data'] == 'ERROR') {
-            swal({
-                title: "Error running the system stat query",
-                text: "An exception occurred pulling all the system data. The details have been recorded in the error log. " + data['error_detail'],
-                type: "warning"
-            });
-        };
-
-        for (i = 0; i < data['system'].length; i++) {
-            var system = data['system'][i];
-
-            // Summary widget
-            dashboard += '<div class="row"><div class="col-md-3"><div class="hpanel hbggreen"><div class="panel-body"><div class="text-center"><h3>';
-            dashboard += system;
-            dashboard += '</h3><p class="text-big font-light">';
-            dashboard += data['data'][system][3] + '%'; // Percent mapped
-            dashboard += '</p><small>';
-            dashboard += data['data'][system][0] + ' of ' + data['data'][system][1] + ' codes mapped</small></div></div></div></div>';
-
-            // Get the maximum number of codes
-            var max_codes = 0;
-            console.log('Looking at system: ', system);
-            for (j = 0; j < data['data'][system][2].length; j++) {
-                //console.log('Raw: ', data['data'][system][2]);
-                //console.log('Length: ', data['data'][system][2].length);
-                //console.log('Item: ', data['data'][system][2][j][3]);
-                var num_codes = data['data'][system][2][j][3];
-                console.log(' num_codes: ', num_codes);
-                if (parseInt(num_codes) > parseInt(max_codes)) {
-                    console.log(' new max');
-                    max_codes = num_codes
-                }
-            };
-            console.log(system, max_codes);
-            
-            // Progress panel 1
-            dashboard += '<div class="col-lg-4"><div class="hpanel stats"><div class="panel-body h-200"><div class="stats-title pull-left"><h4>Mapping progress</h4></div><div class="m-t-xl">';
-            for (j = 0; j < 8; j++) {
-                var sections = data['data'][system][2];
-
-                // Make the bars a relative width based on total number of codes
-                var num_codes = sections[j][3];
-                if (num_codes == '0') {
-                    pct_of_total_width = '0';
-                } else {
-                    var pct_of_total_width = ((sections[j][3] / max_codes) * 100).toFixed(0);
-                };
+﻿$(function () {
+        var lineData = {
+            labels: {{ month_range|safe }},
+            datasets: [
                 
-                dashboard += '<span class="font-bold no-margins">';
-                dashboard += sections[j][1] + ' (' + sections[j][2] + ' / ' + sections[j][3] + ') ' + '</span><div class="progress m-t-xs full progress-small" style="width:' + pct_of_total_width + '%"><div style="width: ';
-                dashboard += sections[j][4] + '%" aria-valuemax="100" aria-valuemin="0" aria-valuenow="55" role="progressbar" class=" progress-bar progress-bar-success"></div></div>';
-            };
-            dashboard += '</div></div></div></div>'; // Close the panel
-
-            // Progress panel 2
-            dashboard += '<div class="col-lg-4"><div class="hpanel stats"><div class="panel-body h-200"><div class="stats-title pull-left"></div><div class="m-t-xl">';
-            for (j = 8; j < data['data'][system][2].length; j++) {
-                var sections = data['data'][system][2];
-
-                // Make the bars a relative width based on total number of codes
-                var num_codes = sections[j][3];
-                if (num_codes == '0') {
-                    pct_of_total_width = '0';
-                } else {
-                    var pct_of_total_width = ((sections[j][3] / max_codes) * 100).toFixed(0);
-                };
-
-                dashboard += '<span class="font-bold no-margins">';
-                dashboard += sections[j][1] + ' (' + sections[j][2] + ' / ' + sections[j][3] + ') ' + '</span><div class="progress m-t-xs full progress-small" style="width:' + pct_of_total_width + '%"><div style="width: ';
-                dashboard += sections[j][4] + '%" aria-valuemax="100" aria-valuemin="0" aria-valuenow="55" role="progressbar" class=" progress-bar progress-bar-success"></div></div>';
-            };
-            dashboard += '</div></div></div></div>'; // Close the panel
-
-            dashboard += '</div>'; // Close the row
+                {
+                    label: "Example dataset",
+                    fillColor: "rgba(98,203,49,0.5)",
+                    strokeColor: "rgba(98,203,49,0.7)",
+                    pointColor: "rgba(98,203,49,1)",
+                    pointStrokeColor: "#fff",
+                    pointHighlightFill: "#fff",
+                    pointHighlightStroke: "rgba(26,179,148,1)",
+                    data: {{ num_changes|safe }}
+                }
+            ]
         };
 
-        $('#global_code_dashboard_main').html(dashboard);
+        var lineOptions = {
+            scaleShowGridLines : true,
+            scaleGridLineColor : "rgba(0,0,0,.05)",
+            scaleGridLineWidth : 1,
+            bezierCurve : true,
+            bezierCurveTension : 0.4,
+            pointDot : true,
+            pointDotRadius : 4,
+            pointDotStrokeWidth : 1,
+            pointHitDetectionRadius : 20,
+            datasetStroke : true,
+            datasetStrokeWidth : 1,
+            datasetFill : true,
+            responsive: true
+        };
 
+
+        var ctx = document.getElementById("lineOptions").getContext("2d");
+        var myNewChart = new Chart(ctx).Line(lineData, lineOptions);
     });
-});
+    
+    var current_system = 'CROM_ALL_DW';
+    var dashboard_overview_var = {{ dashboard_overview_var|safe }};
+    var dashboard_detail = {{ dashboard_detail|safe }};
+    
+    function fill_system_detail(current_system){
+        
+        $('#sysdetail_name').text(current_system);
+        
+        $('#sysdetail_totaltfc').text(dashboard_overview_var[current_system].num_codes + ' TFCs');
+        
+        $('#sysdetail_progress').text(dashboard_overview_var[current_system].pct_mapped);
+        $('#sysdetail_progress').css('width', dashboard_overview_var[current_system].pct_mapped + '%');
+        $('#sysdetail_progress').attr('class', 'progress-bar progress-bar-' + dashboard_overview_var[current_system].bootstrap);
+        
+        $('#sysdetail_numcodes').text(dashboard_overview_var[current_system].num_codes);
+        $('#sysdetail_numexcluded').text(dashboard_overview_var[current_system].num_excluded);
+        $('#sysdetail_valid_codes').text(dashboard_overview_var[current_system].valid_codes);
+        $('#sysdetail_num_mapped').text(dashboard_overview_var[current_system].num_mapped);
+        
+        function calc_bar_width(num_codes){
+            
+            var max_len = 0;
+            for(i=0; i<dashboard_detail.length; i++){
+                if(dashboard_detail['num_codes'] > max_len){ max_len = dashboard_detail['num_codes']};
+            };
+            
+            var pct = ( num_codes / max_len ) * 100;
+            if( pct < 20 ){
+                return 20;
+            } else {
+                return pct;
+            };
+            
+        };
+        
+        var det = dashboard_detail[current_system];
+        var panel = $('#sysdetail_sectionprog');
+        panel.html('');
+        
+        var this_html = '<div class="col-lg-6">';
+        for( i=0; i<=8; i++ ) {
+            var bar_width = calc_bar_width(det[i]['num_codes']);
+            console.log(bar_width);       
+            this_html += '<div class="row">';
+            this_html += '<span class="col-lg-8">' + det[i]['sec'] + ' - ' + det[i]['section_name'] + ' - (' + det[i]['num_mapped'] + ' / ' + det[i]['valid_codes'] + ' ) - ' + det[i]['pct_mapped'] + '%</span>';
+            this_html += '<div class="col-lg-4"><div class="progress m-t-xs full" style="width: ' + calc_bar_width(det[i]['num_codes']) + '%"><div style="width: ' + det[i]['pct_mapped'];
+            this_html += '%" aria-valuemax="100" aria-valuemin="0" aria-valuenow="60" role="progressbar" class=" progress-bar progress-bar-' + det[i]['bootstrap'] + '"></div></div></div></div>';
+        };
+        this_html += '</div>'
+        
+        this_html += '<div class="col-lg-6">';
+        for( i=9; i<det.length; i++ ) {
+            this_html += '<div class="row">';
+            this_html += '<span class="col-lg-8">' + det[i]['sec'] + ' - ' + det[i]['section_name'] + ' - (' + det[i]['num_mapped'] + ' / ' + det[i]['valid_codes'] + ' ) - ' + det[i]['pct_mapped'] + '%</span>';
+            this_html += '<div class="col-lg-4"><div class="progress m-t-xs full" style="width: ' + calc_bar_width(det[i]['num_codes']) + '%"><div style="width: ' + det[i]['pct_mapped'];
+            this_html += '%" aria-valuemax="100" aria-valuemin="0" aria-valuenow="60" role="progressbar" class=" progress-bar progress-bar-' + det[i]['bootstrap'] + '"></div></div></div></div>';
+        };
+        this_html += '</div>'
+        
+        panel.html(this_html);
+    };
+    
+    $(function () {
+        fill_system_detail(current_system);
+    });
+    
+    $('.system-row').click(function(){
+        current_system = $(this).data('system');
+        fill_system_detail(current_system);
+    })

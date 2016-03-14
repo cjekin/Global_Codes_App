@@ -281,51 +281,27 @@ def get_more_tfc_info():
 # Dashboard
 #
 
-#@app.route('/')
+@app.route('/')
 @app.route('/home')
 @app.route('/dashboard')
 @login_required
 def dashboard():
+
+    month_range, num_changes = sql_queries.Dashboard_Graph()
+    dashboard_overview = sql_queries.Dashboard_Overview()
+    dashboard_overview_var = {r['origin']: r for r in dashboard_overview}
+    dashboard_detail = sql_queries.Dashboard_Detail()
+    
     return render_template(
         'dashboard.html',
         title='Mapping Overview',
-        year=datetime.now().year
+        year=datetime.now().year,
+        month_range = json.dumps(month_range),
+        num_changes = json.dumps(num_changes),
+        dashboard_overview = dashboard_overview,
+        dashboard_overview_var = json.dumps(dashboard_overview_var),
+        dashboard_detail = json.dumps(dashboard_detail)
     )
-
-
-@app.route('/dashboard_getdata')
-@login_required
-def dashboard_getdata():
-
-    try:
-        data = sql.exec_stored_procedure_list('spGlobalsApp_AllSystemStats')
-
-        summary = {}
-        for row in data['data']:
-            system = row[0]
-            if system not in summary:
-                summary[system] = [int(row[2]),int(row[3]),[row]]
-            else:
-                summary[system][0] += int(row[2])
-                summary[system][1] += int(row[3])
-                summary[system][2].append(row)
-
-        for key in summary:
-            pct = int( float(summary[key][0]) / float(summary[key][1]) * 100 )
-            summary[key].append(pct)
-            summary[key][2] = sorted(summary[key][2])
-
-        data['data'] = summary
-        data['system'] = sorted([s for s in summary])
-
-    except Exception, err:
-        error_log('Error getting dashboard data:\n' + str(traceback.format_exc()))
-        print ('-----------\n Error getting dashboard data:\n' + str(traceback.format_exc()))
-        data = dict(data = 'ERROR', error_detail='Problem getting system overview')
-
-    json_data = jsonify(data)
-    return json_data
-
 
 
 
@@ -333,362 +309,362 @@ def dashboard_getdata():
 # Global editor page
 #
 
-@app.route('/pull_all_tfcs_to_one_table')
-@login_required
-def pull_all_tfcs_to_one_table():
-    global last_database_update
+#@app.route('/pull_all_tfcs_to_one_table')
+#@login_required
+#def pull_all_tfcs_to_one_table():
+#    global last_database_update
 
-    try:
-        if last_database_update == None:
-            print('\n\n\n*** Performing pre-load and setting up globals ***\n\n\n')
-            sql.exec_stored_procedure_noreturn('spGlobalsApp_GlobalCodeDetail_LoadAllTFCs')
-            last_database_update = datetime.now()
-        elif datetime.now() - last_database_update > timedelta(seconds=(3600*8)):
-            sql.exec_stored_procedure_noreturn('spGlobalsApp_GlobalCodeDetail_LoadAllTFCs')
-            last_database_update = datetime.now()
-        result = dict(data = 'OK')
-    except:
-        error_log('Error executing pull_all_tfcs_to_one_table:\n' + str(traceback.format_exc()))
-        print ('-----------\nError pull_all_tfcs_to_one_table' + str(traceback.format_exc()))
-        result = dict(data = 'ERROR', error_detail='Problem running query')
+#    try:
+#        if last_database_update == None:
+#            print('\n\n\n*** Performing pre-load and setting up globals ***\n\n\n')
+#            sql.exec_stored_procedure_noreturn('spGlobalsApp_GlobalCodeDetail_LoadAllTFCs')
+#            last_database_update = datetime.now()
+#        elif datetime.now() - last_database_update > timedelta(seconds=(3600*8)):
+#            sql.exec_stored_procedure_noreturn('spGlobalsApp_GlobalCodeDetail_LoadAllTFCs')
+#            last_database_update = datetime.now()
+#        result = dict(data = 'OK')
+#    except:
+#        error_log('Error executing pull_all_tfcs_to_one_table:\n' + str(traceback.format_exc()))
+#        print ('-----------\nError pull_all_tfcs_to_one_table' + str(traceback.format_exc()))
+#        result = dict(data = 'ERROR', error_detail='Problem running query')
 
-    json_data = jsonify(result)
-    return json_data
-
-
-@app.route('/globaleditor')
-@login_required
-def globalseditor():
-    return render_template(
-        'globaleditor.html',
-        title='Global code editor',
-        year=datetime.now().year,
-    )
-
-@app.route('/globals_department_list')
-@login_required
-def globals_department_list():
-    try:
-        result = sql.exec_stored_procedure('spGlobalsApp_GlobalCodeDetail_DeptList')
-    except Exception, err:
-        error_log('Error executing spGlobalsApp_GlobalEditor_DeptList:\n' + str(traceback.format_exc()))
-        print ('-----------\nError pulling all global departments' + str(traceback.format_exc()))
-        result = dict(result = 'ERROR', error_detail='Problem running query')
-
-    json_data = jsonify(result)
-    return json_data
+#    json_data = jsonify(result)
+#    return json_data
 
 
-@app.route('/globalseditordata')
-@login_required
-def globalseditordata():
+#@app.route('/globaleditor')
+#@login_required
+#def globalseditor():
+#    return render_template(
+#        'globaleditor.html',
+#        title='Global code editor',
+#        year=datetime.now().year,
+#    )
 
-    try:
-        department = request.args.get('department')
+#@app.route('/globals_department_list')
+#@login_required
+#def globals_department_list():
+#    try:
+#        result = sql.exec_stored_procedure('spGlobalsApp_GlobalCodeDetail_DeptList')
+#    except Exception, err:
+#        error_log('Error executing spGlobalsApp_GlobalEditor_DeptList:\n' + str(traceback.format_exc()))
+#        print ('-----------\nError pulling all global departments' + str(traceback.format_exc()))
+#        result = dict(result = 'ERROR', error_detail='Problem running query')
 
-        result = sql.exec_stored_procedure_list('spGlobalsApp_GlobalEditor',[department])
+#    json_data = jsonify(result)
+#    return json_data
 
-    except Exception, err:
-        error_log('Error executing spGlobalsApp_GlobalEditor:\n' + str(traceback.format_exc()))
-        print ('-----------\nError pulling all globals' + str(traceback.format_exc()))
-        result = dict(data = 'ERROR', error_detail='Problem running query')
 
-    json_data = jsonify(result)
-    return json_data
+#@app.route('/globalseditordata')
+#@login_required
+#def globalseditordata():
 
-@app.route('/globalcodedetail')
-@login_required
-def globalcodedetail():
-    print 'Clicked global code detail'
+#    try:
+#        department = request.args.get('department')
 
-    try:
-        code = request.args.get('code')
-        result = {}
-        result['info'] = sql.exec_stored_procedure('spGlobalsApp_GlobalCodeDetail_Info',[code])['result']
-        result['audit'] = sql.exec_stored_procedure('spGlobalsApp_GlobalCodeDetail_Audit',[code])['result']
-        result['mapping'] = sql.exec_stored_procedure('spGlobalsApp_GlobalCodeDetail_Mapping',[code])['result']
+#        result = sql.exec_stored_procedure_list('spGlobalsApp_GlobalEditor',[department])
+
+#    except Exception, err:
+#        error_log('Error executing spGlobalsApp_GlobalEditor:\n' + str(traceback.format_exc()))
+#        print ('-----------\nError pulling all globals' + str(traceback.format_exc()))
+#        result = dict(data = 'ERROR', error_detail='Problem running query')
+
+#    json_data = jsonify(result)
+#    return json_data
+
+#@app.route('/globalcodedetail')
+#@login_required
+#def globalcodedetail():
+#    print 'Clicked global code detail'
+
+#    try:
+#        code = request.args.get('code')
+#        result = {}
+#        result['info'] = sql.exec_stored_procedure('spGlobalsApp_GlobalCodeDetail_Info',[code])['result']
+#        result['audit'] = sql.exec_stored_procedure('spGlobalsApp_GlobalCodeDetail_Audit',[code])['result']
+#        result['mapping'] = sql.exec_stored_procedure('spGlobalsApp_GlobalCodeDetail_Mapping',[code])['result']
         
-    except Exception, err:
-        error_log('Error executing code detail lookup:\n' + str(traceback.format_exc()))
-        print ('-----------\nError executing code detail lookup' + str(traceback.format_exc()))
-        result = dict(data = 'ERROR', error_detail='Problem running query')
+#    except Exception, err:
+#        error_log('Error executing code detail lookup:\n' + str(traceback.format_exc()))
+#        print ('-----------\nError executing code detail lookup' + str(traceback.format_exc()))
+#        result = dict(data = 'ERROR', error_detail='Problem running query')
 
-    json_data = jsonify(result)
-    return json_data
-
-
-@app.route('/global_edit_submit_changes', methods=['POST'])
-@login_required
-def global_edit_submit_changes():
-    print 'Submitting global code changes'
-
-    try:
-        code = request.form['GlobalCode']
-        lookup = sql.exec_stored_procedure('spGlobalsApp_GlobalCodeDetail_Info',[code])['result'][0]
-        print '\n\nLookup: ', lookup
-
-        # Find the changes       
-        updates = {}
-        for r in lookup:
-            if r <> 'Alias':
-                if r not in config.excluded_fields:
-                    if lookup[r] <> str(request.form[r]):
-                        updates[r] = (lookup[r],str(request.form[r]))
-        result = dict(data='OK', updates=updates)
-        print '\n\n', result, '\n\n'
-
-        sql.update_global_code_fields(code, updates, user.email)
-
-        result['info'] = sql.exec_stored_procedure('spGlobalsApp_GlobalCodeDetail_Info',[code])['result']
-        result['audit'] = sql.exec_stored_procedure('spGlobalsApp_GlobalCodeDetail_Audit',[code])['result']
-        result['mapping'] = sql.exec_stored_procedure('spGlobalsApp_GlobalCodeDetail_Mapping',[code])['result']
-
-    except Exception, err:
-        error_log('Error reciving global code edit submission:\n' + str(traceback.format_exc()))
-        print ('-----------\nError reciving global code edit submission' + str(traceback.format_exc()))
-        result = dict(data = 'ERROR', error_detail=str(traceback.format_exc()))
-
-    json_data = jsonify(result)
-    return json_data
+#    json_data = jsonify(result)
+#    return json_data
 
 
-@app.route('/global_edit_new_code', methods=['POST'])
-@login_required
-def global_edit_new_code():
-    print 'Creating new global code'
+#@app.route('/global_edit_submit_changes', methods=['POST'])
+#@login_required
+#def global_edit_submit_changes():
+#    print 'Submitting global code changes'
 
-    try:
-        submission = {r:request.form[r] for r in request.form if r not in config.excluded_fields}
-        code = submission['GlobalCode']
+#    try:
+#        code = request.form['GlobalCode']
+#        lookup = sql.exec_stored_procedure('spGlobalsApp_GlobalCodeDetail_Info',[code])['result'][0]
+#        print '\n\nLookup: ', lookup
 
-        sql.insert_new_global_code(code, submission, user.email)
+#        # Find the changes       
+#        updates = {}
+#        for r in lookup:
+#            if r <> 'Alias':
+#                if r not in config.excluded_fields:
+#                    if lookup[r] <> str(request.form[r]):
+#                        updates[r] = (lookup[r],str(request.form[r]))
+#        result = dict(data='OK', updates=updates)
+#        print '\n\n', result, '\n\n'
 
-        result = dict(data = 'OK')
+#        sql.update_global_code_fields(code, updates, user.email)
 
-        result['info'] = sql.exec_stored_procedure('spGlobalsApp_GlobalCodeDetail_Info',[code])['result']
-        result['audit'] = sql.exec_stored_procedure('spGlobalsApp_GlobalCodeDetail_Audit',[code])['result']
-        result['mapping'] = sql.exec_stored_procedure('spGlobalsApp_GlobalCodeDetail_Mapping',[code])['result']
+#        result['info'] = sql.exec_stored_procedure('spGlobalsApp_GlobalCodeDetail_Info',[code])['result']
+#        result['audit'] = sql.exec_stored_procedure('spGlobalsApp_GlobalCodeDetail_Audit',[code])['result']
+#        result['mapping'] = sql.exec_stored_procedure('spGlobalsApp_GlobalCodeDetail_Mapping',[code])['result']
 
-    except Exception, err:
-        error_log('Problem creating a new global code:\n' + str(traceback.format_exc()))
-        print ('-----------\nProblem creating a new global code' + str(traceback.format_exc()))
-        result = dict(data = 'ERROR', error_detail='Problem creating a new global code')
+#    except Exception, err:
+#        error_log('Error reciving global code edit submission:\n' + str(traceback.format_exc()))
+#        print ('-----------\nError reciving global code edit submission' + str(traceback.format_exc()))
+#        result = dict(data = 'ERROR', error_detail=str(traceback.format_exc()))
 
-    json_data = jsonify(result)
-    return json_data
+#    json_data = jsonify(result)
+#    return json_data
 
-@app.route('/global_edit_delete_code')
-@login_required
-def global_edit_delete_code():
-    print 'Deleting global code'
 
-    try:
-        code = request.args.get('code')
-        exclusion = request.args.get('exclusion')
+#@app.route('/global_edit_new_code', methods=['POST'])
+#@login_required
+#def global_edit_new_code():
+#    print 'Creating new global code'
 
-        sql.exec_stored_procedure_noreturn('spGlobalsApp_DeleteGlobalCode',[code, exclusion, user.email])
+#    try:
+#        submission = {r:request.form[r] for r in request.form if r not in config.excluded_fields}
+#        code = submission['GlobalCode']
 
-        result = dict(data = 'OK')
+#        sql.insert_new_global_code(code, submission, user.email)
 
-    except Exception, err:
-        error_log('Error deleting global code:\n' + str(traceback.format_exc()))
-        print ('-----------\nError deleting global code' + str(traceback.format_exc()))
-        result = dict(data = 'ERROR', error_detail='Problem deleting the code')
+#        result = dict(data = 'OK')
 
-    json_data = jsonify(result)
-    return json_data
+#        result['info'] = sql.exec_stored_procedure('spGlobalsApp_GlobalCodeDetail_Info',[code])['result']
+#        result['audit'] = sql.exec_stored_procedure('spGlobalsApp_GlobalCodeDetail_Audit',[code])['result']
+#        result['mapping'] = sql.exec_stored_procedure('spGlobalsApp_GlobalCodeDetail_Mapping',[code])['result']
+
+#    except Exception, err:
+#        error_log('Problem creating a new global code:\n' + str(traceback.format_exc()))
+#        print ('-----------\nProblem creating a new global code' + str(traceback.format_exc()))
+#        result = dict(data = 'ERROR', error_detail='Problem creating a new global code')
+
+#    json_data = jsonify(result)
+#    return json_data
+
+#@app.route('/global_edit_delete_code')
+#@login_required
+#def global_edit_delete_code():
+#    print 'Deleting global code'
+
+#    try:
+#        code = request.args.get('code')
+#        exclusion = request.args.get('exclusion')
+
+#        sql.exec_stored_procedure_noreturn('spGlobalsApp_DeleteGlobalCode',[code, exclusion, user.email])
+
+#        result = dict(data = 'OK')
+
+#    except Exception, err:
+#        error_log('Error deleting global code:\n' + str(traceback.format_exc()))
+#        print ('-----------\nError deleting global code' + str(traceback.format_exc()))
+#        result = dict(data = 'ERROR', error_detail='Problem deleting the code')
+
+#    json_data = jsonify(result)
+#    return json_data
 
 
 #
 # Spreadsheet
 #
 
-@app.route('/spreadsheet')
-@login_required
-def spreadsheet():
-    return render_template(
-        'spreadsheet.html',
-        title='Spreadsheet Editor',
-        year=datetime.now().year,
-    )
+#@app.route('/spreadsheet')
+#@login_required
+#def spreadsheet():
+#    return render_template(
+#        'spreadsheet.html',
+#        title='Spreadsheet Editor',
+#        year=datetime.now().year,
+#    )
 
 
-@app.route('/pull_spreadsheet_globals')
-@login_required
-def pull_spreadsheet_globals():
+#@app.route('/pull_spreadsheet_globals')
+#@login_required
+#def pull_spreadsheet_globals():
 
-    try:
-        result = sql.exec_stored_procedure_list('spGlobalsApp_GlobalSpreadsheet', header_row=True)
+#    try:
+#        result = sql.exec_stored_procedure_list('spGlobalsApp_GlobalSpreadsheet', header_row=True)
 
-    except Exception, err:
-        error_log('Error executing spGlobalsApp_GlobalSpreadsheet:\n' + str(traceback.format_exc()))
-        print ('-----------\nError pulling all globals' + str(traceback.format_exc()))
-        result = dict(data = 'ERROR', error_detail='Problem running query')
+#    except Exception, err:
+#        error_log('Error executing spGlobalsApp_GlobalSpreadsheet:\n' + str(traceback.format_exc()))
+#        print ('-----------\nError pulling all globals' + str(traceback.format_exc()))
+#        result = dict(data = 'ERROR', error_detail='Problem running query')
 
-    json_data = jsonify(result)
-    return json_data
-
-
-@app.route('/spreadsheet_changefield', methods=['POST'])
-@login_required
-def spreadsheet_changefield():
-    print 'Submitting change to field from spreadsheet'
-
-    try:
-        print 'Raw submission: ', request.form  
-        code = request.form['GlobalCode']
-
-        lookup = sql.exec_stored_procedure('spGlobalsApp_GlobalCodeDetail_Info',[code])['result'][0]
-        print 'Looking up previous code', lookup
-
-        updates = {}
-        for r in [r for r in request.form if r <> 'GlobalCode']:
-            if r in lookup:
-                updates[r] = (lookup[r],request.form[r])
-            else:
-                updates[r] = ('',request.form[r])
-
-        print 'spreadsheet_changefield\n', code, updates
-        sql.update_global_code_fields(code, updates, user.email)
-        result = dict(data = 'OK')
-
-    except Exception, err:
-        error_log('Error reciving global code spreadsheet edit submission:\n' + str(traceback.format_exc()))
-        print ('-----------\nError reciving global code spreadsheet edit submission' + str(traceback.format_exc()))
-        result = dict(data = 'ERROR', error_detail='Problem submitting global changes')
-
-    json_data = jsonify(result)
-    return json_data
+#    json_data = jsonify(result)
+#    return json_data
 
 
-@app.route('/spreadsheet_newcode', methods=['POST'])
-@login_required
-def spreadsheet_newcode():
-    print 'Spreadsheet: Creating new global code'
+#@app.route('/spreadsheet_changefield', methods=['POST'])
+#@login_required
+#def spreadsheet_changefield():
+#    print 'Submitting change to field from spreadsheet'
 
-    try:
-        submission = {r:request.form[r] for r in request.form}
-        code = submission['GlobalCode']
+#    try:
+#        print 'Raw submission: ', request.form  
+#        code = request.form['GlobalCode']
 
-        sql.insert_new_global_code(code, submission, user.email)
+#        lookup = sql.exec_stored_procedure('spGlobalsApp_GlobalCodeDetail_Info',[code])['result'][0]
+#        print 'Looking up previous code', lookup
 
-        result = dict(data = 'OK')
+#        updates = {}
+#        for r in [r for r in request.form if r <> 'GlobalCode']:
+#            if r in lookup:
+#                updates[r] = (lookup[r],request.form[r])
+#            else:
+#                updates[r] = ('',request.form[r])
 
-    except Exception, err:
-        error_log('Problem creating a new global code from spreadsheet:\n' + str(traceback.format_exc()))
-        print ('-----------\nProblem creating a new global code from spreadsheet' + str(traceback.format_exc()))
-        result = dict(data = 'ERROR', error_detail='Problem creating a new global code')
+#        print 'spreadsheet_changefield\n', code, updates
+#        sql.update_global_code_fields(code, updates, user.email)
+#        result = dict(data = 'OK')
 
-    json_data = jsonify(result)
-    return json_data
+#    except Exception, err:
+#        error_log('Error reciving global code spreadsheet edit submission:\n' + str(traceback.format_exc()))
+#        print ('-----------\nError reciving global code spreadsheet edit submission' + str(traceback.format_exc()))
+#        result = dict(data = 'ERROR', error_detail='Problem submitting global changes')
 
-
-#
-# Locations
-#
-
-@app.route('/locations')
-@login_required
-def locations():
-    return render_template(
-        'locationeditor.html',
-        title='Location Editor',
-        year=datetime.now().year,
-    )
-
-@app.route('/location_department_list')
-@login_required
-def location_department_list():
-    try:
-        result = sql.exec_stored_procedure_list('spGlobalsApp_LocationEditor_DepartmentList')
-    except Exception, err:
-        error_log('Error executing spGlobalsApp_LocationEditor_DepartmentList:\n' + str(traceback.format_exc()))
-        print ('-----------\nError pulling all locations' + str(traceback.format_exc()))
-        result = dict(data = 'ERROR', error_detail='Problem running query')
-
-    json_data = jsonify(result)
-    return json_data
+#    json_data = jsonify(result)
+#    return json_data
 
 
-@app.route('/location_detail')
-@login_required
-def location_detail():
-    print 'Clicked location detail'
+#@app.route('/spreadsheet_newcode', methods=['POST'])
+#@login_required
+#def spreadsheet_newcode():
+#    print 'Spreadsheet: Creating new global code'
 
-    try:
-        code = request.args.get('code')
-        result = {}
-        result['info'] = sql.exec_stored_procedure('spGlobalsApp_LocationEditor_Info',[code])['result']
-        #result['audit'] = sql.exec_stored_procedure('spGlobalsApp_GlobalCodeDetail_Audit',[code])['result']
-        #result['mapping'] = sql.exec_stored_procedure('spGlobalsApp_GlobalCodeDetail_Mapping',[code])['result']
+#    try:
+#        submission = {r:request.form[r] for r in request.form}
+#        code = submission['GlobalCode']
+
+#        sql.insert_new_global_code(code, submission, user.email)
+
+#        result = dict(data = 'OK')
+
+#    except Exception, err:
+#        error_log('Problem creating a new global code from spreadsheet:\n' + str(traceback.format_exc()))
+#        print ('-----------\nProblem creating a new global code from spreadsheet' + str(traceback.format_exc()))
+#        result = dict(data = 'ERROR', error_detail='Problem creating a new global code')
+
+#    json_data = jsonify(result)
+#    return json_data
+
+
+##
+## Locations
+##
+
+#@app.route('/locations')
+#@login_required
+#def locations():
+#    return render_template(
+#        'locationeditor.html',
+#        title='Location Editor',
+#        year=datetime.now().year,
+#    )
+
+#@app.route('/location_department_list')
+#@login_required
+#def location_department_list():
+#    try:
+#        result = sql.exec_stored_procedure_list('spGlobalsApp_LocationEditor_DepartmentList')
+#    except Exception, err:
+#        error_log('Error executing spGlobalsApp_LocationEditor_DepartmentList:\n' + str(traceback.format_exc()))
+#        print ('-----------\nError pulling all locations' + str(traceback.format_exc()))
+#        result = dict(data = 'ERROR', error_detail='Problem running query')
+
+#    json_data = jsonify(result)
+#    return json_data
+
+
+#@app.route('/location_detail')
+#@login_required
+#def location_detail():
+#    print 'Clicked location detail'
+
+#    try:
+#        code = request.args.get('code')
+#        result = {}
+#        result['info'] = sql.exec_stored_procedure('spGlobalsApp_LocationEditor_Info',[code])['result']
+#        #result['audit'] = sql.exec_stored_procedure('spGlobalsApp_GlobalCodeDetail_Audit',[code])['result']
+#        #result['mapping'] = sql.exec_stored_procedure('spGlobalsApp_GlobalCodeDetail_Mapping',[code])['result']
         
-    except Exception, err:
-        error_log('Error executing location detail lookup:\n' + str(traceback.format_exc()))
-        print ('-----------\nError executing code detail lookup' + str(traceback.format_exc()))
-        result = dict(data = 'ERROR', error_detail='Problem running query')
+#    except Exception, err:
+#        error_log('Error executing location detail lookup:\n' + str(traceback.format_exc()))
+#        print ('-----------\nError executing code detail lookup' + str(traceback.format_exc()))
+#        result = dict(data = 'ERROR', error_detail='Problem running query')
 
-    json_data = jsonify(result)
-    return json_data
+#    json_data = jsonify(result)
+#    return json_data
 
 
-@app.route('/location_edit_submit_changes', methods=['POST'])
-@login_required
-def location_edit_submit_changes():
-    print 'Submitting location changes'
+#@app.route('/location_edit_submit_changes', methods=['POST'])
+#@login_required
+#def location_edit_submit_changes():
+#    print 'Submitting location changes'
 
-    try:
-        code = request.form['SubSectionCode']
-        lookup = sql.exec_stored_procedure('spGlobalsApp_LocationEditor_Info',[code])['result'][0]
-        print 'Lookup: ', lookup
+#    try:
+#        code = request.form['SubSectionCode']
+#        lookup = sql.exec_stored_procedure('spGlobalsApp_LocationEditor_Info',[code])['result'][0]
+#        print 'Lookup: ', lookup
         
-        # Find the changes       
-        updates = {}
-        for r in lookup:
-            if r <> 'Alias':
-                print 'Checking', lookup[r], type(lookup[r]), ' against ', request.form[r], type(request.form[r])
-                if lookup[r] <> request.form[r]:
-                    updates[r] = (lookup[r],request.form[r])
-        result = dict(data='OK', updates=updates)
+#        # Find the changes       
+#        updates = {}
+#        for r in lookup:
+#            if r <> 'Alias':
+#                print 'Checking', lookup[r], type(lookup[r]), ' against ', request.form[r], type(request.form[r])
+#                if lookup[r] <> request.form[r]:
+#                    updates[r] = (lookup[r],request.form[r])
+#        result = dict(data='OK', updates=updates)
         
-        sql.update_location_fields(code, updates, user.email)
+#        sql.update_location_fields(code, updates, user.email)
 
-        result['info'] = sql.exec_stored_procedure('spGlobalsApp_LocationEditor_Info',[code])['result']
-        #result['audit'] = sql.exec_stored_procedure('spGlobalsApp_GlobalCodeDetail_Audit',[code])['result']
-        #result['mapping'] = sql.exec_stored_procedure('spGlobalsApp_GlobalCodeDetail_Mapping',[code])['result']
+#        result['info'] = sql.exec_stored_procedure('spGlobalsApp_LocationEditor_Info',[code])['result']
+#        #result['audit'] = sql.exec_stored_procedure('spGlobalsApp_GlobalCodeDetail_Audit',[code])['result']
+#        #result['mapping'] = sql.exec_stored_procedure('spGlobalsApp_GlobalCodeDetail_Mapping',[code])['result']
 
-    except Exception, err:
-        error_log('Error reciving location edit submission:\n' + str(traceback.format_exc()))
-        print ('-----------\nError reciving location edit submission' + str(traceback.format_exc()))
-        result = dict(data = 'ERROR', error_detail=str(traceback.format_exc()))
+#    except Exception, err:
+#        error_log('Error reciving location edit submission:\n' + str(traceback.format_exc()))
+#        print ('-----------\nError reciving location edit submission' + str(traceback.format_exc()))
+#        result = dict(data = 'ERROR', error_detail=str(traceback.format_exc()))
 
-    json_data = jsonify(result)
-    return json_data
+#    json_data = jsonify(result)
+#    return json_data
 
 
-@app.route('/location_edit_new_code', methods=['POST'])
-@login_required
-def location_edit_new_code():
-    print 'Creating new location code'
+#@app.route('/location_edit_new_code', methods=['POST'])
+#@login_required
+#def location_edit_new_code():
+#    print 'Creating new location code'
 
-    try:
-        submission = {r:request.form[r] for r in request.form}
-        code = submission['SubSectionCode']
+#    try:
+#        submission = {r:request.form[r] for r in request.form}
+#        code = submission['SubSectionCode']
 
-        sql.insert_new_location_code(code, submission, user.email)
+#        sql.insert_new_location_code(code, submission, user.email)
 
-        result = dict(data = 'OK')
+#        result = dict(data = 'OK')
 
-        result['info'] = sql.exec_stored_procedure('spGlobalsApp_LocationEditor_Info',[code])['result']
-        #result['audit'] = sql.exec_stored_procedure('spGlobalsApp_GlobalCodeDetail_Audit',[code])['result']
-        #result['mapping'] = sql.exec_stored_procedure('spGlobalsApp_GlobalCodeDetail_Mapping',[code])['result']
+#        result['info'] = sql.exec_stored_procedure('spGlobalsApp_LocationEditor_Info',[code])['result']
+#        #result['audit'] = sql.exec_stored_procedure('spGlobalsApp_GlobalCodeDetail_Audit',[code])['result']
+#        #result['mapping'] = sql.exec_stored_procedure('spGlobalsApp_GlobalCodeDetail_Mapping',[code])['result']
 
-    except Exception, err:
-        error_log('Problem creating a new location code:\n' + str(traceback.format_exc()))
-        print ('-----------\nProblem creating a new location code' + str(traceback.format_exc()))
-        result = dict(data = 'ERROR', error_detail='Problem creating a new location code')
+#    except Exception, err:
+#        error_log('Problem creating a new location code:\n' + str(traceback.format_exc()))
+#        print ('-----------\nProblem creating a new location code' + str(traceback.format_exc()))
+#        result = dict(data = 'ERROR', error_detail='Problem creating a new location code')
 
-    json_data = jsonify(result)
-    return json_data
+#    json_data = jsonify(result)
+#    return json_data
 
 
 
@@ -765,14 +741,26 @@ def submit_table_update():
 # New Mapper
 #
 
-@app.route('/')
+
 @app.route('/mapper')
 @login_required
 def mapper():
+    if 'system' in request.args:
+        current_system_val = request.args.get('system')
+        current_section_val = request.args.get('section')
+        unmapped_checked = 'checked'
+    else:
+        current_system_val = 'UCLH_MIC_DW'
+        current_section_val = 'B'
+        unmapped_checked = ''
+
     return render_template(
         'mapper.html',
         title='Mapper (New)',
-        year=datetime.now().year
+        year=datetime.now().year,
+        current_system = current_system_val,
+        current_section = current_section_val,
+        unmapped = unmapped_checked
     )
 
 @app.route('/mapped_loinc_search')

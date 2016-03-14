@@ -6,8 +6,8 @@ var current_tlc_type = 'G';
 var current_row = '';
 var library_code_datatable = '';
 
-var current_system = 'BMI_ALL_DW';
-var current_section = '0';
+//var current_system = 'BMI_ALL_DW'; // Being passed through the view now
+//var current_section = '0';
 var library_search_datatable = '';
 var global_map_table = ''; // Used to update mapping
 var location_list = '';
@@ -45,11 +45,13 @@ function get_winpath_systems_select() {
     $.getJSON('/get_variable_from_config?variable=systems', function (data) {
 
         var options = data['data'];
+        var sel = '';
         $('#tlc_search_system').html('');
 
         for (i = 0; i < options.length; i++) {
+            if (options[i] == current_system) { sel = ' selected'} else { sel = '' };
             $('#tlc_search_system').append(
-                $('<option></option>').val(options[i]).html(options[i])
+                $('<option' + sel + '></option>').val(options[i]).html(options[i])
             );
         };
     });
@@ -59,6 +61,7 @@ function get_worksections_select() {
     $.getJSON('/get_sql_data?query=Worksection_Data&system=' + current_system, function (data) {
 
         var options = data['data'];
+        var sel = '';
         $('#tlc_search_section').html('<option>0 - ALL SECTIONS</option>');
 
         for (i = 0; i < options.length; i++) {
@@ -68,8 +71,9 @@ function get_worksections_select() {
                 var section = options[i]['section_name'];
             };
             var code = options[i]['section_letter'];
+            if (options[i]['section_letter'] == current_section) { sel = ' selected' } else { sel = '' };
             $('#tlc_search_section').append(
-                $('<option></option>').val(code).html(code + ' - ' + section)
+                $('<option' + sel + '></option>').val(code).html(code + ' - ' + section)
             );
         };
     });
