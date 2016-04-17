@@ -161,11 +161,11 @@ def Location_Table():
 
 def Global_Map_Table():
 
-    columns = ['Map ID','Origin','TFC','TFC Name','LOINC', 'LOINC Name', 'LOINC Sample', 'Container', 'Loc1 Code', 'SubSection', 'Department', 'Location', 'Location2', 'TAT (hrs)','TAT Type','Frozen','Aliquot Vol (ul)','Off Track?']
-    fields = ['map_id', 'origin', 'tfc', 'TestName', 'loinc', 'COMPONENT', 'SYSTEM', 'container', 'loc1', 'SubSection', 'Department', 'Location', 'loc2', 'tat', 'tat_type', 'frozen', 'aliquot_vol_ul', 'off_track']
+    columns = ['Map ID','LOINC', 'LOINC Sample', 'Container', 'Loc1 Code', 'SubSection', 'Department', 'Location', 'Location2','Origin','TFC','TFC Name', 'LOINC Name', 'TAT (hrs)','TAT Type','Frozen','Aliquot Vol (ul)','Off Track?']
+    fields = ['map_id', 'loinc', 'SYSTEM', 'container', 'loc1', 'SubSection', 'Department', 'Location', 'loc2', 'origin', 'tfc', 'TestName', 'COMPONENT', 'tat', 'tat_type', 'frozen', 'aliquot_vol_ul', 'off_track']
 
     sql = """
-    select [map_id], m.[origin], m.[tfc], f.[TestName], [loinc], [COMPONENT], [SYSTEM], [container], [loc1], [SubSection], [Department], [Location], [loc2], [tat], [tat_type], [frozen], [aliquot_vol_ul], [off_track]
+    select [map_id], [loinc], [SYSTEM], [container], [loc1], [SubSection], [Department], [Location], [loc2], m.[origin], m.[tfc], f.[TestName], [COMPONENT], [tat], [tat_type], [frozen], [aliquot_vol_ul], [off_track]
     from {map_table} m
     inner join {form_table} f on m.tfc = f.TFC and m.origin = f.Origin
     left join {loinc_table} ln on m.loinc = ln.LOINC_NUM
@@ -176,7 +176,6 @@ def Global_Map_Table():
                loinc_table = config.loinc_db,
                global_location_table = config.global_location)
 
-    print sql
     result = run_odbc_query(sql)
 
     result['columns'] = fields

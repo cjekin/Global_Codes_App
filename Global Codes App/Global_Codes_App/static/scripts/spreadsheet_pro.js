@@ -54,9 +54,11 @@ function get_spreadsheet(sheet) {
             data = returned_data['data'];
             id_field = returned_data['id_field'];
             current_table = returned_data['table'];
-            if (typeof hot == 'object') {
-                hot.destroy();
-            };
+            //if (typeof hot == 'object') {
+            //    console.log('Typeof hot: ', typeof hot);
+            //    hot.destroy();
+            //    console.log('Typeof hot: ', typeof hot);
+            //};
             current_spreadsheet_data = returned_data;
             build_spreadsheet(current_spreadsheet_data);
         };
@@ -93,7 +95,8 @@ function build_spreadsheet(result) {
 
     filtered_data = result['data'];
 
-    hot = new Handsontable(container, {
+
+    settings = {
         data: filtered_data,
         columns: column_data,
         colHeaders: result['columns_desc'],
@@ -122,11 +125,25 @@ function build_spreadsheet(result) {
         currentRowClassName: 'currentRow', // Highlights the selected row
         currentColClassName: 'currentCol',
 
-        autoColumnSize: {syncLimit: 100}, // Auto-fit the columns (take first 100 rows only)
+        autoColumnSize: { syncLimit: 100 }, // Auto-fit the columns (take first 100 rows only)
+
+        afterRender: function () {
+            if (hot) {
+                var displayedrows = hot.countRows();
+                var totalrows = hot.countSourceRows();
+                if (displayedrows != totalrows) {
+                    $('#number_results_returned').text(displayedrows + ' rows (of ' + totalrows + ')');
+                } else {
+                    $('#number_results_returned').text(displayedrows + ' rows');
+                };
+            } else {
+                console.log('hot does not exist');
+            };
+        },
 
         afterChange: function (changes, source) {
             //console.log('afterChange event: ' + (changes || 'nochange').toString() + ' from ' + source);
-            
+
             if (changes != null && source == 'edit') {
                 cell_changed(changes, source);
             } else if (changes != null && source == 'autofill') {
@@ -140,20 +157,25 @@ function build_spreadsheet(result) {
             };
         }
 
-    });
+    };
 
-    searchField = document.getElementById('search_field'),
-    function onlyExactMatch(queryStr, value) {
-        return queryStr.toString() === value.toString();
-    }
+    if (hot) {
+        hot.updateSettings(settings);
+    } else {
+        hot = new Handsontable(container, settings);
 
-    Handsontable.Dom.addEvent(searchField, 'keyup', function (event) {
-        var queryResult = hot.search.query(this.value);
+        searchField = document.getElementById('search_field'),
+        function onlyExactMatch(queryStr, value) {
+            return queryStr.toString() === value.toString();
+        }
 
-        ////console.log(queryResult);
-        
-        hot.render();
-    });
+        Handsontable.Dom.addEvent(searchField, 'keyup', function (event) {
+            var queryResult = hot.search.query(this.value);
+            hot.render();
+        });
+    };
+
+    
 
 };
 
@@ -222,7 +244,7 @@ $('#panel_fullscreen_icon').click(function(){
         $('#spreadsheet').removeClass('spreadsheet-inpanel');
         $('#global_code_table').addClass('panel-fullscreen');
 
-        hot.destroy();
+        //hot.destroy();
         build_spreadsheet(current_spreadsheet_data);
     } else {
         $('link[rel=stylesheet][href~="static/styles/style.css"]').prop( "disabled", false );
@@ -239,7 +261,7 @@ $('#panel_fullscreen_icon').click(function(){
         $('#spreadsheet').addClass('spreadsheet-inpanel');
         $('#global_code_table').removeClass('panel-fullscreen');
 
-        hot.destroy();
+        //hot.destroy();
         build_spreadsheet(current_spreadsheet_data);
     };
 });
