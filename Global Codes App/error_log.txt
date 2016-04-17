@@ -4780,3 +4780,67 @@ Traceback (most recent call last):
   File "H:\Global_Codes_App\Global Codes App\Global_Codes_App\sql_queries.py", line 266, in TLC_List_For_Mapper
     if params['section'][:1] <> '0':
 KeyError: 'section'
+-----16/03/2016 14:37
+Query does not exist: Global_Table
+Traceback (most recent call last):
+  File "H:\Global_Codes_App\Global Codes App\Global_Codes_App\views.py", line 712, in get_sql_data
+    result = methodToCall()
+  File "H:\Global_Codes_App\Global Codes App\Global_Codes_App\sql_queries.py", line 180, in Global_Table
+    """.format(global_main = config.global_main_table, loinc = config.loinc_db, global_dept = config.global_location)
+AttributeError: 'module' object has no attribute 'global_main_table'
+-----16/03/2016 14:37
+Query does not exist: Global_Table
+Traceback (most recent call last):
+  File "H:\Global_Codes_App\Global Codes App\Global_Codes_App\views.py", line 712, in get_sql_data
+    result = methodToCall()
+  File "H:\Global_Codes_App\Global Codes App\Global_Codes_App\sql_queries.py", line 180, in Global_Table
+    """.format(global_main = config.global_main_table, loinc = config.loinc_db, global_dept = config.global_location)
+AttributeError: 'module' object has no attribute 'global_main_table'
+-----29/03/2016 16:24
+Problem updating SQL table
+Traceback (most recent call last):
+  File "H:\Global_Codes_App\Global Codes App\Global_Codes_App\views.py", line 730, in submit_table_update
+    sql_queries.update_odbc_table(submission,user.email)
+  File "H:\Global_Codes_App\Global Codes App\Global_Codes_App\sql_queries.py", line 65, in update_odbc_table
+    field = submission['field'],
+KeyError: 'field'
+-----29/03/2016 16:26
+Problem updating SQL table
+Traceback (most recent call last):
+  File "H:\Global_Codes_App\Global Codes App\Global_Codes_App\views.py", line 730, in submit_table_update
+    sql_queries.update_odbc_table(submission,user.email)
+  File "H:\Global_Codes_App\Global Codes App\Global_Codes_App\sql_queries.py", line 65, in update_odbc_table
+    field = submission['field'],
+KeyError: 'field'
+-----29/03/2016 16:27
+Problem updating SQL table
+Traceback (most recent call last):
+  File "H:\Global_Codes_App\Global Codes App\Global_Codes_App\views.py", line 730, in submit_table_update
+    sql_queries.update_odbc_table(submission,user.email)
+  File "H:\Global_Codes_App\Global Codes App\Global_Codes_App\sql_queries.py", line 65, in update_odbc_table
+    field = submission['field'],
+KeyError: 'field'
+-----17/04/2016 19:16
+Problem running query
+Traceback (most recent call last):
+  File "H:\Global_Codes_App\Global Codes App\Global_Codes_App\views.py", line 712, in get_sql_data
+    result = methodToCall()
+  File "H:\Global_Codes_App\Global Codes App\Global_Codes_App\sql_queries.py", line 179, in Global_Map_Table
+    location_table = config.global_location)
+KeyError: 'global_location_table'
+-----17/04/2016 19:17
+Problem running query
+Traceback (most recent call last):
+  File "H:\Global_Codes_App\Global Codes App\Global_Codes_App\views.py", line 712, in get_sql_data
+    result = methodToCall()
+  File "H:\Global_Codes_App\Global Codes App\Global_Codes_App\sql_queries.py", line 179, in Global_Map_Table
+    global_location_table = config.global_location)
+KeyError: 'location_table'
+-----17/04/2016 19:18
+Problem running query
+Traceback (most recent call last):
+  File "H:\Global_Codes_App\Global Codes App\Global_Codes_App\views.py", line 712, in get_sql_data
+    result = methodToCall()
+  File "H:\Global_Codes_App\Global Codes App\Global_Codes_App\sql_queries.py", line 179, in Global_Map_Table
+    global_location_table = config.global_location)
+KeyError: 'location_table'

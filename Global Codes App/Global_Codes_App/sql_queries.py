@@ -137,7 +137,7 @@ def Lexical_Table():
 
 def Location_Table():
 
-    columns = ['SubSectionCode','SubSection','Department','Location','Address','PostCode','Telephone','Contact','URL','Notes','HALO','WSL','Referral']
+    columns = ['SubSectionCode','SubSection','Department','Location','Address','PostCode','Telephone','Contact','URL','Notes','HALO','WSL','Referral','DynamicsCode']
 
     sql = """
     SELECT {fields}
@@ -156,6 +156,36 @@ def Location_Table():
     result['table'] = config.global_location
 
     #print sql
+    return result
+
+
+def Global_Map_Table():
+
+    columns = ['Map ID','Origin','TFC','TFC Name','LOINC', 'LOINC Name', 'LOINC Sample', 'Container', 'Loc1 Code', 'SubSection', 'Department', 'Location', 'Location2', 'TAT (hrs)','TAT Type','Frozen','Aliquot Vol (ul)','Off Track?']
+    fields = ['map_id', 'origin', 'tfc', 'TestName', 'loinc', 'COMPONENT', 'SYSTEM', 'container', 'loc1', 'SubSection', 'Department', 'Location', 'loc2', 'tat', 'tat_type', 'frozen', 'aliquot_vol_ul', 'off_track']
+
+    sql = """
+    select [map_id], m.[origin], m.[tfc], f.[TestName], [loinc], [COMPONENT], [SYSTEM], [container], [loc1], [SubSection], [Department], [Location], [loc2], [tat], [tat_type], [frozen], [aliquot_vol_ul], [off_track]
+    from {map_table} m
+    inner join {form_table} f on m.tfc = f.TFC and m.origin = f.Origin
+    left join {loinc_table} ln on m.loinc = ln.LOINC_NUM
+    left join {global_location_table} lc1 on m.loc1 = lc1.SubSectionCode
+    where result_type = 'Result'
+    """.format(map_table = config.global_map_table,
+               form_table = config.global_form_staging,
+               loinc_table = config.loinc_db,
+               global_location_table = config.global_location)
+
+    print sql
+    result = run_odbc_query(sql)
+
+    result['columns'] = fields
+    result['columns_desc'] = columns
+    result['hidden'] = [0]
+    result['locked'] = ['map_id', 'origin', 'tfc', 'TestName', 'loinc', 'COMPONENT', 'SYSTEM', 'container', 'loc1', 'SubSection', 'Department', 'Location', 'loc2']
+    result['id_field'] = 'map_id'
+    result['table'] = config.global_map_table
+
     return result
 
 
@@ -655,7 +685,7 @@ def Dashboard_Graph():
     result = run_odbc_query(sql)
     
     # Format in to number series of changes
-    month_range = [monthdelta(datetime.now(), m).strftime("%Y-%m") for m in range(-24,1)]
+    month_range = [monthdelta(datetime.now(), m).strftime("%Y-%m") for m in range(-12,1)]
     D = {}
     for r in result['data']:
         D[r['ChangeDate']] = r['NumChanges']

@@ -117,10 +117,12 @@ function build_spreadsheet(result) {
         manualColumnResize: true,
         search: true,
         wordWrap: false,
-        colWidths: '200px',
+        //colWidths: '200px',
 
         currentRowClassName: 'currentRow', // Highlights the selected row
         currentColClassName: 'currentCol',
+
+        autoColumnSize: {syncLimit: 100}, // Auto-fit the columns (take first 100 rows only)
 
         afterChange: function (changes, source) {
             //console.log('afterChange event: ' + (changes || 'nochange').toString() + ' from ' + source);
