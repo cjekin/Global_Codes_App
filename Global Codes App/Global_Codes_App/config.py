@@ -8,7 +8,7 @@ systems = ['BMI_ALL_DW','CROM_ALL_DW','EAL_BHI_DW','EAL_MIC_DW','UCLH_BHI_DW','U
 system_translation = dict( BMI_ALL_DW='Regional Winpath', CROM_ALL_DW='Cromwell Winpath', EAL_BHI_DW='North West London BHI', EAL_MIC_DW='North West London Micro', RFH_BIO_DW='Royal Free BHI', RFH_HAEM_DW='Royal Free Haem', RFH_HPIL_DW='Royal Free Special Coag', RFH_IMM_DW='Royal Free Immunology', RFH_MICR_DW='Royal Free Micro', RFH_VIRO_DW='Royal Free Viro', UCLH_BHI_DW='UCLH BHI', UCLH_MIC_DW='UCLH Micro', WSL_ALL_DW='TDL Winpath')
 
 # SQL database config
-connection_string = 'DSN=SQL01;CHARSET=UTF8;Database=GlobalCodes'
+connection_string = 'DSN=SQL01NT;CHARSET=UTF8;Database=GlobalCodes'
 global_map_table = '[GlobalCodes].[dbo].[GlobalCodes_Map]'
 global_audit_table = '[GlobalCodes].[dbo].[GlobalCodes_Audit]'
 global_audit_table_archive = '[GlobalCodes].[dbo].[GlobalCodes_Audit_Archive]'
