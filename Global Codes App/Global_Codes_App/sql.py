@@ -1,33 +1,24 @@
-import config
+
 import pyodbc
 import string
 import traceback
 import sys
 
+from . import config
+
 def safe_str(obj):
     """ return the byte string representation of obj """
     try:
         return str(obj)
-        #return obj.encode('utf-8').strip()
     except UnicodeEncodeError:
-        # obj is unicode
         return unicode(obj).encode('unicode_escape')
-    #if type(obj) == str:
-    #    #obj.decode('iso-8859-1').encode('utf-8', 'ignore')
-    #    obj.encode('utf8','ignore')
-    #if type(obj) != unicode:
-    #    newobj =  obj.decode('utf-8')
-    #    return newobj
-    #else:
-    #    return obj
-
 
 def exec_stored_procedure(stored_procedure,arguements=[]):
     try:
         cnxn = pyodbc.connect(config.connection_string)
         cursor = cnxn.cursor()
     except:
-        print 'Problem making connection'
+        print('Problem making connection')
 
     if len(arguements) > 0:
         args = "'" + "','".join(arguements) + "'"
@@ -52,9 +43,9 @@ def exec_stored_procedure_noreturn(stored_procedure,arguements=[]):
         cnxn = pyodbc.connect(config.connection_string)
         cursor = cnxn.cursor()
     except:
-        print 'Problem making connection'
+        print('Problem making connection')
     
-    if arguements <> []:
+    if arguements != []:
         args = "'" + "','".join(arguements) + "'"
     else:
         args = ''
@@ -73,7 +64,7 @@ def exec_stored_procedure_list(stored_procedure, arguements=[], header_row=False
         cnxn = pyodbc.connect(config.connection_string)
         cursor = cnxn.cursor()
     except:
-        print 'Problem making connection'
+        print('Problem making connection')
 
     # Put string arguements in quotes
     args = []
@@ -85,7 +76,7 @@ def exec_stored_procedure_list(stored_procedure, arguements=[], header_row=False
     
     sql = "EXEC %s %s;" % (stored_procedure,','.join(args))
     data = {}
-    print 'Running SQL: ', sql
+    print('Running SQL: ', sql)
            
     cursor.execute(sql)
     raw_data = cursor.fetchall()
@@ -96,7 +87,7 @@ def exec_stored_procedure_list(stored_procedure, arguements=[], header_row=False
             try:
                 raw_data[i][j] = str(raw_data[i][j])
             except:
-                print 'Problem with raw data row ', i, ' col ', j
+                print('Problem with raw data row ', i, ' col ', j)
             raw_data[i][j] =  ''.join([c if ord(c) < 128 else ' ' for c in raw_data[i][j]]) 
 
     output_list = []
@@ -111,38 +102,10 @@ def exec_stored_procedure_list(stored_procedure, arguements=[], header_row=False
     return data
 
 
-
-
-
 def strip_non_ascii(string):
     ''' Returns the string without non ASCII characters'''
     stripped = (c for c in string if 0 < ord(c) < 127)
     return ''.join(stripped)
-
-
-
-#def pull_library_data(D,system,section,primary,unmapped):
-#    result = []
-#    print 'pull_library_data: ', primary, unmapped
-#    for r in D[system]:
-#        accept = True
-        
-#        if unmapped == '1' and D[system][r]['tlc_mapped'] == 1:
-#            accept = False
-#        if primary == '1' and D[system][r]['tlc_primary'] == 0:
-#            accept = False
-#        if section not in D[system][r]['tlc_sections']:
-#            accept = False
-#        if accept == True:
-#            num_tfc = str(len([t for t in D[system][r]['tfc']]))
-#            L = [D[system][r]['tlc_mapped'], r, D[system][r]['tlc_name'], D[system][r]['tlc_type'], num_tfc]
-            
-#            result.append(L)
-#    #result = sorted(result, key=lambda k: k['TLC']) 
-            
-#    return {'data': result}
-
-
 
 
 def pull_all_global_codes():
@@ -151,7 +114,7 @@ def pull_all_global_codes():
         cnxn = pyodbc.connect(config.connection_string)
         cursor = cnxn.cursor()
     except:
-        print 'Problem making connection'
+        print('Problem making connection')
     
     sql = "EXEC spGlobalsApp_GlobalCodes"
     data = {}
@@ -166,7 +129,6 @@ def pull_all_global_codes():
         data['result'] = 'ERROR'
 
     return data
-
 
 
 def add_mapping(system,tfc,new_global_code,user):
@@ -192,6 +154,7 @@ def add_mapping(system,tfc,new_global_code,user):
 
     return dict(result='OK')
 
+
 def remove_mapping(system,tfc,old_global_code,user):
     result = 'OK'
 
@@ -214,6 +177,7 @@ def remove_mapping(system,tfc,old_global_code,user):
     cursor.commit()
 
     return dict(result='OK')
+
 
 def exclude_tfc(system,tfc,exclusion,user):
     result = 'OK'
@@ -247,7 +211,7 @@ def get_more_tfc_info(system, tfc):
         cnxn = pyodbc.connect(config.connection_string)
         cursor = cnxn.cursor()
     except:
-        print 'Problem making connection'
+        print('Problem making connection')
     
     sql = "EXEC spGlobalsApp_GetTFCInfo %s,%s" % (system,tfc)
     data = {}
@@ -266,10 +230,7 @@ def update_global_code_fields(code, updates, user):
         cnxn = pyodbc.connect(config.connection_string)
         cursor = cnxn.cursor()
     except:
-        print 'Problem making connection'
-    
-    #o = [' ' + k + ' = ' + '\'' + v[0] + '\'' for k,v in updates.iteritems()]
-    #n = [' ' + k + ' = ' + '\'' + v[1] + '\'' for k,v in updates.iteritems()]
+        print('Problem making connection')
 
     for k,v in updates.iteritems():
 
@@ -278,23 +239,22 @@ def update_global_code_fields(code, updates, user):
         new = v[1].replace('\'','\'\'')
 
         sql = "insert into %s values(getdate(), '%s', 'GlobalCodes_Main', '%s', '%s', '%s', '%s', 'GlobalUpdate')" % (config.global_audit_table, user, code, k, old, new)
-        print 'Update audit trail:\n', sql, '\n'
+        print('Update audit trail:\n', sql, '\n')
         cursor.execute(sql)
 
         sql = "update %s set [%s] = '%s' where GlobalCode = '%s'" % (config.global_main_table,k,new,code)
-        print 'Update global codes main:\n', sql, '\n'   
+        print('Update global codes main:\n', sql, '\n')
         cursor.execute(sql)
 
     cursor.commit()
 
     
-
 def insert_new_global_code(code, submission, user):
     try:
         cnxn = pyodbc.connect(config.connection_string)
         cursor = cnxn.cursor()
     except:
-        print 'Problem making connection'
+        print('Problem making connection')
     
     fields = [f for f in submission]
     values = [submission[f] for f in fields]
@@ -304,12 +264,11 @@ def insert_new_global_code(code, submission, user):
     cursor.execute(sql)
 
     for f in fields:
-        if submission[f] <> '':
+        if submission[f] != '':
             sql = "insert into %s values(getdate(), '%s', 'GlobalCodes_Main', '%s', '%s', '', '%s', 'NewGlobal')" % (config.global_audit_table, user, code, f, submission[f])
             cursor.execute(sql)
 
     cursor.commit()
-
 
 
 def update_location_fields(code, updates, user):
@@ -317,10 +276,7 @@ def update_location_fields(code, updates, user):
         cnxn = pyodbc.connect(config.connection_string)
         cursor = cnxn.cursor()
     except:
-        print 'Problem making connection'
-    
-    #o = [' ' + k + ' = ' + '\'' + v[0] + '\'' for k,v in updates.iteritems()]
-    #n = [' ' + k + ' = ' + '\'' + v[1] + '\'' for k,v in updates.iteritems()]
+        print('Problem making connection')
 
     for k,v in updates.iteritems():
 
@@ -328,12 +284,8 @@ def update_location_fields(code, updates, user):
         old = v[0].replace('\'','\'\'')
         new = v[1].replace('\'','\'\'')
 
-        #sql = "insert into %s values(getdate(), '%s', 'GlobalCodes_Main', '%s', '%s', '%s', '%s', 'GlobalUpdate')" % (config.global_audit_table, user, code, k, old, new)
-        #print 'Update audit trail:\n', sql, '\n'
-        #cursor.execute(sql)
-
         sql = "update %s set [%s] = '%s' where SubSectionCode = '%s'" % (config.global_location,k,new,code)
-        print 'Update Departments table:\n', sql, '\n'   
+        print('Update Departments table:\n', sql, '\n')
         cursor.execute(sql)
 
     cursor.commit()
@@ -344,7 +296,7 @@ def insert_new_location_code(code, submission, user):
         cnxn = pyodbc.connect(config.connection_string)
         cursor = cnxn.cursor()
     except:
-        print 'Problem making connection'
+        print('Problem making connection')
     
     fields = [f for f in submission]
     values = [strip_non_ascii(submission[f]) for f in fields]
@@ -354,7 +306,7 @@ def insert_new_location_code(code, submission, user):
     cursor.execute(sql)
 
     for f in fields:
-        if submission[f] <> '':
+        if submission[f] != '':
             sql = "insert into %s values(getdate(), '%s', 'GlobalCodes_Departments', '%s', '%s', '', '%s', 'NewLocation')" % (config.global_audit_table, user, code, f, submission[f])
             cursor.execute(sql)
 

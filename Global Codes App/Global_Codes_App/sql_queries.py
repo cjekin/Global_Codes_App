@@ -1,9 +1,10 @@
-import config
 import pyodbc
 import string
 import traceback
 import sys
 from datetime import datetime
+
+from . import config
 
 def safe_str(obj):
     """ return the byte string representation of obj """
@@ -18,15 +19,16 @@ def safe_str(obj):
         return unicode(obj).encode('unicode_escape')
 
 def safe_unicode(obj, *args):
-    """ return the unicode representation of obj """
-    if obj == None:
-        return u''
-    try:
-        return unicode(obj, *args)
-    except UnicodeDecodeError:
-        # obj is byte string
-        ascii_text = str(obj).encode('string_escape')
-        return unicode(ascii_text)
+    return obj
+    # """ return the unicode representation of obj """
+    # if obj == None:
+    #     return u''
+    # try:
+    #     return unicode(obj, *args)
+    # except UnicodeDecodeError:
+    #     # obj is byte string
+    #     ascii_text = str(obj).encode('string_escape')
+    #     return unicode(ascii_text)
 
 
 def run_odbc_query(sql):
@@ -203,8 +205,8 @@ def Global_Table():
 
     from {global_main} g 
     left join {loinc} l on g.LOINC = l.LOINC_NUM 
-    left join {global_dept} d1 on g.SubSectionCode = d1.SubSectionCode and isnull(g.SubSectionCode,'') <> ''
-    left join {global_dept} d2 on g.HALO_SubSectionCode = d2.SubSectionCode and isnull(g.HALO_SubSectionCode,'') <> ''
+    left join {global_dept} d1 on g.SubSectionCode = d1.SubSectionCode and isnull(g.SubSectionCode,'') != ''
+    left join {global_dept} d2 on g.HALO_SubSectionCode = d2.SubSectionCode and isnull(g.HALO_SubSectionCode,'') != ''
     
     """.format(global_main = config.global_main_table, loinc = config.loinc_db, global_dept = config.global_location)
 
@@ -239,8 +241,8 @@ def Global_Table_WithUnits():
 
     from {global_main} g 
     left join {loinc} l on g.LOINC = l.LOINC_NUM 
-    left join {global_dept} d1 on g.SubSectionCode = d1.SubSectionCode and isnull(g.SubSectionCode,'') <> ''
-    left join {global_dept} d2 on g.HALO_SubSectionCode = d2.SubSectionCode and isnull(g.HALO_SubSectionCode,'') <> ''
+    left join {global_dept} d1 on g.SubSectionCode = d1.SubSectionCode and isnull(g.SubSectionCode,'') != ''
+    left join {global_dept} d2 on g.HALO_SubSectionCode = d2.SubSectionCode and isnull(g.HALO_SubSectionCode,'') != ''
 
     left join [Warehouse].dbo.GlobalCodes_Map map on g.GlobalCode = map.GlobalCode
 	left join [GlobalCodes].dbo.GlobalCodes_FORM_STAGING fs on map.Code = fs.TFC and map.Origin = fs.Origin
@@ -292,7 +294,7 @@ def TLC_List_For_Mapper(params):
     other_sql = []
     other_sql_string = ''
 
-    if params['section'][:1] <> '0':
+    if params['section'][:1] != '0':
         section_sql = " and f.WrkSection = '" + params['section'][:1] + "' "
     if params['primary'] == '1':
         other_sql.append(' tlc_primary = 1 ')
@@ -311,7 +313,7 @@ def TLC_List_For_Mapper(params):
     from (
 	    select tlc.[Test Code] as tlc, tlc.[Description] as tlc_name, tlc.[TLC type] as tlc_type,
 	    case when tlc.[Test Code] in (select distinct TLC from {FORM_INFO}) then 1 else 0 end as tlc_primary, tc.TFC as tfc
-	    ,case when isnull(map.loinc,'') <> '' or isnull(map.result_type,'') not in ('Result','SubResult','') then 1 else 0 end as tfc_mapped
+	    ,case when isnull(map.loinc,'') != '' or isnull(map.result_type,'') not in ('Result','SubResult','') then 1 else 0 end as tfc_mapped
         ,case when isnull(map.result_type,'') = 'Held' then 1 else 0 end as tfc_held
 	    from {TEST_STAGING} tlc 
 	    inner join {FLAT} tc on tlc.[Test Code] = tc.TLC and tlc.[Origin] = tc.[Origin]
@@ -333,7 +335,7 @@ def TLC_List_For_Mapper(params):
                FORM_INFO = config.global_form_info,
                GlobalCodes_Map = config.global_map_table)
 
-    print 'Running\n\n\n', sql, '\n\n\n'
+    print('Running\n\n\n', sql, '\n\n\n')
 
     result = run_odbc_query(sql)
 
@@ -382,7 +384,7 @@ def TLC_Detail_For_Mapper(params):
                TLC = params['TLC'],
                ORIGIN = params['Origin'])
 
-    print 'Running\n\n\n', sql, '\n\n\n'
+    print('Running\n\n\n', sql, '\n\n\n')
 
     result = run_odbc_query(sql)
 
@@ -424,27 +426,6 @@ def Mapped_LOINC_List(params):
     result['table'] = config.loinc_db
 
     return result
-
-
-
-
-#def Container_List_For_Mapper(): 
-
-#    sql = """
-#    select cont_id as id, container as [text], cont_type
-#    from {CONTAINER}
-#    """.format(CONTAINER = config.global_container)
-          
-
-#    result = run_odbc_query(sql)
-
-#    result['columns_desc'] = ['Container ID','Container','Container Type']
-#    result['id_field'] = 'cont_id'
-#    result['table'] = config.global_container
-
-#    return result
-
-
 
 def Location_List_For_Mapper(params): 
 
@@ -536,7 +517,7 @@ def Find_Similar_LOINC(params):
     left join {LOCATIONS} l2 on m.loc2 = l2.SubSectionCode
     left join {FORM_INFO} fi on m.tfc = fi.TFC and m.origin = fi.Origin
     where loinc = '{loinc_code}'
-    and m.origin <> '{this_origin}'
+    and m.origin != '{this_origin}'
     order by isnull(NumLastYear,0)
     """.format(MAP = config.global_map_table, 
                FORM_INFO = config.global_form_info, 
@@ -702,9 +683,9 @@ def Dashboard_Overview():
     sql = """
     select distinct map.origin,
     count(*) as num_codes, 
-    sum(case when isnull(result_type,'') <> '' and isnull(result_type,'') not in ('Result', 'SubResult', 'Held') then 1 else 0 end) as num_excluded,
+    sum(case when isnull(result_type,'') != '' and isnull(result_type,'') not in ('Result', 'SubResult', 'Held') then 1 else 0 end) as num_excluded,
     sum(case when isnull(result_type,'') in ('Result', 'SubResult', 'Held', '') then 1 else 0 end) as valid_codes, 
-    sum(case when loinc <> '' then 1 else 0 end) as num_mapped
+    sum(case when loinc != '' then 1 else 0 end) as num_mapped
     from {global_map} map
     inner join {form_staging} f on map.origin = f.Origin and map.tfc = f.TFC
     inner join {sections} s on f.WrkSection = s.section_letter and f.Origin = s.Origin
@@ -738,9 +719,9 @@ def Dashboard_Detail():
     sql = """
     select distinct map.origin, f.WrkSection as sec, s.section_name,
     count(*) as num_codes, 
-    sum(case when isnull(result_type,'') <> '' and isnull(result_type,'') not in ('Result', 'SubResult', 'Held') then 1 else 0 end) as num_excluded,
+    sum(case when isnull(result_type,'') != '' and isnull(result_type,'') not in ('Result', 'SubResult', 'Held') then 1 else 0 end) as num_excluded,
     sum(case when isnull(result_type,'') in ('Result', 'SubResult', 'Held', '') then 1 else 0 end) as valid_codes, 
-    sum(case when isnull(result_type,'') in ('Result', 'SubResult', 'Held', '') and loinc <> '' then 1 else 0 end) as num_mapped
+    sum(case when isnull(result_type,'') in ('Result', 'SubResult', 'Held', '') and loinc != '' then 1 else 0 end) as num_mapped
     from {global_map} map
     inner join {form_staging} f on map.origin = f.Origin and map.tfc = f.TFC
     inner join {sections} s on f.WrkSection = s.section_letter and f.Origin = s.Origin
